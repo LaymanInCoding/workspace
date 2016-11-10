@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cm="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/no_login_tip"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="登录/注册"
+            android:textColor="@color/main_kin"
+            android:textSize="@dimen/text_size_28"
+            android:visibility="gone" />
+
+        <include layout="@layout/header_fragment_circle" />
+
+        <LinearLayout
+            android:id="@+id/me_is_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#D66263"
+            android:divider="@drawable/divider_x1"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/my_order"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/text_size_55"
+                android:layout_marginTop="3dip"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/my_order"
+                android:gravity="center"
+                android:text="@string/text_my_order"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+
+            <TextView
+                android:id="@+id/product_order"
+                android:layout_width="0dp"
+                android:layout_marginTop="3dip"
+                android:layout_height="@dimen/text_size_55"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/service_order"
+                android:gravity="center"
+                android:text="@string/text_product_order"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+            <TextView
+                android:id="@+id/ma_bu_dai"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/text_size_55"
+                android:layout_marginTop="3dip"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/ma_bu_dai"
+                android:gravity="center"
+                android:text="@string/text_mabudai"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/my_favorite"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/text_size_55"
+                android:layout_marginTop="3dip"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/my_favorite"
+                android:gravity="center"
+                android:text="@string/text_my_favorite"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_size_30"
+                android:layout_marginTop="@dimen/space_10"
+                android:background="#D66263"
+                android:gravity="center"
+                android:text="@string/text_my_account"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_x1"
+                android:showDividers="middle">
+
+                <TextView
+                    android:id="@+id/me_browse_history"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_55"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/browse_history"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/space_5"
+                    android:text="@string/text_browsing_history"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/hot_line"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_55"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/hot_line"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/space_5"
+                    android:text="@string/text_hot_line"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/me_receiver_address"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_55"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/receiver_address"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/space_5"
+                    android:text="@string/text_place_of_receipt"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/me_after_sales_service"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_55"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/after_sales_service"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/space_5"
+                    android:text="@string/text_after_sales_service"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_x1"
+                android:showDividers="middle">
+
+                <TextView
+                    android:id="@+id/me_online_service"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="@dimen/dimen_6_dip"
+                    android:layout_height="@dimen/text_size_49"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/service_online"
+                    android:gravity="center"
+                    android:text="@string/text_online_service"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/me_mb_help"
+                    android:layout_marginTop="@dimen/dimen_6_dip"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_49"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/the_mb_help"
+                    android:gravity="center"
+                    android:text="@string/text_mb_help"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/order_ser"
+                    android:layout_marginTop="@dimen/dimen_6_dip"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_49"
+                    android:drawableTop="@mipmap/out_ser1"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_size_12"
+                    android:text="@string/text_wait_for_out_price"/>
+
+                <TextView
+                    android:id="@+id/cash_coupon"
+                    android:layout_marginTop="@dimen/dimen_6_dip"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_49"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/cash_coupon"
+                    android:gravity="center"
+                    android:text="@string/text_cash_coupon"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12"
+                    android:editable="true" />
+            </LinearLayout>
+
+
+            <View style="@style/horizontal_divider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_size_30"
+                android:layout_marginTop="@dimen/space_12"
+                android:background="#D66263"
+                android:gravity="center"
+                android:text="@string/text_life_health"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_x1"
+                android:showDividers="middle">
+
+                <TextView
+                    android:id="@+id/vaccine_record"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_55"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/the_vaccine_record"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/space_5"
+                    android:text="@string/text_vaccine_record"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/new_born"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_55"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/baby_word"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/space_5"
+                    android:text="@string/text_new_born"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/antenatal_care"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_55"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/antenatal_care"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/space_5"
+                    android:text="@string/text_antenatal_care"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/baby_weight_height"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_55"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/baby_weight_height"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/space_5"
+                    android:text="@string/text_baby_weight_height"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_x1"
+                android:showDividers="middle">
+
+                <TextView
+                    android:id="@+id/bedtime_story"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/text_size_55"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/text_bedtime_story"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/space_5"
+                    android:text="@string/text_bedtime_story"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_divider" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

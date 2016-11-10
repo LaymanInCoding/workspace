@@ -1,0 +1,292 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:typeface">serif</item>
+        <item name="android:textColor">#222622</item>
+    </style>
+
+    <style name="Widget.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/progress_medium_holo</item>
+    </style>
+
+    <style name="dialog_waiting" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+    </style>
+
+    <style name="littleFontAlertDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:textColor">#00FF00</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="popupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+    <!-- 自定义MaterialCalendarWidget日历样式 -->
+    <style name="CustomDateTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/mcv_text_date</item>
+    </style>
+
+    <style name="CustomWeekDayTextAppearance" parent="TextAppearance.MaterialCalendarWidget.WeekDay">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CustomHeaderTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Header">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!-- MaterialCalendarWidget日历样式 END -->
+
+    <style name="inputAreaWrapper">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/bg_input_area</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="inputAreaoutservice">
+        <item name="android:layout_marginTop">@dimen/space_10</item>
+        <item name="android:layout_marginBottom">@dimen/space_10</item>
+    </style>
+
+    <style name="mRatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar</item>
+    </style>
+
+    <style name="inputAreaTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/input_area_text</item>
+    </style>
+
+    <style name="inputAreaTextViewWithoutDrawable" parent="inputAreaTextView">
+        <item name="android:layout_marginLeft">12dp</item>
+    </style>
+
+    <style name="inputAreaEditText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@null</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColorHint">@color/edit_text_hint</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="singleEditText" parent="inputAreaEditText">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/bg_input_area</item>
+    </style>
+
+    <style name="commonButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:text">@string/text_next_step</item>
+        <item name="android:layout_marginLeft">24dp</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <style name="cancelButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_button1</item>
+        <item name="android:text">@string/text_next_step</item>
+        <item name="android:layout_marginLeft">24dp</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <!-- 横向和竖向分隔线 -->
+    <style name="vertical_divider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/divider</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
+    </style>
+
+    <style name="horizontal_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+
+    <style name="horizontal_divider_full" parent="horizontal_divider">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+    </style>
+
+    <style name="mbq_horizontal_divider_full" parent="horizontal_divider">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:background">@color/mbq_bottom_line</item>
+    </style>
+
+    <style name="mbq_horizontal_divider_full_white" parent="horizontal_divider">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="mbq_horizontal_divider_full_share" parent="horizontal_divider">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:background">#cccccc</item>
+    </style>
+
+    <style name="mbq_vertical_divider_full_share" parent="vertical_divider">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:background">#928e8f</item>
+    </style>
+
+    <style name="mbq_vertical_divider_full_divider_ful_white" parent="vertical_divider">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="mbq_vertical_divider_full" parent="vertical_divider">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:background">@color/mbq_bottom_line</item>
+    </style>
+    <!--===================== END =====================-->
+
+    <!-- 显示/隐藏密码ToggleButton按钮样式 -->
+    <style name="passwordToggleBtn">
+        <item name="android:checked">true</item>
+        <item name="android:textOff">@null</item>
+        <item name="android:textOn">@null</item>
+        <item name="android:background">@drawable/bg_pwd_toggle</item>
+        <item name="android:layout_width">34dp</item>
+        <item name="android:layout_height">25dp</item>
+    </style>
+
+    <!-- 上面图片, 下面文字按钮区域样式, 用于LinearLayout -->
+    <style name="topImageButton">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <!-- 多个按钮平分LinearLayout时Item样式 -->
+    <style name="topImageButtonItem" parent="topImageButton">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="textViewSettingItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:drawablePadding">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/bg_item_pressed</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="textViewSettingItemWithRArrow" parent="textViewSettingItem">
+        <item name="android:drawableRight">@mipmap/icon_arrow_right</item>
+    </style>
+
+    <style name="textViewSettingItemWithRArrowNoIcon" parent="textViewSettingItemWithRArrow">
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="textViewSettingItemNoIcon" parent="textViewSettingItem">
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="goodsTagTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+
+    <!-- 左边带有一个小图标的TextView，一般用于代替Button响应点击事件 -->
+    <style name="leftIconButtonTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="taggingRadioButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:button">@null</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/checked_inverse_white</item>
+        <item name="android:background">@drawable/bg_checked_rounded2_red</item>
+    </style>
+
+    <style name="Spinner">
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateDrawable">@drawable/spinner</item>
+        <item name="android:indeterminateDuration">1500</item>
+        <item name="android:indeterminateOnly">true</item>
+    </style>
+
+    <style name="ListSpinner" parent="Spinner">
+        <item name="android:layout_width">@dimen/error_icon_size</item>
+        <item name="android:layout_height">@dimen/error_icon_size</item>
+    </style>
+
+    <style name="dividing_line_style">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/dividing_line_width_height</item>
+        <item name="android:background">@color/gray_dividing</item>
+    </style>
+
+    <style name="listViewMultiImageView">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="anim_pop_right">
+        <item name="android:windowEnterAnimation">@anim/pop_right_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_right_out</item>
+    </style>
+
+    <style name="anim_pop_bottom">
+        <item name="android:windowEnterAnimation">@anim/pop_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_bottom_out</item>
+    </style>
+
+    <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">@color/mbq_bg</item> <!-- Or any color you need -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+</resources>

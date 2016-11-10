@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:rowCount="7"
+            android:useDefaultMargins="true">
+
+            <TextView
+                android:layout_column="0"
+                android:layout_marginLeft="12dp"
+                android:text="@string/text_original_pwd"/>
+
+            <EditText
+                android:id="@+id/old_password"
+                style="@style/inputAreaEditText"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal"
+                android:hint="@string/text_input_current_pwd"
+                android:inputType="textPassword"
+                android:paddingLeft="0dp"/>
+
+            <View
+                style="@style/horizontal_divider"
+                android:layout_columnSpan="3"/>
+
+            <TextView
+                android:layout_marginLeft="12dp"
+                android:text="@string/text_new_pwd"/>
+
+            <EditText
+                android:id="@+id/new_password"
+                style="@style/inputAreaEditText"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal"
+                android:inputType="textPassword"
+                android:paddingLeft="0dp"/>
+
+            <View
+                style="@style/horizontal_divider"
+                android:layout_columnSpan="3"
+                android:layout_row="3"/>
+
+            <TextView
+                android:layout_marginLeft="12dp"
+                android:text="@string/text_re_new_pwd"/>
+
+            <EditText
+                android:id="@+id/confirm_pwd"
+                style="@style/inputAreaEditText"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal"
+                android:inputType="textPassword"
+                android:paddingLeft="0dp"/>
+
+            <View
+                style="@style/horizontal_divider"
+                android:layout_columnSpan="3"
+                android:layout_row="5"/>
+
+            <Button
+                android:id="@+id/submit_button"
+                style="@style/commonButton"
+                android:layout_columnSpan="3"
+                android:layout_marginTop="24dp"
+                android:layout_row="6"/>
+        </GridLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_tool_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_20_dip"
+            android:layout_marginRight="@dimen/dimen_20_dip"
+            android:layout_marginTop="@dimen/dimen_20_dip"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/src_image"
+                    android:layout_width="@dimen/dimen_120_dip"
+                    android:layout_height="@dimen/dimen_120_dip"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/pic_goods_placeholder" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_toEndOf="@+id/src_image"
+                    android:layout_toRightOf="@+id/src_image"
+                    android:text="Anger"
+                    android:textColor="@color/xn_grey"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name"
+                    android:layout_alignLeft="@+id/name"
+                    android:layout_alignStart="@+id/name"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:text=""
+                    android:textColor="@color/xn_grey"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/src_image"
+                    android:layout_alignLeft="@+id/name"
+                    android:layout_alignStart="@+id/name"
+                    android:text=""
+                    android:maxLines="1"
+                    android:textColor="@color/xn_grey"
+                    android:textSize="@dimen/text_size_12" />
+
+
+            </RelativeLayout>
+
+            <com.witmoon.xmb.ui.widget.SortTextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_20"
+                android:lineSpacingExtra="@dimen/dimen_6_dip"
+                android:textSize="@dimen/text_size_16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/img_0"
+                        android:layout_width="@dimen/dimen_200_dip"
+                        android:layout_height="@dimen/dimen_200_dip"
+                        android:background="#333333"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/pic_goods_placeholder"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/img_1"
+                        android:layout_width="@dimen/dimen_200_dip"
+                        android:layout_height="@dimen/dimen_200_dip"
+                        android:layout_marginLeft="10dp"
+                        android:background="#333333"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/pic_goods_placeholder"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/img_2"
+                        android:layout_width="@dimen/dimen_200_dip"
+                        android:layout_height="@dimen/dimen_200_dip"
+                        android:layout_marginLeft="10dp"
+                        android:background="#333333"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/pic_goods_placeholder"
+                        android:visibility="invisible" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+                    <ImageView
+                        android:id="@+id/img_3"
+                        android:layout_width="@dimen/dimen_200_dip"
+                        android:layout_height="@dimen/dimen_200_dip"
+                        android:layout_marginTop="10dp"
+                        android:background="#333333"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/pic_goods_placeholder"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/img_4"
+                        android:layout_width="@dimen/dimen_200_dip"
+                        android:layout_height="@dimen/dimen_200_dip"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#333333"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/pic_goods_placeholder"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/img_5"
+                        android:layout_width="@dimen/dimen_200_dip"
+                        android:layout_height="@dimen/dimen_200_dip"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#333333"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/pic_goods_placeholder"
+                        android:visibility="invisible" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

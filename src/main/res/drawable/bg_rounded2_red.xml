@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 点击状态下按钮背景样式 -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="0dp"/>
+            <solid android:color="#ffee465e"/>
+            <stroke android:width="1dp"
+                    android:color="#ffee465e"/>
+        </shape>
+    </item>
+    <!-- 正常点击状态下按钮背景样式 -->
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="0dp"/>
+            <solid android:color="#ffe7465e"/>
+            <stroke android:width="1dp"
+                    android:color="#ffe7465e"/>
+        </shape>
+    </item>
+</selector>

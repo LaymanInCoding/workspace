@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_390_dip">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/top_group_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_360_dip"
+        android:scaleType="centerCrop"
+        fresco:fadeDuration="300"
+        fresco:placeholderImage="@mipmap/pic_market_placeholder"
+        fresco:placeholderImageScaleType="fitXY" />
+
+    <com.witmoon.xmb.ui.widget.CountDownTextView
+        android:id="@+id/count_down_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/space_35"
+        android:textColor="#ff48baab"
+        android:textSize="12sp"
+        fresco:cdVerticalPadding="0dp"
+        fresco:decimalBackground="@drawable/bg_rounded2_green"
+        fresco:decimalTextColor="@color/white"
+        fresco:decimalVerticalPadding="0dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_30"
+        android:layout_alignParentBottom="true"
+        android:background="#006DC8"
+        android:gravity="center"
+        android:text="热卖爆款"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimen_17_dip"
+        android:textStyle="bold" />
+</RelativeLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:strip="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/main_drawer_bg"
+              android:clickable="true"
+              android:orientation="vertical"
+              android:paddingTop="24dp">
+
+    <com.witmoon.xmb.ui.widget.PagerSlidingTabStrip
+        android:id="@+id/pager_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/white"
+        strip:pstsDividerPadding="4dp"
+        strip:pstsIndicatorColor="@color/main_drawer_highlight"
+        strip:pstsIndicatorHeight="2dp"
+        strip:pstsShouldExpand="true"
+        strip:pstsTabBackground="@drawable/bg_drawer_pager_indicator"
+        strip:pstsUnderlineColor="@color/main_drawer_bg"
+        strip:pstsUnderlineHeight="1dp"
+        strip:zyhSelectedTabTextColor="@color/main_drawer_highlight"/>
+
+    <com.witmoon.xmb.ui.widget.CustomViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/space_12"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

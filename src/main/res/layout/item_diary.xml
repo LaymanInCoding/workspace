@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="1dip">
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50_dip"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/publish_date_month"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/bg_img"
+            android:background="#D66263"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/space_10"
+            android:text="2015年12月"
+            android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/publish_count"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/bg_img"
+            android:background="#D66263"
+            android:gravity="right|center"
+            android:paddingRight="@dimen/space_10"
+            android:text="25"
+            android:textColor="@color/white" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_151_dip"
+        android:id="@+id/item"
+        android:layout_marginTop="1dip">
+        <TextView
+            android:id="@+id/publish_weekday"
+            android:layout_width="@dimen/dimen_150_dip"
+            android:layout_height="@dimen/dimen_50_dip"
+            android:background="#D66263"
+            android:gravity="center"
+            android:text="星期五"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/publish_day"
+            android:layout_width="@dimen/dimen_150_dip"
+            android:layout_height="@dimen/dimen_100_dip"
+            android:layout_below="@+id/publish_weekday"
+            android:gravity="center"
+            android:text="25"
+            android:textColor="@color/main_kin"
+            android:textSize="@dimen/text_size_26" />
+
+        <View
+            android:id="@+id/divider"
+            style="@style/vertical_divider"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/publish_day"
+            android:layout_alignParentTop="true"
+            android:layout_margin="0dp"
+            android:layout_toEndOf="@+id/publish_weekday"
+            android:layout_toRightOf="@+id/publish_weekday" />
+
+        <LinearLayout
+            android:id="@+id/diary_mood"
+            android:layout_toRightOf="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_45_dip"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/space_3">
+
+            <ImageView
+                android:id="@+id/mood_icon"
+                android:layout_width="@dimen/dimen_50_dip"
+                android:layout_height="@dimen/dimen_50_dip"
+                android:src="@null" />
+            <ImageView
+                android:id="@+id/weather_icon"
+                android:layout_width="@dimen/dimen_40_dip"
+                android:layout_height="@dimen/dimen_40_dip"
+                android:src="@null" />
+        </LinearLayout>
+
+        <com.witmoon.xmb.ui.widget.SortTextView
+            android:id="@+id/diary_info"
+            android:layout_toRightOf="@+id/divider"
+            android:layout_width="@dimen/dimen_400_dip"
+            android:layout_height="@dimen/dimen_80_dip"
+            android:layout_below="@+id/diary_mood"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_size_12"
+            android:paddingLeft="@dimen/space_5"
+            android:paddingRight="@dimen/space_5"
+            android:layout_marginTop="@dimen/space_3"
+            android:textColor="@color/xn_grey"
+            android:text="和孩子一起去了游乐场,玩的不亦乐乎，忙里偷闲享受生活吧。"
+            android:layout_above="@+id/publish_time" />
+
+        <TextView
+            android:id="@+id/publish_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_10"
+            android:text="12月"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_above="@+id/view"
+            android:layout_toRightOf="@+id/divider"
+            android:layout_marginBottom="@dimen/space_3"
+            android:layout_toEndOf="@+id/divider" />
+
+        <ImageView
+            android:id="@+id/publish_location"
+            android:layout_toRightOf="@id/publish_time"
+            android:layout_alignTop="@id/publish_time"
+            android:layout_width="@dimen/dimen_15_dip"
+            android:layout_marginTop="@dimen/space_1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_4"
+            android:src="@drawable/location"/>
+
+        <TextView
+            android:id="@+id/publish_place"
+            android:layout_width="@dimen/dimen_235_dip"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:maxLines="1"
+            android:layout_toRightOf="@id/publish_location"
+            android:textSize="@dimen/text_size_10"
+            android:ellipsize="end"
+            android:layout_alignTop="@id/publish_time"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/null_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/diary_info"
+            android:layout_toLeftOf="@+id/diary_pic"
+            android:text="" />
+
+
+        <ImageView
+            android:id="@+id/diary_pic"
+            android:layout_width="@dimen/dimen_140_dip"
+            android:layout_height="@dimen/dimen_140_dip"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="@dimen/space_5"
+            android:layout_marginBottom="@dimen/space_3" />
+
+        <View
+            style="@style/horizontal_divider"
+            android:layout_below="@+id/divider"
+            android:layout_margin="0dp"
+            android:id="@+id/view" />
+    </RelativeLayout>
+</LinearLayout>

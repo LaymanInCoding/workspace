@@ -1,0 +1,174 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E3E3E3"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/post_edit_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/space_25"
+        android:orientation="vertical" >
+
+        <!-- 标题 -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/header_bar_height"
+            android:background="@drawable/bg_nav"
+            android:gravity="top" >
+
+            <ImageView
+                android:id="@+id/post_back"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:paddingRight="@dimen/title_view_left_back_padding_right"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_arrow_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:singleLine="true"
+                android:id="@+id/shop_name"
+                android:text=""
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18" />
+
+            <TextView
+                android:id="@+id/post_send"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingRight="@dimen/dimen_16_dip"
+                android:singleLine="true"
+                android:text="发布"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_size_15" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dividing_line_width_height"
+            android:background="@color/mine_dividing_line_color" />
+
+        <EditText
+            android:id="@+id/post_content"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dimen_274_dip"
+            android:background="#ffffff"
+            android:gravity="top"
+            android:hint="效果如何，服务是否周到，环境怎么样？"
+            android:maxLength="140"
+            android:paddingBottom="@dimen/padding_5"
+            android:paddingLeft="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_10"
+            android:paddingTop="@dimen/padding_5"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/post_text_remain"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="right|center_vertical"
+            android:paddingBottom="@dimen/padding_5"
+            android:paddingTop="@dimen/padding_5"
+            android:paddingRight="@dimen/padding_10"
+            android:text="0/140"
+            android:textColor="@color/gray_9"
+            android:textSize="@dimen/text_size_12" />
+
+        <HorizontalScrollView
+            android:id="@+id/post_scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:id="@+id/post_pic_container"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_186_dip"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/padding_10"
+                android:paddingRight="@dimen/padding_10"
+                android:paddingTop="@dimen/dimen_20_dip"
+                android:paddingBottom="@dimen/dimen_20_dip" >
+
+                <com.witmoon.xmb.ui.widget.FilterImageView
+                    android:id="@+id/post_add_pic"
+                    android:layout_width="@dimen/dimen_146_dip"
+                    android:layout_height="@dimen/dimen_146_dip"
+                    android:src="@mipmap/post_new" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:paddingLeft="@dimen/dimen_20_dip"
+                android:gravity="right|center_vertical"
+                android:paddingBottom="@dimen/padding_5"
+                android:paddingTop="@dimen/padding_5"
+                android:paddingRight="@dimen/padding_10"
+                android:text="钱都花了，为什么不拍几张图片秀一秀呢？"
+                android:textColor="@color/gray_9"
+                android:textSize="@dimen/text_size_12" />
+            <TextView
+                android:id="@+id/post_pic_remain"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:gravity="right|center_vertical"
+                android:paddingBottom="@dimen/padding_5"
+                android:paddingTop="@dimen/padding_5"
+                android:paddingRight="@dimen/padding_10"
+                android:text="0/6"
+                android:textColor="@color/gray_9"
+                android:textSize="@dimen/text_size_12" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dividing_line_width_height"
+            android:background="@color/mine_dividing_line_color" />
+
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/pagerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+
+        <com.witmoon.xmb.ui.widget.AlbumViewPager
+            android:id="@+id/albumviewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/album_item_bg" />
+
+        <include
+            android:id="@+id/album_item_header_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            layout="@layout/album_item_header_bar" />
+    </FrameLayout>
+
+</LinearLayout>

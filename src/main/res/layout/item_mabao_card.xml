@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_210_dip">
+    <TextView
+        android:layout_marginTop="@dimen/dimen_34_dip"
+        android:layout_marginLeft="@dimen/dimen_88_dip"
+        android:id="@+id/mb_card_no_hint"
+        android:textSize="@dimen/dimen_34_dip"
+        android:textColor="#666666"
+        android:text="@string/mb_card_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="@dimen/dimen_34_dip"
+        android:id="@+id/mb_card_no"
+        android:textSize="@dimen/dimen_34_dip"
+        android:textColor="#666666"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/mb_card_no_hint" />
+    <TextView
+        android:layout_marginTop="@dimen/dimen_34_dip"
+        android:layout_marginLeft="@dimen/dimen_88_dip"
+        android:id="@+id/mb_card_surplus_money"
+        android:textSize="@dimen/dimen_26_dip"
+        android:layout_centerVertical="true"
+        android:paddingTop="@dimen/dimen_15_dip"
+        android:textColor="#999999"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginLeft="@dimen/dimen_88_dip"
+        android:id="@+id/mb_card_use_end_time"
+        android:textSize="@dimen/dimen_26_dip"
+        android:layout_below="@+id/mb_card_surplus_money"
+        android:layout_marginTop="@dimen/dimen_16_dip"
+        android:textColor="#999999"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_marginTop="@dimen/dimen_34_dip"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1_dip"
+        android:background="@color/mengbao_index_split_line_color"/>
+
+    <ImageView
+        android:layout_marginTop="@dimen/dimen_34_dip"
+        android:id="@+id/mb_card_checked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dimen_15_dip"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/mb_card_default"
+        android:paddingLeft="@dimen/dimen_15_dip"
+        android:layout_alignParentLeft="true"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/mb_over_date"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/card_over_date"/>
+</RelativeLayout>

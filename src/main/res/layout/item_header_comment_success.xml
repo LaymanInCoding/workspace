@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_78_dip"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_17"
+        android:textColor="#606060"
+        android:text="非常感谢您的评价" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_17_dip"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_14"
+        android:textColor="#a9a9a9"
+        android:text="其他小伙伴都非常需要它哦，小麻包非常感谢您！" />
+
+
+    <View
+        style="@style/horizontal_divider"
+        android:layout_marginTop="@dimen/dimen_66_dip"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_20_dip"
+        android:background="#ECEDF1"/>
+</LinearLayout>

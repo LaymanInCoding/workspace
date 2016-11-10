@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="12dp"
+              android:paddingRight="12dp"
+              android:paddingTop="24dp">
+
+    <LinearLayout
+        android:id="@+id/register_area_select_layout"
+        style="@style/inputAreaWrapper">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:drawableLeft="@mipmap/icon_world"
+            android:text="@string/text_register_area"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="4dp"
+            android:drawableRight="@mipmap/icon_arrow_right"
+            android:gravity="right|center_vertical"
+            android:text="中国大陆+86"/>
+    </LinearLayout>
+
+    <com.witmoon.xmb.ui.widget.InputAreaLinearLayout
+        style="@style/inputAreaWrapper"
+        android:layout_marginTop="18dp">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:drawableLeft="@mipmap/icon_phone"
+            android:text="@string/text_phone"/>
+
+        <EditText
+            android:id="@+id/register_phone_edit"
+            style="@style/inputAreaEditText"
+            android:hint="@string/tip_input_phone"/>
+
+    </com.witmoon.xmb.ui.widget.InputAreaLinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp">
+
+        <CheckBox
+            android:id="@+id/register_agree_license_checkbox"
+            android:layout_width="wrap_content"
+            android:checked="true"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="同意"/>
+
+        <TextView
+            android:id="@+id/register_license"
+            android:layout_width="wrap_content"
+            android:text="《小麻包注册协议》"
+            android:textColor="@color/red"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/register_phone_next"
+        style="@style/commonButton"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="48dp"/>
+</LinearLayout>

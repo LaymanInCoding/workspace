@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/register_write_code_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:text="@string/tip_register_set_email"
+        android:textColor="@color/text_view_hint"/>
+
+    <LinearLayout
+        style="@style/inputAreaWrapper"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="18dp">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:drawableLeft="@mipmap/icon_email"
+            android:text="@string/text_email"/>
+
+        <EditText
+            android:id="@+id/register_email_edit"
+            style="@style/inputAreaEditText"
+            android:hint="@string/tip_email"
+            android:inputType="textEmailAddress"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_button"
+        style="@style/commonButton"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="48dp"/>
+</LinearLayout>

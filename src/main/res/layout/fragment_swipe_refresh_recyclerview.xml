@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <android.support.v4.widget.MySwipeRefreshLayout
+        android:id="@+id/srl_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <com.witmoon.xmblibrary.observablescrollview.ObservableRecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.MySwipeRefreshLayout>
+
+    <com.witmoon.xmb.ui.widget.EmptyLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</RelativeLayout>

@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="animals">
+        <item>Abyssinian</item>
+        <item>Adelie Penguin</item>
+        <item>Affenpinscher</item>
+        <item>Afghan Hound</item>
+        <item>African Bush Elephant</item>
+        <item>African Civet</item>
+        <item>African Clawed Frog</item>
+        <item>Airedale Terrier</item>
+        <item>American Water Spaniel</item>
+        <item>Anatolian Shepherd Dog</item>
+        <item>Angelfish</item>
+        <item>Ant</item>
+        <item>Anteater</item>
+        <item>Arctic Fox</item>
+        <item>Arctic Hare</item>
+        <item>Arctic Wolf</item>
+        <item>Armadillo</item>
+        <item>Avocet</item>
+        <item>Axolotl</item>
+        <item>Baboon</item>
+        <item>Bactrian Camel</item>
+        <item>Badger</item>
+        <item>Balinese</item>
+        <item>Barb</item>
+        <item>Barn Owl</item>
+        <item>Barnacle</item>
+        <item>Barracuda</item>
+        <item>Bedlington Terrier</item>
+        <item>Beetle</item>
+        <item>Bengal Tiger</item>
+        <item>Bernese Mountain Dog</item>
+        <item>Bottle Nosed Dolphin</item>
+        <item>Boxer Dog</item>
+        <item>Boykin Spaniel</item>
+        <item>Brazilian Terrier</item>
+        <item>Brown Bear</item>
+        <item>Budgerigar</item>
+        <item>Buffalo</item>
+        <item>Butterfly</item>
+        <item>Butterfly Fish</item>
+        <item>Caiman Lizard</item>
+        <item>Cairn Terrier</item>
+        <item>Camel</item>
+        <item>Canaan Dog</item>
+        <item>Capybara</item>
+        <item>Caracal</item>
+        <item>Carolina Dog</item>
+        <item>Cassowary</item>
+        <item>Cat</item>
+        <item>Caterpillar</item>
+        <item>Catfish</item>
+        <item>Cavalier King Charles Spaniel</item>
+        <item>Centipede</item>
+        <item>Cesky Fousek</item>
+        <item>Chinese Crested Dog</item>
+        <item>Common Frog</item>
+        <item>Common Loon</item>
+        <item>Cross River Gorilla</item>
+        <item>Curly Coated Retriever</item>
+        <item>Cuscus</item>
+        <item>Cuttlefish</item>
+        <item>Dachshund</item>
+        <item>Dalmatian</item>
+        <item>Darwin\'s Frog</item>
+        <item>Desert Tortoise</item>
+        <item>Deutsche Bracke</item>
+        <item>Dhole</item>
+        <item>Dingo</item>
+        <item>Discus</item>
+        <item>Doberman Pinscher</item>
+        <item>Dodo</item>
+        <item>Dog</item>
+        <item>Dogo Argentino</item>
+        <item>Dugong</item>
+        <item>Dunker</item>
+        <item>Dusky Dolphin</item>
+        <item>Dwarf Crocodile</item>
+        <item>Eagle</item>
+        <item>Earwig</item>
+        <item>Eastern Gorilla</item>
+        <item>Eastern Lowland Gorilla</item>
+        <item>Echidna</item>
+        <item>Edible Frog</item>
+        <item>Egyptian Mau</item>
+        <item>Electric Eel</item>
+        <item>Elephant</item>
+        <item>Emu</item>
+        <item>English Cocker Spaniel</item>
+        <item>English Shepherd</item>
+        <item>English Springer Spaniel</item>
+        <item>Entlebucher Mountain Dog</item>
+        <item>Epagneul Pont Audemer</item>
+        <item>Eskimo Dog</item>
+        <item>Estrela Mountain Dog</item>
+        <item>Falcon</item>
+        <item>Fennec Fox</item>
+        <item>Ferret</item>
+        <item>Field Spaniel</item>
+        <item>Fin Whale</item>
+        <item>Finnish Spitz</item>
+        <item>Fire-Bellied Toad</item>
+        <item>Fish</item>
+        <item>Fox Terrier</item>
+        <item>French Bulldog</item>
+        <item>Frigatebird</item>
+        <item>Frilled Lizard</item>
+        <item>Frog</item>
+        <item>Fur Seal</item>
+        <item>Galapagos Penguin</item>
+        <item>Galapagos Tortoise</item>
+        <item>Gar</item>
+        <item>Gecko</item>
+        <item>Gentoo Penguin</item>
+        <item>Geoffroys Tamarin</item>
+        <item>Gerbil</item>
+        <item>German Pinscher</item>
+        <item>Golden Lion Tamarin</item>
+        <item>Golden Oriole</item>
+        <item>Golden Retriever</item>
+        <item>Goose</item>
+        <item>Gopher</item>
+        <item>Gorilla</item>
+        <item>Grizzly Bear</item>
+        <item>Grouse</item>
+        <item>Guinea Fowl</item>
+        <item>Guinea Pig</item>
+        <item>Guppy</item>
+        <item>Hammerhead Shark</item>
+        <item>Hamster</item>
+        <item>Hare</item>
+        <item>Harrier</item>
+        <item>Havanese</item>
+        <item>Hedgehog</item>
+        <item>Hercules Beetle</item>
+        <item>Hermit Crab</item>
+        <item>Heron</item>
+        <item>Highland Cattle</item>
+        <item>Hummingbird</item>
+        <item>Humpback Whale</item>
+        <item>Hyena</item>
+        <item>Ibis</item>
+        <item>Ibizan Hound</item>
+        <item>Iguana</item>
+        <item>Impala</item>
+        <item>Indian Elephant</item>
+        <item>Indian Palm Squirrel</item>
+        <item>Indian Rhinoceros</item>
+        <item>Indian Star Tortoise</item>
+        <item>Indochinese Tiger</item>
+        <item>Indri</item>
+        <item>Insect</item>
+        <item>Irish Setter</item>
+        <item>Irish WolfHound</item>
+        <item>Jack Russel</item>
+        <item>Jackal</item>
+        <item>Jaguar</item>
+        <item>Japanese Chin</item>
+        <item>Japanese Macaque</item>
+        <item>Javan Rhinoceros</item>
+        <item>Javanese</item>
+        <item>Jellyfish</item>
+        <item>Kakapo</item>
+        <item>Kangaroo</item>
+        <item>Keel Billed Toucan</item>
+        <item>Killer Whale</item>
+        <item>King Crab</item>
+        <item>King Penguin</item>
+        <item>Kingfisher</item>
+        <item>Kiwi</item>
+        <item>Koala</item>
+        <item>Komodo Dragon</item>
+        <item>Kudu</item>
+        <item>Leopard Tortoise</item>
+        <item>Liger</item>
+        <item>Lion</item>
+        <item>Lionfish</item>
+        <item>Little Penguin</item>
+        <item>Lizard</item>
+        <item>Llama</item>
+        <item>Lobster</item>
+        <item>Long-Eared Owl</item>
+        <item>Lynx</item>
+        <item>Macaroni Penguin</item>
+        <item>Macaw</item>
+        <item>Magellanic Penguin</item>
+        <item>Magpie</item>
+        <item>Millipede</item>
+        <item>Minke Whale</item>
+        <item>Mole</item>
+        <item>Molly</item>
+        <item>Mongoose</item>
+        <item>Mongrel</item>
+        <item>Monitor Lizard</item>
+        <item>Moth</item>
+        <item>Mountain Gorilla</item>
+        <item>Mountain Lion</item>
+        <item>Mouse</item>
+        <item>Mule</item>
+        <item>Neanderthal</item>
+        <item>Neapolitan Mastiff</item>
+        <item>Newfoundland</item>
+        <item>Newt</item>
+        <item>Nightingale</item>
+        <item>Norfolk Terrier</item>
+        <item>Norwegian Forest</item>
+        <item>Numbat</item>
+        <item>Nurse Shark</item>
+        <item>Ocelot</item>
+        <item>Octopus</item>
+        <item>Okapi</item>
+        <item>Old English Sheepdog</item>
+        <item>Olm</item>
+        <item>Opossum</item>
+        <item>Orang-utan</item>
+        <item>Ostrich</item>
+        <item>Otter</item>
+        <item>Oyster</item>
+        <item>Pademelon</item>
+        <item>Panther</item>
+        <item>Parrot</item>
+        <item>Patas Monkey</item>
+        <item>Peacock</item>
+        <item>Pug</item>
+        <item>Puma</item>
+        <item>Purple Emperor</item>
+        <item>Puss Moth</item>
+        <item>Pygmy Hippopotamus</item>
+        <item>Pygmy Marmoset</item>
+        <item>Quail</item>
+        <item>Quetzal</item>
+        <item>Quokka</item>
+        <item>Quoll</item>
+        <item>Rabbit</item>
+        <item>Raccoon</item>
+        <item>Raccoon Dog</item>
+        <item>Radiated Tortoise</item>
+        <item>Ragdoll</item>
+        <item>Rat</item>
+        <item>Roseate Spoonbill</item>
+        <item>Rottweiler</item>
+        <item>Royal Penguin</item>
+        <item>Russian Blue</item>
+        <item>Sabre-Toothed Tiger</item>
+        <item>Saint Bernard</item>
+        <item>Salamander</item>
+        <item>Sand Lizard</item>
+        <item>Saola</item>
+        <item>Scorpion</item>
+        <item>Scorpion Fish</item>
+        <item>Sea Dragon</item>
+        <item>Sea Lion</item>
+        <item>Spider Monkey</item>
+        <item>Spiny Dogfish</item>
+        <item>Sponge</item>
+        <item>Squid</item>
+        <item>Squirrel</item>
+        <item>Squirrel Monkey</item>
+        <item>Sri Lankan Elephant</item>
+        <item>Staffordshire Bull Terrier</item>
+        <item>Sumatran Rhinoceros</item>
+        <item>Sumatran Tiger</item>
+        <item>Sun Bear</item>
+        <item>Swan</item>
+        <item>Tang</item>
+        <item>Tapir</item>
+        <item>Tarsier</item>
+        <item>Tasmanian Devil</item>
+        <item>Tawny Owl</item>
+        <item>Termite</item>
+        <item>Tree Frog</item>
+        <item>Tropicbird</item>
+        <item>Tuatara</item>
+        <item>Turkey</item>
+        <item>Turkish Angora</item>
+        <item>Uakari</item>
+        <item>Uguisu</item>
+        <item>Umbrellabird</item>
+        <item>Vampire Bat</item>
+        <item>Vervet Monkey</item>
+        <item>Vulture</item>
+        <item>Wallaby</item>
+        <item>Walrus</item>
+        <item>Warthog</item>
+        <item>White Tiger</item>
+        <item>Wild Boar</item>
+        <item>Wildebeest</item>
+        <item>Wolf</item>
+        <item>Wolverine</item>
+        <item>Wombat</item>
+        <item>Woodlouse</item>
+        <item>Woodpecker</item>
+        <item>Woolly Mammoth</item>
+        <item>Woolly Monkey</item>
+        <item>Wrasse</item>
+        <item>X-Ray Tetra</item>
+        <item>Yak</item>
+        <item>Yellow-Eyed Penguin</item>
+        <item>Yorkshire Terrier</item>
+        <item>Zebra</item>
+        <item>Zebra Shark</item>
+        <item>Zebu</item>
+        <item>Zonkey</item>
+        <item>Zorse</item>
+    </string-array>
+
+    <string-array name="persons">
+        <item>安雪花</item>
+        <item>昂春花</item>
+        <item>袄雪晴</item>
+        <item>艾雪</item>
+        <item>安大春</item>
+        <item>敖春</item>
+        <item>安雪春</item>
+        <item>艾磊</item>
+        <item>艾小春</item>
+        <item>敖雪春</item>
+        <item>敖雪春</item>
+        <item>班春来</item>
+        <item>鲍新东</item>
+        <item>毕小磊</item>
+        <item>毕春华</item>
+        <item>鲍春来</item>
+        <item>薄春来</item>
+        <item>曹小明</item>
+        <item>曹春明</item>
+        <item>参明</item>
+        <item>仓华</item>
+        <item>村明</item>
+        <item>寸明</item>
+        <item>丛团明</item>
+        <item>曾大明</item>
+        <item>曹明</item>
+        <item>丛小明</item>
+        <item>操小明</item>
+        <item>曹小明</item>
+        <item>党中央</item>
+        <item>到家了</item>
+        <item>当时</item>
+        <item>等一下</item>
+        <item>动动不</item>
+        <item>冻死了</item>
+        <item>东边</item>
+        <item>懂了没</item>
+        <item>倒了</item>
+        <item>稻子</item>
+        <item>灯会</item>
+        <item>对不对</item>
+        <item>队伍</item>
+        <item>封不平</item>
+        <item>风清扬</item>
+        <item>凤飞飞</item>
+        <item>冯中伦</item>
+        <item>费孝通</item>
+        <item>废话</item>
+        <item>飞天</item>
+        <item>房秀秀</item>
+        <item>放屁吧</item>
+        <item>方中昆</item>
+        <item>放了我</item>
+        <item>芳芳</item>
+        <item>妨碍</item>
+        <item>法正</item>
+        <item>发财了</item>
+        <item>罚款</item>
+        <item>共产党</item>
+        <item>更多</item>
+        <item>哥哥</item>
+        <item>各人</item>
+        <item>隔阂</item>
+        <item>干露露</item>
+        <item>敢不也</item>
+        <item>赶紧</item>
+        <item>刚才</item>
+        <item>岗子</item>
+        <item>杭州</item>
+        <item>横山</item>
+        <item>恒山</item>
+        <item>横水</item>
+        <item>黑大天</item>
+        <item>嘿你好吗</item>
+        <item>恨册</item>
+        <item>狠不狠</item>
+        <item>痕迹</item>
+        <item>哈哈哈哈</item>
+        <item>汉族人民</item>
+        <item>汗</item>
+        <item>韩国</item>
+        <item>寒冷的天气</item>
+        <item>何炅</item>
+        <item>河水</item>
+        <item>荷花</item>
+        <item>花满楼</item>
+        <item>鸡鸡</item>
+        <item>假如你没气了</item>
+        <item>家人</item>
+        <item>佳人</item>
+        <item>嫁给我吧</item>
+        <item>甲等医院</item>
+        <item>蒋介石</item>
+        <item>江青</item>
+        <item>将尉</item>
+        <item>姜维</item>
+        <item>经验</item>
+        <item>睛</item>
+        <item>京飞</item>
+        <item>惊奇</item>
+        <item>景色</item>
+        <item>贱人就是群情</item>
+        <item>减分</item>
+        <item>娇</item>
+        <item>骄子</item>
+        <item>饺子</item>
+        <item>轿子</item>
+        <item>教学生</item>
+        <item>开朗的人</item>
+        <item>凯子</item>
+        <item>楷模</item>
+        <item>铠甲</item>
+        <item>恺</item>
+        <item>炕上</item>
+        <item>抗敌</item>
+        <item>坑杀</item>
+        <item>亏损</item>
+        <item>窥伺</item>
+        <item>奎狼星</item>
+        <item>愧对你</item>
+        <item>葵花子</item>
+        <item>魁首</item>
+        <item>庐山会议</item>
+        <item>乐和</item>
+        <item>路中</item>
+        <item>鲁萌</item>
+        <item>露露</item>
+        <item>撸管</item>
+        <item>录取</item>
+        <item>陆小凤</item>
+        <item>卢俊义</item>
+        <item>泸水</item>
+        <item>狼人</item>
+        <item>浪荡的女人</item>
+        <item>朗朗上口</item>
+        <item>郎君</item>
+        <item>毛小东</item>
+        <item>萌萌</item>
+        <item>蒙小雨衣</item>
+        <item>懵懂</item>
+        <item>梦中的蝴蝶</item>
+        <item>帽子</item>
+        <item>冒雨前进</item>
+        <item>缪</item>
+        <item>谬</item>
+        <item>木小林</item>
+        <item>沐浴阳光</item>
+        <item>穆人清</item>
+        <item>母老虎</item>
+        <item>妈妈</item>
+        <item>马子</item>
+        <item>骂人干什么</item>
+        <item>吗</item>
+        <item>麻小虎</item>
+        <item>能人</item>
+        <item>拿起来</item>
+        <item>那一边</item>
+        <item>哪儿呢</item>
+        <item>恼火</item>
+        <item>闹啥啊</item>
+        <item>宁宁</item>
+        <item>泞</item>
+        <item>泥腿子</item>
+        <item>你是谁</item>
+        <item>尼姑</item>
+        <item>妮儿</item>
+        <item>呢称</item>
+        <item>昵称</item>
+        <item>朋友的歌</item>
+        <item>碰着你了</item>
+        <item>鹏飞</item>
+        <item>彭德怀</item>
+        <item>捧在揪心里</item>
+        <item>烹饪学校</item>
+        <item>蓬</item>
+        <item>澎湃</item>
+        <item>漂亮的小姐</item>
+        <item>票子</item>
+        <item>嫖妓</item>
+        <item>飘在风中</item>
+        <item>瓢</item>
+        <item>骗我</item>
+        <item>偏门左首家</item>
+        <item>片儿</item>
+        <item>篇幅</item>
+        <item>翩翩</item>
+        <item>清水</item>
+        <item>青天</item>
+        <item>晴天了</item>
+        <item>轻轻的风啊</item>
+        <item>请客吃白饭</item>
+        <item>情缘未了</item>
+        <item>庆曲</item>
+        <item>倾国倾城</item>
+        <item>卿本会子</item>
+        <item>其他的人</item>
+        <item>奇怪</item>
+        <item>旗帜</item>
+        <item>气死人了</item>
+        <item>汽水</item>
+        <item>求我啊</item>
+        <item>球王</item>
+        <item>糗大了</item>
+        <item>秋天来了</item>
+        <item>钱大壮</item>
+        <item>前进吧</item>
+        <item>欠我十块钱</item>
+        <item>日子</item>
+        <item>扔了吧</item>
+        <item>仍然</item>
+        <item>让我来</item>
+        <item>冉小红</item>
+        <item>染色</item>
+        <item>然而</item>
+        <item>容易吗</item>
+        <item>榕树</item>
+        <item>溶化</item>
+        <item>熔化</item>
+        <item>嚷嚷啥啊</item>
+        <item>饶你一命</item>
+        <item>绕树三周</item>
+        <item>扰乱心情</item>
+        <item>骚货</item>
+        <item>扫地</item>
+        <item>嫂子</item>
+        <item>臊不</item>
+        <item>搔痒痒</item>
+        <item>蚤</item>
+        <item>桑兰</item>
+        <item>丧心病</item>
+        <item>嗓门大</item>
+        <item>搡你一下</item>
+        <item>虽然</item>
+        <item>岁月如刀</item>
+        <item>随之就来</item>
+        <item>碎玉</item>
+        <item>桃姐</item>
+        <item>涛声依旧</item>
+        <item>套子</item>
+        <item>逃走了</item>
+        <item>陶点点</item>
+        <item>淘宝</item>
+        <item>掏小鸡</item>
+        <item>讨大方</item>
+        <item>滔天</item>
+        <item>腾飞</item>
+        <item>疼屋联</item>
+        <item>滕大</item>
+        <item>藤蔓</item>
+        <item>伍长</item>
+        <item>翁美美</item>
+        <item>魏延</item>
+        <item>喂药</item>
+        <item>畏惧</item>
+        <item>为了谁</item>
+        <item>位玉宁</item>
+        <item>伟大的领袖</item>
+        <item>未来不是梦</item>
+        <item>味道不错哟</item>
+        <item>胃口大开</item>
+        <item>卫兵</item>
+        <item>嗡</item>
+        <item>小兵</item>
+        <item>笑面虎</item>
+        <item>肖玉</item>
+        <item>潇洒</item>
+        <item>萧十一郞</item>
+        <item>晓明</item>
+        <item>校长你好</item>
+        <item>消停一下吧</item>
+        <item>效果不错啊</item>
+        <item>咸阳</item>
+        <item>现在</item>
+        <item>线缆</item>
+        <item>先来的</item>
+        <item>闲人</item>
+        <item>贤良人</item>
+        <item>县长大人</item>
+        <item>香喷喷</item>
+        <item>像样</item>
+        <item>乡长</item>
+        <item>有一个</item>
+        <item>药家新</item>
+        <item>油水</item>
+        <item>由来</item>
+        <item>又一个</item>
+        <item>游行</item>
+        <item>悠哉</item>
+        <item>攸关</item>
+        <item>营生</item>
+        <item>赢你来</item>
+        <item>硬梆梆</item>
+        <item>杨子</item>
+        <item>扬天</item>
+        <item>雨天</item>
+        <item>于是</item>
+        <item>欲望</item>
+        <item>鱼平平</item>
+        <item>作业</item>
+        <item>左美荣</item>
+        <item>咋了</item>
+        <item>咱们</item>
+        <item>脏死了</item>
+        <item>藏民</item>
+        <item>赃款</item>
+        <item>做爱</item>
+        <item>在他乡</item>
+        <item>仔仔</item>
+        <item>载重</item>
+        <item>赞哥</item>
+        <item>攒钱很多</item>
+        <item>砸死了</item>
+        <item>杂种</item>
+    </string-array>
+</resources>

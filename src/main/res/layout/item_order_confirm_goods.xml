@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/space_5">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/goods_image"
+            android:layout_width="@dimen/dimen_120_dip"
+            android:layout_height="@dimen/dimen_120_dip"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            app:actualImageScaleType="centerCrop"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="centerCrop"
+            app:roundAsCircle="true"
+            app:roundingBorderColor="@color/circle_image_border"
+            app:roundingBorderWidth="2dp"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingRight="6dp">
+
+            <TextView
+                android:id="@+id/goods_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Hello"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/goods_title"
+                android:gravity="bottom">
+                <com.witmoon.xmb.util.MoneyTextView
+                    android:id="@+id/goods_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/text_price"/>
+                <TextView
+                    android:id="@+id/specificationText"
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="6dp"
+                    android:text="规格"
+                    android:textColor="@color/text_view_hint"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/divider"/>
+
+        <TextView
+            android:id="@+id/goods_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="x2"
+            android:textColor="@color/text_view_hint"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <View style="@style/horizontal_divider_full" />
+</LinearLayout>

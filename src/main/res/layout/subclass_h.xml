@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/subclass_img"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_200_dip"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/pic_goods_placeholder" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/subclass_name"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:gravity="center"
+        android:text="奶粉"
+        android:textColor="#606060"
+        android:textSize="@dimen/space_14" />
+
+</LinearLayout>

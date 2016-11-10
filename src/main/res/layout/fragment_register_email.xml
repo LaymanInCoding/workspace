@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/page_horizontal_padding"
+              android:paddingRight="@dimen/page_horizontal_padding"
+              android:paddingTop="24dp">
+
+    <LinearLayout
+        style="@style/inputAreaWrapper">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:drawableLeft="@mipmap/icon_user"
+            android:text="@string/text_uname"/>
+
+        <EditText
+            android:id="@+id/register_username_text"
+            style="@style/inputAreaEditText"
+            android:hint="@string/tip_uname_style"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/inputAreaWrapper"
+        android:layout_marginTop="18dp">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:drawableLeft="@mipmap/icon_email"
+            android:text="@string/text_email"/>
+
+        <EditText
+            android:id="@+id/register_email_text"
+            style="@style/inputAreaEditText"
+            android:hint="@string/tip_email"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/inputAreaWrapper"
+        android:layout_marginTop="18dp">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:drawableLeft="@mipmap/icon_lock"
+            android:text="@string/text_set_pwd"/>
+
+        <EditText
+            android:id="@+id/register_pwd_text"
+            style="@style/inputAreaEditText"
+            android:inputType="textPassword"
+            android:hint="@string/tip_pwd_style"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/inputAreaWrapper"
+        android:layout_marginTop="18dp">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:drawableLeft="@mipmap/icon_locked"
+            android:text="@string/text_confirm_pwd"/>
+
+        <EditText
+            android:id="@+id/register_confirm_pwd_text"
+            android:inputType="textPassword"
+            style="@style/inputAreaEditText"
+            android:hint="@string/tip_pwd_style"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp">
+
+        <CheckBox
+            android:id="@+id/register_agree_license_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_agree"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_app_register_license"
+            android:textColor="@color/red"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/register_phone_next"
+        style="@style/commonButton"
+        android:layout_marginTop="48dp"/>
+</LinearLayout>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/mbq_share_container"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/toolbar_right" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_marginBottom="@dimen/dimen_80_dip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_145_dip"
+            android:background="#e6cb7775"
+            android:visibility="gone"
+            android:id="@+id/choose_area"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/post_all_layout"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/post_all"
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/mbq_post_all_white"
+                    android:scaleType="centerCrop"
+                    android:layout_height="@dimen/dimen_85_dip" />
+            </LinearLayout>
+
+            <View
+                style="@style/mbq_vertical_divider_full_divider_ful_white" />
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/post_up_layout"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/post_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_85_dip"
+                    android:src="@mipmap/mbq_post_up_gray"
+                    android:scaleType="centerCrop"/>
+            </LinearLayout>
+            <View
+                style="@style/mbq_vertical_divider_full_divider_ful_white" />
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/post_pic_layout"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/post_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_85_dip"
+                    android:src="@mipmap/mbq_post_pic_gray"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_81_dip"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+            <View
+                style="@style/mbq_horizontal_divider_full" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_80_dip"
+                android:background="@color/white"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/post_comment"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/mbq_comment_comment"
+                        android:layout_marginRight="@dimen/dimen_10_dip"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/dimen_30_dip"
+                        android:textColor="@color/mbq_circle_title"
+                        android:gravity="center"
+                        android:text="评论"/>
+                    </LinearLayout>
+                <View
+                    style="@style/mbq_vertical_divider_full" />
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/post_collect"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/collect_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/mbq_collect_inactive"
+                        android:layout_marginRight="@dimen/dimen_10_dip"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/dimen_30_dip"
+                        android:textColor="@color/mbq_circle_title"
+                        android:text="收藏"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <include layout="@layout/emptylayout_all" />
+    </RelativeLayout>
+</LinearLayout>

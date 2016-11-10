@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/dimen_50_dip"
+    android:paddingRight="@dimen/dimen_50_dip"
+    android:padding="8.0dip">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <ProgressBar
+            android:id="@+id/waiting_pb"
+            style="@style/Widget.ProgressBar"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/waiting_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/waiting_pb"
+            android:textColor="@color/main_black"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/information_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingRight="20dp"
+                android:text="温馨提示："
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_17" />
+
+            <ImageView
+                android:id="@+id/hidden_img"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="10dp"
+                android:src="@mipmap/hidden" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/space_7"
+            android:background="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_marginRight="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_7"
+            android:lineSpacingExtra="@dimen/space_3"
+            android:text="       尊敬的麻米，根据海关规定，跨境购商品需要办理跨境购商品清单手续，需要填写
+            身份证信息进行实名认证以确保您购买的商品顺利通过入境申报。"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_13" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:paddingTop="@dimen/space_3">
+
+            <TextView
+                android:id="@+id/discoloration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3"
+                android:lineSpacingExtra="@dimen/space_3"
+                android:text="收货人请填写与身份证相对应的真实姓名，否则您的订单无法通过海关审批。"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_13" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_marginRight="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_3"
+            android:lineSpacingExtra="@dimen/space_3"
+            android:text="小麻包承诺：身份证信息视如“绝密档案”保管，绝不对外泄露。"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_13" />
+    </LinearLayout>
+
+</RelativeLayout>

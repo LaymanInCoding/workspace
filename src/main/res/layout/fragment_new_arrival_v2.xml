@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.witmoon.xmblibrary.stickynavlayout.StickyNavLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.witmoon.xmblibrary.stickynavlayout.MyLinearLayout
+        android:id="@id/id_stickynavlayout_topview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.witmoon.xmblibrary.stickynavlayout.MyLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_320_dip">
+
+                <com.witmoon.xmblibrary.autoscrollviewpager.AutoScrollViewPager
+                    android:id="@+id/auto_scroll_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.xmb.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/auto_scroll_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="10dip"
+                    app:fillColor="#88FF0000"
+                    app:pageColor="#FFF"
+                    app:radius="4dp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp">
+
+                <TextView
+                    android:id="@+id/signin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/icon_points_card"
+                    android:gravity="center"
+                    android:text="领积分" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:background="@color/grey" />
+
+                <TextView
+                    android:id="@+id/shake"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/icon_shake"
+                    android:gravity="center"
+                    android:text="摇麻豆" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:background="@color/grey" />
+
+                <TextView
+                    android:id="@+id/favorite"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/icon_heart"
+                    android:gravity="center"
+                    android:text="我的收藏" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:background="@color/grey" />
+
+                <TextView
+                    android:id="@+id/award"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/space_2"
+                    android:drawableTop="@mipmap/brand"
+                    android:gravity="center"
+                    android:text="团购" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="8dp"
+                android:weightSum="1.0">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/advertisement_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:actualImageScaleType="fitXY"
+                        app:fadeDuration="300"
+                        app:placeholderImage="@drawable/temp_04"
+                        app:placeholderImageScaleType="centerCrop" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/xs_" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/advertisement_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        app:actualImageScaleType="fitXY"
+                        app:fadeDuration="300"
+                        app:placeholderImage="@drawable/temp_03"
+                        app:placeholderImageScaleType="centerCrop" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/advertisement_3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:actualImageScaleType="fitXY"
+                            app:fadeDuration="300"
+                            app:placeholderImage="@drawable/temp_04"
+                            app:placeholderImageScaleType="centerCrop" />
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/advertisement_4"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:actualImageScaleType="fitXY"
+                            app:fadeDuration="300"
+                            app:placeholderImage="@drawable/temp_05"
+                            app:placeholderImageScaleType="centerCrop" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/advertisement_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_320_dip"
+                    android:layout_marginTop="@dimen/space_8"
+                    app:actualImageScaleType="fitXY"
+                    app:fadeDuration="300"
+                    app:placeholderImage="@drawable/temp_baokuan"
+                    app:placeholderImageScaleType="fitXY" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:src="@mipmap/bk" />
+            </RelativeLayout>
+        </com.witmoon.xmblibrary.stickynavlayout.MyLinearLayout>
+    </com.witmoon.xmblibrary.stickynavlayout.MyLinearLayout>
+
+    <com.witmoon.xmb.ui.widget.PagerSlidingTabStrip
+        android:id="@+id/id_stickynavlayout_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/master_shopping_all"
+        android:fillViewport="false"
+        app:pstsDividerPadding="2dp"
+        app:pstsIndicatorColor="@color/main_tab_label_selected"
+        app:pstsIndicatorHeight="4dp"
+        app:pstsShouldExpand="true"
+        app:pstsUnderlineColor="@color/grey"
+        app:pstsUnderlineHeight="1dp"
+        app:zyhSelectedTabTextColor="@color/main_tab_label_selected" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_stickynavlayout_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</com.witmoon.xmblibrary.stickynavlayout.StickyNavLayout>

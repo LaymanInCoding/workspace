@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f2f3f7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dip"
+                android:background="@color/white"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_marginTop="5dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="订单状态：已完成"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:paddingLeft="8dip"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/serial_no"
+                    android:padding="5dp"
+                    android:textColor="#333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_12"
+                    android:text="订单号：452452434532"/>
+
+                <TextView
+                    android:id="@+id/time"
+                    android:padding="5dp"
+                    android:textColor="#333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_12"
+                    android:text="下单时间：352452452"/>
+            </LinearLayout>
+
+            <View style="@style/horizontal_divider_full" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/space_13"
+                android:paddingRight="@dimen/space_5"
+                android:paddingTop="@dimen/space_8"
+                android:paddingBottom="@dimen/space_5">
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_12"
+                    android:layout_centerHorizontal="true"
+                    android:text="35245245"/>
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/phone"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="收货人：张三"/>
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:layout_marginTop="@dimen/space_6"
+                    android:text="具体地址"
+                    android:textSize="@dimen/text_size_12"/>
+            </RelativeLayout>
+
+            <View style="@style/horizontal_divider_full" />
+            <!--
+            <com.witmoon.xmblibrary.recyclerview.SuperRecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"/>
+    -->
+            <View
+                android:layout_marginTop="8dip"
+                style="@style/horizontal_divider_full" />
+            <com.witmoon.xmblibrary.linearlistview.LinearListView
+                android:id="@+id/goods_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:showDividers="middle|end"/>
+            <View
+                android:layout_marginTop="8dip"
+                style="@style/horizontal_divider_full" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/space_5"
+                android:paddingLeft="@dimen/space_13"
+                android:paddingRight="@dimen/space_13"
+                android:paddingBottom="@dimen/space_5">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="34dip"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|end"
+                        android:text="商品总额："/>
+                    <com.witmoon.xmb.util.MoneyTextView
+                        android:id="@+id/total_price"
+                        android:gravity="center|end"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="￥0"/>
+                </LinearLayout>
+                <View
+                    style="@style/horizontal_divider_full" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="34dip"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|end"
+                        android:text="运费："/>
+                    <com.witmoon.xmb.util.MoneyTextView
+                        android:id="@+id/freight_charge"
+                        android:gravity="center|end"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="￥0"/>
+                </LinearLayout>
+                <View
+                    style="@style/horizontal_divider_full" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="34dip"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|end"
+                        android:text="专场优惠："/>
+                    <com.witmoon.xmb.util.MoneyTextView
+                        android:id="@+id/favorable_charge_1"
+                        android:gravity="center|end"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="￥0"/>
+                </LinearLayout>
+                <View
+                    style="@style/horizontal_divider_full" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="34dip"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|end"
+                        android:text="麻包卡金额："/>
+                    <com.witmoon.xmb.util.MoneyTextView
+                        android:id="@+id/card_fee"
+                        android:gravity="center|end"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="￥0"/>
+                </LinearLayout>
+                <View
+                    style="@style/horizontal_divider_full" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="34dip"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|end"
+                        android:text="代金券优惠："/>
+                    <com.witmoon.xmb.util.MoneyTextView
+                        android:id="@+id/favorable_charge_2"
+                        android:gravity="center|end"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="￥0"/>
+                </LinearLayout>
+                <View
+                    style="@style/horizontal_divider_full" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="34dip"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|end"
+                        android:text="红包优惠："/>
+                    <com.witmoon.xmb.util.MoneyTextView
+                        android:id="@+id/favorable_charge_3"
+                        android:gravity="center|end"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="￥0"/>
+                </LinearLayout>
+                <View
+                    style="@style/horizontal_divider_full" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="34dip"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|end"
+                        android:text="应付金额："/>
+                    <com.witmoon.xmb.util.MoneyTextView
+                        android:id="@+id/total_payment"
+                        android:gravity="center|end"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="￥0"/>
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                style="@style/horizontal_divider_full" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:id="@+id/express_btn">
+                <View
+                    android:layout_marginTop="@dimen/space_8"
+                    style="@style/horizontal_divider_full" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:paddingTop="@dimen/space_10"
+                    android:paddingBottom="@dimen/space_10"
+                    android:paddingLeft="@dimen/space_13"
+                    android:text="查看物流"/>
+                <View
+                    style="@style/horizontal_divider_full" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <include layout="@layout/emptylayout_all" />
+</RelativeLayout>

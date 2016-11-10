@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/divider"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/top_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/bg_nav"
+        fresco:contentInsetEnd="0dp"
+        fresco:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/toolbar_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:ellipsize="end"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:text="免税"
+                android:textColor="@color/white"
+                android:textSize="@dimen/toolbar_text_size"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp">
+
+        <com.witmoon.xmblibrary.recyclerview.SuperRecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|top" />
+
+        <com.witmoon.xmblibrary.recyclerview.RecyclerViewHeader
+            android:id="@+id/recycler_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/market_place_logo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_360_dip"
+                android:scaleType="centerCrop"
+                fresco:fadeDuration="300"
+                fresco:placeholderImage="@mipmap/pic_market_placeholder"
+                fresco:placeholderImageScaleType="fitXY" />
+        </com.witmoon.xmblibrary.recyclerview.RecyclerViewHeader>
+
+        <include layout="@layout/emptylayout_all" />
+    </FrameLayout>
+</LinearLayout>

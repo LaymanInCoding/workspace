@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:paddingTop="@dimen/dimen_10_dip">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_130_dip"
+        android:layout_weight="1"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/goods_image"
+            android:layout_width="@dimen/dimen_120_dip"
+            android:layout_height="@dimen/dimen_120_dip"
+            android:layout_marginRight="@dimen/space_6"
+            android:scaleType="centerCrop"
+            app:riv_border_color="#eeeeee"
+            app:riv_border_width="@dimen/dimen_1_dip"
+            app:riv_corner_radius="@dimen/dimen_3_dip"/>
+
+        <TextView
+            android:id="@+id/goods_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="@dimen/dimen_2_dip"
+            android:layout_toRightOf="@+id/goods_image"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="@dimen/dimen_24_dip"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/goods_title"
+            android:layout_marginBottom="@dimen/dimen_10_dip"
+            android:layout_toRightOf="@+id/goods_image"
+            android:gravity="bottom">
+
+            <com.witmoon.xmb.util.MoneyTextView
+                android:id="@+id/goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/text_price"
+                android:textSize="@dimen/dimen_22_dip"
+                android:textStyle="normal"/>
+
+            <TextView
+                android:id="@+id/goods_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:text="x1"
+                android:textColor="@color/text_price"
+                android:textSize="@dimen/dimen_20_dip"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        style="@style/horizontal_divider"
+        android:layout_marginTop="@dimen/dimen_5_dip"/>
+</LinearLayout>

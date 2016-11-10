@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:indicator="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/titles"
+        layout="@layout/title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginTop="1dp">
+
+        <com.witmoon.xmb.ui.widget.PagerSlidingTabStrip
+            android:id="@+id/indicator"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/master_shopping_all"
+            android:fillViewport="false"
+            indicator:pstsDividerPadding="6dp"
+            indicator:pstsIndicatorColor="@color/main_tab_label_selected"
+            indicator:pstsIndicatorHeight="2dp"
+            indicator:pstsShouldExpand="true"
+            indicator:pstsTabBackground="@drawable/bg_item_pressed"
+            indicator:pstsTabPaddingLeftRight="16dp"
+            indicator:pstsUnderlineHeight="1dp"
+            indicator:zyhSelectedTabTextColor="@color/main_tab_label_selected" />
+
+        <ImageView
+            android:id="@+id/slider"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:background="@color/master_shopping_all"
+            android:src="@mipmap/icon_32x32_arrow_down" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.witmoon.xmblibrary.percent.PercentRelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.witmoon.xmblibrary.percent.PercentLinearLayout
+                android:id="@+id/grid_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/translucencegray"
+                android:gravity="right"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_widthPercent="70%">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/red"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                    <GridView
+                        android:id="@+id/grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:numColumns="3"
+                        android:stretchMode="columnWidth" />
+                </LinearLayout>
+            </com.witmoon.xmblibrary.percent.PercentLinearLayout>
+        </com.witmoon.xmblibrary.percent.PercentRelativeLayout>
+        <include layout="@layout/emptylayout_all" android:visibility="gone"/>
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_10">
+
+        <TextView
+            android:id="@+id/vaccine_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A+C群流脑疫苗  第一剂" />
+        <TextView
+            android:id="@+id/vaccine_free"
+            android:textSize="@dimen/text_size_10"
+            android:paddingTop="@dimen/space_5"
+            android:textColor="#84D2C5"
+            android:layout_marginRight="@dimen/space_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/vaccine_name"
+            android:layout_alignLeft="@+id/vaccine_name"
+            android:text="免费"/>
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_10"
+            android:id="@+id/divide"
+            android:layout_alignBottom="@+id/vaccine_free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/vaccine_free"
+            android:text="/"
+            />
+        <TextView
+            android:layout_marginLeft="@dimen/space_3"
+            android:id="@+id/vaccine_useful"
+            android:layout_alignBottom="@+id/vaccine_free"
+            android:textColor="@color/main_kin"
+            android:textSize="@dimen/text_size_10"
+            android:paddingTop="@dimen/space_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/divide"
+            android:layout_below="@+id/vaccine_name"
+            android:text="必打"/>
+
+        <TextView
+            android:layout_alignBaseline="@+id/vaccine_free"
+            android:layout_alignBottom="@+id/vaccine_free"
+            android:gravity="center_vertical"
+            android:id="@+id/inoculate_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/vaccine_name"
+            android:text="接种日期:2015-12-30  星期三"
+            android:textSize="@dimen/text_size_10" />
+    </RelativeLayout>
+
+    <View style="@style/horizontal_divider"
+        android:id="@+id/divider"/>
+
+</LinearLayout>

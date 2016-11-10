@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".MainActivity"
+        tools:showIn="@layout/activity_main">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/xListView"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9.5"
+            android:background="@color/lightgrey"
+            android:cacheColorHint="#00000000">
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <RelativeLayout
+        android:id="@+id/login_container"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/xiaoren"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_110_dip"
+            android:src="@mipmap/xiaoren"/>
+
+        <TextView
+            android:id="@+id/h11"
+            android:layout_below="@+id/xiaoren"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:textColor="#a9a9a9"
+            android:textSize="@dimen/text_size_14"
+            android:text="还未登录，登录后才能看到好友信息呦"
+            android:layout_marginTop="@dimen/dimen_63_dip"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_below="@+id/h11"
+            android:id="@+id/login_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_73_dip"
+            android:layout_width="@dimen/dimen_200_dip"
+            android:textColor="@color/white"
+            android:text="登录"
+            android:background="@drawable/bg_service_btn1"
+            android:textSize="@dimen/text_size_16"
+            android:layout_height="@dimen/dimen_80_dip" />
+    </RelativeLayout>
+</RelativeLayout>
+

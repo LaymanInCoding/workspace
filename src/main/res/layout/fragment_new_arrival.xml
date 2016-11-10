@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.witmoon.xmb.ui.widget.EdgeObserverScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp">
+
+                <com.witmoon.xmblibrary.autoscrollviewpager.AutoScrollViewPager
+                    android:id="@+id/auto_scroll_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <com.xmb.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/auto_scroll_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="10dip"
+                    app:fillColor="#88FF0000"
+                    app:pageColor="#FFF"
+                    app:radius="4dp"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingBottom="6dp"
+                android:paddingRight="24dp"
+                android:paddingTop="6dp">
+
+                <TextView
+                    android:id="@+id/signin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/icon_points_card"
+                    android:gravity="center"
+                    android:text="领积分"/>
+                <TextView
+                    android:id="@+id/shake"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/icon_shake"
+                    android:gravity="center"
+                    android:text="摇麻豆"/>
+                <TextView
+                    android:id="@+id/favorite"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/icon_heart"
+                    android:gravity="center"
+                    android:text="我的收藏"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/icon_gift"
+                    android:gravity="center"
+                    android:text="抽大奖"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="8dp"
+                android:weightSum="1.0">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/advertisement_1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    app:actualImageScaleType="centerCrop"
+                    app:fadeDuration="300"
+                    app:placeholderImage="@drawable/temp_04"
+                    app:placeholderImageScaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/advertisement_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        app:actualImageScaleType="centerCrop"
+                        app:fadeDuration="300"
+                        app:placeholderImage="@drawable/temp_03"
+                        app:placeholderImageScaleType="centerCrop"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/advertisement_3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:actualImageScaleType="centerCrop"
+                            app:fadeDuration="300"
+                            app:placeholderImage="@drawable/temp_04"
+                            app:placeholderImageScaleType="centerCrop"/>
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/advertisement_4"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:actualImageScaleType="centerCrop"
+                            app:fadeDuration="300"
+                            app:placeholderImage="@drawable/temp_05"
+                            app:placeholderImageScaleType="centerCrop"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/advertisement_5"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="@dimen/space_8"
+                app:actualImageScaleType="fitXY"
+                app:fadeDuration="300"
+                app:placeholderImage="@drawable/temp_baokuan"
+                app:placeholderImageScaleType="fitXY"/>
+
+            <LinearLayout
+                android:id="@+id/slider_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:weightSum="1.0">
+                <CheckedTextView
+                    android:id="@+id/newest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="@string/text_newest_sale"
+                    android:textColor="@color/slider_indicator_label"
+                    android:background="@color/red"/>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/tomato"
+                    />
+
+                <CheckedTextView
+                    android:id="@+id/coming"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="@string/text_coming_out"
+                    android:layout_marginTop="8dp"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:background="@color/slider_indicator_bag"
+                    android:textColor="@color/slider_indicator_label"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1.0">
+
+                <View
+                    android:id="@+id/slider"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/tomato"/>
+            </LinearLayout>
+
+            <com.witmoon.xmblibrary.linearlistview.LinearListView
+                android:id="@+id/linearlistview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+            <com.witmoon.xmblibrary.linearlistview.LinearListView
+                android:id="@+id/linearlistview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </com.witmoon.xmb.ui.widget.EdgeObserverScrollView>
+
+    <ImageView
+        android:id="@+id/back_top_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="36dp"
+        android:layout_marginRight="36dp"
+        android:src="@mipmap/icon_back_top"
+        android:visibility="gone"/>
+</RelativeLayout>

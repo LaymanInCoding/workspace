@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:indicator="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <LinearLayout
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/dimen_10_dip"
+        android:paddingBottom="@dimen/dimen_10_dip"
+        android:paddingLeft="@dimen/dimen_10_dip"
+        android:paddingRight="@dimen/dimen_10_dip">
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:background="@drawable/edit_return_bg"
+            android:drawableLeft="@mipmap/icon_magnifying_48x48"
+            android:drawablePadding="@dimen/dimen_8_dip"
+            android:hint="输入订单号"
+            android:padding="4dp"
+            android:textSize="@dimen/dimen_26_dip"
+            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginLeft="@dimen/space_4"
+            android:textColorHint="@color/edit_text_hint"/>
+
+    </LinearLayout>
+    <com.witmoon.xmblibrary.observablescrollview.ObservableRecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+    <com.witmoon.xmb.ui.widget.PagerSlidingTabStrip
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        indicator:pstsDividerPadding="6dp"
+        android:layout_marginTop="@dimen/dimen_16_dip"
+        indicator:pstsIndicatorColor="@color/main_tab_label_selected"
+        indicator:pstsIndicatorHeight="2dp"
+        indicator:pstsShouldExpand="true"
+        indicator:pstsTabPaddingLeftRight="16dp"
+        indicator:pstsTabBackground="@drawable/bg_item_pressed"
+        indicator:pstsUnderlineHeight="@dimen/dimen_4_dip"
+        indicator:zyhSelectedTabTextColor="@color/main_tab_label_selected"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_marginTop="@dimen/dimen_16_dip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

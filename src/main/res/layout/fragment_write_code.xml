@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/register_write_code_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tip_write_phone_check_code"
+            android:textColor="@color/text_view_hint"/>
+
+        <LinearLayout
+            style="@style/inputAreaWrapper"
+            android:layout_marginTop="18dp">
+
+            <TextView
+                style="@style/inputAreaTextViewWithoutDrawable"
+                android:text="@string/text_check_code"/>
+
+            <EditText
+                android:id="@+id/register_vcode_edit"
+                style="@style/inputAreaEditText"
+                android:hint="@string/tip_check_code"/>
+
+            <View
+                style="@style/vertical_divider"/>
+
+            <TextView
+                android:id="@+id/register_count_down_text"
+                style="@style/inputAreaTextView"
+                android:layout_width="80dp"
+                android:text="38秒后重发"
+                android:textColor="@color/text_view_hint"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/next_step_btn"
+            style="@style/commonButton"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="48dp"/>
+
+        <TextView
+            android:id="@+id/register_other_type_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="16dp"
+            android:gravity="right"
+            android:text="选择其它方式校验"
+            android:visibility="gone"/>
+    </LinearLayout>
+</LinearLayout>

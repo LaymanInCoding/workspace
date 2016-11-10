@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_92_dip"
+        android:orientation="horizontal">
+
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/shop_logo"
+            android:layout_width="@dimen/dimen_72_dip"
+            android:layout_height="@dimen/dimen_72_dip"
+            android:layout_marginLeft="@dimen/dimen_16_dip"
+            android:layout_marginTop="@dimen/dimen_11_dip"
+            android:scaleType="centerCrop"
+            android:src="@null"
+            app:riv_border_color="#efefef"
+            app:riv_border_width="0.5dip"
+            app:riv_corner_radius="4dip" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_23_dip"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#606060"
+                android:id="@+id/shop_name"
+                android:textSize="@dimen/text_size_16" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        style="@style/horizontal_divider"/>
+</LinearLayout>

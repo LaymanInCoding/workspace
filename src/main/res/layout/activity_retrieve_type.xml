@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_tool_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/page_horizontal_padding"
+        android:paddingRight="@dimen/page_horizontal_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:layout_marginTop="56dp"
+            android:drawableLeft="@mipmap/bang_circle"
+            android:drawablePadding="16dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:text="基于对您操作环境的检测\n请选择以下任一种方式找回密码"
+            android:textColor="@color/input_area_text"/>
+
+        <TextView
+            android:id="@+id/retrieve_by_phone"
+            style="@style/textViewSettingItemWithRArrowNoIcon"
+            android:background="@drawable/bg_input_area"
+            android:drawableRight="@mipmap/icon_arrow_right"
+            android:layout_marginBottom="@dimen/space_16"
+            android:text="@string/text_access_phone"/>
+
+        <TextView
+            android:id="@+id/retrieve_by_email"
+            style="@style/textViewSettingItemWithRArrowNoIcon"
+            android:background="@drawable/bg_input_area"
+            android:drawableRight="@mipmap/icon_arrow_right"
+            android:text="@string/text_access_email"/>
+    </LinearLayout>
+</LinearLayout>

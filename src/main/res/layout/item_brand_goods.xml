@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/goods_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/goods_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_8"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/pic_goods_placeholder"/>
+
+        <TextView
+            android:id="@+id/good_desc"
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/space_8"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:ellipsize="end"
+            android:lines="2"
+            android:textColor="#666666"
+            android:textSize="@dimen/dimen_26_dip"
+            tools:text="asdasdasdasdasdasdasdasd"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dimen_8_dip"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/good_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#f3455e"
+                android:textSize="@dimen/dimen_24_dip"
+                tools:text="321321"/>
+
+            <TextView
+                android:id="@+id/market_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40_dip"
+                android:textColor="#aaaaaa"
+                android:textSize="@dimen/dimen_20_dip"
+                tools:text="321321321"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

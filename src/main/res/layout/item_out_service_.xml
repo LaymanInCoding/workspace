@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              android:paddingBottom="8dp"
+              android:paddingTop="8dp">
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/goods_image"
+        android:layout_width="@dimen/dimen_120_dip"
+        android:layout_height="@dimen/dimen_120_dip"
+        android:layout_marginRight="@dimen/space_6"
+        app:riv_corner_radius="@dimen/dimen_3_dip"
+        app:riv_border_width="@dimen/dimen_1_dip"
+        app:riv_border_color="#eeeeee"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingRight="6dp">
+
+        <TextView
+            android:id="@+id/goods_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="美素佳儿婴幼儿精装奶粉，专为6-18个月婴儿设计配方，新西兰进口奶源"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/goods_title"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实际单价："/>
+
+                <TextView
+                    android:id="@+id/goods_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="6dp"
+                    android:text="￥99"
+                    android:textColor="@color/text_price"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_40_dip">
+            <TextView
+                android:id="@+id/goods_count"
+                android:layout_width="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:text="退货数量（最多一件）"/>
+            <com.witmoon.xmb.ui.widget.IncreaseReduceTextView
+                android:id="@+id/goods_number_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                app:horizontalPadding="8dp"
+                app:textBackground="@drawable/bg_input_area"
+                app:verticalPadding="2dp"
+                app:viewSpace="4dp"
+                app:textSize="@dimen/dimen_20_dip"
+                />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

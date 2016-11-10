@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/name_e"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="宅妈妈"
+            android:textColor="@color/text_view_hint"
+            android:textStyle="bold" />
+
+        <RatingBar
+            android:id="@+id/rating_e"
+            style="?android:ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/content_e"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_6"
+        android:layout_marginTop="8dp"
+        android:text="Helo"
+        android:textColor="@color/text_view_hint"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/showimage"
+        android:layout_width="@dimen/dimen_220_dip"
+        android:layout_height="@dimen/dimen_250_dip"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#333333"
+        android:visibility="gone" />
+
+    <GridLayout
+        android:id="@+id/gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/usercontent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/listuserimg"
+        android:columnCount="3"
+        android:rowCount="3"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/img_0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#333333"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/img_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:background="#333333"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/img_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:background="#333333"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/img_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="#333333"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/img_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:background="#333333"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/img_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:background="#333333"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+    </GridLayout>
+</LinearLayout>

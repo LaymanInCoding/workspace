@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/mbq_message_bg" />
+    <stroke android:width="@dimen/dimen_1_dip" android:color="@color/mbq_message_bg"  />
+    <corners android:topLeftRadius="@dimen/dimen_10_dip"
+        android:topRightRadius="@dimen/dimen_10_dip"
+        android:bottomRightRadius="@dimen/dimen_10_dip"
+        android:bottomLeftRadius="@dimen/dimen_10_dip"/>
+</shape>  

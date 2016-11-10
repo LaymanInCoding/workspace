@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recycler_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/market_place_logo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_300_dip"
+        android:scaleType="centerCrop"
+        fresco:fadeDuration="300"
+        fresco:placeholderImage="@mipmap/pic_market_placeholder"
+        fresco:placeholderImageScaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/market_place_logo"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="6dp">
+
+        <TextView
+            android:id="@+id/favorable_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="12sp" />
+        <com.witmoon.xmb.ui.widget.CountDownTextView
+            android:id="@+id/count_down_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff48baab"
+            android:textSize="12sp"
+            fresco:cdVerticalPadding="0dp"
+            fresco:decimalBackground="@drawable/bg_rounded2_green"
+            fresco:decimalTextColor="@color/white"
+            fresco:decimalVerticalPadding="0dp" />
+    </LinearLayout>
+</LinearLayout>

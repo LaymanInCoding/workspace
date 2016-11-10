@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_tool_bar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:text="下单成功,请于2小时内支付, 超时未付款订单将被取消"
+        android:textSize="@dimen/text_size_12" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:divider="@drawable/divider_x1"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/order_sn"
+                style="@style/textViewSettingItemWithRArrow"
+                android:text="订单号: " />
+
+            <TextView
+                style="@style/textViewSettingItem"
+                android:text="请选择支付方式:" />
+
+            <CheckedTextView
+                android:id="@+id/payment_alipay"
+                style="@style/textViewSettingItem"
+                android:checkMark="@drawable/list_choice_indicator_single"
+                android:checked="true"
+                android:drawableLeft="@mipmap/icon_alipay"
+                android:drawablePadding="6dp"
+                android:text="支付宝客户端支付" />
+            <!--
+                        <CheckedTextView
+                            android:id="@+id/payment_unionpay"
+                            style="@style/textViewSettingItem"
+                            android:checkMark="@drawable/list_choice_indicator_single"
+                            android:drawableLeft="@mipmap/icon_unionpay"
+                            android:drawablePadding="6dp"
+                            android:text="银联支付"/>
+            -->
+            <CheckedTextView
+                android:id="@+id/payment_tenpay"
+                style="@style/textViewSettingItem"
+                android:checkMark="@drawable/list_choice_indicator_single"
+                android:drawableLeft="@mipmap/icon48_wx_logo"
+                android:drawablePadding="6dp"
+                android:text="微信客户端支付" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:paddingLeft="12dp">
+
+            <TextView
+                android:id="@+id/total_payment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="应付金额: ￥0" />
+
+            <Button
+                android:id="@+id/next_step_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/settle_account_btn_bg"
+                android:text="@string/text_payment"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

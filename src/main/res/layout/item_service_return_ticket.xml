@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/dimen_16_dip">
+    <View
+        style="@style/horizontal_divider"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_80_dip"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="#606060"
+            android:gravity="center_vertical"
+            android:text="麻包券："/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/ticket_code"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/text_size_15"
+            android:textColor="#a9a9a9"
+            android:gravity="center_vertical"
+            android:text=""/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_16_dip"
+            android:gravity="center_vertical|right">
+            <ImageView
+                android:id="@+id/select_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_16_dip"
+                android:src="@mipmap/flight_butn_check_unselect"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

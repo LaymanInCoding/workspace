@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <com.witmoon.xmb.ui.widget.CircleImageView
+        android:id="@id/avatar_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="8dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小鱼儿公主"
+            android:textColor="@color/text_view_hint"
+            android:textColorHighlight="@color/text_view_hint"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我也好想要一个啊！分享到朋友圈吧"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:drawableLeft="@mipmap/icon_clock_grey"
+            android:drawablePadding="@dimen/space_2"
+            android:text="2015.04.23 13:12"
+            android:textColor="@color/text_view_hint"
+            android:textSize="10sp"/>
+    </LinearLayout>
+</LinearLayout>

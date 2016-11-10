@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/space_5">
+    <View style="@style/horizontal_divider" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:weightSum="5">
+
+        <!--<com.facebook.drawee.view.SimpleDraweeView-->
+        <!--android:id="@+id/hotsale_item"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="@dimen/dimen_360_dip"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--fresco:fadeDuration="300"-->
+        <!--fresco:placeholderImage="@mipmap/pic_market_placeholder"-->
+        <!--fresco:placeholderImageScaleType="fitXY" />-->
+        <ImageView
+            android:id="@+id/goods_image"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_300_dip"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:src="@mipmap/pic_goods_placeholder" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_8"
+            android:layout_toRightOf="@+id/goods_image"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/country_img"
+                    android:layout_width="@dimen/space_30"
+                    android:layout_height="@dimen/space_30"
+                    android:scaleType="centerCrop"
+                    android:src="@null" />
+
+                <com.witmoon.xmb.ui.widget.TimeView
+                    android:id="@+id/end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/end"
+                    android:layout_toStartOf="@+id/end"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text=""
+                    android:textColor="#ff48baab"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/goods_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:paddingRight="@dimen/space_2"
+                    android:text=""
+                    android:textSize="@dimen/text_size_11" />
+
+                <TextView
+                    android:id="@+id/goods_brief"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:maxLines="4"
+                    android:textSize="@dimen/text_size_8" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_5">
+
+                <TextView
+                    android:id="@+id/goods_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:text="￥298"
+                    android:textColor="@color/text_price"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/market_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_3"
+                    android:layout_marginTop="@dimen/space_3"
+                    android:layout_toRightOf="@+id/goods_price"
+                    android:text="￥299"
+                    android:textColor="@color/text_view_hint"
+                    android:textSize="@dimen/text_size_9" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/pay_right_now"
+                        android:layout_width="@dimen/space_80"
+                        android:layout_height="@dimen/space_20"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_rounded2_red"
+                        android:text="@string/pay_now"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/space_15" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/space_4">
+
+                        <TextView
+                            android:id="@+id/sale_sum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="410"
+                            android:textSize="@dimen/text_size_12"
+                            android:textColor="#ffe7465e" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/space_5"
+                            android:textSize="@dimen/text_size_12"
+                            android:text="人已购买" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <View style="@style/horizontal_divider" />
+</LinearLayout>

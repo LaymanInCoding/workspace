@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/space_8">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/goods_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_150_dip"
+        android:scaleType="centerCrop"
+        fresco:actualImageScaleType="centerCrop"
+        fresco:fadeDuration="300"
+        fresco:placeholderImage="@mipmap/pic_goods_placeholder"
+        fresco:placeholderImageScaleType="fitXY" />
+
+
+</LinearLayout>

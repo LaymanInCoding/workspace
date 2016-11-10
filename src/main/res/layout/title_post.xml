@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_bar_height"
+        android:background="@drawable/bg_nav"
+        android:gravity="top">
+
+        <TextView
+            android:id="@+id/post_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:paddingLeft="12.0dip"
+            android:singleLine="true"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/post_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_17" />
+
+        <TextView
+            android:id="@+id/post_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingRight="12.0dip"
+            android:singleLine="true"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15" />
+    </RelativeLayout>
+</LinearLayout>

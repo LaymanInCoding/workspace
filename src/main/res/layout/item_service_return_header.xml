@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/dimen_16_dip">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_80_dip"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="#606060"
+            android:gravity="center_vertical"
+            android:text="订单号："/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/product_sn"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/text_size_15"
+            android:textColor="#a9a9a9"
+            android:gravity="center_vertical"
+            android:text=""/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    android:id="@+id/top_toolbar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    toolbar:contentInsetEnd="0dp"
+    android:fitsSystemWindows="true"
+    toolbar:contentInsetStart="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_nav"
+        android:paddingRight="12dp">
+
+        <ImageView
+            android:id="@+id/toolbar_left_img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_item_pressed"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:src="@mipmap/icon_arrow_back"/>
+
+        <TextView
+            android:id="@+id/toolbar_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:maxLength="20"
+            android:textColor="@color/white"
+            android:textSize="@dimen/toolbar_text_size"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="@dimen/space_480"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:background="@drawable/bg_rounded_grey_border"
+            android:drawableLeft="@mipmap/icon_magnifying_48x48"
+            android:drawablePadding="@dimen/dimen_8_dip"
+            android:hint="输入问题"
+            android:padding="4dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/space_60"
+            android:layout_marginLeft="@dimen/space_60"
+            android:textColorHint="@color/edit_text_hint"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/toolbar_right_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_camera"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/toolbar_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="取消"
+            android:textSize="@dimen/text_size_17"
+            android:visibility="gone"
+            android:textColor="@android:color/white"
+            />
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginTop="@dimen/space_5"
+    android:layout_marginLeft="@dimen/space_5"
+    android:layout_marginRight="@dimen/space_5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/focuson_userimage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="@dimen/space_5"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/pic_goods_placeholder" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/space_6"
+                    android:layout_toEndOf="@+id/focuson_userimage"
+                    android:layout_toRightOf="@+id/focuson_userimage"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/focuson_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="开心妈妈"
+                            android:textSize="@dimen/text_size_18" />
+
+                        <TextView
+                            android:id="@+id/focuson_userday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/space_5"
+                            android:text="三岁六个月两周"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/text_size_13" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@mipmap/address"/>
+                        <TextView
+                            android:id="@+id/focuson_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="北京"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/text_size_13" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/is_focuson"
+                    android:layout_width="@dimen/dimen_100_dip"
+                    android:layout_height="@dimen/dimen_100_dip"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/seal_been_used"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_5"
+                android:layout_marginLeft="@dimen/space_5"
+                android:layout_marginRight="@dimen/space_5">
+
+                <ImageView
+                    android:id="@+id/content_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/pic_market_placeholder" />
+
+                <HorizontalScrollView
+                    android:id="@+id/content_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:visibility="gone"
+                    android:layout_below="@+id/content_img"
+                    android:layout_marginTop="@dimen/space_5"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/content_image_lin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <com.witmoon.xmb.ui.widget.like.LikeButton
+                    android:id="@+id/heart_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/content_images"
+                    android:layout_marginTop="-18dp"
+                    android:layout_marginRight="@dimen/space_20"
+                    app:icon_size="36dp"
+                    app:like_drawable="@drawable/heart_on"
+                    app:unlike_drawable="@drawable/heart_off" />
+
+                <ImageView
+                    android:id="@+id/image_comments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/image_fx"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_toEndOf="@+id/image_fx"
+                    android:layout_toRightOf="@+id/image_fx"
+                    android:visibility="gone"
+                    android:src="@mipmap/b_image_share" />
+
+                <ImageView
+                    android:id="@+id/image_fx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/heart_button"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:visibility="gone"
+                    android:src="@mipmap/b_no_comments" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/focuson_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginTop="@dimen/space_5"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textSize="@dimen/text_size_14" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/focuson_praise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_5"
+                android:drawableLeft="@mipmap/focus_on"
+                android:textColor="@color/grey"
+                android:drawablePadding="@dimen/space_5"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/focuson_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_5"
+                android:drawableLeft="@mipmap/y_comments"
+                android:drawablePadding="@dimen/space_5"
+                android:textColor="@color/grey"
+                android:text="" />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/all_userimage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_marginBottom="@dimen/space_5"
+            android:layout_marginLeft="@dimen/space_5" >
+            <LinearLayout
+                android:id="@+id/all_userimage_lin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+</RelativeLayout>

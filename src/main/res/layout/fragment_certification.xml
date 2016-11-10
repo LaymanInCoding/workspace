@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                style="@style/inputAreaTextViewWithoutDrawable"
+                android:text="@string/text_real_name"/>
+
+            <EditText
+                android:id="@+id/real_name"
+                style="@style/inputAreaEditText"
+                android:hint="@string/tip_real_name"/>
+        </LinearLayout>
+
+        <View style="@style/horizontal_divider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                style="@style/inputAreaTextViewWithoutDrawable"
+                android:text="@string/text_identity_card"/>
+
+            <EditText
+                android:id="@+id/id_card"
+                style="@style/inputAreaEditText"
+                android:hint="@string/tip_certification_card"/>
+        </LinearLayout>
+
+        <View style="@style/horizontal_divider"/>
+
+        <Button
+            android:id="@+id/submit_button"
+            style="@style/commonButton"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="36dp"
+            android:text="@string/text_submit"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:textSize="12sp"
+            android:text="@string/tip_certification"/>
+    </LinearLayout>
+</LinearLayout>

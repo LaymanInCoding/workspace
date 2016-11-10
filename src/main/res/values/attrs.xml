@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+     <resources>
+     <declare-styleable name="PagerSlidingTabStrip">
+    <attr name="pstsIndicatorColor" format="color" />
+    <attr name="pstsUnderlineColor" format="color" />
+    <attr name="pstsDividerColor" format="color" />
+    <attr name="pstsIndicatorHeight" format="dimension" />
+    <attr name="pstsUnderlineHeight" format="dimension" />
+    <attr name="pstsDividerPadding" format="dimension" />
+    <attr name="pstsTabPaddingLeftRight" format="dimension" />
+    <attr name="pstsScrollOffset" format="dimension" />
+    <attr name="zyhSelectedTabTextSize" format="dimension" />
+    <attr name="zyhTabTextSize" format="dimension" />
+    <attr name="pstsTabBackground" format="reference" />
+    <attr name="pstsShouldExpand" format="boolean" />
+    <attr name="pstsTextAllCaps" format="boolean" />
+    <attr name="zyhSelectedTabTextColor" format="color" />
+    <attr name="zyhSelectedTabBagColor" format="color" />
+    <attr name="zyhTabTextColor" format="color" />
+</declare-styleable>
+     <declare-styleable name="LikeButton">
+    <attr name="icon_type" format="string" />
+    <attr name="icon_size" format="dimension|reference" />
+    <attr name="like_drawable" format="reference" />
+    <attr name="unlike_drawable" format="reference" />
+    <attr name="dots_primary_color" format="color|reference" />
+    <attr name="dots_secondary_color" format="color|reference" />
+    <attr name="circle_start_color" format="color|reference" />
+    <attr name="circle_end_color" format="color|reference" />
+    <attr name="liked" format="boolean" />
+</declare-styleable>
+     <declare-styleable name="ToggleButton">
+    <attr name="tBorderWidth" format="dimension" />
+    <attr name="offBorderColor" format="reference|color" />
+    <attr name="offColor" format="reference|color" />
+    <attr name="onColor" format="reference|color" />
+    <attr name="spotColor" format="reference|color" />
+    <attr name="animate" format="reference|boolean" />
+</declare-styleable>
+     <!--  CircleImageView自定义属性
+  -->
+     <declare-styleable name="CircleImageView">
+    <attr name="border_width" format="dimension" />
+    <attr name="border_color" format="color" />
+</declare-styleable>
+<declare-styleable name="LetterSpacingTextView">
+    <attr name="textSpacing" format="float"/>
+    <attr name="text" format="string"/>
+</declare-styleable>
+<declare-styleable name="IncreaseReduceTextView">
+    <attr name="textSizeu" format="dimension"/>
+    <attr name="textBackground" format="reference" />
+    <attr name="verticalPadding" format="dimension" />
+    <attr name="horizontalPadding" format="dimension" />
+    <attr name="viewSpace" format="dimension" />
+</declare-styleable>
+    - <declare-styleable name="CountDownTextView">
+    <attr name="android:textSize" />
+    <attr name="decimalBackground" format="reference" />
+    <attr name="android:textColor" />
+    <attr name="decimalTextColor" format="color" />
+    <attr name="cdVerticalPadding" format="dimension" />
+    <attr name="cdHorizontalPadding" format="dimension" />
+    <attr name="decimalHorizontalPadding" format="dimension" />
+    <attr name="decimalVerticalPadding" format="dimension" />
+</declare-styleable>
+    - <declare-styleable name="LineFeedHorizontalLayout">
+    <attr name="horizontalSpace" format="dimension" />
+    <attr name="verticalSpace" format="dimension" />
+</declare-styleable>
+     <declare-styleable name="SortTextView">
+    <attr name="sortColumn" format="string" />
+    <attr name="ascLeftDrawable" format="reference" />
+    <attr name="descLeftDrawable" format="reference" />
+    <attr name="sortEnableTextColor" format="color" />
+</declare-styleable>
+     <declare-styleable name="WaterWaveProgress">
+    <attr name="progressWidth" format="dimension" />
+    <attr name="fontSize" format="dimension" />
+    <attr name="progressColor" format="color" />
+    <attr name="progressBgColor" format="color" />
+    <attr name="waterWaveColor" format="color" />
+    <attr name="waterWaveBgColor" format="color" />
+    <attr name="progress2WaterWidth" format="dimension" />
+    <attr name="showProgress" format="boolean" />
+    <attr name="showNumerical" format="boolean" />
+    <attr name="textColor" format="color" />
+    <attr name="progress" format="integer" />
+    <attr name="maxProgress" format="integer" />
+</declare-styleable>
+     <declare-styleable name="BGAFlowLayout">
+     <!--   标签之间的水平间距
+  -->
+    <attr name="fl_horizontalChildGap" format="dimension" />
+     <!--   标签之间的垂直间距
+  -->
+    <attr name="fl_verticalChildGap" format="dimension" />
+     <!--   是否平均分配每一行的剩余水平方向的空白区域给该行的标签
+  -->
+    <attr name="fl_isDistributionWhiteSpacing" format="boolean" />
+</declare-styleable>
+</resources>

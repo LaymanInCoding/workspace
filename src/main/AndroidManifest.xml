@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.witmoon.xmb">
+
+    <!-- 访问网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 读写外部存储器权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <!-- 访问网络状态权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 手机震动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 使用摄像头权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!-- ShareSDK所需要的权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- 蓝牙分享所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 友盟统计所需权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS." />
+    <!-- 极光推送所需权限 -->
+    <permission
+        android:name="com.witmoon.xmb.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+    <!-- 极光推送所需权限 -->
+    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> -->
+
+
+    <!-- ******小能客服权限****** -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:name=".AppContext"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity android:screenOrientation="portrait" android:name=".WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--<activity android:name=".activity.canulacircles.activity.CircleDetailsActivity" />-->
+        <activity android:name=".activity.specialoffer.Baby_DetailsActivity" />
+        <activity android:name=".activity.specialoffer.GroupBuyActivity" />
+        <activity android:name=".GuideActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.common.SimpleBackActivity" />
+        <activity android:name=".activity.me.fragment.New_BabyWebActivity" />
+        <activity android:name=".activity.user.LoginActivity" />
+        <activity android:name=".activity.me.AddressManageActivity" />
+        <activity android:name=".activity.main.fragment.WebVaccineFragment" />
+        <activity android:name=".activity.me.fragment.SearchWebActivity" />
+        <activity
+            android:name=".activity.me.Out_ServiceActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activity.friendship.PersonHomePageActivity" />
+        <activity android:name=".activity.friendship.PublishArticleActivity" />
+        <activity android:name=".activity.baby.DynamicPost" />
+        <activity android:name=".activity.baby.LocalAlbum" />
+        <activity android:name=".activity.baby.LocalAlbumDetail" />
+        <activity android:name=".activity.baby.MoodWeather" />
+        <activity android:name=".activity.common.SearchActivity" />
+        <activity android:name=".activity.common.AreaChooserActivity" />
+        <activity android:name=".activity.main.SignInActivity" />
+        <activity android:name=".activity.main.ShakeActivity" />
+        <activity android:name=".activity.specialoffer.MarketPlaceActivity" />
+        <activity android:name=".activity.goods.SearchResultListActivity" />
+        <activity android:name=".activity.goods.CommodityListActivity" />
+        <activity android:name=".activity.goods.CommodityDetailActivity" />
+        <activity android:name=".activity.goods.SpecificationSelectionActivity" />
+        <activity android:name=".activity.shoppingcart.OrderConfirmActivity" />
+        <activity android:name=".activity.shoppingcart.OrderSubmitSuccessActivity" />
+        <activity android:name=".activity.shoppingcart.MabaoCardAddActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.me.fragment.Fill_info_Fragent" />
+        <activity android:name=".activity.goods.PreviewImage" />
+        <activity android:name=".activity.mbq.activity.PostActivity"
+            android:windowSoftInputMode="adjustResize"  />
+        <activity android:name=".views.MajorArticleActivity" />
+        <activity android:name=".views.MajorVoiceActivity" />
+        <activity android:name=".views.MajorVoiceDetailActivity" />
+        <activity android:name=".views.MajorArticleDetailActivity" />
+        <activity android:name=".views.MajorArticleSearchActivity" />
+        <activity android:name=".views.MajorVoiceSearchActivity" />
+        <activity android:name=".views.CollectArticleActivity" />
+        <activity android:name=".activity.service.SubmitSuccessActivity" />
+        <activity android:name=".activity.webview.InteractiveWebViewActivity" />
+        <activity android:name=".activity.mbq.activity.PostDetailActivity" />
+        <activity android:name=".activity.mbq.activity.CollectActivity" />
+        <activity android:name=".activity.shoppingcart.MabaoCardActivity" />
+        <activity android:name=".activity.mbq.activity.MessageActivity" />
+        <activity android:name=".activity.mbq.activity.PostCommentActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.mbq.activity.SearchPost" android:theme="@style/Theme.AppCompat.Translucent"/>
+        <activity android:name=".activity.mbq.activity.SearchCircle" android:theme="@style/Theme.AppCompat.Translucent"/>
+
+        <service android:name=".UpdataService" />
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+        <!-- <data android:scheme="wxfb1286f7ab6a18f3" /> -->
+        <!-- </intent-filter> -->
+        <!-- ShareSDK Activity配置 -->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="Adapter"
+                android:value="com.example.share.MyAdapter" />
+        </activity>
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:clearTaskOnLaunch="false"
+            android:finishOnTaskLaunch="false"
+            android:launchMode="singleInstance"
+            android:name="com.unicall.androidsdk.UnicallActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <!-- 支付宝接口相关配置 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
+        <!-- 极光推送 Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </activity>
+        <!-- 极光推送Required SDK核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" />
+        <!-- 极光推送Required SDK 核心功能 -->
+        <!-- 极光推送option since 2.0.5 可配置android:process 参数将PushService设置为独立进程 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+            </intent-filter>
+        </service>
+        <!-- 极光推送Required SDK 核心功能 since 1.8.0 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.witmoon.xmb" />
+            </intent-filter>
+        </service>
+        <!-- 极光推送Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <!-- Required 显示通知栏 -->
+                <category android:name="com.witmoon.xmb" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <!-- 极光推送Required SDK核⼼心功能 -->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+        <receiver
+            android:name=".receiver.JPushReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <category android:name="com.witmoon.xmb" />
+            </intent-filter>
+        </receiver>
+
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_APPKEY" -->
+        <!-- android:value="562f0c7fe0f55aa3870028fb" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_CHANNEL" -->
+        <!-- android:value="${UMENG_CHANNEL_VALUE}" /> -->
+        <!-- &lt;!&ndash;${UMENG_CHANNEL_VALUE}&ndash;&gt; -->
+        <!-- 友盟统计 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="562f0c7fe0f55aa3870028fb" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
+        <!-- 极光推送 Required . Enable it you can get statistics data with channel -->
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="f05bfa6c8239efa28520f511" />
+
+        <!-- 腾讯定位 Required. -->
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="NXDBZ-5QPC3-O7I37-3HC4G-CCS3F-3TBLU" />
+        <!-- </>值来自开发者平台取得的AppKey -->
+
+
+        <!-- 。。。。。。。。。。。。。。。。。 -->
+
+
+        <!-- ***************************小能SDK所需要Activity和Service ********************* -->
+        <activity
+            android:name="com.xiaoneng.activity.ChatActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.DeviceDefault" />
+        <activity
+            android:name="com.xiaoneng.activity.LeaveMsgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.xiaoneng.activity.ShowCameraActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogTopRight" />
+        <activity
+            android:name="com.xiaoneng.activity.ShowPhotoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.xiaoneng.activity.ValuationActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/valuationdialog" />
+        <activity
+            android:name="com.xiaoneng.activity.XNBigImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.xiaoneng.activity.GoodsWeb"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <!-- 离线消息提醒服务 -->
+        <service
+            android:name="com.xiaoneng.service.XNSDKService"
+            android:enabled="true" />
+
+        <activity android:name=".activity.service.ServiceShopDetailActivity" />
+        <activity android:name=".activity.service.ServiceCommentActivity" />
+        <activity
+            android:name=".activity.service.UserInfoActivity"
+            android:label="@string/title_activity_user_info"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.service.ProductDetailActivity" />
+        <activity
+            android:name=".activity.service.ServiceCart"
+            android:label="@string/title_activity_service_cart"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.service.ServiceOrderActivity"
+            android:label="@string/title_activity_service_order"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.service.TicketsDetailActivity" />
+        <activity android:name=".activity.service.ServicePostCommentActivity" />
+        <activity android:name=".activity.service.CommentSuccessActivity" />
+        <activity android:name=".activity.service.ServiceOrderDetailActivity" />
+        <activity android:name=".activity.service.ServiceReturnOrderActivity" />
+        <activity
+            android:name=".activity.service.ReturnSubmitSuccessActivity"
+            android:label="@string/title_activity_return_submit_success"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.service.ServicePaySuccessActivity" />
+        <activity android:name=".activity.shoppingcart.OrderPaySuccessActivity" />
+        <activity
+            android:name=".activity.mbq.activity.CircleActivity"
+            android:label="@string/title_activity_circle"
+            android:theme="@style/AppTheme" />
+    </application>
+
+</manifest>

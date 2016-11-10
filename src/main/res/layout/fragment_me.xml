@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cm="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_page_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/need_login_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/azure"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="24dp"
+                    android:paddingLeft="@dimen/dimen_32_dip"
+                    android:paddingRight="@dimen/dimen_32_dip"
+                    android:paddingTop="16dp">
+
+                    <com.witmoon.xmb.ui.widget.CircleImageView
+                        android:id="@+id/me_avatar_img"
+                        android:layout_width="@dimen/dimen_120_dip"
+                        android:layout_height="@dimen/dimen_120_dip"
+                        android:src="@mipmap/avatar"
+                        cm:border_color="@android:color/white"
+                        cm:border_width="2dp"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_32_dip"
+                        android:layout_marginRight="@dimen/dimen_32_dip"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/score"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="积分：0"/>
+
+                            <TextView
+                                android:id="@+id/post_number"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="我的动态：0"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/attention_number"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="关注：0"/>
+
+                            <TextView
+                                android:id="@+id/fans_number"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="粉丝：0"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="布麻包"/>
+
+                            <ProgressBar
+                                style="?android:progressBarStyleHorizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="6dp"
+                                android:layout_weight="1"
+                                android:progress="34"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@android:color/white"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp">
+
+                    <TextView
+                        android:id="@+id/order_waiting_for_payment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/icon_bank_card"
+                        android:gravity="center"
+                        android:text="@string/text_wait_for_payment"/>
+
+                    <TextView
+                        android:id="@+id/order_waiting_for_send"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/icon_sand_clock"
+                        android:gravity="center"
+                        android:text="@string/text_wait_for_send"/>
+
+                    <TextView
+                        android:id="@+id/order_waiting_for_receive"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/icon_truck"
+                        android:gravity="center"
+                        android:text="@string/text_shipped"/>
+
+                    <TextView
+                        android:id="@+id/order_waiting_for_evaluate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/icon_pen"
+                        android:gravity="center"
+                        android:text="@string/text_wait_for_evaluate"/>
+                    <TextView
+                        android:id="@+id/order_waiting_out_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/out_price"
+                        android:gravity="center"
+                        android:visibility="visible"
+                        android:text="@string/text_wait_for_out_price"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:divider="@drawable/divider_x1"
+                    android:dividerPadding="6dp"
+                    android:orientation="vertical"
+                    android:showDividers="beginning">
+
+                    <TextView
+                        android:id="@+id/me_item_all_order"
+                        style="@style/textViewSettingItemWithRArrow"
+                        android:drawableLeft="@mipmap/icon_order"
+                        android:text="@string/text_all_order"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@android:color/white"
+                    android:divider="@drawable/divider_x1"
+                    android:dividerPadding="6dp"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <TextView
+                        android:id="@+id/me_item_my_favorite"
+                        style="@style/textViewSettingItemWithRArrow"
+                        android:drawableLeft="@mipmap/icon_favorite"
+                        android:text="@string/text_my_favorite"/>
+
+                    <TextView
+                        android:id="@+id/me_item_cash_coupon"
+                        style="@style/textViewSettingItemWithRArrow"
+                        android:drawableLeft="@mipmap/icon_cash_coupon"
+                        android:text="@string/text_cash_coupon"/>
+
+                    <TextView
+                        android:id="@+id/me_item_browse_history"
+                        style="@style/textViewSettingItemWithRArrow"
+                        android:drawableLeft="@mipmap/icon_browse_history"
+                        android:text="@string/text_browsing_history"/>
+
+                    <TextView
+                        android:id="@+id/me_item_receiver_address"
+                        style="@style/textViewSettingItemWithRArrow"
+                        android:drawableLeft="@mipmap/icon_receiver_address"
+                        android:text="@string/text_place_of_receipt"/>
+
+                    <TextView
+                        android:id="@+id/me_item_certification"
+                        style="@style/textViewSettingItemWithRArrow"
+                        android:drawableLeft="@mipmap/icon_realname_certificate"
+                        android:text="@string/text_real_name_certification"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/no_login_tip"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="登录/注册"
+                android:textColor="@color/main_green"
+                android:textSize="@dimen/text_size_28"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@android:color/white"
+            android:divider="@drawable/divider_x1"
+            android:dividerPadding="6dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <LinearLayout
+                android:id="@+id/me_item_hot_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_item_pressed"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/textViewSettingItem"
+                    android:layout_width="wrap_content"
+                    android:drawableLeft="@mipmap/icon_hotline"
+                    android:text="@string/text_hot_line"/>
+
+                <TextView
+                    android:id="@+id/hot_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/space_12"
+                    android:drawableRight="@mipmap/icon_arrow_right"
+                    android:gravity="right"
+                    android:paddingRight="12dp"
+                    android:text="400-0056-830"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/me_after_sales_service"
+                style="@style/textViewSettingItemWithRArrow"
+                android:drawableLeft="@mipmap/icon_after_sale_service"
+                android:text="@string/text_after_sales_service"/>
+
+            <TextView
+                android:id="@+id/me_online_service"
+                style="@style/textViewSettingItemWithRArrow"
+                android:drawableLeft="@mipmap/icon_online_service"
+                android:text="@string/text_online_service"/>
+
+            <TextView
+                android:id="@+id/me_item_help"
+                style="@style/textViewSettingItemWithRArrow"
+                android:drawableLeft="@mipmap/icon_help"
+                android:text="@string/text_mb_help"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/white"
+            android:divider="@drawable/divider_x1"
+            android:dividerPadding="6dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/me_item_feedback"
+                style="@style/textViewSettingItemWithRArrow"
+                android:drawableLeft="@mipmap/icon_feedback"
+                android:text="@string/text_user_feedback"/>
+
+            <TextView
+                android:id="@+id/me_item_evaluate"
+                style="@style/textViewSettingItemWithRArrow"
+                android:drawableLeft="@mipmap/icon_evaluate"
+                android:text="@string/text_evaluate"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

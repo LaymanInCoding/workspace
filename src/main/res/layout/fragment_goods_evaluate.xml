@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.witmoon.xmb.ui.InnerScrollView
+    android:id="@+id/id_stickynavlayout_innerscrollview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_12">
+
+            <TextView
+                android:id="@+id/comment_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="评价晒单（0人评论）"/>
+
+            <TextView
+                android:id="@+id/good_reputation_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="100%"
+                android:textColor="@color/red"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="好评率"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/linearlistview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@drawable/divider_x1"
+            android:orientation="vertical"
+            android:showDividers="beginning|middle|end"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_item_pressed"
+            android:gravity="center"
+            android:padding="@dimen/space_12"
+            android:text="查看所有评论"
+            android:visibility="visible"/>
+    </LinearLayout>
+</com.witmoon.xmb.ui.InnerScrollView>

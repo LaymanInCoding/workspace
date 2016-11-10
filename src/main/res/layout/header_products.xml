@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <View
+        style="@style/horizontal_divider"  />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_80_dip"
+        android:paddingLeft="@dimen/dimen_16_dip"
+        android:gravity="center_vertical"
+        android:paddingRight="@dimen/dimen_16_dip">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="特色服务"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="#606060"/>
+        <TextView
+            android:id="@+id/products_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务6"
+            android:layout_marginLeft="@dimen/dimen_13_dip"
+            android:textSize="@dimen/text_size_12"
+            android:textColor="#a9a9a9"/>
+    </LinearLayout>
+    <View
+        style="@style/horizontal_divider"  />
+    <LinearLayout
+        android:id="@+id/product_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen_16_dip"
+        android:paddingTop="@dimen/dimen_15_dip"
+        android:paddingRight="@dimen/dimen_16_dip">
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/product_total_all"
+        android:layout_marginTop="@dimen/dimen_34_dip"
+        android:paddingBottom="@dimen/dimen_28_dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_16"
+        android:textColor="#D66263"
+        android:gravity="center"
+        android:text=""/>
+    <View
+        style="@style/horizontal_divider" />
+</LinearLayout>

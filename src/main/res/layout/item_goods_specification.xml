@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="@dimen/space_12">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="规格"/>
+
+    <com.witmoon.xmb.ui.widget.LineFeedHorizontalLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:horizontalSpace="12dp"
+        app:verticalSpace="6dp">
+
+        <RadioButton
+            android:id="@+id/t1"
+            style="@style/taggingRadioButton"
+            android:checked="true"
+            android:text="200ML"/>
+
+        <RadioButton
+            android:id="@+id/t2"
+            style="@style/taggingRadioButton"
+            android:enabled="false"
+            android:text="300ML"/>
+
+        <RadioButton
+            android:id="@+id/t3"
+            style="@style/taggingRadioButton"
+            android:text="400ML"/>
+    </com.witmoon.xmb.ui.widget.LineFeedHorizontalLayout>
+</LinearLayout>

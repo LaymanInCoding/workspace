@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.witmoon.xmb.ui.widget.InputAreaLinearLayout
+        style="@style/inputAreaWrapper"
+        android:layout_margin="@dimen/space_10"
+        android:layout_marginTop="32dp">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:text="@string/baby_name" />
+
+        <EditText
+            android:id="@+id/add_baby_name"
+            style="@style/inputAreaEditText"
+            android:layout_marginLeft="@dimen/space_20"
+            android:gravity="center|right"
+            android:hint="请输入宝宝小名"
+            android:textSize="@dimen/space_12" />
+    </com.witmoon.xmb.ui.widget.InputAreaLinearLayout>
+
+    <com.witmoon.xmb.ui.widget.InputAreaLinearLayout
+        style="@style/inputAreaWrapper"
+        android:layout_margin="@dimen/space_10"
+        android:layout_marginTop="32dp">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:text="@string/baby_birthday" />
+
+        <EditText
+            android:id="@+id/add_baby_birthday"
+            style="@style/inputAreaEditText"
+            android:layout_marginLeft="@dimen/space_20"
+            android:gravity="center|right"
+            android:hint="宝宝的出生日期"
+            android:focusable="false"
+            android:inputType="number"
+            android:textSize="@dimen/space_12" />
+    </com.witmoon.xmb.ui.widget.InputAreaLinearLayout>
+
+    <com.witmoon.xmb.ui.widget.InputAreaLinearLayout
+        style="@style/inputAreaWrapper"
+        android:layout_margin="@dimen/space_10"
+        android:layout_marginTop="32dp">
+
+        <TextView
+            style="@style/inputAreaTextView"
+            android:text="@string/baby_gender" />
+
+        <EditText
+            android:id="@+id/add_baby_gender"
+            style="@style/inputAreaEditText"
+            android:layout_marginLeft="@dimen/space_20"
+            android:gravity="center|right"
+            android:hint="宝宝性别"
+            android:textSize="@dimen/space_12" />
+    </com.witmoon.xmb.ui.widget.InputAreaLinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_10">
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:id="@+id/add_baby_picture"
+            android:layout_width="@dimen/dimen_250_dip"
+            android:layout_height="@dimen/dimen_250_dip"
+            android:src="@mipmap/add_baby_pic"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/next_step_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_5"
+            android:background="#D66263"
+            android:text="@string/finish"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+</LinearLayout>

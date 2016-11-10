@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <com.witmoon.xmblibrary.stickynavlayout.StickyNavLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+
+        <com.witmoon.xmblibrary.stickynavlayout.MyLinearLayout
+            android:id="@id/id_stickynavlayout_topview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/space_5"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_340_dip">
+
+                <com.witmoon.xmblibrary.autoscrollviewpager.AutoScrollViewPager
+                    android:id="@+id/auto_scroll_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.xmb.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/auto_scroll_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="10dip"
+                    app:fillColor="#88FF0000"
+                    app:pageColor="#FFF"
+                    app:radius="4dp" />
+            </RelativeLayout>
+        </com.witmoon.xmblibrary.stickynavlayout.MyLinearLayout>
+
+        <com.witmoon.xmb.ui.widget.PagerSlidingTabStrip
+            android:id="@+id/id_stickynavlayout_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/master_shopping_all"
+            android:fillViewport="false"
+            app:pstsDividerPadding="2dp"
+            app:pstsIndicatorColor="@color/main_tab_label_selected"
+            app:pstsIndicatorHeight="4dp"
+            app:pstsShouldExpand="true"
+            app:pstsUnderlineColor="@color/grey"
+            app:pstsUnderlineHeight="1dp"
+            android:layout_marginRight="@dimen/space_5"
+            android:layout_marginLeft="@dimen/space_5"
+            app:zyhSelectedTabTextColor="@color/main_tab_label_selected" />
+
+        <android.support.v4.view.ViewPager
+            android:layout_marginRight="@dimen/space_5"
+            android:layout_marginLeft="@dimen/space_5"
+            android:id="@+id/id_stickynavlayout_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.witmoon.xmblibrary.stickynavlayout.StickyNavLayout>
+    <include layout="@layout/emptylayout_all" />
+</RelativeLayout>

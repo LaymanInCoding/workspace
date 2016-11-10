@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/re"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/bg_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@mipmap/me_bg" />
+
+
+            <View
+                android:id="@+id/null_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100_dip"
+                android:layout_below="@id/bg_img"
+                android:background="#D66263" />
+
+            <TextView
+                android:id="@+id/my_baby_info"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_13"
+                android:layout_alignBottom="@+id/null_background"
+                android:layout_marginBottom="@dimen/dimen_50_dip"
+                android:layout_marginLeft="@dimen/dimen_30_dip"
+                android:layout_toRightOf="@+id/baby_pic_rel"
+                android:text=""
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:textSize="@dimen/text_size_11" />
+
+            <TextView
+                android:id="@+id/my_baby_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/null_background"
+                android:layout_marginBottom="@dimen/dimen_125_dip"
+                android:layout_marginLeft="@dimen/dimen_30_dip"
+                android:layout_toEndOf="@+id/baby_pic_rel"
+                android:layout_toRightOf="@+id/baby_pic_rel"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+            <RelativeLayout
+                android:id="@+id/baby_pic_rel"
+                android:layout_width="@dimen/dimen_150_dip"
+                android:layout_height="@dimen/dimen_150_dip"
+                android:layout_alignBottom="@+id/null_background"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/dimen_25_dip"
+                android:layout_marginLeft="@dimen/dimen_22_dip"
+                android:layout_marginStart="@dimen/dimen_22_dip">
+                <ImageView
+                    android:id="@+id/baby_pic"
+                    android:layout_width="@dimen/dimen_150_dip"
+                    android:layout_height="@dimen/dimen_150_dip"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/pic_goods_placeholder" />
+                <ImageView
+                    android:layout_alignBottom="@+id/baby_pic"
+                    android:layout_width="@dimen/dimen_32_dip"
+                    android:layout_height="@dimen/dimen_32_dip"
+                    android:scaleType="centerCrop"
+                    android:layout_margin="@dimen/space_3"
+                    android:src="@mipmap/crame_image" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/weather_tip_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/growth_tip_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/security_tip_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/space_10">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50_dip"
+                android:layout_below="@id/bg_img"
+                android:background="#D66263"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/space_8"
+                android:text="@string/security_tip"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_th"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_10"
+            android:src="@mipmap/img_tih"
+            android:visibility="gone" />
+</LinearLayout>

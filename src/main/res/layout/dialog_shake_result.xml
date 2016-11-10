@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:background="@android:color/white"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:src="@mipmap/shake_avatar"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingTop="40dp">
+
+                <TextView
+                    android:id="@+id/shake_result_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="呃！没摇到~"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/shake_result_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="没关系机会到处有！"
+                    android:textColor="@color/red"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/shake_result_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingBottom="12dp"
+        android:text="每天都有三次摇奖的机会噢！"
+        android:textColor="@color/text_view_hint"/>
+
+    <TextView
+        android:id="@+id/shake_result_again_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF3333"
+        android:gravity="center"
+        android:padding="18dp"
+        android:text="再摇一次"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:id="@+id/shake_result_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF3333"
+        android:divider="@drawable/divider_x1"
+        android:dividerPadding="4dp"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/shake_result_check_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="18dp"
+            android:text="查看"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/shake_result_share_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="18dp"
+            android:text="分享"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"/>
+    </LinearLayout>
+</LinearLayout>
