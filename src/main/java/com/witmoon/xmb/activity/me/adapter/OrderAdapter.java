@@ -1,6 +1,7 @@
 package com.witmoon.xmb.activity.me.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +13,15 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.utils.L;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.me.OrderType;
+import com.witmoon.xmb.activity.me.Out_ServiceActivity;
+import com.witmoon.xmb.activity.me.fragment.Fill_info_Fragent;
 import com.witmoon.xmb.activity.me.fragment.OrderDetailFragment;
 import com.witmoon.xmb.api.Netroid;
 import com.witmoon.xmb.base.BaseRecyclerAdapter;
 import com.witmoon.xmb.model.Order;
+import com.witmoon.xmb.model.Out_;
 import com.witmoon.xmb.model.SimpleBackPage;
 import com.witmoon.xmb.util.UIHelper;
 
@@ -25,6 +30,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,32 +74,62 @@ public class OrderAdapter extends BaseRecyclerAdapter {
         OrderViewHolder oHolder = (OrderViewHolder) holder;
         final Order order = (Order) _data.get(position);
         String type = order.getOrderType();
-
         // 没有子订单
         if (order.getIsSplitOrder() == 0) {
             oHolder.orderBottomView.setVisibility(View.VISIBLE);
             oHolder.splitParentView.setVisibility(View.GONE);
             oHolder.noSplitParentView.setVisibility(View.VISIBLE);
             oHolder.topView.setVisibility(View.VISIBLE);
-            if (OrderType.getType(type) == OrderType.TYPE_WAITING_FOR_PAYMENT) {
-                oHolder.title.setVisibility(View.GONE);
-            } else {
-                oHolder.title.setVisibility(View.VISIBLE);
-            }
             oHolder.title.setText(OrderType.getType(type).getTitle());
             if (OrderType.getType(type) == OrderType.TYPE_WAITING_FOR_PAYMENT || OrderType.getType
                     (type) == OrderType.TYPE_FINISHED || OrderType.getType
                     (type) == OrderType.TYPE_WAITING_FOR_RECEIVING) {
                 oHolder.itemButton.setVisibility(View.VISIBLE);
                 if (OrderType.getType(type) == OrderType.TYPE_FINISHED) {
+                    if (order.getOrderRefundType().equals("1") || order.getOrderRefundType().equals("3")) {
+                        if (order.getOrderRefundType().equals("3")) {
+                            oHolder.refund_button.setText("重新申请");
+                        } else {
+                            oHolder.refund_button.setText("申请售后");
+                        }
+                    } else if (order.getOrderRefundType().equals("5")) {
+                        oHolder.refund_button.setText("填写运单号");
+                    } else if (order.getOrderRefundType().equals("4")) {
+                        oHolder.refund_button.setText("已完成退换货");
+                    } else {
+                        oHolder.refund_button.setText("进度查询");
+                    }
+                    oHolder.refund_button.setVisibility(View.VISIBLE);
                     oHolder.itemButton.setText("发表评价");
-                    oHolder.submit_button_wl.setVisibility(View.VISIBLE);
                 } else if (OrderType.getType(type) == OrderType.TYPE_WAITING_FOR_PAYMENT) {
                     oHolder.itemButton.setText("去付款");
                 } else if (OrderType.getType(type) == OrderType.TYPE_WAITING_FOR_RECEIVING) {
                     oHolder.itemButton.setText("确认收货");
-                    oHolder.submit_button_wl.setVisibility(View.VISIBLE);
                 }
+//----------------------退换货-------------------
+                oHolder.refund_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Out_ orderContentNew = new Out_();
+                        orderContentNew.setOrder_id(order.getId());
+                        orderContentNew.setmGoodsList(order.getGoodsList());
+                        orderContentNew.setOrder_sn(order.getSerialNo());
+                        if (order.getOrderRefundType().equals("3") || order.getOrderRefundType().equals("1")) {
+                            Intent mIntent = new Intent(mContext, Out_ServiceActivity.class);
+                            mIntent.putExtra("order", orderContentNew);
+                            mContext.startActivity(mIntent);
+                        } else if (order.getOrderRefundType().equals("5")) {
+                            Intent mIntent = new Intent(mContext, Fill_info_Fragent.class);
+                            mIntent.putExtra("order", orderContentNew);
+                            mContext.startActivity(mIntent);
+                        } else {
+                            Bundle mb = new Bundle();
+                            mb.putSerializable("order", orderContentNew);
+                            UIHelper.showSimpleBack(mContext, SimpleBackPage.JINDU, mb);
+                        }
+                    }
+                });
+//----------------------------------------------
                 oHolder.itemButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -100,15 +137,8 @@ public class OrderAdapter extends BaseRecyclerAdapter {
                             mOnItemButtonClickListener.onItemButtonClick(order);
                     }
                 });
-
-                oHolder.submit_button_wl.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mOnItemButtonWlClickListener != null)
-                            mOnItemButtonWlClickListener.onItemButtonWlClick(order);
-                    }
-                });
             } else {
+                oHolder.refund_button.setVisibility(View.GONE);
                 oHolder.itemButton.setVisibility(View.GONE);
             }
             //添加订单详情按钮点击事件
@@ -131,6 +161,7 @@ public class OrderAdapter extends BaseRecyclerAdapter {
             List<Map<String, String>> goodsList = order.getGoodsList();
             for (Map<String, String> goodsMap : goodsList) {
                 View view = inflater.inflate(R.layout.item_order_goods, oHolder.container, false);
+                view.setOnClickListener(v -> CommodityDetailActivity.start(mContext, goodsMap.get("goods_id")));
                 ImageView imageView = (ImageView) view.findViewById(R.id.goods_image);
                 Netroid.displayBabyImage(goodsMap.get("goods_img"), imageView);
                 TextView title = (TextView) view.findViewById(R.id.goods_title);
@@ -158,28 +189,22 @@ public class OrderAdapter extends BaseRecyclerAdapter {
         else {
             oHolder.noSplitParentView.setVisibility(View.GONE);
             oHolder.splitParentView.setVisibility(View.VISIBLE);
-            oHolder.title.setVisibility(View.GONE);
+            oHolder.splitTitle.setVisibility(View.GONE);
             oHolder.splitTitle.setText(OrderType.getType(type).getTitle());
-            if (OrderType.getType(type) == OrderType.TYPE_WAITING_FOR_PAYMENT) {
-                oHolder.splitOrderBottomView.setVisibility(View.VISIBLE);
-            } else {
-                oHolder.splitOrderBottomView.setVisibility(View.GONE);
-            }
             if (OrderType.getType(type) == OrderType.TYPE_WAITING_FOR_PAYMENT || OrderType.getType
                     (type) == OrderType.TYPE_FINISHED || OrderType.getType
                     (type) == OrderType.TYPE_WAITING_FOR_RECEIVING) {
+                oHolder.splitOrderBottomView.setVisibility(View.VISIBLE);
                 oHolder.splitItemButton.setVisibility(View.VISIBLE);
                 if (OrderType.getType(type) == OrderType.TYPE_FINISHED) {
+                    oHolder.splitTitle.setVisibility(View.GONE);
                     oHolder.splitItemButton.setText("发表评价");
-                    oHolder.submit_button_wl.setVisibility(View.VISIBLE);
                 } else if (OrderType.getType(type) == OrderType.TYPE_WAITING_FOR_PAYMENT) {
                     oHolder.splitItemButton.setText("去付款");
                     oHolder.splitTitle.setVisibility(View.VISIBLE);
                 } else if (OrderType.getType(type) == OrderType.TYPE_WAITING_FOR_RECEIVING) {
+                    oHolder.splitTitle.setVisibility(View.GONE);
                     oHolder.splitItemButton.setText("确认收货");
-                    oHolder.submit_button_wl.setVisibility(View.VISIBLE);
-                } else {
-                    oHolder.submit_button_wl.setVisibility(View.GONE);
                 }
                 oHolder.splitItemButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -188,16 +213,9 @@ public class OrderAdapter extends BaseRecyclerAdapter {
                             mOnItemButtonClickListener.onItemButtonClick(order);
                     }
                 });
-
-                oHolder.submit_button_wl.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mOnItemButtonWlClickListener != null)
-                            mOnItemButtonWlClickListener.onItemButtonWlClick(order);
-                    }
-                });
             } else {
-                oHolder.splitItemButton.setVisibility(View.GONE);
+                oHolder.splitOrderBottomView.setVisibility(View.GONE);
+                oHolder.splitTitle.setVisibility(View.GONE);
             }
 //             添加子订单详情按钮点击事件
             oHolder.split_detail_button.setOnClickListener(new View.OnClickListener() {
@@ -215,17 +233,44 @@ public class OrderAdapter extends BaseRecyclerAdapter {
             oHolder.splitContainer.removeAllViews();
             LayoutInflater inflater = LayoutInflater.from(mContext);
             JSONArray child_orders = order.getChild_orders();
+            Out_ orderContentNew1 = new Out_();
+            List<Map<String, String>> goodList = new ArrayList<>();
             for (int i = 0; i < child_orders.length(); i++) {
                 try {
                     JSONObject child_order = child_orders.getJSONObject(i);
+                    orderContentNew1.setOrder_sn(child_order.getString("order_sn"));
+                    orderContentNew1.setOrder_id(child_order.getString("order_id"));
+                    JSONArray child_order_goodsList = child_order.getJSONArray("goods_list");
+                    for (int j = 0; j < child_order_goodsList.length(); j++) {
+                        JSONObject goodsObj = child_order_goodsList.getJSONObject(j);
+                        Map<String, String> tmap = new HashMap<>();
+                        tmap.put("goods_id", goodsObj.getString("goods_id"));
+                        tmap.put("goods_name", goodsObj.getString("name"));
+                        tmap.put("count", goodsObj.getString("goods_number"));
+                        tmap.put("is_comment", goodsObj.getString("is_comment"));
+                        tmap.put("goods_img", goodsObj.getString("img"));
+                        tmap.put("goods_price", goodsObj.getString("shop_price_formatted"));
+                        goodList.add(tmap);
+                    }
+                    orderContentNew1.setmGoodsList(goodList);
                     LinearLayout view = (LinearLayout) inflater.inflate(R.layout.item_split_order, oHolder.container, false);
-                    view.findViewById(R.id.detail_button).setOnClickListener(new View.OnClickListener() {
+                    TextView refund_button = (TextView) view.findViewById(R.id.split_refund_button);
+                    TextView detail_text = (TextView) view.findViewById(R.id.detail_button);
+                    refund_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent mIntent = new Intent(mContext, Out_ServiceActivity.class);
+                            mIntent.putExtra("order", orderContentNew1);
+                            mContext.startActivity(mIntent);
+                        }
+                    });
+                    detail_text.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Bundle argument = new Bundle();
                             try {
                                 argument.putString(OrderDetailFragment.KEY_ORDER_TYPE, order.getOrderType());
-                                argument.putString(OrderDetailFragment.KEY_ORDER_ID,child_order.getString("order_id"));
+                                argument.putString(OrderDetailFragment.KEY_ORDER_ID, child_order.getString("order_id"));
                                 argument.putString(OrderDetailFragment.KEY_ORDER_SN, child_order.getString("order_sn"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -234,9 +279,14 @@ public class OrderAdapter extends BaseRecyclerAdapter {
                         }
                     });
                     if (OrderType.getType(type) == OrderType.TYPE_WAITING_FOR_PAYMENT) {
+//                        refund_button.setVisibility(View.GONE);
                         view.findViewById(R.id.order_type).setVisibility(View.GONE);
                         view.findViewById(R.id.split_order_bottom).setVisibility(View.GONE);
                     } else {
+//                        if (OrderType.getType(type) == OrderType.TYPE_FINISHED) {
+//                            refund_button.setVisibility(View.VISIBLE);
+//                            refund_button.setText(child_order.getString("refund_status"));
+//                        }
                         view.findViewById(R.id.order_type).setVisibility(View.VISIBLE);
                         view.findViewById(R.id.split_order_bottom).setVisibility(View.VISIBLE);
                     }
@@ -250,7 +300,8 @@ public class OrderAdapter extends BaseRecyclerAdapter {
                         JSONObject goods = goodsList.getJSONObject(j);
 
                         View goodsContainerView = inflater.inflate(R.layout.item_order_goods, childGoodsContainerView, false);
-//                        TextView detail_bt = (TextView) goodsContainerView.findViewById(R.id.detail_button);
+                        String id = goods.getString("goods_id");
+                        goodsContainerView.setOnClickListener(v -> CommodityDetailActivity.start(mContext, id));
                         ImageView imageView = (ImageView) goodsContainerView.findViewById(R.id.goods_image);
                         Netroid.displayBabyImage(goods.getString("goods_img"), imageView);
                         TextView title = (TextView) goodsContainerView.findViewById(R.id.goods_title);
@@ -292,7 +343,7 @@ public class OrderAdapter extends BaseRecyclerAdapter {
     static class OrderViewHolder extends ViewHolder {
         public View topView, splitTopView;
         public TextView title, splitTitle;
-        public TextView itemButton, splitItemButton, submit_button_wl, detail_button, split_detail_button;
+        public TextView itemButton, splitItemButton, detail_button, split_detail_button, refund_button;
         public LinearLayout container, splitContainer;
         public TextView totalPrice, splitTotalPrice;
         public TextView time, splitTime;
@@ -309,12 +360,12 @@ public class OrderAdapter extends BaseRecyclerAdapter {
             detail_button = (TextView) v.findViewById(R.id.detail_button);
             split_detail_button = (TextView) v.findViewById(R.id.split_detail_button);
             itemButton = (TextView) v.findViewById(R.id.submit_button);
+            refund_button = (TextView) v.findViewById(R.id.refund_button);
             container = (LinearLayout) v.findViewById(R.id.container);
             totalPrice = (TextView) v.findViewById(R.id.total_price);
             time = (TextView) v.findViewById(R.id.time);
             splitTopView = v.findViewById(R.id.split_top_layout);
             splitTitle = (TextView) v.findViewById(R.id.split_title);
-            submit_button_wl = (TextView) v.findViewById(R.id.submit_button_wl);
             splitItemButton = (TextView) v.findViewById(R.id.split_submit_button);
             splitContainer = (LinearLayout) v.findViewById(R.id.split_order_container);
             splitTotalPrice = (TextView) v.findViewById(R.id.split_total_price);

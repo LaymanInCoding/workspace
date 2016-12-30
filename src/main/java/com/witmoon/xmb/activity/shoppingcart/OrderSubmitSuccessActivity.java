@@ -316,7 +316,7 @@ public class OrderSubmitSuccessActivity extends BaseActivity {
 
         // 服务器异步通知页面路径
         orderInfo += "&notify_url=" + "\"" +
-                "http://api.xiaomabao.com/interalipay/notify_url.php" + "\"";
+                "https://api.xiaomabao.com/interalipay/notify_url.php" + "\"";
 
         // 服务接口名称, 固定值
         orderInfo += "&service=\"mobile.securitypay.pay\"";
@@ -569,7 +569,7 @@ public class OrderSubmitSuccessActivity extends BaseActivity {
             packageParams.add(new BasicNameValuePair("body", "xmb"));//mOrderDescription
             packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
             packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
-            packageParams.add(new BasicNameValuePair("notify_url", "http://api.xiaomabao.com/payment/order_wechat_notify"));//回调页面
+            packageParams.add(new BasicNameValuePair("notify_url", "https://api.xiaomabao.com/payment/order_wechat_notify"));//回调页面
             packageParams.add(new BasicNameValuePair("out_trade_no", mOrderSerialNo));
             packageParams.add(new BasicNameValuePair("spbill_create_ip", "127.0.0.1"));
             packageParams.add(new BasicNameValuePair("total_fee", (int) (Double.valueOf(mOrderAmount) * 100) + ""));//金额转换Float.parseFloat(mOrderAmount)*100+" "(int)Float.parseFloat(mOrderAmount)*100+

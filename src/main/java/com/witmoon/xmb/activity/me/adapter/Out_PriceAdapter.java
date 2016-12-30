@@ -71,28 +71,31 @@ public class Out_PriceAdapter extends BaseRecyclerAdapter {
             case 1 :
                 oHolder.goods_od.setVisibility(View.GONE);
                 oHolder.type1.setVisibility(View.GONE);
+                oHolder.type2.setVisibility(View.VISIBLE);
                 oHolder.type2.setText("申请售后");
                 break;
             case 2 :
                 oHolder.goods_od.setVisibility(View.GONE);
                 oHolder.type1.setVisibility(View.GONE);
+                oHolder.type2.setVisibility(View.VISIBLE);
                 oHolder.type2.setText("进度查询");
                 break;
             case 3 :
                 oHolder.goods_od.setVisibility(View.GONE);
                 oHolder.type1.setVisibility(View.VISIBLE);
-                oHolder.type2.setText("进度查询");
+                oHolder.type2.setVisibility(View.GONE);
                 oHolder.type1.setText("重新申请");
                 break;
             case 4 :
-                oHolder.type1.setVisibility(View.VISIBLE);
                 oHolder.goods_od.setVisibility(View.VISIBLE);
                 oHolder.type1.setVisibility(View.GONE);
-                oHolder.type2.setText("进度查询");
+                oHolder.type2.setVisibility(View.VISIBLE);
+                oHolder.type2.setText("已完成退换货");
                 break;
             case 5 :
                 oHolder.type1.setVisibility(View.VISIBLE);
                 oHolder.goods_od.setVisibility(View.GONE);
+                oHolder.type2.setVisibility(View.VISIBLE);
                 oHolder.type2.setText("进度查询");
                 oHolder.type1.setText("填写运单号");
                 break;

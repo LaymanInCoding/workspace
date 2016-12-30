@@ -28,21 +28,20 @@
             android:id="@+id/textLeftTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8.0dip"
-            android:layout_marginTop="3.0dip"
             android:drawableLeft="@mipmap/icon_clock_grey"
             android:text="剩余时间: 03:30:15"
             android:textColor="@color/grey"
             android:textSize="12sp" />
         <TextView
+            android:layout_centerVertical="true"
             android:id="@+id/goods_title"
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:textSize="12sp"
+            android:textColor="@color/grey"
             android:text="12313"
             android:maxLines="1"/>
     </RelativeLayout>

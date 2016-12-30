@@ -55,7 +55,7 @@ public class ServiceIndexFragment extends BaseFragment{
         Toolbar toolbar = ((BaseActivity) getActivity()).getToolBar();
         AQuery aQuery = new AQuery(getActivity(), toolbar);
         aQuery.id(R.id.top_toolbar).visible();
-        aQuery.id(R.id.toolbar_right_img).gone();
+        aQuery.id(R.id.toolbar_right_img).visible();
         aQuery.id(R.id.toolbar_logo_img).gone();
         aQuery.id(R.id.toolbar_right_img1).gone();
         aQuery.id(R.id.toolbar_right_img2).gone();

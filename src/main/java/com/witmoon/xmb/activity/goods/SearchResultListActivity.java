@@ -1,16 +1,19 @@
 package com.witmoon.xmb.activity.goods;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.MySwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
@@ -24,12 +27,10 @@ import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.BaseRecyclerAdapter;
 import com.witmoon.xmb.model.Goods;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
-import com.witmoon.xmb.ui.widget.SortTextView;
 import com.witmoon.xmb.util.TDevice;
 import com.witmoon.xmb.util.TLog;
 import com.witmoon.xmb.util.TwoTuple;
 import com.witmoon.xmblibrary.observablescrollview.ObservableRecyclerView;
-import com.witmoon.xmblibrary.recyclerview.ItemClickSupport;
 import com.witmoon.xmblibrary.recyclerview.itemdecoration.grid.GridDividerItemDecoration;
 
 import org.json.JSONArray;
@@ -50,6 +51,8 @@ public class SearchResultListActivity extends BaseActivity {
     protected static final int STATE_LOAD_MORE = 2;
     protected int mState = STATE_NONE;
 
+    private int price_checked = 2;
+
     private MySwipeRefreshLayout mRefreshLayout;
     private ObservableRecyclerView mRecyclerView;
     protected EmptyLayout mErrorLayout;
@@ -58,16 +61,14 @@ public class SearchResultListActivity extends BaseActivity {
 
     // 列表类型, 品牌商品或者分类商品, 默认为分类商品列表
     private String mKeywords;
-
+    private String mOrderType = "salenum";   //分类 类型 (销量、新品、价格、有货)
+    private View view1, view2, view3, view4;
     private boolean isMoreData;
     private int mCurrentPage;
-    private String mSortColumn;     // 排序列
-    private String mSortType;       // 排序类型
-    private boolean mFilterInStore = false;  // 只看有货
-
-    private SortTextView mPriceSort;
-    private SortTextView mSalesSort;
-    private SortTextView mDiscountSort;
+    private String asc_or_desc = "";
+    private TextView mSalesText, mNewcomeText, mStockText, mPriceText;
+    private ImageView arrow_right;
+    private RelativeLayout price_text_layout;
     private AppContext mAppContext;
 
     public static void start(Context context, String keywords) {
@@ -103,17 +104,16 @@ public class SearchResultListActivity extends BaseActivity {
         mKeywords = intent.getStringExtra("TYPE_VALUE");
         mAppContext = AppContext.instance();
         AQuery aQuery = new AQuery(this);
-        mPriceSort = (SortTextView) aQuery.id(R.id.sort_price).clicked(this).getView();
-        mSalesSort = (SortTextView) aQuery.id(R.id.sort_sales).clicked(this).getView();
-        mDiscountSort = (SortTextView) aQuery.id(R.id.sort_discount).clicked(this).getView();
-        aQuery.id(R.id.filter_in_store).getCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mFilterInStore = isChecked;
-                refresh();
-            }
-        });
-
+        mSalesText = aQuery.id(R.id.default_text).clicked(this).getTextView();
+        mNewcomeText = aQuery.id(R.id.newcome_text).clicked(this).getTextView();
+        mStockText = aQuery.id(R.id.is_exist_text).clicked(this).getTextView();
+        mPriceText = aQuery.id(R.id.price_text).getTextView();
+        price_text_layout = (RelativeLayout) aQuery.id(R.id.price_text_layout).clicked(this).getView();
+        view1 = findViewById(R.id.view1);
+        view2 = findViewById(R.id.view2);
+        view3 = findViewById(R.id.view3);
+        view4 = findViewById(R.id.view4);
+        arrow_right = aQuery.id(R.id.right_arrow).getImageView();
         mErrorLayout = (EmptyLayout) aQuery.id(R.id.error_layout).getView();
         mErrorLayout.setOnLayoutClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +122,6 @@ public class SearchResultListActivity extends BaseActivity {
                 refresh();
             }
         });
-
         mRefreshLayout = (MySwipeRefreshLayout) aQuery.id(R.id.refresh_layout).getView();
         mRefreshLayout.setColorSchemeColors(R.color.main_gray, R.color.main_green, R.color
                 .main_purple);
@@ -132,7 +131,6 @@ public class SearchResultListActivity extends BaseActivity {
                 refresh();
             }
         });
-
         mRecyclerView = (ObservableRecyclerView) aQuery.id(R.id.recycle_view).getView();
         mRecyclerView.addOnScrollListener(mScrollListener);
         mLayoutManager = new GridLayoutManager(this, 2);
@@ -151,7 +149,6 @@ public class SearchResultListActivity extends BaseActivity {
         mRecyclerView.addItemDecoration(new GridDividerItemDecoration(getResources().getDrawable
                 (R.drawable.divider_x2), getResources().getDrawable(R.drawable.divider_x2), 2));
         mRecyclerView.setHasFixedSize(true);
-
         if (mAdapter != null) {
             mRecyclerView.setAdapter(mAdapter);
             mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
@@ -161,7 +158,9 @@ public class SearchResultListActivity extends BaseActivity {
             mRecyclerView.setAdapter(mAdapter);
             mErrorLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
             refresh();
+
         }
+        refresh();
     }
 
     @Override
@@ -183,9 +182,10 @@ public class SearchResultListActivity extends BaseActivity {
 
     // 请求数据
     private void requestData() {
-            GoodsApi.search(mKeywords, mCurrentPage, mSortColumn, mSortType, mFilterInStore,
-                    mGoodsListCallback);
+        GoodsApi.search(mKeywords, mCurrentPage, mOrderType, asc_or_desc,
+                mGoodsListCallback);
     }
+
 
     // 商品列表回调
     Listener<JSONObject> mGoodsListCallback = new Listener<JSONObject>() {
@@ -216,7 +216,7 @@ public class SearchResultListActivity extends BaseActivity {
 
     // 解析网络响应
     private List<Goods> parseResponse(JSONObject response) throws JSONException {
-        isMoreData = response.getJSONObject("paginated").getInt("more") != 0;
+        isMoreData = response.getJSONArray("data").length() != 0;
 
         List<Goods> goodsList = new ArrayList<>();
         JSONArray goodsArray = response.getJSONArray("data");
@@ -292,29 +292,82 @@ public class SearchResultListActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.sort_price:
-                mDiscountSort.setSortType(SortTextView.SORT_TYPE_NONE);
-                mSalesSort.setSortType(SortTextView.SORT_TYPE_NONE);
-                mPriceSort.toggle();
-                mSortColumn = mPriceSort.getSortColumn();
-                mSortType = mPriceSort.getSortType();
-                refresh();
+            case R.id.default_text:
+                if (!mOrderType.equals("salenum")) {
+                    price_checked = 2;
+                    view1.setVisibility(View.VISIBLE);
+                    view2.setVisibility(View.GONE);
+                    view3.setVisibility(View.GONE);
+                    view4.setVisibility(View.GONE);
+                    mSalesText.setTextColor(Color.parseColor("#c86a66"));
+                    mNewcomeText.setTextColor(Color.parseColor("#333333"));
+                    mStockText.setTextColor(Color.parseColor("#333333"));
+                    mPriceText.setTextColor(Color.parseColor("#333333"));
+                    arrow_right.setImageResource(R.mipmap.price_uncheck);
+                    mOrderType = "salenum";
+                    asc_or_desc = "";
+                    refresh();
+                }
                 break;
-            case R.id.sort_sales:
-                mDiscountSort.setSortType(SortTextView.SORT_TYPE_NONE);
-                mPriceSort.setSortType(SortTextView.SORT_TYPE_NONE);
-                mSalesSort.toggle();
-                mSortColumn = mSalesSort.getSortColumn();
-                mSortType = mSalesSort.getSortType();
-                refresh();
+            case R.id.newcome_text:
+                if (!mOrderType.equals("new")) {
+                    mSalesText.setTextColor(Color.parseColor("#333333"));
+                    mNewcomeText.setTextColor(Color.parseColor("#c86a66"));
+                    mStockText.setTextColor(Color.parseColor("#333333"));
+                    mPriceText.setTextColor(Color.parseColor("#333333"));
+                    view1.setVisibility(View.GONE);
+                    view2.setVisibility(View.VISIBLE);
+                    view3.setVisibility(View.GONE);
+                    view4.setVisibility(View.GONE);
+                    arrow_right.setImageResource(R.mipmap.price_uncheck);
+                    mOrderType = "new";
+                    price_checked = 2;
+                    asc_or_desc = "";
+                    refresh();
+                }
                 break;
-            case R.id.sort_discount:
-                mPriceSort.setSortType(SortTextView.SORT_TYPE_NONE);
-                mSalesSort.setSortType(SortTextView.SORT_TYPE_NONE);
-                mDiscountSort.toggle();
-                mSortColumn = mDiscountSort.getSortColumn();
-                mSortType = mDiscountSort.getSortType();
-                refresh();
+            case R.id.is_exist_text:
+                if (!mOrderType.equals("stock")) {
+                    mSalesText.setTextColor(Color.parseColor("#333333"));
+                    mNewcomeText.setTextColor(Color.parseColor("#333333"));
+                    mStockText.setTextColor(Color.parseColor("#c86a66"));
+                    mPriceText.setTextColor(Color.parseColor("#333333"));
+                    view1.setVisibility(View.GONE);
+                    view2.setVisibility(View.GONE);
+                    view3.setVisibility(View.VISIBLE);
+                    view4.setVisibility(View.GONE);
+                    arrow_right.setImageResource(R.mipmap.price_uncheck);
+                    mOrderType = "stock";
+                    price_checked = 2;
+                    asc_or_desc = "";
+                    refresh();
+                }
+                break;
+            case R.id.price_text_layout:
+                mSalesText.setTextColor(Color.parseColor("#333333"));
+                mNewcomeText.setTextColor(Color.parseColor("#333333"));
+                mStockText.setTextColor(Color.parseColor("#333333"));
+                mPriceText.setTextColor(Color.parseColor("#c86a66"));
+                view1.setVisibility(View.GONE);
+                view2.setVisibility(View.GONE);
+                view3.setVisibility(View.GONE);
+                view4.setVisibility(View.VISIBLE);
+                arrow_right.setImageResource(R.mipmap.price_uncheck);
+                mOrderType = "price";
+                if (price_checked == 1) {
+                    arrow_right.setImageResource(R.mipmap.price_check_twice);
+                    price_checked = 2;
+                    asc_or_desc = "desc";
+                    refresh();//降序
+                    break;
+                }
+                if (price_checked == 2) {
+                    arrow_right.setImageResource(R.mipmap.price_check_once);
+                    price_checked = 1;
+                    asc_or_desc = "asc";
+                    refresh(); //升序
+                    break;
+                }
                 break;
         }
     }

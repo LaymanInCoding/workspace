@@ -42,6 +42,9 @@ public class Const {
     public static final String REFRESH_MENGBAO = "com.witmoon.xmb.REFRESH_MENGBAO";
     public static final String BIND_MABAO_CARD_SUCCESS = "com.witmoon.xmb.BIND_MABAO_CARD_SUCCESS";
 
+    public static final String INTENT_ACTION_REFRESH_BEAN = "send_bean_refresh";
+
+
     public static final String BABY_SEX = "baby_sex";
 
 

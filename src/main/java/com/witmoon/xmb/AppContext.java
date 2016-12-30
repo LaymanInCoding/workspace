@@ -21,6 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
@@ -59,13 +60,12 @@ public class AppContext extends BaseApplication {
     private XmbDB mXmbDB;
     private static AppContext instance;
     public static boolean IS_ADDBABY = true;
-    public static DisplayImageOptions options_disk,options_memory;
+    public static DisplayImageOptions options_disk, options_memory;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
         options_disk = new DisplayImageOptions.Builder()
@@ -91,6 +91,7 @@ public class AppContext extends BaseApplication {
         Netroid.initialize(this);
         Fresco.initialize(this);
         initImageLoader(this);
+        Logger.init().hideThreadInfo();
         // 初始化Netroid网络工具及Fresco
         // 初始化数据库
         initializeDatabase();
@@ -178,12 +179,6 @@ public class AppContext extends BaseApplication {
 
     // 用户注销
     public void logout() {
-        int logoff = Ntalker.getInstance().logout(this);
-        if (0 != logoff) {
-            Toast.makeText(getApplicationContext(), "注销失败",
-                    Toast.LENGTH_SHORT).show();
-            Log.e("错误码：", logoff + "");
-        }
         MobclickAgent.onProfileSignOff();
         saveLoginUid(0);
         clearLoginInfo();
@@ -216,7 +211,7 @@ public class AppContext extends BaseApplication {
                     }
                     try {
                         User user2 = User.parse(response.getJSONObject("data").getJSONObject("user"), user.getType(), user.getSin_name(), "ZH");
-                        if (user2.getUid() != user.getUid()){
+                        if (user2.getUid() != user.getUid()) {
                             Intent intent = new Intent(Const.INTENT_ACTION_REG_PUSH);
                             sendBroadcast(intent);
 
@@ -255,7 +250,7 @@ public class AppContext extends BaseApplication {
                     }
                     try {
                         JSONObject sessionObj = response.getJSONObject("data").getJSONObject("session");
-                        if(user.getUid() == AppContext.getLoginUid()){
+                        if (user.getUid() == AppContext.getLoginUid()) {
                             Intent intent = new Intent(Const.INTENT_ACTION_REG_PUSH);
                             sendBroadcast(intent);
                         }
@@ -304,7 +299,6 @@ public class AppContext extends BaseApplication {
         setProperty("user.baby_id", user.getBaby_id());
         setProperty("user.baby_birthday", user.getBaby_birthday());
         setProperty("user.baby_gender", user.getBaby_gender());
-        setProperty("user.baby_photo", user.getBaby_photo());
         setProperty("user.baby_photo", user.getBaby_photo());
         setProperty("user.mobile_phone", user.getMobile_phone());
         setProperty("user.baby_nickname", user.getBaby_nickname());

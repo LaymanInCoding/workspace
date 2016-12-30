@@ -14,7 +14,7 @@ public class MengbaoApi {
         Map<String, String> map = new HashMap<>();
         map.put("current_date",date_str);
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "mengbao/get_index_info",
-                ApiHelper.getParamObj(map), listener));
+                map, listener));
     }
 
     //获取个人工具信息
@@ -22,7 +22,7 @@ public class MengbaoApi {
         Map<String, String> map = new HashMap<>();
         map.put("current_date",dateStr);
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "mengbao/get_user_toolkit_v2",
-                                                     ApiHelper.getParamObj(map), listener));
+                                                     map, listener));
     }
 
     //获取个人照片墙

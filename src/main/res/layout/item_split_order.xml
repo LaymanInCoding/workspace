@@ -80,7 +80,7 @@
                 android:layout_weight="1"/>
 
             <TextView
-                android:id="@+id/submit_button_wl"
+                android:id="@+id/split_refund_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/space_8"
@@ -89,7 +89,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:paddingTop="2dp"
-                android:text="查看物流"
+                android:text="退换货"
                 android:textSize="12sp"
                 android:visibility="gone"/>
 

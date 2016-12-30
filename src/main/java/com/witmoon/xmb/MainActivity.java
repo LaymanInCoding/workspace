@@ -311,12 +311,6 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                 CommonUtil.show(this, "再按一次返回退出程序", 1000);
                 doubleExitBeginTime = System.currentTimeMillis();
             } else {
-                int logoff = Ntalker.getInstance().logout(this);
-                if (0 != logoff) {
-                    Toast.makeText(getApplicationContext(), "注销失败",
-                            Toast.LENGTH_SHORT).show();
-                    Log.e("错误码：", logoff + "");
-                }
                 finish();
                 MobclickAgent.onProfileSignOff();
                 if (mLocationManager != null) {
@@ -351,7 +345,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                     size = response.getString("size");
                     app_name = download_url.substring(download_url.lastIndexOf("/") + 1);
                     if (latest_version > Float.parseFloat(AppContext.geVerSion())) {
-                        XmbUtils.showUpdateWindow(MainActivity.this,latest_version+"",version_description,download_url,size);
+                        XmbUtils.showUpdateWindow(MainActivity.this, latest_version + "", version_description, download_url, size);
                     } else {
                         FileUtils.cheanUpdateFile();
                     }

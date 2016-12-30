@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.user.LoginActivity;
+import com.witmoon.xmb.api.ApiHelper;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
 
@@ -33,7 +34,7 @@ public class ProductDetailActivity extends BaseActivity {
     @Override
     protected void initialize(Bundle savedInstanceState) {
         setTitleColor_(R.color.main_kin);
-        product_id = getIntent().getIntExtra("product_id",0);
+        product_id = getIntent().getIntExtra("product_id", 0);
         emptyLayout = (EmptyLayout) findViewById(R.id.error_layout);
 
         findViewById(R.id.add_to_cart).setOnClickListener(new View.OnClickListener() {
@@ -43,8 +44,8 @@ public class ProductDetailActivity extends BaseActivity {
                     startActivity(new Intent(ProductDetailActivity.this, LoginActivity.class));
                     return;
                 }
-                Intent intent = new Intent(ProductDetailActivity.this,ServiceCart.class);
-                intent.putExtra("product_id",product_id);
+                Intent intent = new Intent(ProductDetailActivity.this, ServiceCart.class);
+                intent.putExtra("product_id", product_id);
                 startActivity(intent);
             }
         });
@@ -70,7 +71,7 @@ public class ProductDetailActivity extends BaseActivity {
                 emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
             }
         });
-        webview.loadUrl("http://api.xiaomabao.com/service/product_preview/"+product_id+"/"+System.currentTimeMillis());
+        webview.loadUrl(ApiHelper.BASE_URL + "service/product_preview/" + product_id + "/" + System.currentTimeMillis());
 
     }
 

@@ -44,6 +44,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         AQuery aQuery = new AQuery(mainActivity, toolbar);
         aQuery.id(R.id.top_toolbar).gone();
     }
+
     //显示加载中的对话框
     // 隐藏等待对话框
     protected void hideWaitDialog() {
@@ -53,20 +54,20 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void setRecRequest(int currentPage){
+    public void setRecRequest(int currentPage) {
 
     }
 
-    public void showProgressing(int res_id,View view){
+    public void showProgressing(int res_id, View view) {
         view.findViewById(res_id).setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressing(int res_id,View view){
+    public void hideProgressing(int res_id, View view) {
 
         view.findViewById(res_id).setVisibility(View.GONE);
     }
 
-    protected void resetStatus(){
+    protected void resetStatus() {
         mRootView.removeOnScrollListener(recyclerViewScrollListener);
         recyclerViewScrollListener = new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
@@ -77,7 +78,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         mRootView.addOnScrollListener(recyclerViewScrollListener);
     }
 
-    protected void createMsgHeaderView(){
+    protected void createMsgHeaderView() {
         removeFooterView();
         View loadMoreView = LayoutInflater
                 .from(getActivity())
@@ -87,18 +88,20 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
 
     protected void createLoadMoreView() {
         removeFooterView();
-        View loadMoreView = LayoutInflater
-                .from(getContext())
-                .inflate(R.layout.view_load_more, mRootView, false);
-        stringAdapter.addFooterView(loadMoreView);
+        if (getActivity() != null) {
+            View loadMoreView = LayoutInflater
+                    .from(getActivity())
+                    .inflate(R.layout.view_load_more, mRootView, false);
+            stringAdapter.addFooterView(loadMoreView);
+        }
     }
 
-    protected void removeFooterView(){
+    protected void removeFooterView() {
         stringAdapter.removeFooterView();
         mRootView.removeOnScrollListener(recyclerViewScrollListener);
     }
 
-    protected void removeHeaderView(HeaderViewRecyclerAdapter stringAdapter){
+    protected void removeHeaderView(HeaderViewRecyclerAdapter stringAdapter) {
         stringAdapter.removeHeaderView();
     }
 

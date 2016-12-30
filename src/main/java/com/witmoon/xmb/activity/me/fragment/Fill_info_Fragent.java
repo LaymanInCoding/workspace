@@ -27,7 +27,7 @@ import org.json.JSONObject;
  * Created by de on 2015/12/5.
  */
 public class Fill_info_Fragent extends BaseActivity implements View.OnClickListener{
-    private EditText express_no,express_company,express_fee;
+    private EditText express_no,express_fee;
     private LinearLayout cwhi;
     private Out_ out;
 
@@ -50,7 +50,6 @@ public class Fill_info_Fragent extends BaseActivity implements View.OnClickListe
         out = (Out_) getIntent().getSerializableExtra("order");
         cwhi = (LinearLayout) findViewById(R.id.fuc_Sa);
         express_no = (EditText) findViewById(R.id.express_no);
-//        express_company = (EditText) findViewById(R.id.express_company);
         express_fee = (EditText) findViewById(R.id.express_fee);
         findViewById(R.id.submit_button1).setOnClickListener(this);
         findViewById(R.id.submit_button).setOnClickListener(this);

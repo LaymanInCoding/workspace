@@ -80,7 +80,8 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
     List<Map<String, String>> goodsList;
     private BroadcastReceiver mLoginOrLogoutReceiver = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {refresh();
+        public void onReceive(Context context, Intent intent) {
+            refresh();
         }
     };
     private BroadcastReceiver mUpdata_car = new BroadcastReceiver() {
@@ -110,8 +111,7 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        if (getActivity() instanceof  MainActivity)
-        {
+        if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).setTitleColor_(R.color.main_kin);
         }
         if (mRootView == null) {
@@ -138,7 +138,7 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
             mCheckAllCheckbox = (CheckBox) mRootView.findViewById(R.id.checkall);
             mCheckAllCheckbox.setOnClickListener(this);
 
-            mShoppingCartAdapter = new ShoppingCart(getContext(),mDataList);
+            mShoppingCartAdapter = new ShoppingCart(getContext(), mDataList);
             mShoppingCartAdapter.OnClickListener(this);
             mSuperRecyclerView.setAdapter(mShoppingCartAdapter);
             emptyLayout = (EmptyLayout) mRootView.findViewById(R.id.error_layout);
@@ -159,8 +159,7 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
 
     // 刷新购物车
     public void refresh() {
-        if (null!=mSuperRecyclerView)
-        {
+        if (null != mSuperRecyclerView) {
             if (!AppContext.instance().isLogin()) {
                 mSuperRecyclerView.hideRecycler();
                 mEmptyView.setVisibility(View.VISIBLE);
@@ -197,38 +196,42 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
         public void onSuccess(JSONObject response) {
             mDataList.clear();
             try {
-                JSONObject dataObj = response.getJSONObject("data");
-                TwoTuple<Integer, List<Map<String, String>>> parseResult = parseGoodsList(dataObj
-                        .getJSONArray("goods_list"));
-                if (parseResult.second.size() < 1) {
-                    mEmptyView.setVisibility(View.VISIBLE);
-                    mSuperRecyclerView.hideRecycler();
-                    mCheckAllCheckbox.setEnabled(false);
-                    mActionTipText.setVisibility(View.VISIBLE);
-                    imageView.setVisibility(View.VISIBLE);
-                    mActionTipText.setText(getResources().getString(R.string.tip_empty_cart));
-                    mActionView.setText("今日特卖，去看看！");
-                    mActionView.setVisibility(View.VISIBLE);
-                    mActionView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            MainActivity.current_tab_index = 2;
-                            getActivity().finish();
-                        }
-                    });
-                    emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
-                    return;
-                }
+                //error_linked:防止在fragment attach 到Activity 前调用getResource();
+                // http://stackoverflow.com/questions/10919240/fragment-myfragment-not-attached-to-activity
+                if (isAdded()) {
+                    JSONObject dataObj = response.getJSONObject("data");
+                    TwoTuple<Integer, List<Map<String, String>>> parseResult = parseGoodsList(dataObj
+                            .getJSONArray("goods_list"));
+                    if (parseResult.second.size() < 1) {
+                        mEmptyView.setVisibility(View.VISIBLE);
+                        mSuperRecyclerView.hideRecycler();
+                        mCheckAllCheckbox.setEnabled(false);
+                        mActionTipText.setVisibility(View.VISIBLE);
+                        imageView.setVisibility(View.VISIBLE);
+                        mActionTipText.setText(getResources().getString(R.string.tip_empty_cart));
+                        mActionView.setText("今日特卖，去看看！");
+                        mActionView.setVisibility(View.VISIBLE);
+                        mActionView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MainActivity.current_tab_index = 2;
+                                getActivity().finish();
+                            }
+                        });
+                        emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+                        return;
+                    }
 
-                mCheckAllCheckbox.setEnabled(true);
-                mCheckAllCheckbox.setChecked(parseResult.first == parseResult.second.size());
-                mSettleAccountBtn.setClickable(parseResult.first > 0);
-                mSuperRecyclerView.showRecycler();
-                mDataList.addAll(parseResult.second);
-                totalPrice = dataObj.getJSONObject("total").getString("goods_price");
-                count = dataObj.getJSONObject("total").getString("real_goods_count");
-                mShoppingCartAdapter.notifyDataSetChanged();
-                emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+                    mCheckAllCheckbox.setEnabled(true);
+                    mCheckAllCheckbox.setChecked(parseResult.first == parseResult.second.size());
+                    mSettleAccountBtn.setClickable(parseResult.first > 0);
+                    mSuperRecyclerView.showRecycler();
+                    mDataList.addAll(parseResult.second);
+                    totalPrice = dataObj.getJSONObject("total").getString("goods_price");
+                    count = dataObj.getJSONObject("total").getString("real_goods_count");
+                    mShoppingCartAdapter.notifyDataSetChanged();
+                    emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+                }
             } catch (JSONException e) {
                 emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
                 XmbUtils.showMessage(getActivity(), "服务器返回数据错误");
@@ -266,10 +269,10 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
             dataMap.put("price", goods.getString("goods_price"));
             dataMap.put("market_price_formatted", goods.getString("market_price_formatted"));
             dataMap.put("count", goods.getString("goods_number"));
-            dataMap.put("is_third",goods.getString("is_third"));
-            dataMap.put("is_group",goods.getString("is_group"));
-            dataMap.put("coupon_disable",goods.getString("coupon_disable"));
-            dataMap.put("is_cross_border",goods.getString("is_cross_border"));
+            dataMap.put("is_third", goods.getString("is_third"));
+            dataMap.put("is_group", goods.getString("is_group"));
+            dataMap.put("coupon_disable", goods.getString("coupon_disable"));
+            dataMap.put("is_cross_border", goods.getString("is_cross_border"));
             goodsList.add(dataMap);
             if ("1".equals(goods.getString("flow_order"))) {
                 checkedCount++;
@@ -314,7 +317,7 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                     return;
                 }
-                OrderConfirmActivity.startActivity(getActivity(),is_code);
+                OrderConfirmActivity.startActivity(getActivity(), is_code);
                 break;
             case R.id.checkall:
                 GoodsApi.selectAllInCart(new Listener<JSONObject>() {
@@ -428,7 +431,7 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
     }
 
     @Override
-    public void OnShoppingCartChangeListener(int position,boolean is_checked,int number) {
+    public void OnShoppingCartChangeListener(int position, boolean is_checked, int number) {
         Map<String, String> dataMap = mDataList.get(position);
         GoodsApi.updateCart(dataMap.get("id"), is_checked, number, new Listener<JSONObject>() {
             @Override
@@ -438,6 +441,7 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
                     CommonUtil.show(getActivity(), tt.second, 1000);
                 }
             }
+
             @Override
             public void onFinish() {
                 refresh();

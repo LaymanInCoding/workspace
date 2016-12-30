@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
@@ -23,6 +24,7 @@ import com.duowan.mobile.netroid.NetroidError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.activity.common.SearchActivity;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.mabao.adapter.AddordableAdapter;
 import com.witmoon.xmb.api.FriendshipApi;
@@ -48,21 +50,26 @@ import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
  * 品牌特卖场Activity
  * Created by zhyh on 2015/5/21.
  */
-public class MarketPlaceActivity extends BaseActivity implements AddordableAdapter.OnItemClickListener{
+public class MarketPlaceActivity extends BaseActivity implements AddordableAdapter.OnItemClickListener {
     private SimpleDraweeView mMarketLogoImage;
     private CountDownTextView mCountDownTextView;
     private View view1, view2, view3, view4;
     private TextView default_text, salesnum_text, new_text, stock_text;
+    private RelativeLayout stock_text_layout;
+    private ImageView right_arrow;
     private int page = 1;
     private String typr = "default";
     private ArrayList<Map<String, String>> mDatas;
     private AddordableAdapter adapter;
     private boolean is_start = false;
+    private int price_checked = 2;
     //设置专场
     private String mMarketId;   // 特卖场ID
     private View headerView;
     private Boolean has_footer = false;
     private EmptyLayout emptyLayout;
+
+    private ImageView searchImg;
 
     public static void start(Context context, String marketId) {
         Intent intent = new Intent(context, MarketPlaceActivity.class);
@@ -70,7 +77,7 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
         context.startActivity(intent);
     }
 
-    public static void start(Context context, String marketId,String title) {
+    public static void start(Context context, String marketId, String title) {
         Intent intent = new Intent(context, MarketPlaceActivity.class);
         intent.putExtra("M_ID", marketId);
         intent.putExtra("title", title);
@@ -92,10 +99,16 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
         view2 = findViewById(R.id.view2);
         view3 = findViewById(R.id.view3);
         view4 = findViewById(R.id.view4);
+        searchImg = (ImageView) findViewById(R.id.toolbar_share);
+        searchImg.setImageResource(R.mipmap.search_imags);
+        searchImg.setVisibility(View.VISIBLE);
+        searchImg.setOnClickListener(v -> startActivity(new Intent(this, SearchActivity.class)));
         default_text = (TextView) findViewById(R.id.default_text);
         salesnum_text = (TextView) findViewById(R.id.salesnum_text);
         new_text = (TextView) findViewById(R.id.new_text);
         stock_text = (TextView) findViewById(R.id.stock_text);
+        stock_text_layout = (RelativeLayout) findViewById(R.id.stock_text_layout);
+        right_arrow = (ImageView) findViewById(R.id.right_arrow);
         view1.setOnClickListener(this);
         view2.setOnClickListener(this);
         view3.setOnClickListener(this);
@@ -103,8 +116,8 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
         default_text.setOnClickListener(this);
         salesnum_text.setOnClickListener(this);
         new_text.setOnClickListener(this);
-        stock_text.setOnClickListener(this);
-        adapter = new AddordableAdapter(mDatas, this,"0");
+        stock_text_layout.setOnClickListener(this);
+        adapter = new AddordableAdapter(mDatas, this, "0");
         adapter.setOnItemClickListener(this);
         mRootView = (RecyclerView) findViewById(R.id.goods_gridView);
         layoutManager = new GridLayoutManager(this, 2);
@@ -118,10 +131,10 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
                 .inflate(R.layout.header_market_place, mRootView, false);
         stringAdapter = new HeaderViewRecyclerAdapter(adapter);
         stringAdapter.addHeaderView(headerView);
-        ((GridLayoutManager)layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+        ((GridLayoutManager) layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return ((stringAdapter.getItemCount() - 1 == position && has_footer) || position == 0) ? ((GridLayoutManager)layoutManager).getSpanCount() : 1;
+                return ((stringAdapter.getItemCount() - 1 == position && has_footer) || position == 0) ? ((GridLayoutManager) layoutManager).getSpanCount() : 1;
             }
         });
         mRootView.setAdapter(stringAdapter);
@@ -129,17 +142,18 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
         init();
         mCountDownTextView = (CountDownTextView) headerView.findViewById(R.id.count_down_text);
         mMarketLogoImage = (SimpleDraweeView) headerView.findViewById(R.id.market_place_logo);
-        LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) mMarketLogoImage.getLayoutParams();
+        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mMarketLogoImage.getLayoutParams();
         linearParams.width = MainActivity.screen_width;
         linearParams.height = MainActivity.screen_width * 350 / 750;
         mMarketLogoImage.setLayoutParams(linearParams);
     }
 
-    public void setRecRequest(int page0){
-        if(page == 1){
-            mDatas.clear();
-        }
+    public void setRecRequest(int page0) {
         FriendshipApi.marketplace(mMarketId, page + "", typr, listener);
+    }
+
+    public void setRecRequestPrice(int page0, String asc_or_desc) {
+        FriendshipApi.marketplace_price(mMarketId, page + "", asc_or_desc, typr, listener);
     }
 
     private void init() {
@@ -184,15 +198,17 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
                     if (page != 1) {
                         removeFooterView();
                     }
+                    mRootView.scrollToPosition(0);
                     has_footer = false;
                 } else {
                     if (page == 1) {
                         has_footer = true;
+                        mRootView.scrollToPosition(0);
                     }
                     createLoadMoreView();
                     resetStatus();
                 }
-                if(page == 1){
+                if (page == 1) {
                     emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
                 }
                 page += 1;
@@ -210,6 +226,7 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
                 if (!typr.equals("default")) {
                     page = 1;
                     mDatas.clear();
+                    adapter.notifyDataSetChanged();
                     view1.setVisibility(View.VISIBLE);
                     view2.setVisibility(View.GONE);
                     view3.setVisibility(View.GONE);
@@ -218,7 +235,11 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
                     salesnum_text.setTextColor(Color.parseColor("#333333"));
                     new_text.setTextColor(Color.parseColor("#333333"));
                     stock_text.setTextColor(Color.parseColor("#333333"));
+                    right_arrow.setImageResource(R.mipmap.price_uncheck);
                     typr = "default";
+                    price_checked = 2;
+                    emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
+
                     setRecRequest(1);
                 }
                 break;
@@ -227,6 +248,7 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
                 if (!typr.equals("salesnum")) {
                     page = 1;
                     mDatas.clear();
+                    adapter.notifyDataSetChanged();
                     view1.setVisibility(View.GONE);
                     view2.setVisibility(View.VISIBLE);
                     view3.setVisibility(View.GONE);
@@ -235,7 +257,11 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
                     salesnum_text.setTextColor(Color.parseColor("#c86a66"));
                     new_text.setTextColor(Color.parseColor("#333333"));
                     stock_text.setTextColor(Color.parseColor("#333333"));
+                    right_arrow.setImageResource(R.mipmap.price_uncheck);
                     typr = "salesnum";
+                    price_checked = 2;
+                    emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
+
                     setRecRequest(1);
                 }
                 break;
@@ -244,6 +270,7 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
                 if (!typr.equals("new")) {
                     page = 1;
                     mDatas.clear();
+                    adapter.notifyDataSetChanged();
                     view1.setVisibility(View.GONE);
                     view2.setVisibility(View.GONE);
                     view3.setVisibility(View.VISIBLE);
@@ -252,24 +279,37 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
                     salesnum_text.setTextColor(Color.parseColor("#333333"));
                     new_text.setTextColor(Color.parseColor("#c86a66"));
                     stock_text.setTextColor(Color.parseColor("#333333"));
+                    right_arrow.setImageResource(R.mipmap.price_uncheck);
                     typr = "new";
+                    price_checked = 2;
+                    emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
                     setRecRequest(1);
                 }
                 break;
-            case R.id.stock_text:
-                if (!typr.equals("stock")) {
-                    page = 1;
-                    mDatas.clear();
-                    view1.setVisibility(View.GONE);
-                    view2.setVisibility(View.GONE);
-                    view3.setVisibility(View.GONE);
-                    view4.setVisibility(View.VISIBLE);
-                    default_text.setTextColor(Color.parseColor("#333333"));
-                    salesnum_text.setTextColor(Color.parseColor("#333333"));
-                    new_text.setTextColor(Color.parseColor("#333333"));
-                    stock_text.setTextColor(Color.parseColor("#c86a66"));
-                    typr = "stock";
-                    setRecRequest(1);
+            case R.id.stock_text_layout:
+                page = 1;
+                mDatas.clear();
+                adapter.notifyDataSetChanged();
+                view1.setVisibility(View.GONE);
+                view2.setVisibility(View.GONE);
+                view3.setVisibility(View.GONE);
+                view4.setVisibility(View.VISIBLE);
+                default_text.setTextColor(Color.parseColor("#333333"));
+                salesnum_text.setTextColor(Color.parseColor("#333333"));
+                new_text.setTextColor(Color.parseColor("#333333"));
+                stock_text.setTextColor(Color.parseColor("#c86a66"));
+                typr = "price";
+                if (price_checked == 1) {
+                    right_arrow.setImageResource(R.mipmap.price_check_twice);
+                    price_checked = 2;
+                    setRecRequestPrice(1, "desc");//降序
+                    break;
+                }
+                if (price_checked == 2) {
+                    right_arrow.setImageResource(R.mipmap.price_check_once);
+                    price_checked = 1;
+                    setRecRequestPrice(1, "asc");//升序
+                    break;
                 }
                 break;
         }

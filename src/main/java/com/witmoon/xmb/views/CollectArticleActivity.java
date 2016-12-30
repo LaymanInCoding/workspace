@@ -36,13 +36,16 @@ public class CollectArticleActivity extends BaseActivity {
     }
 
     @Override
-    protected int getActionBarTitleByResId() {
-        return R.string.collect_article;
+    protected String getActionBarTitle() {
+        return "文章收藏";
     }
 
     @Override
     protected void initialize(Bundle savedInstanceState) {
         setTitleColor_(R.color.main_kin);
+        findViewById(R.id.toolbar_title_text).setVisibility(View.VISIBLE);
+        View view = findViewById(R.id.search_textview);
+        view.setVisibility(View.GONE);
         emptyLayout = (EmptyLayout) findViewById(R.id.error_layout);
         initRecycleView();
     }

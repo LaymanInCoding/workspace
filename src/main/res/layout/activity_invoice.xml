@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/top_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/bg_nav"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="8dp">
+
+            <ImageView
+                android:id="@+id/toolbar_left_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_item_pressed"
+                android:paddingRight="8dp"
+                android:src="@mipmap/icon_arrow_back"/>
+
+            <TextView
+                android:id="@+id/toolbar_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:maxLength="20"
+                android:textColor="@color/white"
+                android:textSize="@dimen/toolbar_text_size"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/some_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/dimen_15_dip"
+                android:paddingRight="@dimen/dimen_15_dip"
+                android:text="@string/text_message_shouldknonw"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_28_dip"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f6f6f6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20_dip"
+                android:paddingTop="@dimen/dimen_20_dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_34_dip"
+                    android:text="@string/type_of_invoice"
+                    android:textColor="#555555"
+                    android:textSize="@dimen/dimen_26_dip"/>
+
+                <Button
+                    android:id="@+id/paper_invoice"
+                    android:layout_width="@dimen/dimen_180_dip"
+                    android:layout_height="@dimen/dimen_54_dip"
+                    android:layout_marginLeft="@dimen/dimen_34_dip"
+                    android:layout_marginTop="@dimen/dimen_18_dip"
+                    android:background="@drawable/bg_invoice_text"
+                    android:gravity="center"
+                    android:text="@string/paper_invoice"
+                    android:textColor="#fb5151"
+                    android:textSize="@dimen/dimen_24_dip"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10_dip"
+                android:background="#f6f6f6"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20_dip"
+                android:paddingTop="@dimen/dimen_20_dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_34_dip"
+                    android:text="@string/head_of_invoice"
+                    android:textColor="#555555"
+                    android:textSize="@dimen/dimen_26_dip"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_18_dip"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dimen_5_dip">
+
+                    <Button
+                        android:id="@+id/personal_invoice"
+                        android:layout_width="@dimen/dimen_180_dip"
+                        android:layout_height="@dimen/dimen_54_dip"
+                        android:layout_marginLeft="@dimen/dimen_34_dip"
+                        android:background="@drawable/bg_invoice_text_uncheck"
+                        android:gravity="center"
+                        android:text="@string/personal_invoice"
+                        android:textColor="#555555"
+                        android:textSize="@dimen/dimen_24_dip"/>
+
+                    <Button
+                        android:id="@+id/company_invoice"
+                        android:layout_width="@dimen/dimen_180_dip"
+                        android:layout_height="@dimen/dimen_54_dip"
+                        android:layout_marginLeft="@dimen/dimen_36_dip"
+                        android:background="@drawable/bg_invoice_text"
+                        android:gravity="center"
+                        android:text="@string/company_invoice"
+                        android:textColor="#fb5151"
+                        android:textSize="@dimen/dimen_24_dip"/>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/company_info_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_68_dip"
+                    android:layout_marginLeft="@dimen/dimen_34_dip"
+                    android:layout_marginRight="@dimen/dimen_34_dip"
+                    android:layout_marginTop="@dimen/dimen_26_dip"
+                    android:background="@drawable/bg_company_info"
+                    android:hint="@string/hint_of_invoice"
+                    android:paddingLeft="@dimen/dimen_30_dip"
+                    android:textColor="#aaaaaa"
+                    android:textSize="@dimen/dimen_24_dip"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10_dip"
+                android:background="#f6f6f6"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_20_dip"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_5_dip"
+                android:paddingTop="@dimen/dimen_20_dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_34_dip"
+                    android:text="@string/content_of_invoice"
+                    android:textColor="#555555"
+                    android:textSize="@dimen/dimen_26_dip"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/invoice_content_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_34_dip"
+                    android:paddingBottom="@dimen/dimen_26_dip">
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/next_step"
+                android:layout_width="@dimen/dimen_400_dip"
+                android:layout_height="@dimen/dimen_60_dip"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/dimen_30_dip"
+                android:layout_marginTop="@dimen/dimen_50_dip"
+                android:background="@drawable/bg_invoice_ok"
+                android:text="@string/invoice_confirm"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/dimen_26_dip"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

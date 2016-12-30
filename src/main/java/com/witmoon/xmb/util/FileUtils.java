@@ -1,5 +1,6 @@
 package com.witmoon.xmb.util;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
@@ -473,7 +474,7 @@ public class FileUtils {
 
     /**
      * 删除空目录
-     * <p/>
+     * <p>
      * 返回 0代表成功 ,1 代表没有删除权限, 2代表不是空目录,3 代表未知错误
      *
      * @return
@@ -974,7 +975,7 @@ public class FileUtils {
     public static void createFile() {
         if (checkSaveLocationExists()) {
             isCreateFileSucess = true;
-            updateDir = new File(AppContext.context().getExternalCacheDir()+ "/" + KonkaApplication + "/");
+            updateDir = new File(AppContext.context().getExternalCacheDir() + "/" + KonkaApplication + "/");
             updateFile = new File(updateDir + "/" + "xiaomabao.apk");
 
             if (!updateDir.exists()) {
@@ -1003,7 +1004,7 @@ public class FileUtils {
             }
             if (updateFile.isFile()) {
                 updateFile.delete();
-                Log.e("删除","删除成功");
+                Log.e("删除", "删除成功");
             }
         }
     }
@@ -1016,20 +1017,20 @@ public class FileUtils {
             return getDataColumn(context, uri, null, null);
         }
         // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+        else  {
             return uri.getPath();
         }
 
-        return null;
     }
+
 
     /**
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */

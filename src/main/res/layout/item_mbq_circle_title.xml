@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/dimen_10_dip"
         android:layout_marginBottom="@dimen/dimen_10_dip"
         android:layout_height="wrap_content"
-        android:textColor="@color/mbq_circle_title"
+        android:textColor="@color/app_main_deep"
         android:textSize="@dimen/dimen_28_dip"/>
     <View
         style="@style/mbq_horizontal_divider_full" />

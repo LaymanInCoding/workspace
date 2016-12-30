@@ -31,10 +31,9 @@ import java.util.List;
  * 订单Fragment
  * Created by zhyh on 2015/6/22.
  */
-public class OrderFragment extends BaseRecyclerViewFragmentV2 implements OrderAdapter.OnItemButtonWlClickListener{
+public class OrderFragment extends BaseRecyclerViewFragmentV2 {
     public static final String TYPE_KEY = "all";
     private String mOrderType;
-    private boolean is_type = false;
 
     public static OrderFragment newInstance(String type) {
         OrderFragment orderFragment = new OrderFragment();
@@ -43,11 +42,13 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 implements OrderAd
         orderFragment.setArguments(bundle);
         return orderFragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mOrderType = getArguments().getString(TYPE_KEY);
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -56,12 +57,10 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 implements OrderAd
     @Override
     protected BaseRecyclerAdapter getListAdapter() {
         final OrderAdapter orderAdapter = new OrderAdapter(getActivity());
-        orderAdapter.setOnItemButtonWlClickListener(this);
         orderAdapter.setOnItemButtonClickListener(new OrderAdapter.OnItemButtonClickListener() {
             @Override
             public void onItemButtonClick(Order order) {
                 if (OrderType.getType(order.getOrderType()) == OrderType.TYPE_FINISHED) {
-                    is_type = true;
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("ORDER", order);
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.GOODS_EVALUATE, bundle);
@@ -105,11 +104,13 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 implements OrderAd
                             UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ORDER, bundle);
                             getActivity().finish();
                         }
+
                         @Override
                         public void onError(NetroidError error) {
                             super.onError(error);
                             hideWaitDialog();
                         }
+
                         @Override
                         public void onFinish() {
                             super.onFinish();
@@ -128,8 +129,9 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 implements OrderAd
     }
 
     @Override
-    protected ListEntity parseResponse(final JSONObject json){
+    protected ListEntity parseResponse(final JSONObject json) {
         JSONArray orderArray = null;
+        Log.e("ORderArray", json.toString());
         try {
             orderArray = json.getJSONArray("data");
         } catch (JSONException e) {
@@ -139,6 +141,7 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 implements OrderAd
         for (int i = 0; i < orderArray.length(); i++) {
             Order order = null;
             try {
+//                Log.e("Order_content",orderArray.getJSONObject(i).toString());
                 order = Order.parse(orderArray.getJSONObject(i));
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -161,20 +164,5 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 implements OrderAd
             }
         };
     }
-//    @Override
-//    protected void onItemClick(View view, int position) {
-//        Order order = (Order) mAdapter.getData().get(position);
-//        Bundle argument = new Bundle();
-//        argument.putString(OrderDetailFragment.KEY_ORDER_TYPE, order.getOrderType());
-//        argument.putString(OrderDetailFragment.KEY_ORDER_ID, order.getId());
-//        UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ORDER_DETAIL, argument);
-//    }
 
-    @Override
-    public void onItemButtonWlClick(Order order) {
-        Bundle argument = new Bundle();
-        argument.putString("type", order.getShipping_name());
-        argument.putString("invoice", order.getInvoice_no());
-        UIHelper.showSimpleBack(getContext(), SimpleBackPage.LOGISTICS,argument);
-    }
 }

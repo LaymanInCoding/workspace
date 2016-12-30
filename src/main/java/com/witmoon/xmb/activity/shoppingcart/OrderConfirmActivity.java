@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +30,9 @@ import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
+import com.witmoon.xmb.InvoiceActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.shoppingcart.adapter.OrderConfirmAdapterV2;
 import com.witmoon.xmb.api.ApiHelper;
@@ -78,6 +81,8 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
     public static final int GET_IMAGE_VIA_CAMERA = 0x03;
     public static final int IMAGE_OPEN = 0x04;
     public static final int MB_CARD_CODE = 0x05;
+    public static final int INVOICE_CODE = 0x06;
+    public static final int MABAO_BEAN_CODE = 0x07;
     private LinearListView mGoodsListView;
     private WaitingDialog mWaitingDialog;
     private View mReceiverLayout;   // 收货地址
@@ -89,23 +94,27 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
     private TextView mTotalPriceText;   // 商品总价格
     private TextView mShippingFeeText;  // 运费
     private TextView mDiscountText;  // 优惠金额
-    private TextView mUseCashCouponText, goods_envelope, goods_dvolume,mMbCardText;
+    private TextView mUseCashCouponText, goods_envelope, goods_dvolume, mMbCardText, mInvoiceText, mUseBeanText;
     private TextView mUseBonusText;
     private TextView id_card;
     private TextView line;
     private float is_goods_envelope = 0, is_goods_dvolume = 0;
-    private LinearLayout error_prompt__information,over_sea_container;
-    private EditText mName, mId,postscriptText;//姓名---身份
+    private LinearLayout error_prompt__information, over_sea_container;
+    private EditText mName, mId, postscriptText;//姓名---身份
     private String str_name, str_id;
     private String mOrderMoney; //商品总额
     private Button mButton;
-    private String mReceiverAddressId;  // 送货地址ID
-    private String mCashCouponId;       // 客户选择代金券ID
+    private String mReceiverAddressId ;  // 送货地址ID
+    private String mCashCouponId = "";       // 客户选择代金券ID
     private ArrayList<String> mSelectedCard = new ArrayList<>();
-    private String mBonusId;       // 客户选择红包或兑换ID
+    private String mBonusId = "";       // 客户选择红包或兑换ID
+    private String mBeanId = ""; //麻豆金额
+    private String inv_type = "";  //发票类型
+    private String inv_payee = ""; //发票抬头
+    private String inv_content; //发票内容
     private LinearLayout k_lin;
     private EmptyLayout emptyLayout;
-    private ImageView frontImageView,backendImageView;
+    private ImageView frontImageView, backendImageView;
     String name;
     private boolean is_code;
     private String localTempImgDir = "localTempImgDir";
@@ -146,7 +155,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
         mWaitingDialog = new WaitingDialog(this);
         name_text = (TextView) findViewById(R.id.receiver_name_text);
         mName = (EditText) findViewById(R.id.receiver_name);
-        postscriptText = (EditText)findViewById(R.id.postscript);
+        postscriptText = (EditText) findViewById(R.id.postscript);
         k_lin = (LinearLayout) findViewById(R.id.k_lin);
         over_sea_container = (LinearLayout) findViewById(R.id.over_sea_container);
         mId = (EditText) findViewById(R.id.id_no);
@@ -168,15 +177,19 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
         mUseCashCouponText = (TextView) findViewById(R.id.use_cash_coupon);
         mMbCardText = (TextView) findViewById(R.id.mb_card);
         mUseBonusText = (TextView) findViewById(R.id.use_bonus);
+        mUseBeanText = (TextView) findViewById(R.id.use_mabao_bean);
+        mUseBeanText.setOnClickListener(this);
         mUseCashCouponText.setOnClickListener(this);
         mUseBonusText.setOnClickListener(this);
+        mInvoiceText = (TextView) findViewById(R.id.invoice_message);
+        mInvoiceText.setOnClickListener(this);
         mMbCardText.setOnClickListener(this);
-        frontImageView = (ImageView)findViewById(R.id.post_add_front_pic);
+        frontImageView = (ImageView) findViewById(R.id.post_add_front_pic);
         frontImageView.setOnClickListener(this);
 
         findViewById(R.id.post_add_submit).setOnClickListener(this);
 
-        backendImageView = (ImageView)findViewById(R.id.post_add_backend_pic);
+        backendImageView = (ImageView) findViewById(R.id.post_add_backend_pic);
         backendImageView.setOnClickListener(this);
         mButton = (Button) findViewById(R.id.submit_name_id);
         mButton.setTextColor(Color.WHITE);
@@ -190,10 +203,10 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
         emptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsApi.checkOrder(mBonusId, mCashCouponId, mSelectedCard, mCheckCallback);
+                GoodsApi.checkOrder(mBonusId, mCashCouponId, mSelectedCard, mBeanId, mCheckCallback);
             }
         });
-        GoodsApi.checkOrder(mBonusId, mCashCouponId,mSelectedCard, mCheckCallback);
+        GoodsApi.checkOrder(mBonusId, mCashCouponId, mSelectedCard, mBeanId, mCheckCallback);
     }
 
     private boolean is_over_sea;
@@ -226,9 +239,10 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
 
                 mOrderMoney = dataObj.getString("goods_amount");
                 mTotalPaymentText.setText(dataObj.getString("order_amount_formatted"));
-                mTotalPriceText.setText( dataObj.getString("goods_amount_formatted"));
+                mTotalPriceText.setText(dataObj.getString("goods_amount_formatted"));
                 mShippingFeeText.setText(dataObj.getString("shipping_fee_formatted"));
                 mDiscountText.setText(dataObj.getString("discount_formatted"));
+
                 if (dataObj.has("surplus")) {
                     mMbCardText.setText(dataObj.getString("surplus"));
                 }
@@ -248,20 +262,20 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                         .getString("city_name") + receiverObj.getString("district_name") +
                         receiverObj.getString("address"));
                 String _name = receiverObj.getString("consignee");
-                if(!receiverObj.has("idcard")){
+                if (!receiverObj.has("idcard")) {
                     is_over_sea = true;
                 }
                 JSONObject mJSONObject = (JSONObject) receiverObj.get("idcard");
                 String is_black = mJSONObject.getInt("is_black") + "";
                 String identity_card = mJSONObject.getString("identity_card");
-                if(!mJSONObject.getString("identity_card_front_thumb").equals("")){
-                    Netroid.displayImage(mJSONObject.getString("identity_card_front_thumb"),frontImageView);
-                }else{
+                if (!mJSONObject.getString("identity_card_front_thumb").equals("")) {
+                    Netroid.displayImage(mJSONObject.getString("identity_card_front_thumb"), frontImageView);
+                } else {
                     is_over_sea = false;
                 }
-                if(!mJSONObject.getString("identity_card_backend_thumb").equals("")){
-                    Netroid.displayImage(mJSONObject.getString("identity_card_backend_thumb"),backendImageView);
-                }else{
+                if (!mJSONObject.getString("identity_card_backend_thumb").equals("")) {
+                    Netroid.displayImage(mJSONObject.getString("identity_card_backend_thumb"), backendImageView);
+                } else {
                     is_over_sea = false;
                 }
 
@@ -309,16 +323,16 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
 
     private List<Map<String, Object>> parseSupplier(JSONObject goodsObject)
             throws JSONException {
-        List<Map<String, Object>> dataList =  new ArrayList<>();
+        List<Map<String, Object>> dataList = new ArrayList<>();
 
         Iterator it = goodsObject.keys();
         while (it.hasNext()) {
             String key = (String) it.next();
             JSONObject value = goodsObject.getJSONObject(key);
             JSONArray goodsArray = value.getJSONArray("goods_list");
-            List<Map<String,String>> tmpDataList = new ArrayList<>();
+            List<Map<String, String>> tmpDataList = new ArrayList<>();
             Map<String, Object> tmpDataMap = new HashMap<>();
-            for(int i=0;i<goodsArray.length();i++){
+            for (int i = 0; i < goodsArray.length(); i++) {
                 JSONObject goods = goodsArray.getJSONObject(i);
                 Map<String, String> dataMap = new HashMap<>();
                 dataMap.put("title", goods.getString("goods_name"));
@@ -330,12 +344,12 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 dataMap.put("count", goods.getString("goods_number"));
                 tmpDataList.add(dataMap);
             }
-            tmpDataMap.put("goods_list",tmpDataList);
-            tmpDataMap.put("number",value.getString("number"));
-            tmpDataMap.put("total_money",value.getString("total_money"));
-            tmpDataMap.put("cross_border_money",value.getString("cross_border_money"));
-            tmpDataMap.put("shipping_fee",value.getString("shipping_fee"));
-            tmpDataMap.put("supplier_name",key);
+            tmpDataMap.put("goods_list", tmpDataList);
+            tmpDataMap.put("number", value.getString("number"));
+            tmpDataMap.put("total_money", value.getString("total_money"));
+            tmpDataMap.put("cross_border_money", value.getString("cross_border_money"));
+            tmpDataMap.put("shipping_fee", value.getString("shipping_fee"));
+            tmpDataMap.put("supplier_name", key);
             dataList.add(tmpDataMap);
         }
         return dataList;
@@ -343,8 +357,12 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
 
     // 提交订单回调接口
     private Listener<JSONObject> submitCallback = new Listener<JSONObject>() {
+
+
         @Override
         public void onSuccess(JSONObject response) {
+
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
             if (!twoTuple.first) {
                 XmbUtils.showMessage(OrderConfirmActivity.this, twoTuple.second);
@@ -352,11 +370,11 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
             }
             try {
                 JSONObject jsonObject = response.getJSONObject("data").getJSONObject("order_info");
-                if(jsonObject.getDouble("order_amount") == 0.00){
+                if (jsonObject.getDouble("order_amount") == 0.00) {
                     Intent intent = new Intent(OrderConfirmActivity.this, OrderPaySuccessActivity.class);
                     intent.putExtra("ORDER_ID", jsonObject.getString("order_id"));
                     startActivity(intent);
-                }else{
+                } else {
                     OrderSubmitSuccessActivity.startActivity(OrderConfirmActivity.this, jsonObject.toString());
                     AppContext.showToastShort("提交订单成功, 请尽快完成支付");
                 }
@@ -398,12 +416,22 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 bundle.putString("money", mOrderMoney);
                 UIHelper.showSimpleBackForResult(this, 2, SimpleBackPage.CASH_COUPON, bundle);
                 break;
+            case R.id.invoice_message:
+                Intent intent = new Intent(this, InvoiceActivity.class);
+                intent.putExtra("invoice_payee", inv_payee);
+                intent.putExtra("invoice_content", inv_content);
+                startActivityForResult(intent, INVOICE_CODE);
+                break;
             case R.id.use_bonus:
                 if (is_goods_dvolume > 0.00) {
                     XmbUtils.showMessage(OrderConfirmActivity.this, "您已选择代金券！");
                     break;
                 }
                 doSearchBonus();
+                break;
+            case R.id.use_mabao_bean:
+                bundle.putString("mabaobean_number", mBeanId);
+                UIHelper.showSimpleBackForResult(this, MABAO_BEAN_CODE, SimpleBackPage.BeanUse,bundle);
                 break;
             case R.id.submit_name_id:
                 if (isCheck()) {
@@ -469,11 +497,11 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 task.execute();
                 break;
             case R.id.next_step_btn:
-                if(mReceiverAddressId == null){
-                    XmbUtils.showMessage(this,"请选择收货地址");
+                if (mReceiverAddressId == null) {
+                    XmbUtils.showMessage(this, "请选择收货地址");
                     return;
                 }
-                if(!is_over_sea){
+                if (!is_over_sea) {
                     XmbUtils.showMessage(this, "海外直邮必须上传身份证照片");
                     return;
                 }
@@ -485,14 +513,21 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 String postscript = postscriptText.getText().toString();
                 if (k_lin.getVisibility() == View.GONE) {
                     findViewById(R.id.next_step_btn).setClickable(false);
-                    GoodsApi.submitOrder(mReceiverAddressId, mCashCouponId, mBonusId, name, str_id_card,postscript,mSelectedCard, submitCallback);
+                    if (inv_payee.equals("个人")) {
+                        GoodsApi.submitOrder(mReceiverAddressId, mCashCouponId, mBonusId, mBeanId, name, str_id_card, postscript, mSelectedCard, inv_type, "", inv_content, submitCallback);
+                    } else {
+                        GoodsApi.submitOrder(mReceiverAddressId, mCashCouponId, mBonusId, mBeanId, name, str_id_card, postscript, mSelectedCard, inv_type, inv_payee, inv_content, submitCallback);
+                    }
                 } else {
                     if (id_card.getVisibility() == View.VISIBLE && name_text.getVisibility() == View.VISIBLE) {
-                        GoodsApi.submitOrder(mReceiverAddressId, mCashCouponId, mBonusId, name, str_id_card,postscript,mSelectedCard, submitCallback);
+                        if (inv_payee.equals("个人")) {
+                            GoodsApi.submitOrder(mReceiverAddressId, mCashCouponId, mBonusId, mBeanId, name, str_id_card, postscript, mSelectedCard, inv_type, "", inv_content, submitCallback);
+                        } else {
+                            GoodsApi.submitOrder(mReceiverAddressId, mCashCouponId, mBonusId, mBeanId, name, str_id_card, postscript, mSelectedCard, inv_type, inv_payee, inv_content, submitCallback);
+                        }
                     } else {
                         XmbUtils.showMessage(this, "请先验证身份！");
                     }
-//                }
                 }
                 break;
         }
@@ -503,11 +538,11 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
         LinearLayout containerLayout = new LinearLayout(this);
         containerLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams
                 .MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        containerLayout.setPadding(DensityUtil.dip2px(this,25), DensityUtil.dip2px(this,10), DensityUtil.dip2px(this,25), 0);
+        containerLayout.setPadding(DensityUtil.dip2px(this, 25), DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 25), 0);
         final EditText input = new EditText(this);
-        input.setTextSize(DensityUtil.dip2px(this,6));
+        input.setTextSize(DensityUtil.dip2px(this, 6));
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        input.setPadding(DensityUtil.dip2px(this,10),DensityUtil.dip2px(this,10),DensityUtil.dip2px(this,10),DensityUtil.dip2px(this,10));
+        input.setPadding(DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 10));
         input.setBackgroundResource(R.drawable.bg_input_area);
         input.setHint("请输入兑换券或红包序列号");
         input.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams
@@ -551,7 +586,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 mUseCashCouponText.setText("");
                 goods_envelope.setText("红包或兑换券: ￥" + is_goods_envelope);
                 // 选择红包后刷新界面
-                GoodsApi.checkOrder(mBonusId, mCashCouponId,mSelectedCard, mCheckCallback);
+                GoodsApi.checkOrder(mBonusId, mCashCouponId, mSelectedCard, mBeanId, mCheckCallback);
             } catch (JSONException e) {
                 XmbUtils.showMessage(OrderConfirmActivity.this, "服务器异常");
             }
@@ -572,7 +607,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                     mNoReceiverTipView.setVisibility(View.GONE);
                     ReceiverAddress addr = (ReceiverAddress) data.getSerializableExtra("address");
                     mReceiverAddressId = addr.getId();
-                    GoodsApi.checkOrderV2(mBonusId, mCashCouponId, mReceiverAddressId,mSelectedCard, mCheckCallback);
+                    GoodsApi.checkOrderV2(mBonusId, mCashCouponId, mReceiverAddressId, mSelectedCard, mBeanId, mCheckCallback);
                 }
                 break;
             case CASH_COUPON_CODE:
@@ -585,9 +620,9 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                         is_goods_dvolume = Float.valueOf(dataMap.get("type_money"));
                         goods_dvolume.setText("代金券：￥" + is_goods_dvolume);
                         // 选择红包后刷新界面
-                        GoodsApi.checkOrder(mBonusId, mCashCouponId,mSelectedCard, mCheckCallback);
+                        GoodsApi.checkOrder(mBonusId, mCashCouponId, mSelectedCard, mBeanId, mCheckCallback);
                     } else {
-                        GoodsApi.checkOrder("", "",mSelectedCard, mCheckCallback);
+                        GoodsApi.checkOrder("", "", mSelectedCard, mBeanId, mCheckCallback);
                         goods_dvolume.setText("");
                         mUseCashCouponText.setText("");
                     }
@@ -595,15 +630,23 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 break;
             case MB_CARD_CODE:
                 if (resultCode == RESULT_OK) {
-                    mSelectedCard  = data.getStringArrayListExtra("data");
-                    GoodsApi.checkOrder(mBonusId, mCashCouponId,mSelectedCard, mCheckCallback);
+                    mSelectedCard = data.getStringArrayListExtra("data");
+                    GoodsApi.checkOrder(mBonusId, mCashCouponId, mSelectedCard, mBeanId, mCheckCallback);
+                }
+                break;
+            case INVOICE_CODE:
+                if (resultCode == RESULT_OK) {
+                    inv_type = data.getStringExtra("inv_type");
+                    inv_content = data.getStringExtra("inv_content");
+                    inv_payee = data.getStringExtra("inv_payee");
+                    mInvoiceText.setText(inv_payee);
                 }
                 break;
             case IMAGE_OPEN:
                 Uri uri = data.getData();
                 if (!TextUtils.isEmpty(uri.getAuthority())) {
                     //查询选择图片
-                    settingImg(uri,current_img);
+                    settingImg(uri, current_img);
                 }
                 break;
             case GET_IMAGE_VIA_CAMERA:
@@ -612,16 +655,23 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 try {
                     Uri u = Uri.parse(android.provider.MediaStore.Images.Media.insertImage(getContentResolver(),
                             f.getAbsolutePath(), null, null));
-                    settingImg(u,current_img);
+                    settingImg(u, current_img);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+                }
+                break;
+            case MABAO_BEAN_CODE:
+                if (resultCode == RESULT_OK) {
+                    mBeanId = data.getStringExtra("mabaobean_number");
+                    GoodsApi.checkOrder(mBonusId, mCashCouponId, mSelectedCard, mBeanId, mCheckCallback);
+                    mUseBeanText.setText("已使用" + mBeanId + "麻豆");
                 }
                 break;
         }
     }
 
     //外部查询返回
-    private void settingImg(Uri uri,int type) {
+    private void settingImg(Uri uri, int type) {
         mBitmap = null;
         Cursor cursor = managedQuery(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
         //返回 没找到选择图片
@@ -630,24 +680,24 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
         }
         //光标移动至开头 获取图片路径
         cursor.moveToFirst();
-        if(type == 1) {
+        if (type == 1) {
             pathImage1 = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        }else if(type == 2){
+        } else if (type == 2) {
             pathImage2 = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
         }
         try {
-            if(type == 1) {
+            if (type == 1) {
                 mBitmap = BitmapUtils.getCompressedImage(pathImage1, 5);
-            }else if(type == 2){
+            } else if (type == 2) {
                 mBitmap = BitmapUtils.getCompressedImage(pathImage2, 5);
             }
         } catch (NullPointerException e) {
             XmbUtils.showMessage(OrderConfirmActivity.this, "当前相片不可用，重新选择或拍照！");
             return;
         }
-        if(current_img == 1){
+        if (current_img == 1) {
             frontImageView.setImageBitmap(mBitmap);
-        }else{
+        } else {
             backendImageView.setImageBitmap(mBitmap);
         }
     }
@@ -752,10 +802,10 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
         protected String doInBackground(OrderConfirmActivity orderConfirmActivity,
                                         Void... params) {
             ArrayList<File> arrayList = new ArrayList<>();
-            BitmapDrawable bmpDrawable1 = (BitmapDrawable)frontImageView.getDrawable();
+            BitmapDrawable bmpDrawable1 = (BitmapDrawable) frontImageView.getDrawable();
             Bitmap bmp1 = bmpDrawable1.getBitmap();
 
-            BitmapDrawable bmpDrawable2 = (BitmapDrawable)backendImageView.getDrawable();
+            BitmapDrawable bmpDrawable2 = (BitmapDrawable) backendImageView.getDrawable();
             Bitmap bmp2 = bmpDrawable2.getBitmap();
             arrayList.add(saveAvatarBitmap(bmp1, pathImage1));
             arrayList.add(saveAvatarBitmap(bmp2, pathImage2));
@@ -770,7 +820,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 }
                 pm.put("real_name", name);
                 pm.put("identity_card", str_id_card);
-                String response = HttpUtility.post("http://api.xiaomabao.com/idcard/update", null, pm,"photo", arrayList);
+                String response = HttpUtility.post("https://api.xiaomabao.com/idcard/update", null, pm, "photo", arrayList);
                 JSONObject respObj = new JSONObject(response);
                 if (respObj.getString("status").equals("0")) {
                     return respObj.getString("msg");
@@ -790,7 +840,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 return;
             }
             is_over_sea = true;
-            XmbUtils.showMessage(OrderConfirmActivity.this,"操作成功");
+            XmbUtils.showMessage(OrderConfirmActivity.this, "操作成功");
         }
     }
 

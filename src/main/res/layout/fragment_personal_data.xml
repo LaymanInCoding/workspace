@@ -10,14 +10,26 @@
         android:layout_marginTop="4dp"
         android:background="@color/white">
 
-        <com.witmoon.xmb.ui.widget.CircleImageView
+        <!--<com.witmoon.xmb.ui.widget.CircleImageView-->
+            <!--android:id="@+id/me_avatar_img"-->
+            <!--android:layout_width="96dp"-->
+            <!--android:layout_height="96dp"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginBottom="24dp"-->
+            <!--android:layout_marginTop="24dp"-->
+            <!--android:src="@mipmap/ic_launcher"/>-->
+        <com.makeramen.roundedimageview.RoundedImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_centerHorizontal="true"
             android:id="@+id/me_avatar_img"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_marginBottom="24dp"
+            android:src="@mipmap/touxiang"
+            app:riv_corner_radius="@dimen/dimen_10_dip"
+            app:riv_border_width="@dimen/dimen_5_dip"
+            app:riv_border_color="#3f000000"/>
 
         <GridLayout
             android:layout_width="match_parent"
@@ -42,78 +54,6 @@
                 style="@style/horizontal_divider"
                 android:layout_columnSpan="3"/>
 
-            <TextView
-                android:layout_marginLeft="12dp"
-                android:visibility="gone"
-                android:text="宝宝生日："/>
-
-            <EditText
-                android:id="@+id/baby_birthday"
-                style="@style/inputAreaEditText"
-                android:layout_columnSpan="2"
-                android:layout_gravity="fill_horizontal"
-                android:focusable="false"
-                android:visibility="gone"
-                android:hint="@string/tip_setting"/>
-
-            <View
-                style="@style/horizontal_divider"
-                android:visibility="gone"
-                android:layout_columnSpan="3"/>
-
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="12dp"
-                android:visibility="gone"
-                android:text="预  产  期："/>
-
-            <EditText
-                android:id="@+id/due_date"
-                style="@style/inputAreaEditText"
-                android:layout_columnSpan="2"
-                android:layout_gravity="fill_horizontal"
-                android:focusable="false"
-                android:visibility="gone"
-                android:hint="@string/tip_setting"/>
-
-            <View
-                style="@style/horizontal_divider"
-                android:visibility="gone"
-                android:layout_columnSpan="3"/>
-
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="12dp"
-                android:visibility="gone"
-                android:text="宝宝性别："/>
-
-            <RadioGroup
-                android:id="@+id/baby_sex"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/baby_sex_male"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
-                    android:button="@drawable/choice_indicator_circle"
-                    android:paddingLeft="4dp"
-                    android:text="男"/>
-
-                <RadioButton
-                    android:id="@+id/baby_sex_female"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/choice_indicator_circle"
-                    android:paddingLeft="4dp"
-                    android:text="女"/>
-            </RadioGroup>
-
-            <View
-                style="@style/horizontal_divider"
-                android:visibility="gone"
-                android:layout_columnSpan="3"/>
 
             <TextView
                 android:layout_gravity="center_vertical"

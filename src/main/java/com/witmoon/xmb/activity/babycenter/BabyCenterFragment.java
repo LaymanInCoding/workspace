@@ -13,17 +13,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
@@ -32,6 +33,7 @@ import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.babycenter.Adapter.DayNumberAdapter;
+import com.witmoon.xmb.activity.babycenter.Adapter.RecGoodsAdapter;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.mbq.activity.PostDetailActivity;
 import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
@@ -73,38 +75,34 @@ import library.CropHandler;
 import library.CropHelper;
 import library.CropParams;
 
-public class BabyCenterFragment extends BaseFragment  implements  DialogInterface.OnClickListener, CropHandler {
+public class BabyCenterFragment extends BaseFragment implements DialogInterface.OnClickListener, CropHandler {
+
+    private boolean first_baby_launch;
     private View rootView;
     private int current_type = 0;
     private RecyclerView horizonta_recycleview;
     private DayNumberAdapter daynum_adapter;
-    private ArrayList<HashMap<String,String>> daynumArrayList = new ArrayList<>();
+    private ArrayList<HashMap<String, String>> daynumArrayList = new ArrayList<>();
     private int current_daynum = 0;
     private EmptyLayout emptyLayout;
-    private View left_btn,right_btn;
+    private View left_btn, right_btn;
     private ImageView me_avatar_img;
     Date start_date = null, current_date, end_date;
     private View add_tools;
     private String btype = "";
     private TextView add_tools2;
-    private View status1_container,status2_container;
-    private int cnt = 0,over = 0;
+    private View status1_container, status2_container;
+    private int cnt = 0, over = 0;
     private BabyCenterFragment _this = this;
-    private TextView baby_weight_textview,baby_length_textview,due_date_textview,baby_weight_textview_hint,baby_length_textview_hint,due_date_textview_hint,dayinfo_summary;
+    private TextView baby_weight_textview, baby_length_textview, due_date_textview, baby_weight_textview_hint, baby_length_textview_hint, due_date_textview_hint, dayinfo_summary;
     private CropParams mCropParams;
     private File mAvatar;
-    private View jump_setting,backtotoday;
+    private View jump_setting, backtotoday;
+    private View more_message_img;
     private int dayCnt = 0;
+    private boolean is_babypic_change = false;
+    private RecyclerView recgood_recycler;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     private void configToolbar() {
         Toolbar toolbar = ((BaseActivity) getActivity()).getToolBar();
@@ -114,19 +112,35 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         aQuery.id(R.id.toolbar_logo_img).gone();
         aQuery.id(R.id.toolbar_right_img1).gone();
         aQuery.id(R.id.toolbar_right_img2).gone();
-        aQuery.id(R.id.toolbar_title_text).visible().text("萌宝");
+        aQuery.id(R.id.toolbar_title_text).visible().text("我的状态");
         ((MainActivity) getActivity()).setTitleColor_(R.color.main_kin);
     }
 
-    private void hideConfigToolbar(){
+    private void hideConfigToolbar() {
         Toolbar toolbar = ((BaseActivity) getActivity()).getToolBar();
         AQuery aQuery = new AQuery(getActivity(), toolbar);
         aQuery.id(R.id.top_toolbar).gone();
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    private void checkFirstOpen() {
+        String flag = AppContext.getProperty(BabyGuideActivity.KEY_FLAG_FIRST_LAUNCH);
+        Log.e("flag", flag);
+        if (TextUtils.isEmpty(flag) || flag.equals("true")) {
+            first_baby_launch = true;
+        } else {
+            first_baby_launch = false;
+        }
+        Log.e("first-launch", first_baby_launch + "");
+        if (first_baby_launch && AppContext.instance().isLogin()) {
+            Intent intent = new Intent(getActivity(), BabyGuideActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_my_status, container, false);
+            recgood_recycler = (RecyclerView) rootView.findViewById(R.id.recgood_recycler);
             status1_container = rootView.findViewById(R.id.status1_container);
             status2_container = rootView.findViewById(R.id.status2_container);
             emptyLayout = (EmptyLayout) rootView.findViewById(R.id.error_layout);
@@ -184,14 +198,15 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         return rootView;
     }
 
-    private void setCurrentStatus(){
-        if(AppContext.instance().isLogin()){
-            if(AppContext.getLoginInfo().getIs_baby_add().equals("true")){
+    private void setCurrentStatus() {
+        if (AppContext.instance().isLogin()) {
+            if (AppContext.getLoginInfo().getIs_baby_add().equals("true")) {
+                checkFirstOpen();
                 current_type = 1;
-            }else{
+            } else {
                 current_type = 0;
             }
-        }else{
+        } else {
             current_type = 0;
         }
         if (current_type == 0) {
@@ -199,15 +214,15 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
             status1_container.setVisibility(View.VISIBLE);
             status2_container.setVisibility(View.GONE);
             bindMyStatusEvent();
-            if (MainActivity.current_tab_index == 0){
+            if (MainActivity.current_tab_index == 0) {
                 configToolbar();
             }
-        }else{
+        } else {
             status1_container.setVisibility(View.GONE);
             status2_container.setVisibility(View.GONE);
-            if (daynumArrayList.size() != 0){
+            if (daynumArrayList.size() != 0) {
                 status2_container.setVisibility(View.VISIBLE);
-                if (MainActivity.current_tab_index == 0){
+                if (MainActivity.current_tab_index == 0) {
                     hideConfigToolbar();
                 }
             }
@@ -217,12 +232,12 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         }
     }
 
-    private void initView(){
+    private void initView() {
         requestData("");
     }
 
-    private void requestToolkit(String dateStr){
-        MengbaoApi.getToolkits(dateStr,new Listener<JSONObject>() {
+    private void requestToolkit(String dateStr) {
+        MengbaoApi.getToolkits(dateStr, new Listener<JSONObject>() {
             @Override
             public void onSuccess(JSONObject response) {
                 LinearLayout tools_container = (LinearLayout) rootView.findViewById(R.id.tools_container);
@@ -255,17 +270,17 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                         TextView contentView = (TextView) linearLayout.findViewById(R.id.tool_desc);
                         ImageView imageView = (ImageView) linearLayout.findViewById(R.id.tool_img);
                         LinearLayout tool_detail_container = (LinearLayout) linearLayout.findViewById(R.id.tool_detail_container);
-                        if (jsonObject.has("toolkit_detail")){
+                        if (jsonObject.has("toolkit_detail")) {
                             contentView.setVisibility(View.GONE);
                             tool_detail_container.removeAllViews();
                             tool_detail_container.setVisibility(View.VISIBLE);
                             JSONArray details = jsonObject.getJSONArray("toolkit_detail");
-                            if (details.length() == 0){
+                            if (details.length() == 0) {
                                 tool_detail_container.setVisibility(View.GONE);
                                 contentView.setVisibility(View.VISIBLE);
                             }
                             int length = details.length() > 3 ? 3 : details.length();
-                            for (int j = 0; j < length; j++){
+                            for (int j = 0; j < length; j++) {
                                 LinearLayout linearLayout_child = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_remind_tool_item, null);
                                 TextView left_text = (TextView) linearLayout_child.findViewById(R.id.left_c);
                                 TextView right_text = (TextView) linearLayout_child.findViewById(R.id.right_c);
@@ -276,7 +291,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                             }
                         }
                         TextView tool_remind_time = (TextView) linearLayout.findViewById(R.id.tool_remind_time);
-                        if(!jsonObject.getString("toolkit_remind_time").equals("")){
+                        if (!jsonObject.getString("toolkit_remind_time").equals("")) {
                             tool_remind_time.setVisibility(View.VISIBLE);
                             tool_remind_time.setText(jsonObject.getString("toolkit_remind_time"));
                         }
@@ -293,7 +308,6 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                     add_tools.setVisibility(View.VISIBLE);
                     add_tools2.setVisibility(View.GONE);
                 }
-
             }
         });
     }
@@ -301,7 +315,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
     Handler handler = new Handler();
     //要用handler来处理多线程可以使用runnable接口，这里先定义该接口
     //线程中运行该接口的run函数
-    Runnable update_thread = new Runnable(){
+    Runnable update_thread = new Runnable() {
         public void run() {
             daynumArrayList.clear();
             horizonta_recycleview.scrollToPosition(0);
@@ -310,20 +324,19 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                 HashMap<String, String> hashMap = new HashMap<>();
                 String dateStr = DateUtil.getDateBeforeOrAfterMD(start_date, i);
                 hashMap.put("date", dateStr);
-                if(i == current_daynum && over == 0){
+                if (i == current_daynum && over == 0) {
                     hashMap.put("is_checked", "1");
-                }else{
+                } else {
                     hashMap.put("is_checked", "0");
                 }
                 hashMap.put("daynum", (i + 1) + "天");
                 daynumArrayList.add(hashMap);
             }
-            horizonta_recycleview.scrollToPosition(current_daynum+1);
+            horizonta_recycleview.scrollToPosition(current_daynum + 1);
         }
     };
 
-
-    private void requestData(final String dateStr){
+    private void requestData(final String dateStr) {
         MengbaoApi.getMengbaoInfo(dateStr, new Listener<JSONObject>() {
             @Override
             public void onPreExecute() {
@@ -344,6 +357,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
 
             @Override
             public void onSuccess(JSONObject response) {
+                Log.e("response", response.toString());
                 try {
                     btype = response.getString("type");
                 } catch (JSONException e) {
@@ -365,7 +379,19 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                 }
                 if (response.has("recommend_goods")) {
                     try {
-                        setRecommendGoods(response.getJSONArray("recommend_goods"));
+                        JSONArray goodsArray = response.getJSONArray("recommend_goods");
+                        ArrayList<JSONObject> list = new ArrayList<>();
+                        RecGoodsAdapter recAdapter = new RecGoodsAdapter(getActivity(), list);
+                        for (int i = 0; i < goodsArray.length(); i++) {
+                            JSONObject obj = goodsArray.getJSONObject(i);
+                            list.add(obj);
+                        }
+                        recAdapter.notifyDataSetChanged();
+                        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+                        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        recgood_recycler.setLayoutManager(manager);
+                        recgood_recycler.setAdapter(recAdapter);
+                        recgood_recycler.setHasFixedSize(true);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -378,14 +404,16 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                         rootView.findViewById(R.id.top_container).setVisibility(View.GONE);
                     }
                 } else {
-                    if (!AppContext.getLoginInfo().getAvatar().equals("")){
-                        ImageLoader.getInstance().displayImage(AppContext.getLoginInfo().getBaby_photo(), me_avatar_img, AppContext.options_disk);
-                    }else{
-                        me_avatar_img.setImageResource(R.mipmap.touxiang);
+                    if (!is_babypic_change) {
+                        if (!AppContext.getLoginInfo().getBaby_photo().equals("")) {
+                            ImageLoader.getInstance().displayImage(AppContext.getLoginInfo().getBaby_photo(), me_avatar_img, AppContext.options_disk);
+                        } else {
+                            me_avatar_img.setImageResource(R.mipmap.touxiang);
+                        }
                     }
                     rootView.findViewById(R.id.top_container).setVisibility(View.GONE);
                 }
-                if(response.has("remind")){
+                if (response.has("remind")) {
                     try {
                         setRemindTopics(response.getJSONArray("remind"));
                     } catch (JSONException e) {
@@ -398,9 +426,9 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                         current_date = DateUtil.strToDate(response.get("current_date").toString());
                         end_date = DateUtil.strToDate(response.get("end_date").toString());
                         dayCnt = DateUtil.getGapCount(start_date, current_date) + 1;
-                        if(dayCnt >= 260 && btype.equals("pregnant")){
+                        if (dayCnt >= 260 && btype.equals("pregnant")) {
                             jump_setting.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             jump_setting.setVisibility(View.GONE);
                         }
                         cnt = DateUtil.getGapCount(start_date, end_date) + 1;
@@ -409,7 +437,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                             over = 1;
                             current_daynum = 1;
                         }
-                        if(start_date.compareTo(current_date) > 0){
+                        if (start_date.compareTo(current_date) > 0) {
                             current_daynum = 1;
                         }
                     } catch (JSONException e) {
@@ -417,11 +445,13 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                     }
                     for (int i = 0; i < 3; i++) {
                         HashMap<String, String> hashMap = new HashMap<>();
-                        String dateStr = DateUtil.getDateBeforeOrAfterMD(start_date, current_daynum+i-1);
-                        hashMap.put("date", dateStr);
-                        if(i == 1 && over == 0){
+                        if (start_date != null) {
+                            String dateStr = DateUtil.getDateBeforeOrAfterMD(start_date, current_daynum + i - 1);
+                            hashMap.put("date", dateStr);
+                        }
+                        if (i == 1 && over == 0) {
                             hashMap.put("is_checked", "1");
-                        }else{
+                        } else {
                             hashMap.put("is_checked", "0");
                         }
                         hashMap.put("daynum", (current_daynum + i) + "天");
@@ -431,21 +461,21 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                     hideToolBar();
                     emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
                     status2_container.setVisibility(View.VISIBLE);
-                    handler.postDelayed(update_thread,500);
+                    handler.postDelayed(update_thread, 500);
                 }
             }
         });
         requestToolkit(dateStr);
     }
 
-    private void setDayInfo(JSONObject jsonObject) throws JSONException{
+    private void setDayInfo(JSONObject jsonObject) throws JSONException {
 
         View overdue_t_line = rootView.findViewById(R.id.overdue_t_line);
         View overdue_t_container = rootView.findViewById(R.id.overdue_t_container);
-        if(!jsonObject.has("overdue_daynum")){
+        if (!jsonObject.has("overdue_daynum")) {
             overdue_t_line.setVisibility(View.GONE);
             overdue_t_container.setVisibility(View.GONE);
-        }else{
+        } else {
             overdue_t_line.setVisibility(View.VISIBLE);
             overdue_t_container.setVisibility(View.VISIBLE);
             due_date_textview.setText(jsonObject.getString("overdue_daynum"));
@@ -453,31 +483,30 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
 
         baby_length_textview.setText(jsonObject.getString("baby_length"));
         baby_weight_textview.setText(jsonObject.getString("baby_weight"));
-        if (jsonObject.getString("content").equals("")){
+        if (jsonObject.getString("content").equals("")) {
             rootView.findViewById(R.id.info_container).setVisibility(View.GONE);
-        }else{
+        } else {
             rootView.findViewById(R.id.info_container).setVisibility(View.VISIBLE);
             dayinfo_summary.setText(jsonObject.getString("content"));
         }
-
-        if(jsonObject.has("images") && btype.equals("pregnant")) {
+        if (jsonObject.has("images") && btype.equals("pregnant")) {
+            me_avatar_img.setClickable(false);
             baby_weight_textview_hint.setText("胎儿体重");
             baby_length_textview_hint.setText("胎儿身长");
-            if (!AppContext.getLoginInfo().getAvatar().equals("")){
-                ImageLoader.getInstance().displayImage(jsonObject.getString("images"), me_avatar_img, AppContext.options_disk);
-            }else{
-                me_avatar_img.setImageResource(R.mipmap.touxiang);
-            }
-        }else{
+            ImageLoader.getInstance().displayImage(jsonObject.getString("images"), me_avatar_img, AppContext.options_disk);
+        } else {
+            me_avatar_img.setClickable(true);
             baby_weight_textview_hint.setText("宝宝体重");
             baby_length_textview_hint.setText("宝宝身高");
-            if(AppContext.getLoginInfo().getBaby_photo().equals("")){
+            if (AppContext.getLoginInfo().getBaby_photo().equals("")) {
                 me_avatar_img.setImageResource(R.mipmap.touxiang);
-            }else{
-                if (!AppContext.getLoginInfo().getAvatar().equals("")){
-                    ImageLoader.getInstance().displayImage(AppContext.getLoginInfo().getBaby_photo(), me_avatar_img, AppContext.options_disk);
-                }else{
-                    me_avatar_img.setImageResource(R.mipmap.touxiang);
+            } else {
+                if (!is_babypic_change) {
+                    if (!AppContext.getLoginInfo().getBaby_photo().equals("")) {
+                        ImageLoader.getInstance().displayImage(AppContext.getLoginInfo().getBaby_photo(), me_avatar_img, AppContext.options_disk);
+                    } else {
+                        me_avatar_img.setImageResource(R.mipmap.touxiang);
+                    }
                 }
             }
         }
@@ -486,7 +515,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
     private void setRecommendPosts(JSONArray postsJSONArray) throws JSONException {
         LinearLayout mb_posts_container = (LinearLayout) rootView.findViewById(R.id.mb_posts_container);
         mb_posts_container.removeAllViews();
-        for(int i = 0; i < postsJSONArray.length(); i++){
+        for (int i = 0; i < postsJSONArray.length(); i++) {
             final JSONObject jsonObject = postsJSONArray.getJSONObject(i);
             LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_mengbao_post, null);
             linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -515,25 +544,25 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         }
     }
 
-    private void setRecommendTopics(JSONArray topicsJSONArray) throws JSONException{
+    private void setRecommendTopics(JSONArray topicsJSONArray) throws JSONException {
         ImageView topic_img_01 = (ImageView) rootView.findViewById(R.id.topic_img_01);
         ImageView topic_img_02 = (ImageView) rootView.findViewById(R.id.topic_img_02);
         final JSONObject topic1 = topicsJSONArray.getJSONObject(0);
         final JSONObject topic2 = topicsJSONArray.getJSONObject(1);
-        Netroid.displayImage(topic1.getString("ad_img"),topic_img_01);
-        Netroid.displayImage(topic2.getString("ad_img"),topic_img_02);
+        Netroid.displayImage(topic1.getString("ad_img"), topic_img_01);
+        Netroid.displayImage(topic2.getString("ad_img"), topic_img_02);
 
         topic_img_01.setOnClickListener(new topicClickHandler(topic1));
         topic_img_02.setOnClickListener(new topicClickHandler(topic2));
     }
 
-    private void setRemindTopics(JSONArray remindJSONArray){
+    private void setRemindTopics(JSONArray remindJSONArray) {
         LinearLayout remind_container = (LinearLayout) rootView.findViewById(R.id.remind_container);
         remind_container.removeAllViews();
-        if (remindJSONArray.length() == 0){
+        if (remindJSONArray.length() == 0) {
             rootView.findViewById(R.id.layout_mengbao_remind).setVisibility(View.GONE);
         }
-        for(int i = 0; i < remindJSONArray.length(); i++){
+        for (int i = 0; i < remindJSONArray.length(); i++) {
             final JSONObject jsonObject;
             try {
                 jsonObject = remindJSONArray.getJSONObject(i);
@@ -565,61 +594,10 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         }
     }
 
-    private void setRecommendGoods(JSONArray goodsJSONArray) throws JSONException{
-        ImageView goods_img_01 = (ImageView) rootView.findViewById(R.id.goods_img_01);
-        ImageView goods_img_02 = (ImageView) rootView.findViewById(R.id.goods_img_02);
-        ImageView goods_img_03 = (ImageView) rootView.findViewById(R.id.goods_img_03);
-        ImageView goods_img_04 = (ImageView) rootView.findViewById(R.id.goods_img_04);
-        TextView goods_name_01 = (TextView) rootView.findViewById(R.id.goods_name1);
-        TextView goods_name_02 = (TextView) rootView.findViewById(R.id.goods_name2);
-        TextView goods_name_03 = (TextView) rootView.findViewById(R.id.goods_name3);
-        TextView goods_name_04 = (TextView) rootView.findViewById(R.id.goods_name4);
-        TextView shop_price_01 = (TextView) rootView.findViewById(R.id.shop_price1);
-        TextView shop_price_02 = (TextView) rootView.findViewById(R.id.shop_price2);
-        TextView shop_price_03 = (TextView) rootView.findViewById(R.id.shop_price3);
-        TextView shop_price_04 = (TextView) rootView.findViewById(R.id.shop_price4);
-        TextView market_price_01 = (TextView) rootView.findViewById(R.id.market_price1);
-        TextView market_price_02 = (TextView) rootView.findViewById(R.id.market_price2);
-        TextView market_price_03 = (TextView) rootView.findViewById(R.id.market_price3);
-        TextView market_price_04 = (TextView) rootView.findViewById(R.id.market_price4);
-        final JSONObject goods1 = goodsJSONArray.getJSONObject(0);
-        final JSONObject goods2 = goodsJSONArray.getJSONObject(1);
-        final JSONObject goods3 = goodsJSONArray.getJSONObject(2);
-        final JSONObject goods4 = goodsJSONArray.getJSONObject(3);
-        Netroid.displayImage(goods1.getString("goods_thumb"), goods_img_01);
-        Netroid.displayImage(goods2.getString("goods_thumb"), goods_img_02);
-        Netroid.displayImage(goods3.getString("goods_thumb"), goods_img_03);
-        Netroid.displayImage(goods4.getString("goods_thumb"), goods_img_04);
-
-        goods_name_01.setText(goods1.getString("goods_name"));
-        goods_name_02.setText(goods2.getString("goods_name"));
-        goods_name_03.setText(goods3.getString("goods_name"));
-        goods_name_04.setText(goods4.getString("goods_name"));
-
-        shop_price_01.setText("¥"+goods1.getString("goods_price"));
-        shop_price_02.setText("¥"+goods2.getString("goods_price"));
-        shop_price_03.setText("¥"+goods3.getString("goods_price"));
-        shop_price_04.setText("¥"+goods4.getString("goods_price"));
-
-        market_price_01.setText("¥"+goods1.getString("market_price"));
-        market_price_02.setText("¥"+goods2.getString("market_price"));
-        market_price_03.setText("¥"+goods3.getString("market_price"));
-        market_price_04.setText("¥"+goods4.getString("market_price"));
-
-        market_price_01.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        market_price_02.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        market_price_03.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        market_price_04.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-
-        goods_img_01.setOnClickListener(new GoodsClickHandler(goods1));
-        goods_img_02.setOnClickListener(new GoodsClickHandler(goods2));
-        goods_img_03.setOnClickListener(new GoodsClickHandler(goods3));
-        goods_img_04.setOnClickListener(new GoodsClickHandler(goods4));
-    }
-
-    private class topicClickHandler implements View.OnClickListener{
+    private class topicClickHandler implements View.OnClickListener {
         private JSONObject jsonObject;
-        public topicClickHandler(JSONObject jsonObject){
+
+        public topicClickHandler(JSONObject jsonObject) {
             this.jsonObject = jsonObject;
         }
 
@@ -648,26 +626,10 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
             }
         }
     }
-    private class GoodsClickHandler implements View.OnClickListener{
-        private JSONObject jsonObject;
-        public GoodsClickHandler(JSONObject jsonObject){
-            this.jsonObject = jsonObject;
-        }
 
-        @Override
-        public void onClick(View v) {
-            try {
-                CommodityDetailActivity.start(getActivity(), jsonObject.getString("goods_id"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    private void bindMengbaoEvent(){
-        left_btn =  rootView.findViewById(R.id.left_btn);
-        right_btn =  rootView.findViewById(R.id.right_btn);
+    private void bindMengbaoEvent() {
+        left_btn = rootView.findViewById(R.id.left_btn);
+        right_btn = rootView.findViewById(R.id.right_btn);
 
         left_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -706,14 +668,15 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         });
     }
 
-    private void bindMyStatusEvent(){
-        ImageView my_status1 = (ImageView) rootView.findViewById(R.id.my_status1);
-        ImageView my_status2 = (ImageView) rootView.findViewById(R.id.my_status2);
+    private void bindMyStatusEvent() {
+        RelativeLayout in_pregnant_status_img = (RelativeLayout) rootView.findViewById(R.id.my_status1);
+        RelativeLayout baby_born_status_img = (RelativeLayout) rootView.findViewById(R.id.my_status2);
 
-        my_status2.setOnClickListener(new View.OnClickListener() {
+        baby_born_status_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (AppContext.instance().isLogin()) {
+//                    startActivity(new Intent(getActivity(),BabyGuideFragment.class));
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ChildStatus);
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -721,7 +684,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
             }
         });
 
-        my_status1.setOnClickListener(new View.OnClickListener() {
+        in_pregnant_status_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (AppContext.instance().isLogin()) {
@@ -733,30 +696,30 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         });
     }
 
-    private void scrollToPlace(int p){
-        if (p != 0){
+    private void scrollToPlace(int p) {
+        if (p != 0) {
             HashMap<String, String> hashMap1 = daynumArrayList.get(current_daynum);
             hashMap1.put("is_checked", "0");
             daynumArrayList.set(current_daynum, hashMap1);
-            current_daynum+=p;
+            current_daynum += p;
             HashMap<String, String> hashMap2 = daynumArrayList.get(current_daynum);
             hashMap2.put("is_checked", "1");
             daynumArrayList.set(current_daynum, hashMap2);
             daynum_adapter.notifyDataSetChanged();
         }
-        if ((dayCnt - 1) == current_daynum){
+        if ((dayCnt - 1) == current_daynum) {
             backtotoday.setVisibility(View.GONE);
-        }else{
-            if(over == 1 && current_daynum <= daynumArrayList.size() && daynumArrayList.get(current_daynum).get("is_checked").equals("1")){
+        } else {
+            if (over == 1 && current_daynum <= daynumArrayList.size() && daynumArrayList.get(current_daynum).get("is_checked").equals("1")) {
                 backtotoday.setVisibility(View.VISIBLE);
-            }else if(over == 0 && (dayCnt - 1) != current_daynum){
+            } else if (over == 0 && (dayCnt - 1) != current_daynum) {
                 backtotoday.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 backtotoday.setVisibility(View.GONE);
             }
         }
-        if (p == 0){
-        }else{
+        if (p == 0) {
+        } else {
             fling(p * horizonta_recycleview.getWidth() / 3 * current_daynum, 0);
             requestData(DateUtil.getDateBeforeOrAfter(start_date, current_daynum));
         }
@@ -775,14 +738,16 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         int scrollDistanceRight = rightMargin - rightEdge;
 
         //if(user swipes to the left)
-        if(velocityX > 0) horizonta_recycleview.smoothScrollBy(scrollDistanceLeft - (lastVisibleView - current_daynum)  * firstView.getWidth(), 0);
-        else horizonta_recycleview.smoothScrollBy(-scrollDistanceRight + (current_daynum - firstVisibleView) * firstView.getWidth(), 0);
+        if (velocityX > 0)
+            horizonta_recycleview.smoothScrollBy(scrollDistanceLeft - (lastVisibleView - current_daynum) * firstView.getWidth(), 0);
+        else
+            horizonta_recycleview.smoothScrollBy(-scrollDistanceRight + (current_daynum - firstVisibleView) * firstView.getWidth(), 0);
         return true;
     }
 
-    private void setFont(){
+    private void setFont() {
         AssetManager mgr = getActivity().getAssets();
-        Typeface tf=Typeface.createFromAsset(mgr, "fonts/font.otf");
+        Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");
         TextView mb_remind_post = (TextView) rootView.findViewById(R.id.mb_remind_post);
         TextView mb_remind = (TextView) rootView.findViewById(R.id.mb_remind);
         TextView mb_tools = (TextView) rootView.findViewById(R.id.mb_tools);
@@ -800,7 +765,11 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         baby_weight_textview_hint = (TextView) rootView.findViewById(R.id.baby_weight_text_hint);
         baby_length_textview_hint = (TextView) rootView.findViewById(R.id.baby_length_text_hint);
         due_date_textview_hint = (TextView) rootView.findViewById(R.id.due_date_text_hint);
-        dayinfo_summary = (TextView)rootView.findViewById(R.id.dayinfo_summary);
+        dayinfo_summary = (TextView) rootView.findViewById(R.id.dayinfo_summary);
+        more_message_img = rootView.findViewById(R.id.more_message_img);
+        more_message_img.setOnClickListener(v -> {
+            UIHelper.showSimpleBack(getContext(), SimpleBackPage.BABYMOREMESSAGE);
+        });
         baby_weight_textview.setTypeface(tf);
         baby_length_textview.setTypeface(tf);
         due_date_textview.setTypeface(tf);
@@ -808,11 +777,8 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         baby_length_textview_hint.setTypeface(tf);
         due_date_textview_hint.setTypeface(tf);
 
-        LinearLayout goods_container1 = (LinearLayout)rootView.findViewById(R.id.goods_container1);
+        LinearLayout goods_container1 = (LinearLayout) rootView.findViewById(R.id.goods_container1);
         goods_container1.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MainActivity.screen_width * 175 / 750));
-
-        LinearLayout goods_container2 = (LinearLayout)rootView.findViewById(R.id.goods_container2);
-        goods_container2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MainActivity.screen_width * 186 / 750));
 
         bindBabyCenterEvent();
 
@@ -827,10 +793,10 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
             @Override
             public void onItemClick(int position) {
                 if (position < current_daynum) {
-                    scrollToPlace(-(current_daynum-position));
+                    scrollToPlace(-(current_daynum - position));
                 } else if (position > current_daynum) {
-                    scrollToPlace(+(position-current_daynum));
-                }else{
+                    scrollToPlace(+(position - current_daynum));
+                } else {
                     scrollToPlace(1);
                 }
             }
@@ -864,14 +830,14 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         backtotoday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(over == 1){
+                if (over == 1) {
                     HashMap<String, String> hashMap = daynumArrayList.get(current_daynum);
                     hashMap.put("is_checked", "0");
                     daynumArrayList.set(current_daynum, hashMap);
                     current_daynum = 1;
                     daynum_adapter.notifyDataSetChanged();
                     requestData("");
-                }else{
+                } else {
                     resetCurrentDaynum();
                 }
                 backtotoday.setVisibility(View.GONE);
@@ -879,7 +845,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         });
     }
 
-    private void resetCurrentDaynum(){
+    private void resetCurrentDaynum() {
         HashMap<String, String> hashMap1 = daynumArrayList.get(current_daynum);
         hashMap1.put("is_checked", "0");
         daynumArrayList.set(current_daynum, hashMap1);
@@ -892,7 +858,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         requestData(DateUtil.getDateBeforeOrAfter(start_date, current_daynum));
     }
 
-    private void bindBabyCenterEvent(){
+    private void bindBabyCenterEvent() {
         View baby_record_container = rootView.findViewById(R.id.baby_record_container);
         View knowledge_container = rootView.findViewById(R.id.knowledge_container);
         View eatable_container = rootView.findViewById(R.id.eatable_container);
@@ -957,12 +923,12 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         MainActivity.current_tab_index = 0;
         if (current_type == 0 || daynumArrayList.size() == 0) {
             configToolbar();
-        }else{
+        } else {
             hideConfigToolbar();
         }
     }
@@ -1017,7 +983,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
             startActivityForResult(intent, CropHelper.REQUEST_CROP);
         } else {
             if (!SDCardUtils.isSDCardEnable()) {
-                XmbUtils.showMessage(getActivity(),"SD卡不可用.");
+                XmbUtils.showMessage(getActivity(), "SD卡不可用.");
                 return;
             }
             mCropParams.enable = true;
@@ -1063,17 +1029,15 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
                 fm.put("photo", mAvatar);
             }
             Map<String, String> pm = new HashMap<>();
-            pm.put("baby_id",AppContext.getLoginInfo().getBaby_id());
+            pm.put("baby_id", AppContext.getLoginInfo().getBaby_id());
             try {
-                JSONObject paramObj = ApiHelper.getParamObj(pm);
-                pm.clear();
-                pm.put("json", paramObj.toString());
                 String response = HttpUtility.post("http://api.xiaomabao.com/athena/save_baby_photo",
-                        null, pm, fm);
+                        null, ApiHelper.getParamMap(pm), fm);
                 JSONObject respObj = new JSONObject(response);
-                if (respObj.getString("status").equals("1")){
+                if (respObj.getString("status").equals("1")) {
+                    is_babypic_change = true;
                     return null;
-                }else{
+                } else {
                     return "设置失败";
                 }
             } catch (Exception e) {
@@ -1084,7 +1048,7 @@ public class BabyCenterFragment extends BaseFragment  implements  DialogInterfac
         @Override
         protected void onPostExecute(BabyCenterFragment babyCenterFragment, String result) {
             if (result != null) {
-                XmbUtils.showMessage(getActivity(),result);
+                XmbUtils.showMessage(getActivity(), result);
                 return;
             }
             XmbUtils.showMessage(getActivity(), "设置成功");

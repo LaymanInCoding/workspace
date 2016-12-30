@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_30_dip"
             android:textSize="@dimen/dimen_30_dip"
-            android:textColor="#999999"
+            android:textColor="@color/app_main_deep"
             android:text="- 全部分类 -"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cat_recycle_view"
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_30_dip"
             android:textSize="@dimen/dimen_30_dip"
-            android:textColor="#999999"
+            android:textColor="@color/app_main_deep"
             android:text="- 精选活动 -"/>
     </LinearLayout>
 </LinearLayout>

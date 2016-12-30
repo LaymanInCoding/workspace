@@ -190,7 +190,7 @@ public class CircleActivity extends BaseActivity {
                     });
                     return;
                 }
-                Intent intent = new Intent(CircleActivity.this,PostActivity.class);
+                Intent intent = new Intent(CircleActivity.this,PostActivity_new.class);
                 intent.putExtra("circle_id",circle_id + "");
                 startActivity(intent);
                 break;

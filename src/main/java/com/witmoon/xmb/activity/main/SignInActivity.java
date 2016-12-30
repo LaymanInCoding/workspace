@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
+import com.orhanobut.logger.Logger;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
@@ -96,6 +97,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     private Listener<JSONObject> mSigninDataCallback = new Listener<JSONObject>() {
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
             if (!twoTuple.first) {
                 AppContext.showToast(twoTuple.second);
@@ -136,9 +138,11 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
-                        }).setMessage("1、坚持每天签到，则每次签到能领取1个麻豆。（1麻豆=1元）\n\n2、坚持签到十天，麻豆累计到十个，可兑换为10" +
-                                "元优惠券（全场通用无门槛）。\n\n3、活动最终解释权给小麻包所有。").show();
+                        }).setMessage("1、每天签到能领取10个麻豆奖励，签到成功麻豆奖励直接放入您的账户中，可享受小麻包" +
+                                "平台的所有麻豆优惠政策。\n\n" + "2、如因不可抗力、大面积作弊等情况导致难以继续开展本活动，小麻包可自觉取消、修改" +
+                                "或暂停本活动，法律法规许可范围内，小麻包有权对活动进行解释。").show();
                 TextView message = (TextView) dialog.findViewById(android.R.id.message);
+                message.setLineSpacing(1.2f, 1.2f);
                 message.setTextSize(13);
                 break;
         }

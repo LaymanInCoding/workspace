@@ -52,7 +52,7 @@ import java.util.Map;
 
 import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 
-public class AaffordableFragment extends BaseFragment{
+public class AaffordableFragment extends BaseFragment {
     private View view;
     private View headerView;
     private EmptyLayout emptyLayout;
@@ -61,7 +61,7 @@ public class AaffordableFragment extends BaseFragment{
     private SelectedActivityAdapter adapter;
     private ArrayList<Map<String, Object>> mDatas = new ArrayList<>();
     private CatAdapter cat_adapter;
-    private ArrayList<Map<String,String>> categoryList = new ArrayList<>();
+    private ArrayList<Map<String, String>> categoryList = new ArrayList<>();
     private RecyclerView cat_recycle_view;
 
     @Nullable
@@ -76,19 +76,20 @@ public class AaffordableFragment extends BaseFragment{
                 @Override
                 public void onItemnClick(Map<String, String> map) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("cat_id",map.get("id"));
-                    bundle.putString("cat_name",map.get("name"));
-                    UIHelper.showSimpleBack(getActivity(), SimpleBackPage.SUBCLASS,bundle);
+                    bundle.putString("cat_id", map.get("id"));
+                    bundle.putString("cat_name", map.get("name"));
+                    UIHelper.showSimpleBack(getActivity(), SimpleBackPage.SUBCLASS, bundle);
                 }
             });
             cat_recycle_view = (RecyclerView) headerView.findViewById(R.id.cat_recycle_view);
-            GridLayoutManager gridlayoutManager = new GridLayoutManager(this.getContext(),2);
+            GridLayoutManager gridlayoutManager = new GridLayoutManager(this.getContext(), 2);
             gridlayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             cat_recycle_view.setHasFixedSize(true);
             cat_recycle_view.setLayoutManager(gridlayoutManager);
             cat_recycle_view.setAdapter(cat_adapter);
-            emptyLayout = (EmptyLayout) view.findViewById(R.id.error_layout);View ad_container = headerView.findViewById(R.id.ad_container);
-            LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) ad_container.getLayoutParams();
+            emptyLayout = (EmptyLayout) view.findViewById(R.id.error_layout);
+            View ad_container = headerView.findViewById(R.id.ad_container);
+            LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) ad_container.getLayoutParams();
             linearParams.width = MainActivity.screen_width;
             linearParams.height = MainActivity.screen_width * 350 / 750;
             ad_container.setLayoutParams(linearParams);
@@ -118,17 +119,17 @@ public class AaffordableFragment extends BaseFragment{
         return view;
     }
 
-    private void setFont(){
+    private void setFont() {
         AssetManager mgr = getActivity().getAssets();//得到AssetManager
-        Typeface tf=Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
+        Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
         TextView qbfl = (TextView) headerView.findViewById(R.id.qbfl);
         TextView mbjx = (TextView) headerView.findViewById(R.id.mbjx);
         headerView.findViewById(R.id.sign_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AppContext.instance().isLogin()) {
+                if (AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), SignInActivity.class));
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -136,9 +137,9 @@ public class AaffordableFragment extends BaseFragment{
         headerView.findViewById(R.id.shake_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AppContext.instance().isLogin()) {
+                if (AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), ShakeActivity.class));
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -146,12 +147,12 @@ public class AaffordableFragment extends BaseFragment{
         headerView.findViewById(R.id.raffle_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AppContext.instance().isLogin()) {
+                if (AppContext.instance().isLogin()) {
                     Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                     intent.putExtra("title", "幸运大转盘");
-                    intent.putExtra("url", "http://api.xiaomabao.com/circle/raffle");
+                    intent.putExtra("url", "https://api.xiaomabao.com/circle/raffle");
                     startActivity(intent);
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -160,7 +161,7 @@ public class AaffordableFragment extends BaseFragment{
         mbjx.setTypeface(tf);
     }
 
-    public void setRecRequest(int current_page){
+    public void setRecRequest(int current_page) {
         ShoppingApi.get_affordable(new Listener<JSONObject>() {
             @Override
             public void onPreExecute() {
@@ -188,7 +189,7 @@ public class AaffordableFragment extends BaseFragment{
         });
     }
 
-    public void initSelectedActivities(JSONArray today_recommend_top_array){
+    public void initSelectedActivities(JSONArray today_recommend_top_array) {
         for (int i = 0; i < today_recommend_top_array.length(); i++) {
             Map<String, Object> map = new HashMap<>();
             try {
@@ -197,7 +198,7 @@ public class AaffordableFragment extends BaseFragment{
                 map.put("act_id", jsonObject.getString("act_id"));
                 map.put("ad_name", jsonObject.getString("ad_name"));
                 map.put("ad_img", jsonObject.getString("ad_img"));
-                map.put("goods",jsonObject.getJSONArray("goods"));
+                map.put("goods", jsonObject.getJSONArray("goods"));
             } catch (JSONException e) {
 
             }
@@ -207,12 +208,12 @@ public class AaffordableFragment extends BaseFragment{
     }
 
     public void initCat(JSONArray categoryJsonArray) {
-        for(int i = 0;i < categoryJsonArray.length(); i++){
-            HashMap<String,String> hashMap = new HashMap<>();
+        for (int i = 0; i < categoryJsonArray.length(); i++) {
+            HashMap<String, String> hashMap = new HashMap<>();
             try {
-                hashMap.put("id",categoryJsonArray.getJSONObject(i).getString("cat_id"));
-                hashMap.put("url",categoryJsonArray.getJSONObject(i).getString("icon"));
-                hashMap.put("name",categoryJsonArray.getJSONObject(i).getString("cat_name"));
+                hashMap.put("id", categoryJsonArray.getJSONObject(i).getString("cat_id"));
+                hashMap.put("url", categoryJsonArray.getJSONObject(i).getString("icon"));
+                hashMap.put("name", categoryJsonArray.getJSONObject(i).getString("cat_name"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -221,7 +222,7 @@ public class AaffordableFragment extends BaseFragment{
         cat_adapter.notifyDataSetChanged();
     }
 
-    public void initBanner(JSONArray today_recommend_top_array){
+    public void initBanner(JSONArray today_recommend_top_array) {
         ArrayList<Map<String, String>> maplist = new ArrayList<>();
         for (int i = 0; i < today_recommend_top_array.length(); i++) {
             Map<String, String> map = new HashMap<>();
@@ -274,22 +275,26 @@ public class AaffordableFragment extends BaseFragment{
         mAutoScrollViewPager.setOnPageClickListener(new AutoScrollViewPager.OnPageClickListener() {
             @Override
             public void onPageClick(AutoScrollViewPager pager, int position) {
-                 if (null != advertisements.get(position).get("ad_type")) {
+                if (null != advertisements.get(position).get("ad_type")) {
                     int type = Integer.parseInt(advertisements.get(position).get("ad_type"));
                     //专题  2商品 3网页 4团购 5帖子
                     String id = advertisements.get(position).get("act_id");
-                     if (type == 1) {
-                         MarketPlaceActivity.start(getActivity(), id, advertisements.get(position).get("ad_name"));
+                    String title = advertisements.get(position).get("ad_name");
+                    if (type == 1) {
+                        MarketPlaceActivity.start(getActivity(), id, advertisements.get(position).get("ad_name"));
                     } else if (type == 2) {
                         CommodityDetailActivity.start(getActivity(), id);
                     } else if (type == 3) {
                         Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                         intent.putExtra("url", id);
+                        intent.putExtra("title", title);
                         startActivity(intent);
                     } else if (type == 4) {
-                        GroupBuyActivity.start(getContext(), id);
+                        UIHelper.showSimpleBack(getActivity(), SimpleBackPage.GROUP_BUYING);
+
+//     GroupBuyActivity.start(getContext(), id);
                     }
-                 }
+                }
             }
         });
     }

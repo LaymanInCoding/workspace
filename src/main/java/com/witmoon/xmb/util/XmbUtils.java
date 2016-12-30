@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -93,6 +94,15 @@ public class XmbUtils {
         });
     }
 
+    public static void showInvoiceInfo(Activity activity) {
+        View contentView = LayoutInflater.from(activity).inflate(R.layout.pop_invoice_info, null);
+        PopupWindow infoWindow = new PopupWindow(contentView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
+        infoWindow.setTouchable(true);
+        infoWindow.showAsDropDown(contentView);
+        Button button = (Button) contentView.findViewById(R.id.ok_btn);
+        button.setOnClickListener(v -> infoWindow.dismiss());
+    }
+
     //弹出mbq提示文字
     public static void showMessage(Context context, String message) {
         View contentView = LayoutInflater.from(context).inflate(
@@ -132,7 +142,7 @@ public class XmbUtils {
         }
     }
 
-    //弹出mbq提示文字刷新circleActivity
+    //弹出mbq提示文字刷新circleActivity  发表帖子
     public static void showMessageRefreshCircle(final Context context, String message) {
         View contentView = LayoutInflater.from(context).inflate(
                 R.layout.pop_mbq_message, null);
@@ -151,7 +161,7 @@ public class XmbUtils {
         }, 1 * 1000);
     }
 
-    //弹出mbq提示文字刷新circleActivity
+    //弹出mbq提示文字刷新  发表评论
     public static void showMessageRefreshPost(final Context context, String message) {
         View contentView = LayoutInflater.from(context).inflate(
                 R.layout.pop_mbq_message, null);

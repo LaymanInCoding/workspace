@@ -23,7 +23,7 @@
                 android:ellipsize="middle"
                 android:layout_marginRight="@dimen/dimen_322_dip"
                 android:textSize="@dimen/dimen_30_dip"
-                android:textColor="#4d4d4d"
+                android:textColor="@color/app_main_deep"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:ellipsize="end"
                 android:layout_marginRight="@dimen/dimen_342_dip"
                 android:textSize="@dimen/dimen_24_dip"
-                android:textColor="#717173"
+                android:textColor="@color/app_main_thin"
                 android:id="@+id/post_content"
                 android:layout_height="wrap_content" />
             <ImageView

@@ -395,11 +395,8 @@ public class BabyRecordFragment extends BaseFragment implements  DialogInterface
             Map<String, String> pm = new HashMap<>();
             pm.put("img_index", currentImageIndex+"");
             try {
-                JSONObject paramObj = ApiHelper.getParamObj(pm);
-                pm.clear();
-                pm.put("json", paramObj.toString());
                 String response = HttpUtility.post("http://api.xiaomabao.com/athena/set_pic_wall",
-                        null, pm, fm);
+                        null, ApiHelper.getParamMap(pm), fm);
                 JSONObject respObj = new JSONObject(response);
                 if (respObj.getString("status").equals("1")){
                     return null;

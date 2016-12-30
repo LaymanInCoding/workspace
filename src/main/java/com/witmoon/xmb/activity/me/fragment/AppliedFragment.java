@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.activity.friendship.fragment.CommentFragment;
 import com.witmoon.xmb.activity.me.Out_ServiceActivity;
 import com.witmoon.xmb.activity.me.adapter.OrderAdapter;
@@ -124,7 +125,6 @@ public class AppliedFragment extends BaseRecyclerViewFragmentV2{
     protected ListEntity parseResponse(JSONObject json) throws Exception {
         JSONArray orderArray = json.getJSONArray("data");
         final List<Out_> outs = new ArrayList<Out_>();
-        Log.e("parseResponse", orderArray.toString());
         for (int i = 0; i < orderArray.length(); i++) {
             outs.add(Out_.parse(orderArray.getJSONObject(i)));
         }

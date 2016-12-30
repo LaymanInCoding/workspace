@@ -5,6 +5,7 @@ import com.witmoon.xmb.activity.babycenter.BabyRecordFragment;
 import com.witmoon.xmb.activity.babycenter.BabySettingFragment;
 import com.witmoon.xmb.activity.babycenter.CalOverdueFragment;
 import com.witmoon.xmb.activity.babycenter.ChildStatusFragment;
+import com.witmoon.xmb.activity.babycenter.MoreMessageFragment;
 import com.witmoon.xmb.activity.babycenter.OverdueSettingFragment;
 import com.witmoon.xmb.activity.friendship.fragment.CommentFragment;
 import com.witmoon.xmb.activity.goods.fragment.Group_Buying_Fragment;
@@ -14,6 +15,11 @@ import com.witmoon.xmb.activity.mabao.Subclass_bomFragment;
 import com.witmoon.xmb.activity.main.fragment.ShoppingCartFragmentV2;
 import com.witmoon.xmb.activity.me.fragment.AboutFragment;
 import com.witmoon.xmb.activity.me.fragment.AfterSaleServiceFragment;
+import com.witmoon.xmb.activity.me.fragment.BeanHelpFragment;
+import com.witmoon.xmb.activity.me.fragment.BeanSendFragment;
+import com.witmoon.xmb.activity.me.fragment.BeanToCashFragment;
+import com.witmoon.xmb.activity.me.fragment.BeanUseFragment;
+import com.witmoon.xmb.activity.me.fragment.BindBankCardFragment;
 import com.witmoon.xmb.activity.me.fragment.BrowseHistoryFragment;
 import com.witmoon.xmb.activity.me.fragment.CashCouponFragment;
 import com.witmoon.xmb.activity.me.fragment.CertificationFragment;
@@ -23,6 +29,7 @@ import com.witmoon.xmb.activity.me.fragment.EvaluateFragment;
 import com.witmoon.xmb.activity.me.fragment.HelpFragment;
 import com.witmoon.xmb.activity.me.fragment.LogisticsFragment;
 import com.witmoon.xmb.activity.me.fragment.MyFavoriteGoodsFragment;
+import com.witmoon.xmb.activity.me.fragment.MyMabaoBeanFragment;
 import com.witmoon.xmb.activity.me.fragment.MyOrderFragment;
 import com.witmoon.xmb.activity.me.fragment.NewAddressFragment;
 import com.witmoon.xmb.activity.me.fragment.OnlineServiceFragment;
@@ -115,14 +122,23 @@ public enum SimpleBackPage {
     VACCINE_INDEX(42, R.string.text_vaccine_cj_, R.color.master_me, WebUtilFragments.class),
     SUBCLASS(45, R.string.app_name, R.color.master_me, SubclassFragment.class),
     SUBCLASS_BOM(46, R.string.app_name, R.color.master_me, Subclass_bomFragment.class),
-
+    //    SUBCLASS_BOM(46, R.string.app_name, R.color.master_me, SubClass_bomFragment_New.class),
     ChildStatus(47, R.string.baby_sex, R.color.master_me, ChildStatusFragment.class),
     OverdueSetting(48, R.string.overdue_setting, R.color.master_me, OverdueSettingFragment.class),
     CalOverdue(49, R.string.overdue_setting, R.color.master_me, CalOverdueFragment.class),
     BabySetting(50, R.string.baby_setting, R.color.master_me, BabySettingFragment.class),
     BabyRecord(51, R.string.baby_record, R.color.master_me, BabyRecordFragment.class),
     MbCard(52, R.string.my_mb_card, R.color.master_me, MabaoCardFragment.class),
-    FEATURE_BRAND(53, R.string.feature_brand, R.color.master_me, FeatureBrandFragment.class),;
+    FEATURE_BRAND(53, R.string.feature_brand, R.color.master_me, FeatureBrandFragment.class),
+    BABYMOREMESSAGE(54, R.string.mengbao_introduce, R.color.master_me, MoreMessageFragment.class),
+
+    BindBankCard(55, R.string.bind_bank_card, R.color.master_me, BindBankCardFragment.class),
+    MyMabaoBean(56, R.string.my_mabao_bean, R.color.master_me, MyMabaoBeanFragment.class),
+    BeanHelp(57, R.string.madou_use_help, R.color.master_me, BeanHelpFragment.class),
+    BeanToCash(58,R.string.bean_to_cash,R.color.master_me,BeanToCashFragment.class),
+    BeanUse(59,R.string.madou_use,R.color.master_me,BeanUseFragment.class),
+    BeanSend(60,R.string.send_bean,R.color.master_me,BeanSendFragment.class);
+
 
     private int value;
     private int title;

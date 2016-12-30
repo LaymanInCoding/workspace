@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:scaleType="centerCrop"
-            android:src="@mipmap/left1"/>
+            android:src="@mipmap/add_pic_little"/>
         <ImageView
             android:id="@+id/img2"
             android:layout_alignParentLeft="true"
@@ -36,21 +36,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:src="@mipmap/left1" />
+            android:src="@mipmap/add_pic_little" />
         <ImageView
             android:id="@+id/img3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:scaleType="centerCrop"
-            android:src="@mipmap/zhongjian" />
+            android:src="@mipmap/add_pic_big" />
         <ImageView
             android:id="@+id/img4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:scaleType="centerCrop"
-            android:src="@mipmap/left1" />
+            android:src="@mipmap/add_pic_little" />
         <ImageView
             android:id="@+id/img5"
             android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             android:layout_below="@+id/img4"
             android:scaleType="centerCrop"
             android:layout_marginTop="@dimen/dimen_20_dip"
-            android:src="@mipmap/left1" />
+            android:src="@mipmap/add_pic_little" />
     </RelativeLayout>
     <TextView
         android:id="@+id/pic_wall_hint"

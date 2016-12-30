@@ -219,7 +219,7 @@ public class ServicePostCommentActivity extends BaseActivity implements OnClickL
                 pm.put("content", mContent.getText().toString().trim());
                 pm.put("order_id", getIntent().getIntExtra("order_id",0)+"");
 
-                String response = HttpUtility.post("http://api.xiaomabao.com/service/post_comment", null, pm, "photo", fielList);
+                String response = HttpUtility.post("https://api.xiaomabao.com/service/post_comment", null, pm, "photo", fielList);
                 JSONObject respObj = new JSONObject(response);
                 if (respObj.getString("status").equals("0")) {
                     return respObj.getString("info");

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.witmoon.xmb.ui.widget.EmptyLayout
+        android:id="@+id/empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.witmoon.xmb.ui.widget.EmptyLayout>
+
+    <include layout="@layout/header_my_bean"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bean_detail_reclv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/no_bean_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_28_dip"
+            android:layout_marginLeft="@dimen/dimen_30_dip"
+            android:layout_marginTop="@dimen/dimen_28_dip"
+            android:text="麻豆明细 :"
+            android:textColor="#555555"
+            android:textSize="@dimen/dimen_28_dip"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1_dip"
+            android:layout_marginLeft="@dimen/dimen_30_dip"
+            android:layout_marginRight="@dimen/dimen_30_dip"
+            android:background="#dddddd"/>
+
+        <ImageView
+            android:id="@+id/no_bean_record_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_70_dip"
+            android:src="@mipmap/no_bean_record"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_45_dip"
+            android:text="您的麻豆没有成长记录哦"
+            android:textColor="#bbbbbb"
+            android:textSize="@dimen/dimen_28_dip"/>
+    </LinearLayout>
+
+
+</LinearLayout>

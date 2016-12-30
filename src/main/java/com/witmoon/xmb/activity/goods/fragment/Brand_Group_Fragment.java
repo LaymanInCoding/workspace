@@ -52,7 +52,7 @@ public class Brand_Group_Fragment extends BaseFragment{
             mRootView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    GroupBuyActivity.start(getActivity(), mapList.get(position).get("ad_link"), "");
+                    GroupBuyActivity.start(getActivity(), mapList.get(position).get("id"), "");
                 }
             });
         }

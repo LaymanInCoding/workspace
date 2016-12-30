@@ -42,11 +42,11 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_11"
                 android:text="已完成"
-                android:textColor="@color/red"
+                android:textColor="@color/white"
                 android:layout_marginLeft="@dimen/space_10"
                 android:layout_toRightOf="@id/serial_no"
                 android:visibility="gone"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerInParent="true" />
         </RelativeLayout>
         <LinearLayout
             android:id="@+id/split_order_container"

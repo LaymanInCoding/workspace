@@ -25,6 +25,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.duowan.mobile.netroid.Listener;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
@@ -45,6 +47,7 @@ import com.witmoon.xmb.util.UIHelper;
 import com.witmoon.xmb.util.WeakAsyncTask;
 import com.witmoon.xmb.util.XmbUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -69,26 +72,15 @@ import library.CropParams;
  * 个人资料修改界面
  * Created by zhyh on 2015/6/21.
  */
-public class PersonalDataFragment extends BaseFragment implements DatePickerDialog
-        .OnDateSetListener, DialogInterface.OnClickListener, CropHandler {
+public class PersonalDataFragment extends BaseFragment implements DialogInterface.OnClickListener, CropHandler {
     private static String[] items = {"选择本地图片", "拍照"};
-    //设置头部图片的名字
-    private static String dateStyle = "yyyy-MM-dd";
-
-    private CircleImageView mAvatarImage;
+    private RoundedImageView mAvatarImage;
     private EditText mNickNameEdit;
-    private EditText mDueDayEdit;
-    private EditText mBabyBirthdayEdit;
-    private EditText currentEditText;
-
-    private String mBabySex;
     private String mParentSex;
-
-    private RadioGroup mBabySexGroup;
     private RadioGroup mParentSexGroup;
-
     private File mAvatar;
     private CropParams mCropParams;
+    private String userGender;
 
     @Nullable
     @Override
@@ -96,21 +88,9 @@ public class PersonalDataFragment extends BaseFragment implements DatePickerDial
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_data, container, false);
         mCropParams = new CropParams(getActivity());
-        mAvatarImage = (CircleImageView) view.findViewById(R.id.me_avatar_img);
+        mAvatarImage = (RoundedImageView) view.findViewById(R.id.me_avatar_img);
         mAvatarImage.setOnClickListener(this);
         mNickNameEdit = (EditText) view.findViewById(R.id.nick_name);
-        mDueDayEdit = (EditText) view.findViewById(R.id.due_date);
-        mDueDayEdit.setOnClickListener(this);
-        mBabyBirthdayEdit = (EditText) view.findViewById(R.id.baby_birthday);
-        mBabyBirthdayEdit.setOnClickListener(this);
-
-        mBabySexGroup = (RadioGroup) view.findViewById(R.id.baby_sex);
-        mBabySexGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                mBabySex = checkedId == R.id.baby_sex_male ? "1" : "0";
-            }
-        });
         mParentSexGroup = (RadioGroup) view.findViewById(R.id.parent_sex);
         mParentSexGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -118,27 +98,31 @@ public class PersonalDataFragment extends BaseFragment implements DatePickerDial
                 mParentSex = checkedId == R.id.parent_sex_baba ? "1" : "0";
             }
         });
-
         view.findViewById(R.id.submit_button).setOnClickListener(this);
-
+        requestData();
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        User user = AppContext.getLoginInfo();
-        Netroid.displayImage(user.getAvatar(), mAvatarImage);
-        mNickNameEdit.setText(user.getName());
-        if (null != user.getChildSex() && !TextUtils.isEmpty(user.getChildSex())) {
-            mBabySexGroup.check("1".equals(user.getChildSex()) ? R.id.baby_sex_male : R.id
-                    .baby_sex_female);
-        }
-        if (null != user.getParentSex() && !TextUtils.isEmpty(user.getParentSex())) {
-            mParentSexGroup.check("1".equals(user.getParentSex()) ? R.id.parent_sex_baba : R.id
-                    .parent_sex_mama);
-        }
-        mBabyBirthdayEdit.setText(user.getBabyBirthday());
-        mDueDayEdit.setText(user.getDueDay());
+    public void requestData() {
+        UserApi.userInfo(new Listener<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    JSONObject data = response.getJSONObject("data");
+                    Log.e("Data", data.toString());
+                    Netroid.displayImage(data.getString("header_img"), mAvatarImage);
+                    mNickNameEdit.setText(data.getString("nick_name"));
+                    mNickNameEdit.setSelection(data.getString("nick_name").length());
+                    userGender = data.getString("parent_sex");
+                    if (null != userGender && !TextUtils.isEmpty(userGender)) {
+                        mParentSexGroup.check("1".equals(userGender) ? R.id.parent_sex_baba : R.id
+                                .parent_sex_mama);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void onClick(View v) {
@@ -148,28 +132,6 @@ public class PersonalDataFragment extends BaseFragment implements DatePickerDial
                 AvatarDialogFragment avatarDialogFragment = new AvatarDialogFragment();
                 avatarDialogFragment.setOnClickListener(this);
                 avatarDialogFragment.show(getActivity().getFragmentManager(), "AvatarDialog");
-                break;
-            case R.id.baby_birthday:
-            case R.id.due_date:
-                currentEditText = v.getId() == R.id.due_date ? mDueDayEdit :
-                        mBabyBirthdayEdit;
-
-                Date iDate = null;
-                String t = currentEditText.getText().toString();
-                if (!TextUtils.isEmpty(t)) {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat(dateStyle, Locale.CHINA);
-                    try {
-                        //设置打开默认显示的值
-                        if (t.equals("0000-00-00")) {
-                            t = "2015-05-05";
-                        }
-                        iDate = dateFormat.parse(t);
-                    } catch (ParseException ignored) {
-                    }
-                }
-                DatePickerDialogFragment fragment = DatePickerDialogFragment.newInstance(iDate);
-                fragment.setOnDateSetListener(this);
-                fragment.show(getActivity().getFragmentManager(), "DatePickerDialog");
                 break;
             case R.id.submit_button:
                 ModifyAsyncTask asyncTask = new ModifyAsyncTask(this);
@@ -181,13 +143,7 @@ public class PersonalDataFragment extends BaseFragment implements DatePickerDial
     private Map<String, String> getParamMap() {
         Map<String, String> paramMap = new HashMap<>();
         String nickName = mNickNameEdit.getText().toString();
-        String babyBirthday = mBabyBirthdayEdit.getText().toString();
-        String dueDay = mDueDayEdit.getText().toString();
-
         paramMap.put("nick_name", nickName);
-        paramMap.put("child_birthday", babyBirthday);
-        paramMap.put("expected_date", dueDay);
-        paramMap.put("child_sex", mBabySex);
         paramMap.put("parent_sex", mParentSex);
 
         return paramMap;
@@ -209,12 +165,11 @@ public class PersonalDataFragment extends BaseFragment implements DatePickerDial
             }
             Map<String, String> pm = personalDataFragment.getParamMap();
             try {
-                JSONObject paramObj = ApiHelper.getParamObj(pm);
-                pm.clear();
-                pm.put("json", paramObj.toString());
-                String response = HttpUtility.post(ApiHelper.getAbsoluteApiUrl("/user/modInfo"),
-                        null, pm, fm);
+                Map<String, String> paramObj = ApiHelper.getParamMap(pm);
+                String response = HttpUtility.post(ApiHelper.BASE_URL + "users/modinfo",
+                        null, paramObj, fm);
                 JSONObject respObj = new JSONObject(response);
+                Log.e("MOD_RESPONSE", response);
                 TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(respObj);
                 if (!twoTuple.first) {
                     return twoTuple.second;
@@ -232,7 +187,6 @@ public class PersonalDataFragment extends BaseFragment implements DatePickerDial
                 AppContext.showToastShort(result);
                 return;
             }
-            UserApi.userInfo(ApiHelper.getDefaultUserInfoListener());
             AppContext.showToastShort("操作成功");
             getActivity().finish();
         }
@@ -264,14 +218,6 @@ public class PersonalDataFragment extends BaseFragment implements DatePickerDial
     }
 
     /**
-     * 日期选择对话框设置日期时响应方法
-     */
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        currentEditText.setText(year + "-" + ++monthOfYear + "-" + dayOfMonth);
-    }
-
-    /**
      * DialogInterface接口点击响应方法, 用于响应头像来源选择Dialog点击事件
      */
     @Override
@@ -284,7 +230,7 @@ public class PersonalDataFragment extends BaseFragment implements DatePickerDial
             startActivityForResult(intent, CropHelper.REQUEST_CROP);
         } else {            // 使用相机拍摄
             if (!SDCardUtils.isSDCardEnable()) {
-                XmbUtils.showMessage(getActivity(),"SD卡不可用.");
+                XmbUtils.showMessage(getActivity(), "SD卡不可用.");
                 return;
             }
             mCropParams.enable = true;

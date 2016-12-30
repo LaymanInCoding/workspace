@@ -179,9 +179,9 @@ public class ReturnofthegoodsFragment extends BaseFragment{
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new Out_PriceFragment();
+                return new Out_PriceFragment(); //全部订单
             }
-            return new AppliedFragment();
+            return new AppliedFragment();  //已申请
         }
 
         @Override

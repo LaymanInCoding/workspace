@@ -109,15 +109,6 @@ public class SettingFragment extends BaseFragment {
                 mCacheSizeText.setText("0KB");
                 break;
             case R.id.check_update:
-                final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
-                builder.setOnKeyListener((dialog, keyCode, event) -> {
-                    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-                builder.setCancelable(false);
                 UserApi.Upversion("android", new Listener<JSONObject>() {
                     @Override
                     public void onPreExecute() {
@@ -126,7 +117,7 @@ public class SettingFragment extends BaseFragment {
 
                     @Override
                     public void onSuccess(JSONObject response) {
-                        Log.e("Response",response.toString());
+                        Log.e("Response", response.toString());
                         //先取版本号，和本地比对。
                         try {
                             final float latest_version = Float.parseFloat(response.getString("latest_version"));
@@ -134,7 +125,6 @@ public class SettingFragment extends BaseFragment {
                             final String download_url = response.getString("download_url");
                             final String size = response.getString("size");
                             if (latest_version > Float.parseFloat(AppContext.geVerSion())) {
-                                Log.e("respons", response.toString());
                                 XmbUtils.showUpdateWindow(getActivity(), latest_version + "", version_description, download_url, size);
                             } else {
                                 AppContext.showToast("已是最新版本！");

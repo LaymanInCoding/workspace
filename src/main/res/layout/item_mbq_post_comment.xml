@@ -53,7 +53,7 @@
             android:layout_toLeftOf="@+id/comment_floor"
             android:layout_centerVertical="true" />
     </RelativeLayout>
-    <TextView
+    <org.sufficientlysecure.htmltextview.HtmlTextView
         android:id="@+id/comment_content"
         android:textSize="@dimen/dimen_26_dip"
         android:layout_marginBottom="@dimen/dimen_20_dip"
@@ -99,7 +99,7 @@
                 android:textSize="@dimen/dimen_22_dip"
                 android:textColor="#666a72" />
         </LinearLayout>
-        <TextView
+        <org.sufficientlysecure.htmltextview.HtmlTextView
             android:id="@+id/reply_content"
             android:textColor="@color/mbq_post_detail_title"
             android:textSize="@dimen/dimen_22_dip"

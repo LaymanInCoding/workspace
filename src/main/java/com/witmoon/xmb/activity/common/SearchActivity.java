@@ -1,83 +1,159 @@
 package com.witmoon.xmb.activity.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.duowan.mobile.netroid.Listener;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.common.adapter.Search_adapter;
 import com.witmoon.xmb.activity.goods.SearchResultListActivity;
+import com.witmoon.xmb.api.CommonApi;
 import com.witmoon.xmb.base.BaseActivity;
+import com.witmoon.xmb.ui.FlowTagLayout;
 import com.witmoon.xmb.ui.SearChMyView.BGAFlowLayout;
+import com.witmoon.xmb.ui.TagAdapter;
+import com.witmoon.xmb.ui.widget.EmptyLayout;
+import com.witmoon.xmb.util.SystemBarTintManager;
+import com.witmoon.xmb.util.XmbUtils;
 import com.witmoon.xmblibrary.linearlistview.LinearListView;
 import com.witmoon.xmblibrary.linearlistview.listener.OnItemClickListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 搜索界面
  * Created by zhyh on 2015/8/6.
  */
-public class SearchActivity extends BaseActivity implements View.OnClickListener {
+public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText mSearchEdit;
     private TextView mSearch_no;
-    private String[] mString = {"童车", "哈罗闪", "汤美天地", "花王", "纸尿裤", "奶粉", "美德乐", "跨境购"};
-    private int[] mColors = {Color.parseColor("#7ECEF4"), Color.parseColor("#84CCC9"), Color.parseColor("#88ABDA"), Color.parseColor("#7DC1DD"), Color.parseColor("#B6B8DE")};
+    private ArrayList<String> mString = new ArrayList<>();
     private Context mContext = SearchActivity.this;
     private AppContext mAppContext = AppContext.instance();
     private ArrayList<String> mList;
     private LinearLayout mLinearLayout;
     int index = 0;
-    private LinearListView mLinearListView;
+    private RecyclerView mLinearListView;
     //  RadioGroup ----
-    private BGAFlowLayout mBGAFlowLayout;
+    private FlowTagLayout mBGAFlowLayout;
+    private TagAdapter mAdapter;
+    private Search_adapter adapter;
+    private EmptyLayout mEmptyLayout;
 
     @Override
-    protected int getActionBarTitleByResId() {
-        return R.string.text_add_to_shopping_search;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        initialize();
+        setTitleColor();
     }
 
-    @Override
-    protected void configActionBar(Toolbar toolbar) {
-        setTitleColor_(R.color.master_shopping_cart);
+    public void setTitleColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintDrawable(getResources().getDrawable(R.drawable.bg_status));
+        }
     }
 
-    @Override
-    protected int getLayoutResourceId() {
-        return R.layout.activity_search;
+    //获取高度
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 
-    @Override
-    protected void initialize(Bundle savedInstanceState) {
-        findViewById(R.id.submit_button).setOnClickListener(this);
-        mBGAFlowLayout = (BGAFlowLayout) findViewById(R.id.search_BGAFlowLayout);
-        mSearchEdit = (EditText) findViewById(R.id.edit_text_2);
+    private void initialize() {
+        mEmptyLayout = (EmptyLayout) findViewById(R.id.empty_layout);
+        mEmptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
+        mBGAFlowLayout = (FlowTagLayout) findViewById(R.id.search_BGAFlowLayout);
+        mAdapter = new TagAdapter(this, mString);
+        mBGAFlowLayout.setAdapter(mAdapter);
+        mBGAFlowLayout.setOnTagClickListener(((parent, view, position) -> {
+            View tagView = parent.getAdapter().getView(position, null, null);
+            String tag = (String) tagView.getTag();
+            SearchResultListActivity.start(SearchActivity.this, tag.trim());
+        }));
+        mBGAFlowLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_NONE);
+        mSearchEdit = (EditText) findViewById(R.id.edit_text);
+        mSearchEdit.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //防止搜索事件响应两次
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus()
+                                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    doSearch();
+                }
+                return false;
+            }
+        });
         mLinearLayout = (LinearLayout) findViewById(R.id.search_boom);
         mSearch_no = (TextView) findViewById(R.id.search_no);
         findViewById(R.id.delete_search).setOnClickListener(this);
-        mLinearListView = (LinearListView) findViewById(R.id.search_listView);
-        for (int i = 0; i < mString.length; i++) {
-            mBGAFlowLayout.addView(getLabel(mString[i]), new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT));
-        }
+        findViewById(R.id.toolbar_right_text).setOnClickListener(this);
+        mLinearListView = (RecyclerView) findViewById(R.id.search_listView);
         initData();
+        CommonApi.getSearchWord(listener);
     }
 
     public void initData() {
         mList = (ArrayList<String>) mAppContext.getXmbDB().search_name();
         if (mList.size() > 0) {
-            mLinearListView.setLinearAdapter(new Search_adapter(mContext, mList));
+            adapter = new Search_adapter(mContext, mList);
+            adapter.setOnItemDeleteListener(new Search_adapter.OnItemDeleteListener() {
+                @Override
+                public void onItemDelete(int position) {
+                    mAppContext.getXmbDB().search_delete_one(mList.get(position));
+                    mList.remove(position);
+                    adapter.notifyDataSetChanged();
+                    if (mList.size() == 0) {
+                        mSearch_no.setVisibility(View.VISIBLE);
+                        mLinearLayout.setVisibility(View.GONE);
+                    }
+                }
+            });
+            LinearLayoutManager manager = new LinearLayoutManager(mContext);
+            manager.setOrientation(LinearLayoutManager.VERTICAL);
+            mLinearListView.setLayoutManager(manager);
+            mLinearListView.setAdapter(adapter);
             mSearch_no.setVisibility(View.GONE);
             mLinearLayout.setVisibility(View.VISIBLE);
         } else {
@@ -85,40 +161,15 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             mLinearLayout.setVisibility(View.GONE);
         }
 
-        mLinearListView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(LinearListView parent, View view, int position, long id) {
-                SearchResultListActivity.start(SearchActivity.this, mAppContext.getXmbDB().search_name().get(position));
-            }
-        });
     }
 
-    private TextView getLabel(String text) {
-        final RadioButton label = new RadioButton(this);
-        label.setTextColor(Color.WHITE);
-        label.setGravity(Gravity.CENTER);
-        label.setTag(1);
-        label.setButtonDrawable(android.R.color.transparent);
-        //防止下标溢出
-        index++;
-        if (index == mColors.length) {
-            index = 0;
+    public void doSearch() {
+        String keyword = mSearchEdit.getText().toString();
+        if (TextUtils.isEmpty(keyword)) {
+            XmbUtils.showMessage(mContext, "请输入搜索关键字");
+        } else {
+            SearchResultListActivity.start(this, keyword);
         }
-        label.setBackgroundResource(R.drawable.bg_rounded_grey_border);
-        label.setBackgroundColor(mColors[index]);
-        label.setSingleLine(true);
-        label.setEllipsize(TextUtils.TruncateAt.END);
-        int padding = BGAFlowLayout.dp2px(this, 5);
-        label.setPadding(padding, padding, padding, padding);
-        label.setText(text);
-        //实例的事件
-        label.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SearchResultListActivity.start(SearchActivity.this, label.getText().toString().trim());
-            }
-        });
-        return label;
     }
 
     @Override
@@ -129,17 +180,30 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 AppContext.showToast("清除成功！");
                 initData();
                 break;
-            case R.id.submit_button:
-                // TODO: 2015/8/6 搜索
-                String keyword = mSearchEdit.getText().toString();
-                if (TextUtils.isEmpty(keyword)) {
-                    AppContext.showToast("请输入搜索关键字");
-                    return;
-                }
-                SearchResultListActivity.start(this, keyword);
+            case R.id.toolbar_right_text:
+                finish();
                 break;
         }
     }
+
+    Listener<JSONObject> listener = new Listener<JSONObject>() {
+        @Override
+        public void onSuccess(JSONObject response) {
+            mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+            try {
+                if (response.has("keywords")) {
+                    JSONArray list = response.getJSONArray("keywords");
+                    for (int i = 0; i < list.length(); i++) {
+                        String word = list.getString(i);
+                        mString.add(word);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
     @Override
     protected void onResume() {

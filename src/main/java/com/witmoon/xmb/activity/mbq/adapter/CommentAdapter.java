@@ -16,18 +16,22 @@ import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.mbq.activity.PostCommentActivity;
 import com.witmoon.xmb.api.Netroid;
 import com.witmoon.xmb.model.circle.CircleCategory;
+import com.witmoon.xmb.util.HtmlHttpImageGetter;
+import com.witmoon.xmb.util.URLImageGetter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
 
-public class CommentAdapter extends  RecyclerView.Adapter<CommentAdapter.ViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     private OnItemClickListener mOnClickListener;
 
     public interface OnItemClickListener {
         void onItemClick(CircleCategory circleCategory);
+
         void onItemButtonClick(int circle_id);
     }
 
@@ -43,21 +47,22 @@ public class CommentAdapter extends  RecyclerView.Adapter<CommentAdapter.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position){
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final JSONObject jsonObject = mDatas.get(position);
+        Log.e("Reply", jsonObject.toString());
         try {
             Netroid.displayBabyImage(jsonObject.getString("user_head"), holder.user_head_img);
             holder.user_name.setText(jsonObject.getString("user_name"));
             holder.comment_post_time.setText(jsonObject.getString("comment_time"));
             holder.comment_floor.setText(jsonObject.getString("comment_floor"));
-            holder.comment_content.setText(jsonObject.getString("comment_content"));
+            holder.comment_content.setHtml(jsonObject.getString("comment_content"), new URLImageGetter(holder.comment_content));
             JSONArray imgsJsonArray = jsonObject.getJSONArray("comment_imgs");
             holder.comment_imgs_container.removeAllViews();
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            for (int i = 0; i < imgsJsonArray.length();i++){
+            for (int i = 0; i < imgsJsonArray.length(); i++) {
                 ImageView riv = new ImageView(context);
                 layoutParams.width = MainActivity.screen_width - 50;
-                layoutParams.setMargins(0,0,0,20);
+                layoutParams.setMargins(0, 0, 0, 20);
                 riv.setMaxHeight(MainActivity.screen_width * 5);
                 riv.setScaleType(ImageView.ScaleType.FIT_XY);
                 riv.setAdjustViewBounds(true);
@@ -65,12 +70,12 @@ public class CommentAdapter extends  RecyclerView.Adapter<CommentAdapter.ViewHol
                 Netroid.displayImage(imgsJsonArray.getString(i), riv);
                 holder.comment_imgs_container.addView(riv);
             }
-            if(jsonObject.has("comment_reply")){
+            if (jsonObject.has("comment_reply")) {
                 holder.reply_comment_container.setVisibility(View.VISIBLE);
                 Netroid.displayBabyImage(jsonObject.getJSONObject("comment_reply").getString("user_head"), holder.reply_user_head);
                 holder.reply_user_name.setText(jsonObject.getJSONObject("comment_reply").getString("user_name"));
-                holder.reply_content.setText(jsonObject.getJSONObject("comment_reply").getString("comment_content"));
-            }else{
+                holder.reply_content.setHtml(jsonObject.getJSONObject("comment_reply").getString("comment_content"), new URLImageGetter(holder.reply_content));
+            } else {
                 holder.reply_comment_container.setVisibility(View.GONE);
             }
             holder.reply_btn.setOnClickListener(new View.OnClickListener() {
@@ -79,8 +84,8 @@ public class CommentAdapter extends  RecyclerView.Adapter<CommentAdapter.ViewHol
                     Intent intent = new Intent(context, PostCommentActivity.class);
                     try {
                         Log.e("jsonObject", jsonObject.toString());
-                        intent.putExtra("post_id",jsonObject.getString("post_id"));
-                        intent.putExtra("comment_reply_id",jsonObject.getString("comment_id"));
+                        intent.putExtra("post_id", jsonObject.getString("post_id"));
+                        intent.putExtra("comment_reply_id", jsonObject.getString("comment_id"));
                         context.startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -97,24 +102,26 @@ public class CommentAdapter extends  RecyclerView.Adapter<CommentAdapter.ViewHol
         return mDatas.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        public ImageView user_head_img,reply_user_head;
-        public TextView user_name,comment_floor,comment_post_time,comment_content,reply_user_name,reply_content;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView user_head_img, reply_user_head;
+        public TextView user_name, comment_floor, comment_post_time, reply_user_name;
+        private HtmlTextView reply_content, comment_content;
         public LinearLayout comment_imgs_container;
         public LinearLayout reply_comment_container;
         public View reply_btn;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            user_head_img = (ImageView)itemView.findViewById(R.id.user_head_img);
-            user_name = (TextView)itemView.findViewById(R.id.user_name);
-            comment_floor = (TextView)itemView.findViewById(R.id.comment_floor);
-            comment_post_time = (TextView)itemView.findViewById(R.id.comment_post_time);
-            comment_content = (TextView)itemView.findViewById(R.id.comment_content);
+            user_head_img = (ImageView) itemView.findViewById(R.id.user_head_img);
+            user_name = (TextView) itemView.findViewById(R.id.user_name);
+            comment_floor = (TextView) itemView.findViewById(R.id.comment_floor);
+            comment_post_time = (TextView) itemView.findViewById(R.id.comment_post_time);
+            comment_content = (HtmlTextView) itemView.findViewById(R.id.comment_content);
             comment_imgs_container = (LinearLayout) itemView.findViewById(R.id.comment_imgs_container);
             reply_comment_container = (LinearLayout) itemView.findViewById(R.id.reply_comment_container);
             reply_user_head = (ImageView) reply_comment_container.findViewById(R.id.reply_user_head);
             reply_user_name = (TextView) reply_comment_container.findViewById(R.id.reply_user_name);
-            reply_content = (TextView) reply_comment_container.findViewById(R.id.reply_content);
+            reply_content = (HtmlTextView) reply_comment_container.findViewById(R.id.reply_content);
             reply_btn = itemView.findViewById(R.id.reply_btn);
         }
     }

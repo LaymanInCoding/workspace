@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
@@ -29,6 +30,7 @@ import com.witmoon.xmb.activity.mbq.adapter.MyCircleAdapter;
 import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
 import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
 import com.witmoon.xmb.activity.user.LoginActivity;
+import com.witmoon.xmb.api.ApiHelper;
 import com.witmoon.xmb.views.CollectArticleActivity;
 import com.witmoon.xmb.views.MajorArticleActivity;
 import com.witmoon.xmb.views.MajorVoiceActivity;
@@ -55,13 +57,13 @@ import java.util.Map;
 import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 
 public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.OnItemClickListener {
-    private View view,headerView;
+    private View view, headerView;
     private AutoScrollViewPager mAutoScrollViewPager;
     private CirclePageIndicator mCirclePageIndicator;
     private List<Map<String, String>> advertisements = new ArrayList<>();
     private MyCircleAdapter adapter;
     private ArrayList<Object> mDatas = new ArrayList<>();
-    private View voice_container,article_container,article_collect_container,collectView,story_container;
+    private View voice_container, article_container, article_collect_container, collectView, story_container;
     private EmptyLayout emptyLayout;
 
     @Nullable
@@ -72,7 +74,7 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
             emptyLayout = (EmptyLayout) view.findViewById(R.id.error_layout);
             headerView = inflater.inflate(R.layout.header_my_circle_fragment, container, false);
             initHeadView();
-            mRootView = (RecyclerView)view.findViewById(R.id.recycle_view);
+            mRootView = (RecyclerView) view.findViewById(R.id.recycle_view);
             mAutoScrollViewPager = (AutoScrollViewPager) headerView.findViewById(R.id.auto_scroll_pager);
             mCirclePageIndicator = (CirclePageIndicator) headerView.findViewById(R.id.auto_scroll_indicator);
             layoutManager = new LinearLayoutManager(this.getContext());
@@ -80,14 +82,14 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
             mRootView.setHasFixedSize(true);
             mRootView.setLayoutManager(layoutManager);
 
-            adapter = new MyCircleAdapter(mDatas,this.getContext());
+            adapter = new MyCircleAdapter(mDatas, this.getContext());
             adapter.setOnItemClickListener(this);
             stringAdapter = new HeaderViewRecyclerAdapter(adapter);
             stringAdapter.addHeaderView(headerView);
             mRootView.setAdapter(stringAdapter);
 
             View ad_container = headerView.findViewById(R.id.ad_container);
-            LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) ad_container.getLayoutParams();
+            LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) ad_container.getLayoutParams();
             linearParams.width = MainActivity.screen_width;
             linearParams.height = MainActivity.screen_width * 350 / 750;
             ad_container.setLayoutParams(linearParams);
@@ -126,7 +128,7 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
         }
     };
 
-    private void initHeadView(){
+    private void initHeadView() {
         voice_container = headerView.findViewById(R.id.voice_container);
         article_container = headerView.findViewById(R.id.article_container);
         article_collect_container = headerView.findViewById(R.id.article_collect_container);
@@ -139,10 +141,11 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
         collectView.setOnClickListener(this);
     }
 
-    private void requestSearchHotWord(){
+    private void requestSearchHotWord() {
         CircleApi.get_hot_search_keyword(new Listener<JSONObject>() {
             @Override
             public void onSuccess(JSONObject response) {
+                Logger.json(response.toString());
                 if (response.has("data")) {
                     try {
                         SharedPreferencesUtil.remove(getContext(), Const.MBQ_SEARCH_HOT_KEYWORD);
@@ -157,7 +160,7 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
         });
     }
 
-    private void requestAdData(){
+    private void requestAdData() {
         CircleApi.get_circle_ads(new Listener<JSONObject>() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -165,10 +168,12 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
                     JSONArray jsonArray = response.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        Logger.json(jsonObject.toString());
                         HashMap<String, String> map = new HashMap<String, String>();
                         map.put("ad_type", jsonObject.getString("ad_type"));
                         map.put("act_id", jsonObject.getString("ad_con"));
                         map.put("ad_img", jsonObject.getString("ad_img"));
+                        map.put("ad_name", jsonObject.getString("ad_name"));
                         advertisements.add(map);
                     }
                 } catch (JSONException e) {
@@ -179,12 +184,12 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
         });
     }
 
-    private void resetData(){
+    private void resetData() {
         mDatas.clear();
     }
 
-    private void requestData(){
-        if(AppContext.instance().isLogin()){
+    private void requestData() {
+        if (AppContext.instance().isLogin()) {
             CircleApi.get_user_circle(new Listener<JSONObject>() {
 
                 @Override
@@ -204,16 +209,16 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
                         JSONArray jsonArray = response.getJSONArray("user_circle");
                         if (jsonArray.length() == 0) {
                             setDataInit(0);
-                        }else{
+                        } else {
                             setDataInit(jsonArray.length());
                         }
-                        SharedPreferencesUtil.remove(getActivity(),Const.MY_JOIN_CIRCLE_KEY);
+                        SharedPreferencesUtil.remove(getActivity(), Const.MY_JOIN_CIRCLE_KEY);
                         JSONArray tmpJsonArray = new JSONArray();
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            tmpJsonArray.put(i,jsonArray.getJSONObject(i).getInt("circle_id"));
+                            tmpJsonArray.put(i, jsonArray.getJSONObject(i).getInt("circle_id"));
                             mDatas.add(i + 1, CircleCategory.parse(jsonArray.getJSONObject(i)));
                         }
-                        SharedPreferencesUtil.put(getActivity(),Const.MY_JOIN_CIRCLE_KEY,tmpJsonArray.toString());
+                        SharedPreferencesUtil.put(getActivity(), Const.MY_JOIN_CIRCLE_KEY, tmpJsonArray.toString());
                         analyticRecommend(response);
 
                         Intent intent = new Intent(Const.INTENT_ACTION_REFRESH_MY_MBQ_SEARCH);
@@ -227,7 +232,7 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
             });
         }
 
-        if(!AppContext.instance().isLogin()){
+        if (!AppContext.instance().isLogin()) {
             //setDataInit(0);
             CircleApi.get_recommend_cat(new Listener<JSONObject>() {
                 @Override
@@ -243,7 +248,7 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
                 @Override
                 public void onSuccess(JSONObject response) {
                     resetData();
-                    SharedPreferencesUtil.remove(getActivity(),Const.MY_JOIN_CIRCLE_KEY);
+                    SharedPreferencesUtil.remove(getActivity(), Const.MY_JOIN_CIRCLE_KEY);
                     analyticRecommend(response);
                     stringAdapter.notifyDataSetChanged();
                     emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
@@ -253,7 +258,7 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
 
     }
 
-    private void analyticRecommend(JSONObject response){
+    private void analyticRecommend(JSONObject response) {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("title", "推荐麻包圈");
         hashMap.put("type", "text");
@@ -263,7 +268,7 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
             for (int i = 0; i < jsonArray.length(); i++) {
                 mDatas.add(CircleCategory.parse(jsonArray.getJSONObject(i)));
             }
-            if (jsonArray.length()==0){
+            if (jsonArray.length() == 0) {
                 HashMap<String, String> hashMapNo = new HashMap<>();
                 hashMapNo.put("title", "暂无推荐的麻包圈，赶紧催促编辑更新吧！");
                 hashMapNo.put("type", "no_circle");
@@ -274,17 +279,17 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
         }
     }
 
-    private void setDataInit(int t){
+    private void setDataInit(int t) {
         HashMap<String, String> hashMap = new HashMap<>();
-        if(t != 0){
-            hashMap.put("title", "我的麻包圈（"+t+"）");
-        }else{
+        if (t != 0) {
+            hashMap.put("title", "我的麻包圈（" + t + "）");
+        } else {
             hashMap.put("title", "我的麻包圈");
         }
         hashMap.put("type", "text");
         mDatas.add(0, hashMap);
 
-        if(t == 0){
+        if (t == 0) {
             HashMap<String, String> hashMapNo = new HashMap<>();
             hashMapNo.put("title", "您还没有加入任何圈子，点击加入吧。");
             hashMapNo.put("type", "no_circle");
@@ -332,12 +337,14 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
                     int type = Integer.parseInt(advertisements.get(position).get("ad_type"));
                     //专题  2商品 3网页 4团购 5帖子
                     String id = advertisements.get(position).get("act_id");
+                    String name = advertisements.get(position).get("ad_name");
                     if (type == 1) {
                         MarketPlaceActivity.start(getActivity(), id);
                     } else if (type == 2) {
                         CommodityDetailActivity.start(getActivity(), id);
                     } else if (type == 3) {
                         Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
+                        intent.putExtra("title", name);
                         intent.putExtra("url", id);
                         startActivity(intent);
                     } else if (type == 4) {
@@ -352,27 +359,27 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
     public void onItemClick(CircleCategory circleCategory) {
         Intent intent = new Intent(getActivity(), CircleActivity.class);
         intent.putExtra("circle_id", circleCategory.getCircle_id());
-        intent.putExtra("circle_logo",circleCategory.getCircle_logo());
-        intent.putExtra("circle_name",circleCategory.getCircle_name());
-        intent.putExtra("circle_post_cnt",circleCategory.getCircle_post_cnt() + "个话题");
-        intent.putExtra("circle_is_join",circleCategory.getUser_is_join());
+        intent.putExtra("circle_logo", circleCategory.getCircle_logo());
+        intent.putExtra("circle_name", circleCategory.getCircle_name());
+        intent.putExtra("circle_post_cnt", circleCategory.getCircle_post_cnt() + "个话题");
+        intent.putExtra("circle_is_join", circleCategory.getUser_is_join());
         startActivity(intent);
     }
 
     @Override
     public void onItemButtonClick(int circle_id) {
-        if(!AppContext.instance().isLogin()){
+        if (!AppContext.instance().isLogin()) {
             startActivity(new Intent(getActivity(), LoginActivity.class));
-        }else{
+        } else {
             CircleApi.join_circle(circle_id, new Listener<JSONObject>() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
-                        if(response.getInt("status")==1){
-                            XmbUtils.showMessage(getActivity(),response.getString("info"));
+                        if (response.getInt("status") == 1) {
+                            XmbUtils.showMessage(getActivity(), response.getString("info"));
                             requestData();
-                        }else{
-                            XmbUtils.showMessage(getActivity(),response.getString("info"));
+                        } else {
+                            XmbUtils.showMessage(getActivity(), response.getString("info"));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -390,7 +397,7 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.voice_container:
                 startActivity(new Intent(getActivity(), MajorVoiceActivity.class));
                 break;
@@ -399,25 +406,25 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
                 break;
             case R.id.story_container:
                 Intent intent = new Intent();
-                intent.putExtra("title","睡前故事");
-                intent.putExtra("share_right","1");
-                intent.putExtra("url","http://api.xiaomabao.com/discovery/story");
-                intent.setClass(getContext(),InteractiveWebViewActivity.class);
+                intent.putExtra("title", "睡前故事");
+                intent.putExtra("share_right", "1");
+                intent.putExtra("url", ApiHelper.BASE_URL + "discovery/story");
+                intent.setClass(getContext(), InteractiveWebViewActivity.class);
                 startActivity(intent);
                 break;
             case R.id.article_collect_container:
-                if(AppContext.instance().isLogin()) {
+                if (AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), CollectArticleActivity.class));
                     break;
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                     break;
                 }
             case R.id.collect_container:
-                if(AppContext.instance().isLogin()) {
+                if (AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), CollectActivity.class));
                     break;
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                     break;
                 }

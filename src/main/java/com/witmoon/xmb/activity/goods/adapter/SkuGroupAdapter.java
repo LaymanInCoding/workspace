@@ -75,12 +75,12 @@ public class SkuGroupAdapter extends BaseAdapter {
         viewHolder.market_price.setText(map.get("market_price"));
         viewHolder.market_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         viewHolder.count.setText(map.get("salesnum") + "件已付款");
-        if(map.get("brief").equals("")){
-            viewHolder.context.setVisibility(View.GONE);
-        }else{
-            viewHolder.context.setVisibility(View.VISIBLE);
-        }
-        viewHolder.context.setText(map.get("brief"));
+//        if(map.get("short_name").equals("")){
+//            viewHolder.context.setVisibility(View.GONE);
+//        }else{
+//            viewHolder.context.setVisibility(View.VISIBLE);
+//        }
+        viewHolder.context.setText(map.get("short_name"));
         if (TimeUtill.list.size()>0)
         if (TimeUtill.get(position, "time").equals("售罄")) {
             viewHolder.end_time.setText(TimeUtill.get(position, "time"));

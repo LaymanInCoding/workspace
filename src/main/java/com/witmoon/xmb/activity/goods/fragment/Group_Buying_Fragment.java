@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,11 +114,12 @@ public class Group_Buying_Fragment extends BaseFragment {
 
         @Override
         public void onSuccess(JSONObject response) {
-            TwoTuple<Boolean, String> tu = ApiHelper.parseResponseStatus(response);
-            if (!tu.first) {
-                AppContext.showToastShort(tu.second);
-                return;
-            }
+            Log.e("Response", response.toString());
+//            TwoTuple<Boolean, String> tu = ApiHelper.parseResponseStatus(response);
+//            if (!tu.first) {
+//                AppContext.showToastShort(tu.second);
+//                return;
+//            }
             try {
                 JSONObject dataJson = response.getJSONObject("data");
                 List<Advertisement> ads = Advertisement.parse(dataJson.getJSONArray("top_ads"));
@@ -160,18 +162,18 @@ public class Group_Buying_Fragment extends BaseFragment {
             Map<String, String> map = new HashMap<>();
             Map<String, String> timeMap = new HashMap<>();
             map.put("promote_price", jsonObject.getString("promote_price"));
-            map.put("price_integer", jsonObject.getString("price_integer"));
-            map.put("price_decimal", jsonObject.getString("price_decimal"));
+//            map.put("price_integer", jsonObject.getString("price_integer"));
+//            map.put("price_decimal", jsonObject.getString("price_decimal"));
             map.put("id", jsonObject.getString("id"));
             map.put("name", jsonObject.getString("name"));
-            map.put("brief", jsonObject.getString("brief"));
+//            map.put("brief", jsonObject.getString("brief"));
             map.put("brand_name", jsonObject.getString("brand_name"));
             map.put("salesnum", jsonObject.getString("salesnum"));
             map.put("gmt_end_time", jsonObject.getString("gmt_end_time"));
-            timeMap.put("time", Long.parseLong(jsonObject.getString("gmt_end_time"))  - System.currentTimeMillis() / 1000 + "");
-            map.put("goods_style_name", jsonObject.getString("goods_style_name"));
+            timeMap.put("time", Long.parseLong(jsonObject.getString("gmt_end_time")) - System.currentTimeMillis() / 1000 + "");
+//            map.put("goods_style_name", jsonObject.getString("goods_style_name"));
             map.put("short_name", jsonObject.getString("short_name"));
-            map.put("short_style_name", jsonObject.getString("short_style_name"));
+//            map.put("short_style_name", jsonObject.getString("short_style_name"));
             map.put("market_price", jsonObject.getString("market_price"));
             map.put("shop_price", jsonObject.getString("shop_price"));
             map.put("goods_img", jsonObject.getString("goods_img"));
@@ -191,7 +193,6 @@ public class Group_Buying_Fragment extends BaseFragment {
             map.put("id", jsonObject.getString("id"));
             map.put("title", jsonObject.getString("title"));
             map1.put("time", Long.parseLong(jsonObject.getString("end_time")) / 1000 + "");
-            map.put("ad_link", jsonObject.getString("ad_link"));
             map.put("ad_code", jsonObject.getString("ad_code"));
             mapList.add(map);
             TimeUtill.mAdd(map1);
@@ -235,36 +236,9 @@ public class Group_Buying_Fragment extends BaseFragment {
             @Override
             public void onPageClick(AutoScrollViewPager pager, int position) {
                 Advertisement ad = advertisements.get(position);
-                GroupBuyActivity.start(getActivity(), ad.getLink(), "");
+                GroupBuyActivity.start(getActivity(), ad.getId(), "");
             }
         });
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.shake:
-                if (!AppContext.instance().isLogin()) {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                    return;
-                }
-                ShakeActivity.startActivity(getActivity());
-                break;
-            case R.id.signin:
-                if (!AppContext.instance().isLogin()) {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                    return;
-                }
-                SignInActivity.startActivity(getActivity());
-                break;
-            case R.id.favorite:
-                if (!AppContext.instance().isLogin()) {//判断当前是否登录
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                    return;
-                }
-                UIHelper.showSimpleBack(getActivity(), SimpleBackPage.FAVORITE);
-                break;
-        }
     }
 
     public class MainFragmentPagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.TitleIconTabProvider {

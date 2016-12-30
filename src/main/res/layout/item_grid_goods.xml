@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
-            android:text="￥256"
+            android:text=""
             android:textColor="@color/text_view_hint"
             android:textSize="10sp"/>
     </LinearLayout>

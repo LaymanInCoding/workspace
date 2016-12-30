@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/divider"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/divider"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/top_toolbar"
@@ -29,7 +29,7 @@
                 android:background="@drawable/bg_item_pressed"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:src="@mipmap/icon_arrow_back" />
+                android:src="@mipmap/icon_arrow_back"/>
 
             <TextView
                 android:id="@+id/toolbar_title_text"
@@ -40,7 +40,7 @@
                 android:text="商品列表"
                 android:textColor="@color/white"
                 android:textSize="@dimen/toolbar_text_size"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <ImageView
                 android:id="@+id/toolbar_share"
@@ -49,7 +49,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/icon_share_white_2"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/toolbar_right_img"
@@ -59,7 +59,7 @@
                 android:layout_marginRight="4dp"
                 android:layout_toLeftOf="@id/toolbar_share"
                 android:src="@mipmap/icon_heart_white_empty"
-                android:visibility="gone" />
+                android:visibility="gone"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -74,95 +74,154 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_height="40dp"
                 android:background="@color/white"
-                android:divider="@drawable/divider_x1"
-                android:showDividers="middle">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/sort_sales_layout"
+                <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="6dp"
-                    android:paddingTop="6dp">
+                    android:layout_height="40dp"
+                    android:layout_weight="1">
 
-                    <com.witmoon.xmb.ui.widget.SortTextView
-                        android:id="@+id/sort_sales"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_sales"
-                        android:textSize="12sp"
-                        app:sortColumn="salesnum" />
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/default_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="销量"
+                        android:textColor="#c86a66"
+                        android:textSize="@dimen/text_size_14"/>
 
-                <LinearLayout
-                    android:id="@+id/sort_price_layout"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/grey"/>
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="@dimen/dimen_66_dip"
+                        android:layout_height="2dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="#c86a66"/>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
-                    <com.witmoon.xmb.ui.widget.SortTextView
-                        android:id="@+id/sort_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="6dp"
-                        android:paddingTop="6dp"
-                        android:text="@string/text_price"
-                        android:textSize="12sp"
-                        app:sortColumn="shop_price" />
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/newcome_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="新品"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/text_size_14"/>
 
-                <LinearLayout
-                    android:id="@+id/sort_discount_layout"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/grey"/>
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="@dimen/dimen_66_dip"
+                        android:layout_height="2dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="#c86a66"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
-                    <com.witmoon.xmb.ui.widget.SortTextView
-                        android:id="@+id/sort_discount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="6dp"
-                        android:paddingTop="6dp"
-                        android:text="@string/text_discount"
-                        android:textSize="12sp"
-                        app:sortColumn="zhekou" />
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/is_exist_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="只看有货"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/text_size_14"/>
 
-                <LinearLayout
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/grey"/>
+
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="@dimen/dimen_110_dip"
+                        android:layout_height="2dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="#c86a66"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/price_text_layout"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="6dp"
-                    android:paddingTop="6dp">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
-                    <CheckBox
-                        android:id="@+id/filter_in_store"
+                    <TextView
+                        android:id="@+id/price_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:button="@drawable/choice_indicator_circle"
-                        android:paddingLeft="4dp"
-                        android:text="只看有货"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="价格"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/text_size_14"/>
+
+                    <ImageView
+                        android:id="@+id/right_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/dimen_10_dip"
+                        android:layout_toRightOf="@id/price_text"
+                        android:src="@mipmap/price_uncheck"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/grey"/>
+
+                    <View
+                        android:id="@+id/view4"
+                        android:layout_width="@dimen/dimen_132_dip"
+                        android:layout_height="2dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="#c86a66"
+                        android:visibility="gone"/>
+                </RelativeLayout>
             </LinearLayout>
+
 
             <android.support.v4.widget.MySwipeRefreshLayout
                 android:id="@+id/refresh_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/space_4">
+                android:layout_height="match_parent">
 
                 <com.witmoon.xmblibrary.observablescrollview.ObservableRecyclerView
                     android:id="@+id/recycle_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"/>
             </android.support.v4.widget.MySwipeRefreshLayout>
         </LinearLayout>
 
@@ -170,6 +229,6 @@
             android:id="@+id/error_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 </LinearLayout>

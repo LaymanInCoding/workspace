@@ -1,16 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'bugly'   //添加Bugly符号表插件
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.3'
     defaultConfig {
         applicationId "com.witmoon.xmb"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 24
-        versionCode 38
-        versionName "4.6"
+//        versionCode 42
+        versionCode 43
+//        versionName "4.64"
+        versionName "4.7"
         multiDexEnabled true
     }
     compileOptions {
@@ -102,6 +105,9 @@ dependencies {
     compile files('jpush-android-2.1.9.jar')
     compile project(':pickerview')
     compile 'com.nineoldandroids:library:2.4.0'
+    //
+    compile 'org.sufficientlysecure:html-textview:3.0'
+    //
     compile 'com.gxz.stickynavlayout:library:1.1'
     compile 'cn.bingoogolapple:bga-refreshlayout:1.0.7@aar'
     compile 'com.gxz.pagerslidingtabstrip:library:1.1'
@@ -115,6 +121,7 @@ dependencies {
     compile 'com.android.support:percent:23.0.0'
     compile 'com.duowan.android.netroid:netroid:1.2.1'
     compile 'com.facebook.rebound:rebound:0.3.7'
+    compile 'com.github.yxping:EasyPermissionUtil:v0.1.0'
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.1@aar'
     compile 'com.tencent.bugly:crashreport:1.2.3.8'
     compile 'com.facebook.fresco:fresco:0.6.1'
@@ -122,11 +129,13 @@ dependencies {
     compile 'org.json:org.json:chargebee-1.0'
     compile 'cn.bingoogolapple:bga-adapter:1.0.5@aar'
     compile 'info.hoang8f:android-segmented:1.0.6'
-
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'io.reactivex:rxjava:1.0.4'
     compile 'io.reactivex:rxandroid:0.23.0'
     compile 'com.android.support:multidex:1.0.0'
+    compile 'com.orhanobut:logger:1.15'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }
 
 bugly {

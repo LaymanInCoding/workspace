@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_210_dip">
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/bean_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_40_dip"
+            android:layout_marginTop="@dimen/dimen_48_dip"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/inner_bean"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_bean_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_44_dip"
+            android:layout_marginTop="@dimen/dimen_48_dip"
+            android:layout_toRightOf="@id/bean_pic"
+            android:gravity="bottom"
+            android:textColor="#ff7162"
+            android:textSize="@dimen/dimen_60_dip"
+            android:text="0"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_bean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_bean_num"
+            android:layout_marginLeft="@dimen/dimen_12_dip"
+            android:layout_toRightOf="@id/tv_bean_num"
+            android:paddingBottom="@dimen/dimen_12_dip"
+            android:text="个麻豆可使用"
+            android:textColor="#555555"
+            android:textSize="@dimen/dimen_28_dip"/>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bean_use_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1_dip"
+            android:background="#dddddd"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_90_dip"
+            android:layout_below="@id/bean_help_tv"
+            android:gravity="center_vertical">
+
+            <RelativeLayout
+                android:id="@+id/send_bean_container"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/cash_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dimen_16_dip"
+                    android:layout_marginRight="@dimen/dimen_104_dip"
+                    android:text="@string/send_bean"
+                    android:textColor="@color/app_main_deep"
+                    android:textSize="@dimen/dimen_28_dip"/>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/cash_tv"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/send_bean"/>
+
+
+            </RelativeLayout>
+
+            <View
+
+                android:layout_width="@dimen/dimen_1_dip"
+                android:layout_height="@dimen/dimen_66_dip"
+                android:background="#dddddd"/>
+
+            <RelativeLayout
+                android:id="@+id/bean_help_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/send_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/dimen_104_dip"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/bean_help_big"/>
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_16_dip"
+                    android:layout_toRightOf="@id/send_img"
+                    android:text="@string/use_help_bean"
+                    android:textColor="@color/app_main_deep"
+                    android:textSize="@dimen/dimen_28_dip"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_10_dip"
+        android:background="#f3f3f3"/>
+
+
+
+</LinearLayout>

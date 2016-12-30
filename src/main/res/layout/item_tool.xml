@@ -1,53 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_120_dip">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dimen_120_dip">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_120_dip"
-        android:gravity="center_vertical"
         android:background="@color/white"
+        android:gravity="center_vertical"
         android:paddingTop="@dimen/dimen_30_dip">
+
         <ImageView
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dimen_30_dip"
+            android:id="@+id/tool_img"
             android:layout_width="@dimen/dimen_55_dip"
             android:layout_height="@dimen/dimen_55_dip"
-            android:id="@+id/tool_img"/>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_30_dip"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_105_dip"
             android:layout_marginRight="@dimen/dimen_30_dip"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tool_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#717173"
+                android:textColor="@color/app_main_deep"
                 android:textSize="@dimen/dimen_30_dip"/>
+
             <TextView
+                android:id="@+id/tool_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#999999"
-                android:layout_marginTop="@dimen/dimen_6_dip"
-                android:maxLines="1"
-                android:ellipsize="middle"
                 android:layout_marginRight="@dimen/dimen_20_dip"
-                android:id="@+id/tool_desc"
+                android:layout_marginTop="@dimen/dimen_6_dip"
+                android:ellipsize="middle"
+                android:maxLines="1"
+                android:textColor="@color/app_main_thin"
                 android:textSize="@dimen/dimen_24_dip"/>
         </LinearLayout>
+
         <ImageView
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dimen_30_dip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_30_dip"
             android:src="@mipmap/jiantou"/>
+
         <ImageView
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1_dip"
+            android:layout_alignParentBottom="true"
             android:background="@color/mengbao_index_split_line_color"/>
     </RelativeLayout>
 </LinearLayout>

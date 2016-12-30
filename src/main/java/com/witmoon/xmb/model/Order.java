@@ -18,6 +18,7 @@ import java.util.Map;
 public class Order extends BaseBean {
     private String id;
     private String orderType;
+    private String orderRefundType;
     private String serialNo;
     private String time;
 
@@ -156,7 +157,7 @@ public class Order extends BaseBean {
             order.setId(orderObj.getString("order_id"));
             order.setTime(orderObj.getString("order_time"));
             order.setOrderType(orderObj.getString("order_status"));
-            Log.e("TOTAL_FEE",orderObj.getString("order_status"));
+//            Log.e("TOTAL_FEE",orderObj.getString("order_status"));
             order.setTotalFee(orderObj.getString("totalFee"));
             order.setIsCrossBorder(orderObj.getInt("is_cross_border"));
             order.setShipping_name(orderObj.getString("shipping_name"));
@@ -165,6 +166,7 @@ public class Order extends BaseBean {
             JSONArray childOrders = orderObj.getJSONArray("child_orders");
             if (childOrders.length() == 0) {
                 order.setIsSplitOrder(0);
+                order.setOrderRefundType(orderObj.getInt("refund_status") + "");
             } else {
                 order.setIsSplitOrder(1);
                 order.setChild_orders(childOrders);
@@ -197,5 +199,13 @@ public class Order extends BaseBean {
 
 
         return order;
+    }
+
+    public String getOrderRefundType() {
+        return orderRefundType;
+    }
+
+    public void setOrderRefundType(String orderRefundType) {
+        this.orderRefundType = orderRefundType;
     }
 }

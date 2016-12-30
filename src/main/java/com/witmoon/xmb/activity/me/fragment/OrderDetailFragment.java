@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.me.OrderType;
@@ -66,6 +67,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView mBonusText_1;    // 专场优惠
     private TextView mBonusText_2;    // 代金券优惠
     private TextView mBonusText_3;    // 红包优惠
+    private TextView mBonusText_4;    // 麻豆优惠
 
     private LinearListView mGoodsListView;
 
@@ -101,6 +103,7 @@ public class OrderDetailFragment extends BaseFragment {
         mBonusText_1 = (TextView) view.findViewById(R.id.favorable_charge_1);
         mBonusText_2 = (TextView) view.findViewById(R.id.favorable_charge_2);
         mBonusText_3 = (TextView) view.findViewById(R.id.favorable_charge_3);
+        mBonusText_4 = (TextView) view.findViewById(R.id.favorable_charge_4);
 
         mGoodsListView = (LinearListView) view.findViewById(R.id.goods_list);
         emptyLayout = (EmptyLayout) view.findViewById(R.id.error_layout);
@@ -129,9 +132,10 @@ public class OrderDetailFragment extends BaseFragment {
                 }
                 try {
                     JSONObject dataObj = response.getJSONObject("data");
+                    Logger.json(dataObj.toString());
                     List<Map<String, String>> goodsList = parseGoodsList(dataObj.getJSONArray
                             ("goods_list"));
-                    OrderConfirmAdapter adapter = new OrderConfirmAdapter(getActivity(), goodsList);
+                    OrderConfirmAdapter adapter = new OrderConfirmAdapter(getContext(), goodsList);// getActivity => getContext
                     mGoodsListView.setLinearAdapter(adapter);
                     parseDataObj(dataObj);
                     emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
@@ -176,6 +180,7 @@ public class OrderDetailFragment extends BaseFragment {
         mBonusText_1.setText(dataObj.getString("discount_formatted"));
         mBonusText_2.setText(dataObj.getString("coupus_formatted"));
         mBonusText_3.setText(dataObj.getString("bonus_formatted"));
+        mBonusText_4.setText(dataObj.getString("bean_fee"));
         mFreightChargeText.setText(dataObj.getString("shipping_fee_formatted"));
         mCardFee.setText(dataObj.getString("surplus_formatted"));
         if(mOrderType.equals("shipped") || mOrderType.equals("finished")){

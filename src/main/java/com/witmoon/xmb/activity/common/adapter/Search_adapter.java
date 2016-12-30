@@ -1,12 +1,16 @@
 package com.witmoon.xmb.activity.common.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.activity.common.SearchActivity;
+import com.witmoon.xmb.activity.goods.SearchResultListActivity;
 import com.witmoon.xmblibrary.linearlistview.adapter.LinearBaseAdapter;
 
 import java.util.ArrayList;
@@ -14,55 +18,64 @@ import java.util.ArrayList;
 /**
  * Created by de on 2015/10/29.
  */
-public class Search_adapter extends LinearBaseAdapter {
+public class Search_adapter extends RecyclerView.Adapter<Search_adapter.ViewHolder> {
     private ArrayList<String> mList;
     private Context mContext;
+    private OnItemDeleteListener mDeleteListener;
 
     public Search_adapter(Context mContext, ArrayList<String> mList) {
         this.mList = mList;
         this.mContext = mContext;
     }
 
+    public interface OnItemDeleteListener {
+        void onItemDelete(int position);
+    }
+
+    public void setOnItemDeleteListener(OnItemDeleteListener listener) {
+        this.mDeleteListener = listener;
+    }
+
+
     @Override
-    public int getCount() {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.itme_search, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.textView.setText(mList.get(position));
+        holder.deleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDeleteListener.onItemDelete(position);
+            }
+        });
+        holder.containerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchResultListActivity.start(mContext,mList.get(position));
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
         return mList.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        ViewHolder holder = new ViewHolder();
-        if (null == view){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itme_search, parent, false);
-            holder.textView = (TextView) view.findViewById(R.id.search_tv);
-            view.setTag(holder);
-         }else{
-            holder = (ViewHolder) view.getTag();
-         }
-        //设置holder
-        holder.textView.setText(mList.get(position));
-        return view;
-    }
-
-    @Override
-    public int getCountOfIndexViewType(int mType) {
-        if (mType == 0)
-        {
-            return mList.size();
-        }
-        return 0;
-    }
-
-    class ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+        ImageView deleteImg;
+        View containerView;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            textView = (TextView) itemView.findViewById(R.id.search_tv);
+            containerView = itemView.findViewById(R.id.container);
+            deleteImg = (ImageView) itemView.findViewById(R.id.item_delete);
+        }
     }
 }

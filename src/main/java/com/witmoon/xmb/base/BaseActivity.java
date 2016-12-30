@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.umeng.analytics.MobclickAgent;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.ui.dialog.DialogControl;
@@ -136,8 +137,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         mTitleText = (TextView) toolbar.findViewById(R.id.toolbar_title_text);
-        AssetManager mgr =getAssets();//得到AssetManager
-        Typeface tf=Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
+        AssetManager mgr = getAssets();//得到AssetManager
+        Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
         mTitleText.setTypeface(tf);
         mDelete = (TextView) toolbar.findViewById(R.id.toolbar_right_text);
         if (getActionBarTitleByResId() != Integer.MIN_VALUE) {
@@ -174,8 +175,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         mTitleText.setText(title);
     }
 
-    public TextView setmDeleteText(String str)
-    {
+    public TextView setmDeleteText(String str) {
         mDelete.setVisibility(View.VISIBLE);
         mDelete.setText(str);
         return mDelete;
@@ -212,10 +212,13 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     public Toolbar getToolBar() {
         return mToolBar;
+
     }
 
-    public void hideToolbar(){
-        mToolBar.setVisibility(View.GONE);
+    public void hideToolbar() {
+        if (mToolBar != null) {
+            mToolBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -313,9 +316,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             setTranslucentStatus(true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
-            if (mColor == R.color.black){
+            if (mColor == R.color.black) {
                 tintManager.setStatusBarTintColor(getResources().getColor(R.color.black));
-            }else{
+            } else {
                 tintManager.setStatusBarTintDrawable(getResources().getDrawable(R.drawable.bg_status));
             }
         }
@@ -335,8 +338,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
-    protected void resetStatus(){
+    protected void resetStatus() {
         mRootView.removeOnScrollListener(recyclerViewScrollListener);
         recyclerViewScrollListener = new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
@@ -347,11 +349,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         mRootView.addOnScrollListener(recyclerViewScrollListener);
     }
 
-    public void setRecRequest(int currentPage){
+    public void setRecRequest(int currentPage) {
 
     }
 
-    protected void createMsgHeaderView(){
+    protected void createMsgHeaderView() {
         removeFooterView();
         View loadMoreView = LayoutInflater
                 .from(this)
@@ -367,12 +369,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         stringAdapter.addFooterView(loadMoreView);
     }
 
-    protected void removeFooterView(){
+    protected void removeFooterView() {
         stringAdapter.removeFooterView();
         mRootView.removeOnScrollListener(recyclerViewScrollListener);
     }
 
-    protected void removeHeaderView(){
+    protected void removeHeaderView() {
         stringAdapter.removeHeaderView();
     }
 

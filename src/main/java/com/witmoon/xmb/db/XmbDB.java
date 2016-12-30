@@ -236,26 +236,71 @@ public class XmbDB {
         return ms;
     }
 
-    public void search_insret(String name)
-    {
+    //插入商品搜索
+    public void search_insret(String name) {
         name = name.trim();
-        if (null!=name)
-        {
+        if (null != name) {
             //保持唯一 0-0
             Cursor cursor = db.rawQuery("select * from search where search_name = ?", new String[]{name});
-            if (cursor.getCount()<=0)
-            {
+            if (cursor.getCount() <= 0) {
                 ContentValues values = new ContentValues();
                 values.put("search_name", name);
-                db.insert("search", null,values);
+                db.insert("search", null, values);
             }
         }
     }
 
-    //查询所有搜索记录
-    public List<String> search_name(){
+    //插入帖子搜索
+    public void post_search_insert(String name) {
+        name = name.trim();
+        if (null != name) {
+            //保持唯一 0-0
+            Cursor cursor = db.rawQuery("select * from search where search_post = ?", new String[]{name});
+            if (cursor.getCount() <= 0) {
+                ContentValues values = new ContentValues();
+                values.put("search_post", name);
+                db.insert("search", null, values);
+            }
+        }
+    }
+    
+    //查询所有帖子搜索记录
+    public List<String> search_post() {
         List<String> search = new ArrayList<String>();
-        Cursor cursor =  db.query("search", null, null, null, null, null, null);
+        Cursor cursor = db.query("search", null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                search.add(cursor.getString(cursor.getColumnIndex("search_post")));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return search;
+    }
+
+    //删除某条帖子搜索记录
+    public void search_delete_onepost(String search_name) {
+        List<String> mList = search_name();
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i).toString().equals(search_name)) {
+                db.delete("search", "search_post = ?", new String[]{mList.get(i).toString()});
+            }
+        }
+    }
+
+    //删除所有帖子搜索记录
+    public void search_delete_post() {
+        List<String> mList = search_name();
+        for (int i = 0; i < mList.size(); i++) {
+            db.delete("search", "search_post = ?", new String[]{mList.get(i).toString()});
+        }
+    }
+
+
+
+    //查询所有商品搜索记录
+    public List<String> search_name() {
+        List<String> search = new ArrayList<String>();
+        Cursor cursor = db.query("search", null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 search.add(cursor.getString(cursor.getColumnIndex("search_name")));
@@ -264,33 +309,44 @@ public class XmbDB {
         cursor.close();
         return search;
     }
-    //查询所有搜索记录
-    public void  search_delete(){
-        List<String> mList =  search_name();
-        for (int i =0;i<mList.size();i++)
-        {
-            db.delete("search","search_name = ?",new String[]{mList.get(i).toString()});
+
+    //删除某条商品搜索记录
+    public void search_delete_one(String search_name) {
+        List<String> mList = search_name();
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i).toString().equals(search_name)) {
+                db.delete("search", "search_name = ?", new String[]{mList.get(i).toString()});
+            }
+        }
+    }
+
+    //删除所有搜索记录
+    public void search_delete() {
+        List<String> mList = search_name();
+        for (int i = 0; i < mList.size(); i++) {
+            db.delete("search", "search_name = ?", new String[]{mList.get(i).toString()});
         }
     }
 
     /**
      * 判断某张表是否存在
+     *
      * @param tabName 表名
      * @return
      */
-    public boolean tabIsExist(String tabName){
+    public boolean tabIsExist(String tabName) {
         boolean result = false;
-        if(tabName == null){
+        if (tabName == null) {
             return false;
         }
         Cursor cursor = null;
         try {
-            Log.e("输出当前数据库的版本号",db.getVersion()+"");
-            String sql = "select count(*) as c from sqlite_master where type ='table' and name ='"+tabName.trim()+"' ";
+            Log.e("输出当前数据库的版本号", db.getVersion() + "");
+            String sql = "select count(*) as c from sqlite_master where type ='table' and name ='" + tabName.trim() + "' ";
             cursor = db.rawQuery(sql, null);
-            if(cursor.moveToNext()){
+            if (cursor.moveToNext()) {
                 int count = cursor.getInt(0);
-                if(count>0){
+                if (count > 0) {
                     result = true;
                 }
             }
@@ -300,8 +356,8 @@ public class XmbDB {
         }
         return result;
     }
-    public void addTable()
-    {
+
+    public void addTable() {
         // search表建表语句
         String CREATE_SEARCH = "create table search (id text primary key, " +
                 "search_name text)";

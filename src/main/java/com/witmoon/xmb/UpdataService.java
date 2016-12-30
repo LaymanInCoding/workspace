@@ -83,6 +83,7 @@ public class UpdataService extends Service {
      ******/
     private final Handler handler = new Handler() {
         private UpdataService mService = UpdataService.this;
+
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -125,8 +126,8 @@ public class UpdataService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (null!=notificationManager)
-        notificationManager.cancel(R.layout.notification_item);
+        if (null != notificationManager)
+            notificationManager.cancel(R.layout.notification_item);
     }
 
     private class DownLoadThread extends Thread {
@@ -160,13 +161,13 @@ public class UpdataService extends Service {
         //notification = new Notification(R.drawable.dot_enable,app_name + getString(R.string.is_downing) ,System.currentTimeMillis());
         notification = new Notification(
                 R.mipmap.ic_launcher,//应用的图标
-                app_name + getString(R.string.app_name),
+                getString(R.string.app_name),
                 System.currentTimeMillis());
         notification.flags = Notification.FLAG_ONGOING_EVENT;
 
         /*** 自定义  Notification 的显示****/
         contentView = new RemoteViews(getPackageName(), R.layout.notification_item);
-        contentView.setTextViewText(R.id.notificationTitle, app_name + getString(R.string.is_downing));
+        contentView.setTextViewText(R.id.notificationTitle, getString(R.string.app_name) + getString(R.string.is_downing));
         contentView.setTextViewText(R.id.notificationPercent, "0%");
         contentView.setProgressBar(R.id.notificationProgress, 100, 0, false);
         notification.contentView = contentView;

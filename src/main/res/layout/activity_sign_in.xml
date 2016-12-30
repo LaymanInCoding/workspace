@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text="我的签到奖金总额 "
+                    android:text="可用麻豆 "
                     android:textColor="@color/white"/>
 
                 <TextView
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text=" 麻豆"
+                    android:text=" 个"
                     android:textColor="@color/white"/>
             </LinearLayout>
 

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_210_dip">
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/bean_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_40_dip"
+            android:layout_marginTop="@dimen/dimen_48_dip"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/inner_bean"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_bean_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_44_dip"
+            android:layout_marginTop="@dimen/dimen_48_dip"
+            android:layout_toRightOf="@id/bean_pic"
+            android:gravity="bottom"
+            android:textColor="#ff7162"
+            android:textSize="@dimen/dimen_60_dip"
+            android:text="0"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_bean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_bean_num"
+            android:layout_marginLeft="@dimen/dimen_12_dip"
+            android:layout_toRightOf="@id/tv_bean_num"
+            android:paddingBottom="@dimen/dimen_12_dip"
+            android:text="个麻豆"
+            android:textColor="#555555"
+            android:textSize="@dimen/dimen_28_dip"/>
+
+        <RelativeLayout
+            android:id="@+id/bean_help_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/dimen_20_dip"
+            android:layout_marginRight="@dimen/dimen_30_dip"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/send_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_104_dip"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/bean_help_small"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_16_dip"
+                android:layout_toRightOf="@id/send_img"
+                android:text="@string/use_help_bean"
+                android:textColor="#777777"
+                android:textSize="@dimen/dimen_24_dip"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_10_dip"
+        android:background="#f3f3f3"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_40_dip">
+
+        <TextView
+            android:id="@+id/tip_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_40_dip"
+            android:text="对方账号："
+            android:textColor="@color/app_main_deep"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+
+        <EditText
+            android:id="@+id/send_account_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tip_tv"
+            android:background="@null"
+            android:hint="@string/send_bean_hint"
+            android:paddingLeft="@dimen/dimen_20_dip"
+            android:paddingRight="@dimen/dimen_10_dip"
+            android:textColor="@color/app_main_deep"
+            android:textColorHint="#aaaaaa"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <View
+            style="@style/horizontal_divider"
+            android:layout_alignLeft="@id/send_account_et"
+            android:layout_below="@id/send_account_et"
+            android:layout_marginRight="@dimen/dimen_200_dip"
+            android:layout_marginTop="@dimen/dimen_5_dip"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_40_dip">
+
+        <TextView
+            android:id="@+id/tip_tv_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_40_dip"
+            android:text="赠送数量："
+            android:textColor="@color/app_main_deep"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+
+        <EditText
+            android:id="@+id/send_num_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tip_tv_down"
+            android:background="@null"
+            android:hint="@string/send_num_hint"
+            android:inputType="number"
+            android:paddingLeft="@dimen/dimen_20_dip"
+            android:paddingRight="@dimen/dimen_10_dip"
+            android:textColor="@color/app_main_deep"
+            android:textColorHint="#aaaaaa"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <View
+            style="@style/horizontal_divider"
+            android:layout_alignLeft="@id/send_num_et"
+            android:layout_below="@id/send_num_et"
+            android:layout_marginRight="@dimen/dimen_200_dip"
+            android:layout_marginTop="@dimen/dimen_5_dip"/>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/submit_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30_dip"
+        android:layout_marginRight="@dimen/dimen_30_dip"
+        android:layout_marginTop="@dimen/dimen_60_dip"
+        android:height="@dimen/dimen_66_dip"
+        android:background="@drawable/bg_button_radiu26"
+        android:gravity="center"
+        android:text="确认赠送"
+        android:textColor="#f3f3f3"/>
+</LinearLayout>

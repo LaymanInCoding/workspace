@@ -39,13 +39,13 @@
                 android:id="@+id/tool_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#717173"
+                android:textColor="@color/app_main_deep"
                 android:textSize="@dimen/dimen_30_dip"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#999999"
+                android:textColor="@color/app_main_thin"
                 android:lineSpacingExtra="@dimen/dimen_3_dip"
                 android:layout_marginTop="@dimen/dimen_6_dip"
                 android:ellipsize="middle"

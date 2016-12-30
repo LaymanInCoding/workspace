@@ -1,81 +1,196 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:gravity="center_horizontal">
-    <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:gravity="center_vertical">
+
+    <RelativeLayout
         android:id="@+id/status1_container"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:background="#E6E6E6"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/top_text"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/space_35"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/my_status1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/wzhyz" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/dimen_20_dip"
+            android:paddingLeft="@dimen/dimen_150_dip"
+            android:paddingRight="@dimen/dimen_150_dip"
+            android:paddingTop="@dimen/dimen_20_dip"
+            android:text="@string/tip_message_baby"
+            android:textColor="@color/app_main_thin"/>
+
+        <RelativeLayout
+            android:id="@+id/my_status1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_120_dip"
+            android:layout_below="@id/top_text"
+            android:background="@color/white">
 
             <ImageView
-                android:id="@+id/my_status2"
-                android:layout_marginTop="@dimen/dimen_40_dip"
+                android:id="@+id/preg_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/bbycs"/>
-        </LinearLayout>
-    </ScrollView>
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dimen_16_dip"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/my_status_preg"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/preg_pic"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_5_dip"
+                    android:text="@string/in_pregnant"
+                    android:textColor="@color/app_main_deep"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_5_dip"
+                    android:text="@string/pregnant_message"
+                    android:textColor="@color/app_main_thin"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10_dip"
+                android:padding="@dimen/dimen_16_dip"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/jiantou"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/my_status2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_120_dip"
+            android:layout_below="@id/my_status1"
+            android:layout_marginTop="@dimen/dimen_1_dip"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/born_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dimen_16_dip"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/my_status_bborn"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/born_pic"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_5_dip"
+                    android:text="@string/baby_born"
+                    android:textColor="@color/app_main_deep"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_5_dip"
+                    android:text="@string/born_message"
+                    android:textColor="@color/app_main_thin"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10_dip"
+                android:padding="@dimen/dimen_16_dip"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/jiantou"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/more_message_img"
+            android:layout_width="@dimen/dimen_400_dip"
+            android:layout_height="@dimen/dimen_300_dip"
+            android:layout_alignParentBottom="true"
+            android:src="@mipmap/my_status_more"/>
+
+
+    </RelativeLayout>
+
+
     <RelativeLayout
         android:id="@+id/status2_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:background="#ffffff"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/top_toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_240_dip"
             android:background="@drawable/bg_nav"
-            android:paddingTop="@dimen/dimen_20_dip"
-            android:gravity="top">
+            android:gravity="top"
+            android:paddingTop="@dimen/dimen_20_dip">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height">
+
                 <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
                     android:id="@+id/horizonta_recycleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dimen_80_dip"
-                    android:layout_marginRight="@dimen/dimen_80_dip"
-                    android:layout_height="match_parent">
+                    android:layout_marginRight="@dimen/dimen_80_dip">
 
                 </android.support.v7.widget.RecyclerView>
+
                 <LinearLayout
                     android:id="@+id/left_btn"
                     android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/dimen_40_dip"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:gravity="center_vertical"
-                    android:layout_height="match_parent">
+                    android:paddingLeft="@dimen/dimen_40_dip">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/dimen_40_dip"
                         android:src="@mipmap/dajian"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/right_btn"
                     android:layout_width="wrap_content"
-                    android:paddingRight="@dimen/dimen_40_dip"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
-                    android:layout_alignParentRight="true"
-                    android:layout_height="match_parent">
+                    android:paddingRight="@dimen/dimen_40_dip">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,152 +199,174 @@
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
+
         <ScrollView
             android:id="@+id/userinfo_container"
-            android:layout_marginTop="@dimen/dimen_125_dip"
-            android:overScrollMode="never"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_125_dip"
+            android:overScrollMode="never">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <com.makeramen.roundedimageview.RoundedImageView
                         xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/me_avatar_img"
                         android:layout_width="@dimen/dimen_185_dip"
                         android:layout_height="@dimen/dimen_185_dip"
                         android:layout_centerInParent="true"
-                        android:src="@mipmap/touxiang"
-                        app:riv_corner_radius="@dimen/dimen_10_dip"
-                        app:riv_border_width="@dimen/dimen_5_dip"
-                        app:riv_border_color="#3f000000"
+                        android:layout_marginBottom="@dimen/dimen_15_dip"
                         android:scaleType="centerCrop"
-                        android:layout_marginBottom="@dimen/dimen_15_dip" />
+                        android:src="@mipmap/touxiang"
+                        app:riv_border_color="#3f000000"
+                        app:riv_border_width="@dimen/dimen_5_dip"
+                        app:riv_corner_radius="@dimen/dimen_10_dip"/>
                 </RelativeLayout>
+
                 <LinearLayout
+                    android:id="@+id/top_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/top_container"
                     android:orientation="vertical">
+
                     <LinearLayout
-                        android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/dimen_20_dip"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
                         android:paddingBottom="@dimen/dimen_20_dip"
-                        android:orientation="horizontal">
+                        android:paddingTop="@dimen/dimen_20_dip">
+
                         <LinearLayout
                             android:layout_width="0dip"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/baby_weight_text_hint"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="胎儿体重"
                                 android:textColor="#999999"
-                                android:textSize="@dimen/dimen_20_dip"
-                                android:text="胎儿体重"/>
+                                android:textSize="@dimen/dimen_20_dip"/>
+
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:textSize="@dimen/dimen_36_dip"
                                 android:id="@+id/baby_weight"
-                                android:textColor="#4d4d4d"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dimen_8_dip"
-                                android:layout_height="wrap_content"/>
+                                android:textColor="#4d4d4d"
+                                android:textSize="@dimen/dimen_36_dip"/>
                         </LinearLayout>
+
                         <ImageView
                             android:layout_width="@dimen/dimen_1_dip"
                             android:layout_height="match_parent"
                             android:background="#D66263"/>
+
                         <LinearLayout
                             android:layout_width="0dip"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/baby_length_text_hint"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="胎儿身长"
                                 android:textColor="#999999"
-                                android:textSize="@dimen/dimen_20_dip"
-                                android:text="胎儿身长"/>
+                                android:textSize="@dimen/dimen_20_dip"/>
+
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:textSize="@dimen/dimen_36_dip"
-                                android:textColor="#4d4d4d"
                                 android:id="@+id/baby_length"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dimen_8_dip"
-                                android:layout_height="wrap_content"/>
+                                android:textColor="#4d4d4d"
+                                android:textSize="@dimen/dimen_36_dip"/>
                         </LinearLayout>
+
                         <ImageView
                             android:id="@+id/overdue_t_line"
                             android:layout_width="@dimen/dimen_1_dip"
                             android:layout_height="match_parent"
                             android:background="#D66263"/>
+
                         <LinearLayout
+                            android:id="@+id/overdue_t_container"
                             android:layout_width="0dip"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:id="@+id/overdue_t_container"
                             android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/due_date_text_hint"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="距离预产期"
                                 android:textColor="#999999"
-                                android:textSize="@dimen/dimen_20_dip"
-                                android:text="距离预产期"/>
+                                android:textSize="@dimen/dimen_20_dip"/>
+
                             <TextView
+                                android:id="@+id/due_date_text"
                                 android:layout_width="wrap_content"
-                                android:textSize="@dimen/dimen_36_dip"
-                                android:textColor="#4d4d4d"
-                                android:layout_marginTop="@dimen/dimen_8_dip"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/due_date_text"/>
+                                android:layout_marginTop="@dimen/dimen_8_dip"
+                                android:textColor="#4d4d4d"
+                                android:textSize="@dimen/dimen_36_dip"/>
                         </LinearLayout>
                     </LinearLayout>
+
                     <LinearLayout
+                        android:id="@+id/info_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/info_container"
                         android:orientation="vertical">
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dimen_10_dip"
                             android:background="@color/mengbao_index_split_bg_color"/>
+
                         <LinearLayout
-                            android:background="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                            android:background="@color/white"
                             android:gravity="top"
-                            android:paddingTop="@dimen/dimen_24_dip"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/dimen_10_dip"
                             android:paddingLeft="@dimen/dimen_40_dip"
                             android:paddingRight="@dimen/dimen_40_dip"
-                            android:paddingBottom="@dimen/dimen_10_dip">
+                            android:paddingTop="@dimen/dimen_24_dip">
+
                             <ImageView
-                                android:layout_marginTop="@dimen/dimen_2_dip"
                                 android:layout_width="@dimen/dimen_28_dip"
                                 android:layout_height="@dimen/dimen_28_dip"
+                                android:layout_marginTop="@dimen/dimen_2_dip"
                                 android:src="@mipmap/deng"/>
+
                             <TextView
-                                android:layout_marginLeft="@dimen/dimen_15_dip"
+                                android:id="@+id/dayinfo_summary"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/dayinfo_summary"
-                                android:textColor="#727d7f"
-                                android:textSize="@dimen/dimen_30_dip"
-                                android:lineSpacingExtra="@dimen/dimen_6_dip"/>
+                                android:layout_marginLeft="@dimen/dimen_15_dip"
+                                android:lineSpacingExtra="@dimen/dimen_6_dip"
+                                android:textColor="@color/app_main_deep"
+                                android:textSize="@dimen/dimen_30_dip"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -238,67 +375,83 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_10_dip"
                     android:background="@color/mengbao_index_split_bg_color"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:background="@color/white"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
                     <LinearLayout
-                        android:layout_width="0dip"
-                        android:paddingTop="@dimen/dimen_30_dip"
-                        android:paddingBottom="@dimen/dimen_30_dip"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:id="@+id/baby_record_container"
-                        android:layout_weight="1">
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/dimen_30_dip"
+                        android:paddingTop="@dimen/dimen_30_dip">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/zhongtu1"/>
                     </LinearLayout>
+
                     <LinearLayout
+                        android:id="@+id/knowledge_container"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:id="@+id/knowledge_container"
-                        android:paddingTop="@dimen/dimen_30_dip"
                         android:paddingBottom="@dimen/dimen_30_dip"
-                        android:layout_weight="1">
+                        android:paddingTop="@dimen/dimen_30_dip">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/zhongtu2"/>
                     </LinearLayout>
+
                     <LinearLayout
+                        android:id="@+id/eatable_container"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:id="@+id/eatable_container"
-                        android:paddingTop="@dimen/dimen_30_dip"
                         android:paddingBottom="@dimen/dimen_30_dip"
-                        android:layout_weight="1">
+                        android:paddingTop="@dimen/dimen_30_dip">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/zhongtu3"/>
                     </LinearLayout>
+
                     <LinearLayout
+                        android:id="@+id/treasure_container"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:id="@+id/treasure_container"
-                        android:paddingTop="@dimen/dimen_30_dip"
                         android:paddingBottom="@dimen/dimen_30_dip"
-                        android:layout_weight="1">
+                        android:paddingTop="@dimen/dimen_30_dip">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/zhongtu4"/>
                     </LinearLayout>
                 </LinearLayout>
-                <include android:id="@+id/layout_mengbao_remind" layout="@layout/layout_mengbao_remind" />
-                <include layout="@layout/layout_mengbao_tools" />
-                <include layout="@layout/layout_mengbao_remind_post" />
-                <include layout="@layout/layout_mengbao_remind_goods" />
+
+                <include
+                    android:id="@+id/layout_mengbao_remind"
+                    layout="@layout/layout_mengbao_remind"/>
+
+                <include layout="@layout/layout_mengbao_tools"/>
+
+                <include layout="@layout/layout_mengbao_remind_post"/>
+
+                <include layout="@layout/layout_mengbao_remind_goods"/>
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_10_dip"
@@ -310,22 +463,22 @@
 
     <ImageView
         android:id="@+id/jump_setting"
-        android:layout_marginTop="@dimen/dimen_140_dip"
-        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_height="wrap_content"
-        android:src="@mipmap/jumptobaby"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dimen_140_dip"
+        android:src="@mipmap/jumptobaby"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/backtotoday"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/dimen_140_dip"
         android:layout_width="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_height="wrap_content"
-        android:src="@mipmap/backtotoday"/>
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/dimen_140_dip"
+        android:src="@mipmap/backtotoday"
+        android:visibility="gone"/>
 
-    <include layout="@layout/emptylayout_all" />
+    <include layout="@layout/emptylayout_all"/>
 
 </RelativeLayout>

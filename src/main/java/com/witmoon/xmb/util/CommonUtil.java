@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class CommonUtil {
 
     //用于匹配手机号码
-    public final static String REGEX_MOBILE = "^0?1[3458]\\d{9}$";
+    public final static String REGEX_MOBILE = "^0?1[34578]\\d{9}$";
     // 邮箱匹配正则表达式
     public final static String REGEX_EMAIL = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1," +
             "3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";

@@ -32,7 +32,7 @@ import org.json.JSONObject;
  * RecyclerView
  * Created by zhyh on 2015/6/15.
  */
-public abstract class   BaseRecyclerViewFragmentV2 extends BaseFragment implements
+public abstract class BaseRecyclerViewFragmentV2 extends BaseFragment implements
         BaseRecyclerAdapter.OnItemClickListener, BaseRecyclerAdapter.OnItemLongClickListener {
 
     private static final String TAG = "BaseRecycleViewFragment";
@@ -209,11 +209,9 @@ public abstract class   BaseRecyclerViewFragmentV2 extends BaseFragment implemen
                 } catch (Exception e) {
                     executeOnLoadDataError(null);
                 }
-                if (is_dow)
-                {
+                if (is_dow) {
                     try {
-                        if (response.getJSONArray("data").length()==0)
-                        {
+                        if (response.getJSONArray("data").length() == 0) {
                             mAdapter.setState(BaseRecyclerAdapter.STATE_NO_MORE);
                         }
                     } catch (JSONException e) {

@@ -35,7 +35,7 @@
                 android:layout_marginTop="@dimen/dimen_4_dip"
                 android:textSize="@dimen/dimen_26_dip"
                 android:text="@null"
-                android:textColor="@color/mbq_circle_item_title"/>
+                android:textColor="@color/app_main_deep"/>
             <TextView
                 android:id="@+id/circle_desc"
                 android:background="@color/white"
@@ -46,7 +46,7 @@
                 android:maxLines="1"
                 android:text="@null"
                 android:layout_marginTop="@dimen/dimen_6_dip"
-                android:textColor="@color/mbq_circle_item_desc"/>
+                android:textColor="@color/app_main_thin"/>
         </RelativeLayout>
         <ImageView
             android:id="@+id/circle_join"

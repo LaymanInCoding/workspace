@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
-    <include layout="@layout/common_tool_bar" />
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_tool_bar"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="@dimen/dimen_10_dip"
         android:layout_marginTop="10dp"
         android:text="请退货给商家"
-        android:textColor="@color/black"
-        android:textSize="20dp" />
+        android:textColor="@color/app_main_deep"
+        android:textSize="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,6 +24,7 @@
         android:paddingBottom="10dp">
 
         <LinearLayout
+            android:layout_marginTop="@dimen/dimen_10_dip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -29,16 +32,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="@dimen/dimen_10_dip"
                 android:padding="4dp"
-                android:text="退货地址:" />
+                android:text="退货地址:"
+                android:textColor="@color/app_main_deep"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:paddingLeft="4dp"
-                android:text="北京通州区六环内(马驹桥镇)团瓢庄西仓库开兴仓储物流有限公司9排9-12门" />
+                android:text="北京通州区六环内(马驹桥镇)团瓢庄西仓库开兴仓储物流有限公司9排9-12门"
+                android:textColor="@color/app_main_deep"/>
 
         </LinearLayout>
 
@@ -52,14 +57,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:padding="4dp"
-                android:text="姓        名:" />
+                android:text="姓        名:"
+                android:textColor="@color/app_main_deep"/>
 
             <TextView
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:paddingLeft="4dp"
-                android:text="@string/app_name" />
+                android:text="@string/app_name"
+                android:textColor="@color/app_main_deep"/>
 
         </LinearLayout>
 
@@ -69,17 +77,20 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/app_main_deep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:padding="4dp"
-                android:text="电        话:" />
+                android:text="电        话:"/>
 
             <TextView
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="01056865097" />
+                android:text="01056865097"
+                android:textColor="@color/app_main_deep"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -88,16 +99,16 @@
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="@dimen/dimen_10_dip"
         android:layout_marginTop="10dp"
         android:text="请填写发货信息"
-        android:textColor="@color/black"
-        android:textSize="20dp" />
+        android:textColor="@color/app_main_deep"
+        android:textSize="20dp"/>
 
     <LinearLayout
         android:id="@+id/top_layout"
@@ -109,16 +120,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:baselineAligned="true"
+            android:layout_marginTop="@dimen/dimen_10_dip"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="5dip"
                 android:padding="4dp"
                 android:text="快递单号:"
-                android:textColor="@color/black" />
+                android:textColor="@color/app_main_deep"/>
 
             <EditText
                 android:id="@+id/express_no"
@@ -127,40 +139,42 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="@dimen/space_30"
                 android:background="@drawable/bg_rounded_grey_border"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/app_main_deep"/>
         </LinearLayout>
 
         <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingBottom="4dp"-->
-            <!--android:paddingTop="4dp">-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingBottom="4dp"-->
+        <!--android:paddingTop="4dp">-->
 
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:padding="4dp"-->
-                <!--android:text="快递公司:"-->
-                <!--android:textColor="@color/black" />-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:padding="4dp"-->
+        <!--android:text="快递公司:"-->
+        <!--android:textColor="@color/black" />-->
 
-            <!--<EditText-->
-                <!--android:id="@+id/express_company"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="12dp"-->
-                <!--android:layout_marginRight="@dimen/space_30"-->
-                <!--android:background="@drawable/bg_rounded_grey_border"-->
-                <!--android:singleLine="true" />-->
+        <!--<EditText-->
+        <!--android:id="@+id/express_company"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:layout_marginRight="@dimen/space_30"-->
+        <!--android:background="@drawable/bg_rounded_grey_border"-->
+        <!--android:singleLine="true" />-->
         <!--</LinearLayout>-->
 
         <LinearLayout
+            android:baselineAligned="true"
             android:id="@+id/fuc_Sa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/dimen_10_dip"
             android:orientation="horizontal">
 
             <TextView
@@ -169,7 +183,7 @@
                 android:layout_marginLeft="5dp"
                 android:padding="4dp"
                 android:text="快递费用:"
-                android:textColor="@color/black" />
+                android:textColor="@color/app_main_deep"/>
 
             <EditText
                 android:id="@+id/express_fee"
@@ -178,7 +192,8 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="@dimen/space_30"
                 android:background="@drawable/bg_rounded_grey_border"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/app_main_deep"/>
         </LinearLayout>
 
         <TextView
@@ -186,31 +201,31 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="温馨提示：如您寄回的商品的退货原因经小麻包判断为与真实情况不符，将无法为您报销运费，感谢您的理解和支持"
-            android:textColor="@color/grey"
-            android:textSize="10dp" />
+            android:textColor="@color/app_main_thin"
+            android:textSize="10dp"/>
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_marginTop="100dp"
         android:id="@+id/submit_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/submit_button"
             style="@style/cancelButton"
-            android:background="@drawable/bg_button1"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="@string/cancel" />
+            android:background="@drawable/bg_button1"
+            android:text="@string/cancel"/>
 
         <Button
             android:id="@+id/submit_button1"
             style="@style/commonButton"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="提交" />
+            android:text="提交"/>
     </LinearLayout>
 </LinearLayout>

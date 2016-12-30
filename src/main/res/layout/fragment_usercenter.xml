@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:background="@color/white"
                     android:textSize="@dimen/dimen_30_dip"
-                    android:textColor="#908e8e"
+                    android:textColor="@color/app_main_deep"
                     android:id="@+id/login_text_view"
                     android:gravity="center"
                     android:paddingTop="@dimen/dimen_20_dip"
@@ -105,7 +105,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textSize="@dimen/dimen_30_dip"
-                        android:textColor="#908e8e"
+                        android:textColor="@color/app_main_deep"
                         android:layout_marginTop="@dimen/dimen_20_dip"
                         android:layout_height="wrap_content"
                         android:text="@string/text_my_order"/>
@@ -130,7 +130,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textSize="@dimen/dimen_30_dip"
-                        android:textColor="#908e8e"
+                        android:textColor="@color/app_main_deep"
                         android:layout_marginTop="@dimen/dimen_20_dip"
                         android:layout_height="wrap_content"
                         android:text="@string/text_product_order"/>
@@ -156,7 +156,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textSize="@dimen/dimen_30_dip"
-                        android:textColor="#908e8e"
+                        android:textColor="@color/app_main_deep"
                         android:layout_marginTop="@dimen/dimen_20_dip"
                         android:layout_height="wrap_content"
                         android:text="@string/text_shopcart"/>
@@ -182,7 +182,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textSize="@dimen/dimen_30_dip"
-                        android:textColor="#908e8e"
+                        android:textColor="@color/app_main_deep"
                         android:layout_marginTop="@dimen/dimen_20_dip"
                         android:layout_height="wrap_content"
                         android:text="@string/text_my_favorite"/>
@@ -193,6 +193,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/me_mabao_bean"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100_dip">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dimen_30_dip"
+                        android:layout_height="@dimen/dimen_56_dip"
+                        android:src="@mipmap/mabaobean"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="@string/my_mabao_bean"
+                        android:textColor="@color/app_main_deep"
+                        android:layout_marginLeft="@dimen/dimen_105_dip"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/dimen_30_dip"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/jiantou"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_30_dip"
+                        android:layout_alignParentRight="true"/>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_height="@dimen/dimen_1_dip"
+                        android:background="#ececec" />
+                </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:id="@+id/me_history"
@@ -206,7 +237,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:text="@string/text_browsing_history"
-                        android:textColor="#717173"
+                        android:textColor="@color/app_main_deep"
                         android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:layout_centerVertical="true"
                         android:textSize="@dimen/dimen_30_dip"
@@ -243,13 +274,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:text="@string/text_hot_line"
-                            android:textColor="#717173"
+                            android:textColor="@color/app_main_deep"
                             android:textSize="@dimen/dimen_30_dip"
                             android:layout_height="wrap_content" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:text="@string/text_tel_service"
-                            android:textColor="#999999"
+                            android:textColor="@color/app_main_thin"
                             android:layout_marginLeft="@dimen/dimen_20_dip"
                             android:textSize="@dimen/dimen_30_dip"
                             android:layout_height="wrap_content" />
@@ -287,7 +318,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:text="@string/text_receiver_address"
-                            android:textColor="#717173"
+                            android:textColor="@color/app_main_deep"
                             android:textSize="@dimen/dimen_30_dip"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -318,7 +349,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:text="@string/text_receiver_out_service"
-                        android:textColor="#717173"
+                        android:textColor="@color/app_main_deep"
                         android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:layout_centerVertical="true"
                         android:textSize="@dimen/dimen_30_dip"
@@ -355,7 +386,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:text="@string/text_online_service"
-                            android:textColor="#717173"
+                            android:textColor="@color/app_main_deep"
                             android:textSize="@dimen/dimen_30_dip"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -392,7 +423,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:text="@string/text_mb_help"
-                            android:textColor="#717173"
+                            android:textColor="@color/app_main_deep"
                             android:textSize="@dimen/dimen_30_dip"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -423,7 +454,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:text="@string/text_wait_for_out_price"
-                        android:textColor="#717173"
+                        android:textColor="@color/app_main_deep"
                         android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:layout_centerVertical="true"
                         android:textSize="@dimen/dimen_30_dip"
@@ -455,7 +486,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:text="@string/text_cash_coupon"
-                        android:textColor="#717173"
+                        android:textColor="@color/app_main_deep"
                         android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:layout_centerVertical="true"
                         android:textSize="@dimen/dimen_30_dip"
@@ -473,6 +504,7 @@
                         android:layout_height="@dimen/dimen_1_dip"
                         android:background="#ececec" />
                 </RelativeLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

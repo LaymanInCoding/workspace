@@ -1,28 +1,36 @@
 package com.witmoon.xmb.ui.SearChMyView;
 
+import android.view.View;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.test.RenamingDelegatingContext;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-
 import com.witmoon.xmb.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class BGAFlowLayout extends RadioGroup {
+/**
+ * 作者:王浩 邮件:bingoogolapple@gmail.com
+ * 创建时间:15/6/24 11:21
+ * 描述:流式布局
+ */
+public class BGAFlowLayout extends ViewGroup {
     private List<Row> mRows = new ArrayList<>();
     private int mHorizontalChildGap;
     private int mVerticalChildGap;
     private boolean mIsDistributionWhiteSpacing = true;
 
+    public BGAFlowLayout(Context context) {
+        this(context, null);
+    }
+
     public BGAFlowLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
+    }
+
+    public BGAFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         initDefaultAttrs(context);
         initCustomAttrs(context, attrs);
     }
@@ -44,7 +52,7 @@ public class BGAFlowLayout extends RadioGroup {
     private void initCustomAttr(int attr, TypedArray typedArray) {
         if (attr == R.styleable.BGAFlowLayout_fl_horizontalChildGap) {
             /**
-             * getDimension和getDimensionPixelOffset的功能差不多,都是获取某个dimen,如果是dp或sp,将其乘以density,如果是px,则不;两个函数的区别是一个返回float,一个返回int. getDimensionPixelSize则不管写的是dp还是sp还是px,都会乘以denstiy.
+             * getDimension和getDimensionPixelOffset的功能差不多,都是获取某个dimen的值,如果是dp或sp的单位,将其乘以density,如果是px,则不乘;两个函数的区别是一个返回float,一个返回int. getDimensionPixelSize则不管写的是dp还是sp还是px,都会乘以denstiy.
              */
             mHorizontalChildGap = typedArray.getDimensionPixelOffset(attr, mHorizontalChildGap);
         } else if (attr == R.styleable.BGAFlowLayout_fl_verticalChildGap) {
@@ -80,7 +88,7 @@ public class BGAFlowLayout extends RadioGroup {
             }
         }
 
-        // 添加�?后一�?
+        // 添加最后一行
         if (!mRows.contains(row)) {
             mRows.add(row);
         }

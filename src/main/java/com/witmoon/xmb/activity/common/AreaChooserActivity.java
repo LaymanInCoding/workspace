@@ -35,31 +35,33 @@ public class AreaChooserActivity extends BaseActivity implements ItemClickSuppor
     private StringBuffer mRegionIdSB = new StringBuffer();
     private StringBuilder mAddressSB = new StringBuilder();
 
-        private SimpleAdapter mAdapter;
-        private List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
+    private SimpleAdapter mAdapter;
+    private List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
 
-        private AppContext applicationContext;
+    private AppContext applicationContext;
 
-        @Override
-        protected int getLayoutResourceId() {
-            return R.layout.recycler_view_with_toolbar;
-        }
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.recycler_view_with_toolbar;
+    }
 
-        @Override
-        protected String getActionBarTitle() {
-            return "地区选择";
-        }
+    @Override
+    protected String getActionBarTitle() {
+        return "地区选择";
+    }
 
-        @Override
-        protected void configActionBar(Toolbar toolbar) {
-            toolbar.setBackgroundColor(getResources().getColor(R.color.master_me));
-            setTitleColor_(R.color.master_me);
-        }
+    @Override
+    protected void configActionBar(Toolbar toolbar) {
+        toolbar.setBackgroundColor(getResources().getColor(R.color.master_me));
+        setTitleColor_(R.color.master_me);
+    }
 
-        @Override
-        protected void initialize(Bundle savedInstanceState) {
+    @Override
+    protected void initialize(Bundle savedInstanceState) {
         SuperRecyclerView recyclerView = (SuperRecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
 
         applicationContext = (AppContext) getApplicationContext();
         mAdapter = new SimpleAdapter<>(android.R.layout.simple_list_item_1, AreaHolder.class,
@@ -73,6 +75,7 @@ public class AreaChooserActivity extends BaseActivity implements ItemClickSuppor
 
     /**
      * 初始化行政区划数据
+     *
      * @param pid 父行政区划ID
      */
     private void initRegionData(String pid) {

@@ -79,13 +79,25 @@
                 android:text="恭喜您，您的订单已经支付成功，我们将在第一时间给您发货。"
                 android:layout_marginTop="@dimen/dimen_63_dip"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="@dimen/dimen_10_dip"
+                android:id="@+id/h12"
+                android:layout_below="@+id/h11"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:textColor="@color/master_me"
+                android:textSize="@dimen/text_size_11"
+                android:paddingLeft="@dimen/dimen_120_dip"
+                android:paddingRight="@dimen/dimen_120_dip"
+                android:text="温馨提示：此订单获得的麻豆将在14天后确认无退换货行为下返送至您的账户中，请注意查收。"
+                android:layout_height="wrap_content" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/dimen_73_dip"
                 android:gravity="center"
-                android:layout_below="@+id/h11">
+                android:layout_below="@+id/h12">
                 <Button
                     android:id="@+id/detailButton"
                     android:layout_centerHorizontal="true"

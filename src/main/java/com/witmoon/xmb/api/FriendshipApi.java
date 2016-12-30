@@ -24,7 +24,7 @@ public class FriendshipApi {
         return paramMap;
     }
 
-    // 查看帖子列表
+    // 查看帖子列表       暫時沒用到
     public static void articleList(int page, String type, Listener<JSONObject> listener) {
         Map<String, String> paramMap = getPaginationMap(page);
         paramMap.put("type", type);
@@ -32,7 +32,7 @@ public class FriendshipApi {
                 paramMap, listener));
     }
 
-    // 关注的人帖子列表
+    // 关注的人帖子列表   暫時沒用到
     public static void attentionArticleList(int page, String type, Listener<JSONObject> listener) {
         Map<String, String> paramMap = getPaginationMap(page);
         paramMap.put("type", type);
@@ -41,7 +41,7 @@ public class FriendshipApi {
                 paramMap, listener));
     }
 
-    // 个人帖子列表
+    // 个人帖子列表    暫時沒用到
     public static void personalArticleList(String uid, int page, Listener<JSONObject> listener) {
         Map<String, String> paramMap = getPaginationMap(page);
         paramMap.put("user_id", uid);
@@ -49,7 +49,7 @@ public class FriendshipApi {
                 paramMap, listener));
     }
 
-    // 帖子详情
+    // 帖子详情         暫時沒用到
     public static void articleDetail(String id, Listener<JSONObject> listener) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("post_id", id);
@@ -101,7 +101,7 @@ public class FriendshipApi {
 
     //麻包圈广告图
     public static void communicate_index(Listener<JSONObject> listener) {
-        Netroid.addRequest(new NormalPostJSONRequest("http://api.xiaomabao.com/communicate/index",
+        Netroid.addRequest(new NormalPostJSONRequest("https://api.xiaomabao.com/communicate/index",
                 ApiHelper.getParamObj(new HashMap<String, String>()), listener));
     }
 
@@ -179,19 +179,19 @@ public class FriendshipApi {
     }
 
     //关注列表
-    public static void attentionlist(String page,String user_id, Listener<JSONObject> listener) {
+    public static void attentionlist(String page, String user_id, Listener<JSONObject> listener) {
         Map<String, String> map = new HashMap<>();
         map.put("page", page);
-        map.put("user_id",user_id);
+        map.put("user_id", user_id);
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.getAbsoluteUrl("/communicate/attentionlist"),
                 ApiHelper.getParamObj(map), listener));
     }
 
     //粉丝列表
-    public static void fanlist(String page, String user_id,Listener<JSONObject> listener) {
+    public static void fanlist(String page, String user_id, Listener<JSONObject> listener) {
         Map<String, String> map = new HashMap<>();
         map.put("page", page);
-        map.put("user_id",user_id);
+        map.put("user_id", user_id);
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.getAbsoluteUrl("/communicate/fanlist"),
                 ApiHelper.getParamObj(map), listener));
     }
@@ -233,40 +233,73 @@ public class FriendshipApi {
                 ApiHelper.getParamObj(map), listener));
     }
 
+
     //实惠星球接口
     public static void affordablePlanet(Listener<JSONObject> listener) {
         Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/AffordablePlanet/index"), listener));
     }
+
     //实惠星球接口分页
-    public static void affordablePlanets(String url,Listener<JSONObject> listener) {
-        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("AffordablePlanet/recommend_goods/")+url, listener));
+    public static void affordablePlanets(String url, Listener<JSONObject> listener) {
+        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("AffordablePlanet/recommend_goods/") + url, listener));
     }
+
     //免税
     public static void taxfreeStore(Listener<JSONObject> listener) {
         Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/TaxfreeStore/index"), listener));
     }
 
     //子分类
-    public static void child_category_index(String cat_id,Listener<JSONObject> listener) {
-        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/AffordablePlanet/child_category_index2/")+cat_id, listener));
+    public static void child_category_index(String cat_id, Listener<JSONObject> listener) {
+        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/AffordablePlanet/child_category_index2/") + cat_id, listener));
     }
 
     //子分类- 分页
-    public static void child_category_index(String cat_id,String page,Listener<JSONObject> listener) {
-        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/AffordablePlanet/child_category_index2/")+cat_id+"/"+page, listener));
+    public static void child_category_index(String cat_id, String page, Listener<JSONObject> listener) {
+        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/AffordablePlanet/child_category_index2/") + cat_id + "/" + page, listener));
     }
+
     //子分类- 分页- 筛选
-    public static void child_category_index(String cat_id,String page,String type,String is_type,Listener<JSONObject> listener) {
-        if (is_type.equals("0")){
-            Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/AffordablePlanet/get_category_goods/")+cat_id+"/"+page+"/"+type, listener));
+    public static void child_category_index(String cat_id, String page, String asc_or_desc, String type, String is_type, Listener<JSONObject> listener) {
+        if (asc_or_desc.equals("")) {
+            if (is_type.equals("0")) {
+                Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/AffordablePlanet/get_category_goods/") + cat_id + "/" + page + "/" + type, listener));
+            } else {
+                Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/taxfreeStore/goods_list/") + cat_id + "/" + page + "/" + type, listener));
+            }
         }else{
-            Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/taxfreeStore/goods_list/")+cat_id+"/"+page+"/"+type, listener));
+            if (is_type.equals("0")) {
+                Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/AffordablePlanet/get_category_goods/") + cat_id + "/" + page + "/" + type + "?sort=" + asc_or_desc
+                        + "&channel=" + AppContext.getChannels() + "&device=android" + "&version=" + AppContext.geVerSion(), listener));
+            } else {
+                Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/taxfreeStore/goods_list/") + cat_id + "/" + page + "/" + type + "?sort=" + asc_or_desc
+                        + "&channel=" + AppContext.getChannels() + "&device=android" + "&version=" + AppContext.geVerSion(), listener));
+            }
         }
-
     }
 
-//专场
-    public static void marketplace(String cat_id,String page,String type,Listener<JSONObject> listener) {
-        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("topic/info/")+cat_id+"/"+page+"/"+type, listener));
+//    //子分类- 分页- 筛选 - 价格
+//    public static void child_category_index_price(String cat_id, String page, String asc_or_desc, String is_type, String type, Listener<JSONObject> listener) {
+//        if (is_type.equals("0")) {
+//            Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/AffordablePlanet/get_category_goods/") + cat_id + "/" + page + "/" + type + "?sort=" + asc_or_desc
+//                    + "&channel=" + AppContext.getChannels() + "&device=android" + "&version=" + AppContext.geVerSion(), listener));
+//        } else {
+//            Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("/taxfreeStore/goods_list/") + cat_id + "/" + page + "/" + type + "?sort=" + asc_or_desc
+//                    + "&channel=" + AppContext.getChannels() + "&device=android" + "&version=" + AppContext.geVerSion(), listener));
+//        }
+//    }
+
+    //专场
+    public static void marketplace(String cat_id, String page, String type, Listener<JSONObject> listener) {
+        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("topic/info/") + cat_id + "/" + page + "/" + type, listener));
+    }
+
+    //价格高低
+    public static void marketplace_price(String cat_id, String page, String asc_or_desc, String type, Listener<JSONObject> listener) {
+        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.getAbsoluteUrl("topic/info/") + cat_id + "/" + page + "/" + type + "?sort=" + asc_or_desc
+                + "&channel=" + AppContext.getChannels() + "&device=android" + "&version=" + AppContext.geVerSion(), listener));
+        Log.e("API", ApiHelper.getAbsoluteUrl("topic/info/") + cat_id + "/" + page + "/" + type + "?s=" + asc_or_desc
+                + "&channel=" + AppContext.getChannels() + "&device=android" + "&version=" + AppContext.geVerSion());
+
     }
 }

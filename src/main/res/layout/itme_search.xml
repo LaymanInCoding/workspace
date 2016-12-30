@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    >
-    <LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/container"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="40dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_26_dip"
+        android:layout_marginTop="@dimen/dimen_26_dip">
+
         <ImageView
+            android:id="@+id/item_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:src="@mipmap/main_tab_friend_on"/>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_30_dip"
+            android:src="@mipmap/item_search_img"/>
+
         <TextView
             android:id="@+id/search_tv"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_34_dip"
+            android:layout_toRightOf="@id/item_img"
             android:text="测试数据"
-            />
-    </LinearLayout>
-</RelativeLayout>
+            android:textColor="#777777"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <ImageView
+            android:id="@+id/item_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_56_dip"
+            android:src="@mipmap/item_search_delete"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1_dip"
+        android:layout_marginLeft="@dimen/dimen_30_dip"
+        android:background="#eeeeee"/>
+</LinearLayout>

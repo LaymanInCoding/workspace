@@ -16,7 +16,7 @@ import retrofit.http.POST;
 import rx.Observable;
 
 public class VoiceService {
-    private static final String USER_SERVER_URL = "http://api.xiaomabao.com/";
+    private static final String USER_SERVER_URL = "https://api.xiaomabao.com/";
     private VoiceApi api;
 
     public VoiceService() {

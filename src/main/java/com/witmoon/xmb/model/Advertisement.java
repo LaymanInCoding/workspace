@@ -19,6 +19,7 @@ public class Advertisement extends BaseBean {
     private String link;
     private String picture;
     private String position;
+    private String endtime;
 
     public void setId(String id) {
         this.id = id;
@@ -65,7 +66,7 @@ public class Advertisement extends BaseBean {
 
         advertisement.setId(jsonObject.getString("id"));
         advertisement.setTitle(jsonObject.getString("title"));
-        advertisement.setLink(jsonObject.getString("ad_link"));
+        advertisement.setEndtime(jsonObject.getString("end_time"));
         advertisement.setPicture(jsonObject.getString("ad_code"));
         if (jsonObject.has("position_id")) {
             advertisement.setPosition(jsonObject.getString("position_id"));
@@ -100,5 +101,13 @@ public class Advertisement extends BaseBean {
             }
         }
         return tmap;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
     }
 }

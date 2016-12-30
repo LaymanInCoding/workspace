@@ -15,11 +15,13 @@ import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseFragment;
 import com.witmoon.xmb.model.Out_;
+import com.witmoon.xmb.ui.widget.EmptyLayout;
 import com.witmoon.xmb.util.TDevice;
 
 import org.json.JSONArray;
@@ -40,6 +42,7 @@ public class CheckProgressFragment extends BaseFragment {
     private LinearLayout linearLayout;
     private TextView tv0, tv1, tv2, tv3;
     private ArrayList<Map<String, String>> mList;
+    private EmptyLayout error_layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,14 @@ public class CheckProgressFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.fragment_check_progress, null);
+        error_layout = (EmptyLayout) view.findViewById(R.id.error_layout);
+        error_layout.setOnLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                error_layout.setErrorType(EmptyLayout.NETWORK_LOADING);
+                requestData();
+            }
+        });
         tv0 = (TextView) view.findViewById(R.id.order_num);
         linearLayout = (LinearLayout) view.findViewById(R.id._gson);
         tv1 = (TextView) view.findViewById(R.id.return_money);
@@ -58,48 +69,54 @@ public class CheckProgressFragment extends BaseFragment {
         tv3 = (TextView) view.findViewById(R.id.question_desc);
         mlistview = (ListView) view.findViewById(R.id.list_progress_info);
         if (AppContext.isNetworkAvailable(getContext())) {
-            UserApi.check_proo(out.getOrder_id(), new Listener<JSONObject>() {
-                @Override
-                public void onSuccess(JSONObject response) {
-                    try {
-                        JSONObject js = response.getJSONObject("status");
-                        if (js.getString("succeed").equals("0")) {
-                            AppContext.showToast("信息错误！");
-                            return;
-                        }
-                        JSONObject js_data = response.getJSONObject("data");
-                        tv0.setText("：" + out.getOrder_sn());
-                        tv1.setText(js_data.getString("refund_money"));
-                        if (js_data.getString("refund_type").equals("换货")) {
-                            linearLayout.setVisibility(View.GONE);
-                        }
-                        tv2.setText(js_data.getString("refund_type"));
-                        tv3.setText(js_data.getString("refund_reason"));
-                        mList = new ArrayList<Map<String, String>>();
-                        JSONArray jsonArray = js_data.getJSONArray("process");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            Map<String, String> map = new HashMap<String, String>();
-                            JSONObject jss = jsonArray.getJSONObject(i);
-                            map.put("time", jss.getString("log_time"));
-                            map.put("content", jss.getString("log_content"));
-                            mList.add(map);
-                        }
-                        mlistview.setAdapter(new MyAdapter());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onError(NetroidError error) {
-                    super.onError(error);
-//                executeOnLoadDataError(error.getMessage());
-                }
-            });
+            requestData();
         } else {
             AppContext.showToast("当前无网络连接！");
         }
         return view;
+    }
+
+    public void requestData() {
+        UserApi.check_proo(out.getOrder_id(), new Listener<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Logger.json(response.toString());
+                error_layout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+                try {
+                    JSONObject js = response.getJSONObject("status");
+                    if (js.getString("succeed").equals("0")) {
+                        AppContext.showToast("信息错误！");
+                        return;
+                    }
+                    JSONObject js_data = response.getJSONObject("data");
+                    tv0.setText("：" + out.getOrder_sn());
+                    tv1.setText(js_data.getString("refund_money"));
+                    if (js_data.getString("refund_type").equals("换货")) {
+                        linearLayout.setVisibility(View.GONE);
+                    }
+                    tv2.setText(js_data.getString("refund_type"));
+                    tv3.setText(js_data.getString("refund_reason"));
+                    mList = new ArrayList<Map<String, String>>();
+                    JSONArray jsonArray = js_data.getJSONArray("process");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        Map<String, String> map = new HashMap<String, String>();
+                        JSONObject jss = jsonArray.getJSONObject(i);
+                        map.put("time", jss.getString("log_time"));
+                        map.put("content", jss.getString("log_content"));
+                        mList.add(map);
+                    }
+                    mlistview.setAdapter(new MyAdapter());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(NetroidError error) {
+                super.onError(error);
+                error_layout.setErrorType(EmptyLayout.NETWORK_ERROR);
+            }
+        });
     }
 
     class MyAdapter extends BaseAdapter {
@@ -123,10 +140,15 @@ public class CheckProgressFragment extends BaseFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             ViewHolder viewHolder;
-
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.progress_info, null);
                 viewHolder = new ViewHolder();
+                viewHolder.noprocesstv = (TextView) convertView.findViewById(R.id.no_process);
+                if (mList.size() == 0) {
+                    viewHolder.noprocesstv.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.noprocesstv.setVisibility(View.GONE);
+                }
                 viewHolder.mtextview1 = (TextView) convertView.findViewById(R.id.handle_time);
                 viewHolder.mtextview2 = (TextView) convertView.findViewById(R.id.audit_type);
                 convertView.setTag(viewHolder);
@@ -147,19 +169,8 @@ public class CheckProgressFragment extends BaseFragment {
         class ViewHolder {
             TextView mtextview1;
             TextView mtextview2;
+            TextView noprocesstv;
         }
     }
 
-    private void executeOnLoadDataError(String error) {
-
-        String message = error;
-        if (TextUtils.isEmpty(error)) {
-            if (TDevice.hasInternet()) {
-                message = getString(R.string.tip_load_data_error);
-            } else {
-                message = getString(R.string.tip_network_error);
-            }
-        }
-        AppContext.showToastShort(message);
-    }
 }

@@ -41,17 +41,6 @@ public class WelcomeActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         XN_init();
-        GenericDraweeHierarchy draweeHierarchy = new GenericDraweeHierarchyBuilder(getResources())
-                .setFadeDuration(600)
-                .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP)
-                .build();
-
-        SimpleDraweeView draweeView = new SimpleDraweeView(this, draweeHierarchy);
-        draweeView.setImageURI(Uri.parse("res:///" + R.mipmap.page_welcome3));
-        draweeView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        draweeView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams
-                .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        setContentView(draweeView);
 
         // 判断是否为第一次运行
         String flag = AppContext.getProperty(KEY_FLAG_FIRST_LAUNCH);
@@ -65,7 +54,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void run() {
                 runSwitchPage();
             }
-        }, 3000);
+        }, 2500);
     }
 
     // 根据是否为第一次启动应用, 跳转到引导页面或App主界面

@@ -1,5 +1,6 @@
 package com.witmoon.xmb.api;
 
+import android.net.http.LoggingEventHandler;
 import android.util.Log;
 
 import com.duowan.mobile.netroid.AuthFailureError;
@@ -24,7 +25,7 @@ import java.util.Map;
  * 就必须以JSONObject的json串方式提交; 服务端可能并不支持这种方式, 比如常见的spring mvc,
  * 就很难支持json的请求方式.
  * 因此自定义Request, 实现客户端以普通的post方式进行提交,服务端返回json串
- * <p/>
+ * <p>
  * Created by zhyh on 2015/5/6.
  */
 public class NormalPostJSONRequest extends Request<JSONObject> {
@@ -50,8 +51,8 @@ public class NormalPostJSONRequest extends Request<JSONObject> {
         super(Method.POST, url, listener);
         mParamMap = new HashMap<>();
         mParamMap.put(SERVER_PARAMS_KEY, p.toString());
-        Log.e("params",mParamMap.toString());
-        Log.e("url",url);
+        Log.e("params", mParamMap.toString());
+        Log.e("url", url);
     }
 
     /**
@@ -59,13 +60,26 @@ public class NormalPostJSONRequest extends Request<JSONObject> {
      */
     public NormalPostJSONRequest(String url, Map<String, String> pm,
                                  Listener<JSONObject> listener) {
-        this(url, new JSONObject(addMap(pm)), listener);
+        this(url, ApiHelper.getParamMap(pm), listener,"withoutJson");
+    }
+    /**
+     *
+     * 构造方法
+     *
+     * @param url      POST请求提交URL  不拼接Json
+     * @param pm        参数, 最终会组成:{'key':'value','key2':'value2'}形式, 以符合服务器端参数要求
+     * @param listener 响应监听
+     */
+    public NormalPostJSONRequest(String url, Map<String, String> pm,
+                                 Listener<JSONObject> listener, String withoutJson) {
+        super(Method.POST, url, listener);
+        mParamMap = pm;
+        Log.e("params",mParamMap.toString());
+        Log.e("url", url);
     }
 
 
-
-    public static Map<String,String> addMap(Map<String,String> map)
-    {
+    public static Map<String, String> addMap(Map<String, String> map) {
         map.put("version", AppContext.geVerSion());
         map.put("channel", AppContext.getChannels());
         map.put("device", "android");

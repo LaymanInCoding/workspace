@@ -87,7 +87,7 @@
     <string name="text_user_feedback">用户反馈</string>
     <string name="text_all">全部</string>
     <string name="text_hot_line">热线电话</string>
-    <string name="text_tel_service">400-1367-282</string>
+    <string name="text_tel_service">010-8517-0751</string>
     <string name="text_change_info">修改个人资料</string>
     <string name="text_change_pwd">修改密码</string>
     <string name="text_bind_phone">手机绑定</string>
@@ -161,6 +161,24 @@
     <string name="loading">加载中…</string>
     <string name="loading_no_more">没有更多.</string>
 
+    <string name="text_message_shouldknonw">须知</string>
+    <string name="type_of_invoice">发票类型 :</string>
+    <string name="paper_invoice">纸质发票</string>
+    <string name="head_of_invoice">发票抬头 :</string>
+    <string name="personal_invoice">个人</string>
+    <string name="company_invoice">单位</string>
+    <string name="hint_of_invoice">请输入单位公司名称</string>
+    <string name="content_of_invoice">发票内容 :</string>
+    <string name="close_invoice">服装</string>
+    <string name="cosmetic_invoice">化妆品</string>
+    <string name="electronics_invoice">电子产品</string>
+    <string name="stationery_invoice">文具用品</string>
+    <string name="goods_detail_invoice">商品明细</string>
+    <string name="invoice_confirm">确&#160;&#160;&#160;&#160;定</string>
+    <string name="btn_check">确&#160;&#160;定</string>
+    <string name="info_title">发票须知</string>
+    <string name="info_content_one">1.目前只支持纸质发票，暂不支持电子发票、增值税发票</string>
+    <string name="info_content_two">2.发票金额为订单实际支付金额，不含红包、优惠券抵扣金额</string>
     <!-- Error View -->
     <string name="error_view_click_to_refresh">点击屏幕,重新加载</string>
     <string name="error_view_no_data">暂无内容</string>
@@ -278,6 +296,15 @@
     <string name="overdue_help"><u>如何计算预产期</u></string>
     <string name="baby_setting">设置宝宝信息</string>
     <string name="baby_record">记录宝宝</string>
+    <string name="tip_message_baby">我们会针对您的状态为您提供记录提醒和推荐知识、文章等内容</string>
+    <string name="in_pregnant">我在怀孕中</string>
+    <string name="pregnant_message">怀胎十月，关爱母婴健康</string>
+    <string name="baby_born">宝宝已出生</string>
+    <string name="born_message">产后调养与恢复，和宝宝共同健康成长</string>
+    <string name="mengbao_introduce">萌宝介绍</string>
+    <string name="tip_message_gender">让我们选择一下宝宝的基本信息吧</string>
+    <string name="baby_girl_message">让她感到一种发自内心的安全感</string>
+    <string name="baby_boy_message">让他养成男子豁达大度的个性</string>
 
     <!-- 麻包卡 -->
     <string name="my_mb_card">我的麻包卡</string>
@@ -288,6 +315,32 @@
     <string name="mb_card_add">绑 定 并 使 用</string>
     <string name="mb_card_add_hint1">请输入麻包卡密码：</string>
     <string name="mb_card_add_hint2">密码包含数字0&#8211;9,大写字母A&#8211;Z</string>
+
+    <!-- 麻包豆 -->
+    <string name="my_mabao_bean">我的麻豆</string>
+    <string name="bind_bank_card">绑定银行卡</string>
+    <string name="bean_to_cash">兑换现金</string>
+    <string name="send_bean">赠送麻豆</string>
+    <string name="madou_use">麻豆使用</string>
+    <string name="use_help_bean">使用帮助</string>
+    <string name="madou_use_help">麻豆使用帮助</string>
+    <string name="bank_hint">请选择您的开户银行</string>
+    <string name="bank_num_hint">请输入您的银行卡号</string>
+    <string name="bind_phone_hint">请输入您用于绑定的手机号</string>
+    <string name="bind_name_hint">请输入您的姓名</string>
+    <string name="bind_province_hint">选择省份</string>
+    <string name="bind_city_hint">选择市</string>
+    <string name="bind_district_hint">选择区\\县</string>
+    <string name="no_bean_record_msg">你的麻豆没有成长记录哦</string>
+    <string name="confirm_cash">确认提现</string>
+    <string name="use_bean_tip">请填写麻豆使用数量 :</string>
+    <string name="use_bean_hint">输入使用麻豆数量</string>
+    <string name="send_bean_hint">请输入对方账号</string>
+    <string name="send_num_hint">请输入赠送数量</string>
+    <string name="get_cash_tip">请填写提现麻豆数量 :</string>
+    <string name="no_bind_card_msg">未绑定，请先绑定银行卡</string>
+    <string name="bean_to_cash_hint">提现麻豆数量</string>
+
 
     <!-- 专业语音 -->
     <string name="major_voice">专家语音问答</string>

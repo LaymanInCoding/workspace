@@ -454,10 +454,56 @@
                 <TextView
                     style="@style/textViewSettingItem"
                     android:layout_width="wrap_content"
+                    android:text="发票信息"/>
+
+                <TextView
+                    android:id="@+id/invoice_message"
+                    style="@style/textViewSettingItemWithRArrowNoIcon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:singleLine="true"/>
+            </LinearLayout>
+
+            <View style="@style/horizontal_divider"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
+                <TextView
+                    style="@style/textViewSettingItem"
+                    android:layout_width="wrap_content"
                     android:text="使用代金券"/>
 
                 <TextView
                     android:id="@+id/use_cash_coupon"
+                    style="@style/textViewSettingItemWithRArrowNoIcon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:singleLine="true"/>
+            </LinearLayout>
+
+            <View style="@style/horizontal_divider"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
+                <TextView
+                    style="@style/textViewSettingItem"
+                    android:layout_width="wrap_content"
+                    android:text="使用麻豆"/>
+
+                <TextView
+                    android:id="@+id/use_mabao_bean"
                     style="@style/textViewSettingItemWithRArrowNoIcon"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

@@ -14,8 +14,9 @@
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dimen_15_dip"
+        android:paddingRight="@dimen/dimen_6_dip"
         android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
         android:button="@drawable/list_choice_indicator_single"/>
 
     <com.witmoon.xmb.ui.widget.CircleImageView

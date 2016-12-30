@@ -8,6 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,7 +18,6 @@ import android.widget.TextView;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.witmoon.xmb.AppContext;
-import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.mbq.adapter.CommentAdapter;
 import com.witmoon.xmb.activity.user.LoginActivity;
@@ -24,12 +25,15 @@ import com.witmoon.xmb.api.CircleApi;
 import com.witmoon.xmb.api.Netroid;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.Const;
+import com.witmoon.xmb.util.HtmlHttpImageGetter;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
+import com.witmoon.xmb.util.URLImageGetter;
 import com.witmoon.xmb.util.XmbUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,26 +51,26 @@ public class PostDetailActivity extends BaseActivity {
     private EmptyLayout emptyLayout;
     private TextView toolbar_title_text;
     private Boolean is_choose_show = false;
-    private Drawable drawable1,drawable2;
-    private View choose_area,post_pic_layout,post_up_layout,post_all_layout;
-    private ImageView post_pic,post_up,post_all;
-    private View post_collect,post_comment;
+    private Drawable drawable1, drawable2;
+    private View choose_area, post_pic_layout, post_up_layout, post_all_layout;
+    private ImageView post_pic, post_up, post_all;
+    private View post_collect, post_comment;
     private int current_choose = 1;
-    private int type  = 1;
+    private int type = 1;
     private int user_id = 0;
     private int is_collect = 0;
     private ImageView collect_img;
     private int comment_id = 0;
-    private HashMap<String,String> share_info =  new HashMap<>();
+    private HashMap<String, String> share_info = new HashMap<>();
 
     private BroadcastReceiver refreshCurrentActivity = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(mDatas.size() < 20){
+            if (mDatas.size() < 20) {
                 mDatas.clear();
                 page = 1;
                 setRecRequest(page);
-            }else{
+            } else {
                 TextView post_comment_total = (TextView) headerView.findViewById(R.id.post_comment_total);
                 post_comment_total.setText(post_comment_total.getText().toString() + 1);
             }
@@ -74,7 +78,7 @@ public class PostDetailActivity extends BaseActivity {
     };
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(refreshCurrentActivity);
     }
@@ -90,18 +94,18 @@ public class PostDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected void  initialize(Bundle savedInstanceState) {
+    protected void initialize(Bundle savedInstanceState) {
         setTitleColor_(R.color.main_kin);
         initView();
         IntentFilter refreshActivity = new IntentFilter(Const.INTENT_ACTION_REFRESH_POST);
         registerReceiver(refreshCurrentActivity, refreshActivity);
     }
 
-    private void initView(){
+    private void initView() {
         headerView = (LinearLayout) getLayoutInflater().inflate(R.layout.header_mbq_post, null, false);
         toolbar_right_img = (ImageView) findViewById(R.id.toolbar_right_img);
         toolbar_right_img.setImageResource(R.mipmap.mbq_share);
-        toolbar_title_text = (TextView)findViewById(R.id.toolbar_title_text);
+        toolbar_title_text = (TextView) findViewById(R.id.toolbar_title_text);
         drawable1 = getResources().getDrawable(R.drawable.arrow_up);
         drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight());//必须设置图片大小，否则不显示
         drawable2 = getResources().getDrawable(R.drawable.arrow_down);
@@ -114,7 +118,7 @@ public class PostDetailActivity extends BaseActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRootView.setHasFixedSize(true);
         mRootView.setLayoutManager(layoutManager);
-        adapter = new CommentAdapter(mDatas,this);
+        adapter = new CommentAdapter(mDatas, this);
         stringAdapter = new HeaderViewRecyclerAdapter(adapter);
         stringAdapter.addHeaderView(headerView);
         mRootView.setAdapter(stringAdapter);
@@ -128,18 +132,18 @@ public class PostDetailActivity extends BaseActivity {
         post_pic = (ImageView) findViewById(R.id.post_pic);
         post_collect = findViewById(R.id.post_collect);
         collect_img = (ImageView) findViewById(R.id.collect_img);
-        comment_id = getIntent().getIntExtra("comment_id",0);
+        comment_id = getIntent().getIntExtra("comment_id", 0);
         post_comment = findViewById(R.id.post_comment);
         post_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!AppContext.instance().isLogin()) {
+                if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(PostDetailActivity.this, LoginActivity.class));
                     return;
                 }
-                Intent intent = new Intent(PostDetailActivity.this,PostCommentActivity.class);
-                intent.putExtra("post_id",post_id+"");
-                intent.putExtra("comment_reply_id","0");
+                Intent intent = new Intent(PostDetailActivity.this, PostCommentActivity.class);
+                intent.putExtra("post_id", post_id + "");
+                intent.putExtra("comment_reply_id", "0");
                 startActivity(intent);
             }
         });
@@ -147,7 +151,7 @@ public class PostDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 post_collect.setClickable(false);
-                if(!AppContext.instance().isLogin()) {
+                if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(PostDetailActivity.this, LoginActivity.class));
                     return;
                 }
@@ -160,9 +164,9 @@ public class PostDetailActivity extends BaseActivity {
                                 if (XmbUtils.popupWindow != null && XmbUtils.popupWindow.isShowing()) {
                                     XmbUtils.popupWindow.dismiss();
                                 }
-                                if (is_collect == 1){
+                                if (is_collect == 1) {
                                     collect_img.setImageResource(R.mipmap.mbq_collect_active);
-                                }else{
+                                } else {
                                     collect_img.setImageResource(R.mipmap.mbq_collect_inactive);
                                 }
                                 XmbUtils.showMessage(PostDetailActivity.this, response.getString("info"));
@@ -178,6 +182,7 @@ public class PostDetailActivity extends BaseActivity {
             }
         });
 
+
         post_all_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,11 +192,10 @@ public class PostDetailActivity extends BaseActivity {
         });
 
 
-
         toolbar_right_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XmbUtils.showMbqShare(PostDetailActivity.this, findViewById(R.id.mbq_share_container),share_info);
+                XmbUtils.showMbqShare(PostDetailActivity.this, findViewById(R.id.mbq_share_container), share_info);
             }
         });
 
@@ -216,27 +220,27 @@ public class PostDetailActivity extends BaseActivity {
         toolbar_title_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!is_choose_show){
+                if (!is_choose_show) {
                     showArea(1);
-                }else{
+                } else {
                     showArea(2);
                 }
             }
         });
     }
 
-    private void setImage(){
-        if(current_choose==1){
+    private void setImage() {
+        if (current_choose == 1) {
             post_all.setImageResource(R.mipmap.mbq_post_all_white);
             post_up.setImageResource(R.mipmap.mbq_post_up_gray);
             post_pic.setImageResource(R.mipmap.mbq_post_pic_gray);
             type = 1;
-        }else if(current_choose == 2){
+        } else if (current_choose == 2) {
             post_all.setImageResource(R.mipmap.mbq_post_all_gray);
             post_up.setImageResource(R.mipmap.mbq_post_up_white);
             post_pic.setImageResource(R.mipmap.mbq_post_pic_gray);
             type = 2;
-        }else if(current_choose == 3){
+        } else if (current_choose == 3) {
             post_all.setImageResource(R.mipmap.mbq_post_all_gray);
             post_up.setImageResource(R.mipmap.mbq_post_up_gray);
             post_pic.setImageResource(R.mipmap.mbq_post_pic_white);
@@ -251,14 +255,14 @@ public class PostDetailActivity extends BaseActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if(AppContext.instance().isLogin()) {
+        if (AppContext.instance().isLogin()) {
             CircleApi.check_is_collect(post_id, new Listener<JSONObject>() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
-                        if(response.getInt("status") == 1){
+                        if (response.getInt("status") == 1) {
                             is_collect = 1;
                             collect_img.setImageResource(R.mipmap.mbq_collect_active);
                         }
@@ -270,12 +274,12 @@ public class PostDetailActivity extends BaseActivity {
         }
     }
 
-    private void showArea(int t){
-        if(t==2){
+    private void showArea(int t) {
+        if (t == 2) {
             is_choose_show = false;
             toolbar_title_text.setCompoundDrawables(null, null, drawable2, null);
             choose_area.setVisibility(View.GONE);
-        }else{
+        } else {
             toolbar_title_text.setCompoundDrawables(null, null, drawable1, null);
             is_choose_show = true;
             choose_area.setVisibility(View.VISIBLE);
@@ -292,31 +296,32 @@ public class PostDetailActivity extends BaseActivity {
         user_id = jsonObject.getInt("author_id");
         TextView post_title = (TextView) headerView.findViewById(R.id.post_title);
         post_title.setText(jsonObject.getString("post_title"));
-        TextView post_content = (TextView) headerView.findViewById(R.id.post_content);
-        post_content.setText(jsonObject.getString("post_content"));
+        HtmlTextView post_content = (HtmlTextView) headerView.findViewById(R.id.post_content);
+//        post_content.setHtml(jsonObject.getString("post_content"), new HtmlHttpImageGetter(post_content,null,true));
+        post_content.setHtml(jsonObject.getString("post_content"), new URLImageGetter(post_content));
         share_info.put("title", jsonObject.getString("post_title"));
         share_info.put("desc", jsonObject.getString("post_content"));
         share_info.put("url", "http://api.xiaomabao.com/circle/post/" + post_id);
         LinearLayout post_imgs_container = (LinearLayout) headerView.findViewById(R.id.post_imgs_container);
         post_imgs_container.removeAllViews();
-        JSONArray imgsJsonArray = jsonObject.getJSONArray("post_imgs");
-        if(imgsJsonArray.length() == 0 ){
-            post_imgs_container.setVisibility(View.GONE);
-        }else{
-            post_imgs_container.setVisibility(View.VISIBLE);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            for (int i = 0; i < imgsJsonArray.length();i++){
-                ImageView riv = new ImageView(this);
-                layoutParams.width = MainActivity.screen_width - 50;
-                layoutParams.setMargins(0,0,0,20);
-                riv.setMaxHeight(MainActivity.screen_width * 5);
-                riv.setScaleType(ImageView.ScaleType.FIT_XY);
-                riv.setAdjustViewBounds(true);
-                riv.setLayoutParams(layoutParams);
-                Netroid.displayImage(imgsJsonArray.getString(i), riv);
-                post_imgs_container.addView(riv);
-            }
-        }
+//        JSONArray imgsJsonArray = jsonObject.getJSONArray("post_imgs");
+//        if (imgsJsonArray.length() == 0) {
+//            post_imgs_container.setVisibility(View.GONE);
+//        } else {
+//            post_imgs_container.setVisibility(View.VISIBLE);
+//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            for (int i = 0; i < imgsJsonArray.length(); i++) {
+//                ImageView riv = new ImageView(this);
+//                layoutParams.width = MainActivity.screen_width - 50;
+//                layoutParams.setMargins(0, 0, 0, 20);
+//                riv.setMaxHeight(MainActivity.screen_width * 5);
+//                riv.setScaleType(ImageView.ScaleType.FIT_XY);
+//                riv.setAdjustViewBounds(true);
+//                riv.setLayoutParams(layoutParams);
+//                Netroid.displayImage(imgsJsonArray.getString(i), riv);
+//                post_imgs_container.addView(riv);
+//            }
+//        }
 
         TextView circle_name = (TextView) headerView.findViewById(R.id.circle_name);
         circle_name.setText(jsonObject.getString("circle_name"));
@@ -327,7 +332,7 @@ public class PostDetailActivity extends BaseActivity {
 
     @Override
     public void setRecRequest(int page0) {
-        CircleApi.circle_detail(post_id, page, type ,user_id,comment_id, new Listener<JSONObject>() {
+        CircleApi.circle_detail(post_id, page, type, user_id, comment_id, new Listener<JSONObject>() {
             @Override
             public void onError(NetroidError error) {
                 emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
@@ -335,7 +340,8 @@ public class PostDetailActivity extends BaseActivity {
 
             @Override
             public void onSuccess(JSONObject response) {
-                if(response.has("post_detail")){
+                Log.e("Response", response.toString());
+                if (response.has("post_detail")) {
                     try {
                         setHeadView(response.getJSONObject("post_detail"));
                     } catch (JSONException e) {
@@ -344,12 +350,12 @@ public class PostDetailActivity extends BaseActivity {
                 }
                 try {
                     JSONArray jsonArray = response.getJSONArray("comments");
-                    for (int i = 0; i < jsonArray.length(); i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         mDatas.add(jsonArray.getJSONObject(i));
                     }
-                    if(jsonArray.length() < 20){
+                    if (jsonArray.length() < 20) {
                         removeFooterView();
-                    }else{
+                    } else {
                         createLoadMoreView();
                         resetStatus();
                     }

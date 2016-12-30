@@ -183,4 +183,9 @@ public class SearchCircle extends BaseActivity {
         overridePendingTransition(R.anim.pop_right_in, R.anim.pop_right_out);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(refreshSearch);
+    }
 }

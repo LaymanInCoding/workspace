@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.androidquery.AQuery;
@@ -22,6 +24,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.activity.common.SearchActivity;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.specialoffer.adapter.GroupBuyAdapter;
 import com.witmoon.xmb.api.ApiHelper;
@@ -47,7 +50,7 @@ import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 /**
  * Created by ZCM on 2016/1/19
  */
-public class GroupBuyActivity extends BaseActivity{
+public class GroupBuyActivity extends BaseActivity {
 
     private boolean isrun = true;
 
@@ -55,7 +58,7 @@ public class GroupBuyActivity extends BaseActivity{
 
     private String mLink;
 
-    private  List<Map<String, Object>> mDatas = new ArrayList<>();
+    private List<Map<String, Object>> mDatas = new ArrayList<>();
 
     private CountDownTextView time_text;
 
@@ -77,6 +80,8 @@ public class GroupBuyActivity extends BaseActivity{
 
     private Boolean has_footer = false;
 
+    private ImageView searchImg;
+
     public static void start(Context context, String link) {
         Intent intent = new Intent(context, GroupBuyActivity.class);
         intent.putExtra("LINK", link);
@@ -88,10 +93,12 @@ public class GroupBuyActivity extends BaseActivity{
         intent.putExtra("LINK", link);
         context.startActivity(intent);
     }
+
     @Override
     protected int getActionBarTitleByResId() {
         return R.string.text_jing_group;
     }
+
     @Override
     protected void configActionBar(Toolbar toolbar) {
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_kin));
@@ -112,6 +119,10 @@ public class GroupBuyActivity extends BaseActivity{
     }
 
     private void initView() {
+        searchImg = (ImageView) findViewById(R.id.toolbar_right_img);
+        searchImg.setImageResource(R.mipmap.search_imags);
+        searchImg.setVisibility(View.VISIBLE);
+        searchImg.setOnClickListener(v -> startActivity(new Intent(this, SearchActivity.class)));
         mRootView = (RecyclerView) findViewById(R.id.recyclerView);
         layoutManager = new GridLayoutManager(this, 2);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -123,14 +134,14 @@ public class GroupBuyActivity extends BaseActivity{
         });
         mRootView.setHasFixedSize(true);
         mRootView.setLayoutManager(layoutManager);
-        headView = getLayoutInflater().inflate(R.layout.header_group_buy,mRootView,false);
+        headView = getLayoutInflater().inflate(R.layout.header_group_buy, mRootView, false);
         time_text = (CountDownTextView) headView.findViewById(R.id.count_down_text);
         top_group_image = (SimpleDraweeView) headView.findViewById(R.id.top_group_image);
-        LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) top_group_image.getLayoutParams();
+        RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) top_group_image.getLayoutParams();
         linearParams.width = MainActivity.screen_width;
         linearParams.height = MainActivity.screen_width * 350 / 750;
         top_group_image.setLayoutParams(linearParams);
-        adapter = new GroupBuyAdapter(mDatas,this,this);
+        adapter = new GroupBuyAdapter(mDatas, this, this);
         stringAdapter = new HeaderViewRecyclerAdapter(adapter);
         stringAdapter.addHeaderView(headView);
         mRootView.setAdapter(stringAdapter);
@@ -147,18 +158,19 @@ public class GroupBuyActivity extends BaseActivity{
 
         @Override
         public void onSuccess(JSONObject response) {
-            TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
-            if (!twoTuple.first) {
-                AppContext.showToastShort(twoTuple.second);
-                return;
-            }
+            Log.e("Response",response.toString());
+//            TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
+//            if (!twoTuple.first) {
+//                AppContext.showToastShort(twoTuple.second);
+//                return;
+//            }
             try {
-                mData = response.getJSONObject("data");
+                mData = response;
                 Netroid.displayImage(mData.getString("top_banner"), top_group_image);
                 time_text.setTime(Long.parseLong(mData.getString("end_time")) - System.currentTimeMillis() / 1000);
                 mDataList = parseGroupHotResponse(mData);
                 mDataGrid = parseGroupNormalResponse(mData);
-                Map<String,Object> bottom_banner = new HashMap<String, Object>();
+                Map<String, Object> bottom_banner = new HashMap<String, Object>();
                 bottom_banner.put("type", "banner");
                 mDataBottomGrid = parseGroupBottomTopicResponse(mData);
                 mDatas.addAll(mDataList);
@@ -189,7 +201,7 @@ public class GroupBuyActivity extends BaseActivity{
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
         }
     }
 
@@ -203,25 +215,26 @@ public class GroupBuyActivity extends BaseActivity{
                 Map<String, Object> dm = new HashMap<>();
                 Map<String, String> timeMap = new HashMap<>();
                 dm.put("goods_id", detail.getString("goods_id"));
-                dm.put("shop_price", detail.getString("shop_price"));
+//                dm.put("shop_price", detail.getString("shop_price"));
                 dm.put("goods_thumb", detail.getString("goods_thumb"));
-                dm.put("salesnum", detail.getString("salesnum"));
-                dm.put("goods_img", detail.getString("goods_img"));
+//                dm.put("salesnum", detail.getString("salesnum"));
+//                dm.put("goods_img", detail.getString("goods_img"));
                 dm.put("goods_name", detail.getString("goods_name"));
-                dm.put("org_price", detail.getString("org_price"));
-                dm.put("origin_pic", detail.getString("origin_pic"));
-                dm.put("origin_name", detail.getString("origin_name"));
-                dm.put("goods_brief", detail.getString("goods_brief"));
-                dm.put("end_time", detail.getString("gmt_end_time"));
-                dm.put("type","hot");
+                dm.put("goods_price", detail.getString("goods_price"));
+//                dm.put("org_price", detail.getString("org_price"));
+//                dm.put("origin_pic", detail.getString("origin_pic"));
+//                dm.put("origin_name", detail.getString("origin_name"));
+//                dm.put("goods_brief", detail.getString("goods_brief"));
+//                dm.put("end_time", detail.getString("gmt_end_time"));
+                dm.put("type", "hot");
                 long def_time = Long.parseLong(detail.getString("gmt_end_time")) - System.currentTimeMillis() / 1000;
-                if(def_time > 0 ) {
+                if (def_time > 0) {
 
                     timeMap.put("time", def_time + "");
-                }else{
+                } else {
                     timeMap.put("time", "售完");
                 }
-                dm.put("market_price", detail.getString("market_price"));
+//                dm.put("market_price", detail.getString("market_price"));
                 TimeUtill.byeAdd(timeMap);
                 hotList.add(dm);
             }
@@ -247,7 +260,7 @@ public class GroupBuyActivity extends BaseActivity{
                 dm.put("goods_name", detail.getString("goods_name"));
                 dm.put("goods_brief", detail.getString("goods_brief"));
                 dm.put("market_price", detail.getString("market_price"));
-                dm.put("type","mid");
+                dm.put("type", "mid");
                 hotList.add(dm);
             }
 
@@ -266,9 +279,11 @@ public class GroupBuyActivity extends BaseActivity{
                 JSONObject detail = mArray.getJSONObject(i);
                 Map<String, Object> dm = new HashMap<>();
                 dm.put("ad_code", detail.getString("ad_code"));
-                dm.put("goods_id", detail.getString("ad_link"));
-                dm.put("type","bot");
-                dm.put("index",i);
+                dm.put("goods_id", detail.getString("id"));
+                dm.put("end_time", detail.getString("end_time"));
+                dm.put("title", detail.getString("title"));
+                dm.put("type", "bot");
+                dm.put("index", i);
                 hotList.add(dm);
             }
 
@@ -327,6 +342,7 @@ public class GroupBuyActivity extends BaseActivity{
         };
         thread.start();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

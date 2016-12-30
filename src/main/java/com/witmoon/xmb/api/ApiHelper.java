@@ -11,6 +11,7 @@ import com.witmoon.xmb.util.TwoTuple;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -19,20 +20,26 @@ import java.util.Map;
  */
 public class ApiHelper {
     public static final int PAGE_SIZE = TDevice.getPageSize();
-    public static final String API_URL = "http://api.xiaomabao.com/mobile/?url=%s";
-    public static final String MBQZ_API_URL = "http://api.xiaomabao.com/mobile/?url=%s";
-    public static final String BASE_URL = "http://api.xiaomabao.com/";
-    public static final String GOODS_LINK_MODE = "http://www.xiaomabao.com/goods-%s.html";
-    public static final String MARKET_LINK_MODE = "http://www.xiaomabao.com/topic.php?topic_id=%s";
-//    public static final String XIAOMABAO_DOMAIN = "http://www.xiaomabao.com/";
 
+    public static final String API_URL = "https://api.xiaomabao.com/mobile/?url=%s";
+    public static final String MBQZ_API_URL = "https://api.xiaomabao.com/mobile/?url=%s";
+    public static final String BASE_URL = "https://api.xiaomabao.com/";
+    public static final String GOODS_LINK_MODE = "https://www.xiaomabao.com/goods-%s.html";
+    public static final String MARKET_LINK_MODE = "https://www.xiaomabao.com/topic.php?topic_id=%s";
+
+//    public static final String API_URL = "http://192.168.22.222/?url=%s";
+//    public static final String MBQZ_API_URL = "http://192.168.22.222/?url=%s";
+//    public static final String BASE_URL = "http://192.168.22.222/";
+//    public static final String GOODS_LINK_MODE = "http://192.168.22.222/goods-%s.html";
+//    public static final String MARKET_LINK_MODE = "http://192.168.22.222/topic.php?topic_id=%s";
+//
 //    public static final String API_URL = "http://192.168.11.36/mobile/?url=%s";
 //    public static final String MBQZ_API_URL = "http://192.168.11.36/mobile/?url=%s";
-//    public static final String BASE_URL = "http://192.168.11.36/index.php/";
+//    public static final String BASE_URL = "http://192.168.11.36/";
 //    public static final String GOODS_LINK_MODE = "http://192.168.11.36/goods-%s.html";
 //    public static final String MARKET_LINK_MODE = "http://192.168.11.36/topic.php?topic_id=%s";
 
-//    public static final String API_URL = "http://172.16.1.122/mobile/?url=%s";
+    //    public static final String API_URL = "http://172.16.1.122/mobile/?url=%s";
 //    public static final String MBQZ_API_URL = "http://172.16.1.122/mobile?url=%s";
 //    public static final String BASE_URL = "http://172.16.1.122/";
     public static String mSessionID;
@@ -77,6 +84,23 @@ public class ApiHelper {
     }
 
     /**
+     * 创建附带用户登录信息的HTTP请求参数对象Map<String,String>
+     *
+     * @param pm 其它参数Map<String, String>
+     * @return Map<String,String>
+     */
+    public static Map<String, String> getParamMap(Map<String, String> pm) {
+//
+        Map<String, String> paramObj = pm == null ? new HashMap<>() : pm;
+        paramObj.put("session[uid]", AppContext.getLoginUid() + "");
+        paramObj.put("session[sid]",  AppContext.getLoginInfo().getSid());
+        paramObj.put("version", AppContext.geVerSion());
+        paramObj.put("channel", AppContext.getChannels());
+        paramObj.put("device", "android");
+        return paramObj;
+    }
+
+    /**
      * 获取分页信息的JSONObject
      *
      * @param p  页码
@@ -111,7 +135,6 @@ public class ApiHelper {
         return String.format(API_URL, url);
     }
 
-
     // 获取麻包圈子接口绝对URL
     public static String getMbqzApiUrl(String url) {
         return String.format(MBQZ_API_URL, url);
@@ -130,7 +153,7 @@ public class ApiHelper {
      */
     public static TwoTuple<Boolean, String> parseResponseStatus(JSONObject response) {
         try {
-                JSONObject statusObj = response.getJSONObject("status");
+            JSONObject statusObj = response.getJSONObject("status");
             int succeed = (int) statusObj.get("succeed");
             if (succeed == 1) {
                 return TwoTuple.tuple(true, null);
@@ -138,26 +161,9 @@ public class ApiHelper {
             return TwoTuple.tuple(false, statusObj.get("error_desc").toString());
 
         } catch (JSONException e) {
-            Log.e("error",e.getMessage());
+            Log.e("error", e.getMessage());
             return TwoTuple.tuple(false, e.getMessage());
         }
     }
 
-    // 默认用户资料回调接口, 请求成功后更新用户资料
-    public static Listener<JSONObject> getDefaultUserInfoListener() {
-        return new Listener<JSONObject>() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
-                if (twoTuple.first) {
-                    try {
-                        User user = User.parse(response.getJSONObject("data"), "", "", "");
-                        AppContext.saveLoginInfo(user);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-    }
 }

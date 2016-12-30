@@ -9,26 +9,38 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
+import com.duowan.mobile.netroid.Listener;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.service.ServiceOrderActivity;
 import com.witmoon.xmb.activity.user.LoginActivity;
-import com.witmoon.xmb.api.Netroid;
+import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.BaseFragment;
 import com.witmoon.xmb.model.SimpleBackPage;
 import com.witmoon.xmb.util.UIHelper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MeFragment extends BaseFragment implements View.OnClickListener {
+
     private View view;
     private TextView login_text_view;
     private ImageView me_avatar_img;
@@ -49,25 +61,60 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-       if (view == null) {
-           view = inflater.inflate(R.layout.fragment_usercenter, container, false);
-           AssetManager mgr = getActivity().getAssets();//得到AssetManager
-           Typeface tf=Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
-           TextView titleView = (TextView) view.findViewById(R.id.toolbar_title_text);
-           titleView.setTypeface(tf);
-           bindEvent();
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_usercenter, container, false);
+            AssetManager mgr = getActivity().getAssets();//得到AssetManager
+            Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
+            TextView titleView = (TextView) view.findViewById(R.id.toolbar_title_text);
+            titleView.setTypeface(tf);
+            bindEvent();
         }
+        ButterKnife.bind(this, view);
+
         return view;
     }
 
-    private void bindEvent(){
+    private void requestData() {
+        UserApi.userInfo(new Listener<JSONObject>() {
+            @Override
+            public void onPreExecute() {
+                super.onPreExecute();
+                login_text_view.setText(AppContext.getLoginInfo().getName());
+                if (!AppContext.getLoginInfo().getAvatar().equals("")) {
+                    ImageLoader.getInstance().displayImage(AppContext.getLoginInfo().getAvatar(), me_avatar_img, AppContext.options_disk);
+                } else {
+                    me_avatar_img.setImageResource(R.mipmap.touxiang);
+                }
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    JSONObject data = response.getJSONObject("data");
+                    Log.e("Data", data.toString());
+                    login_text_view.setText(data.getString("nick_name"));
+                    AppContext.getLoginInfo().setName(data.getString("nick_name"));
+                    if (!data.getString("header_img").equals("")) {
+                        ImageLoader.getInstance().displayImage(data.getString("header_img"), me_avatar_img, AppContext.options_disk);
+                    } else {
+                        me_avatar_img.setImageResource(R.mipmap.touxiang);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void bindEvent() {
+
         login_text_view = (TextView) view.findViewById(R.id.login_text_view);
         me_avatar_img = (ImageView) view.findViewById(R.id.me_avatar_img);
 
         login_text_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!AppContext.instance().isLogin()){
+                if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -79,7 +126,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.SETTING);
                 }
             }
@@ -91,7 +138,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     Bundle args = new Bundle();
                     args.putSerializable("initType", null);
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ORDER, args);
@@ -105,7 +152,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), ServiceOrderActivity.class));
                 }
 
@@ -118,7 +165,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     UIHelper.showSimpleBackForResult(getActivity(), 3, SimpleBackPage.SHOPPING_CART);
                 }
             }
@@ -130,7 +177,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.FAVORITE);
                 }
             }
@@ -142,7 +189,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.BROWSE_HISTORY);
                 }
             }
@@ -157,7 +204,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:400-0056-830"));
+                                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:010-8517-0751"));
                                 startActivity(intent);
                             }
                         }).setCancelable(true).show();
@@ -170,7 +217,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     AddressManageActivity.startActivity(getActivity());
                 }
             }
@@ -206,7 +253,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.OUT_PRICE);
                 }
             }
@@ -218,7 +265,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.CASH_COUPON);
                 }
             }
@@ -237,14 +284,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         super.onResume();
         configToolbar();
         MainActivity.current_tab_index = 4;
-        if(AppContext.instance().isLogin()){
-            login_text_view.setText(AppContext.getLoginInfo().getName());
-            if (!AppContext.getLoginInfo().getAvatar().equals("")){
-                ImageLoader.getInstance().displayImage(AppContext.getLoginInfo().getAvatar(), me_avatar_img, AppContext.options_disk);
-            }else{
-                me_avatar_img.setImageResource(R.mipmap.touxiang);
-            }
-        }else{
+        if (AppContext.instance().isLogin()) {
+            requestData();
+        } else {
             login_text_view.setText("登录 / 注册");
             me_avatar_img.setImageResource(R.mipmap.touxiang);
         }
@@ -254,4 +296,15 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         super.onClick(v);
     }
+
+
+    @OnClick(R.id.me_mabao_bean)
+    public void onClick() {
+        if (!AppContext.instance().isLogin()) {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        } else {
+            UIHelper.showSimpleBack(getActivity(), SimpleBackPage.MyMabaoBean);
+        }
+    }
+
 }

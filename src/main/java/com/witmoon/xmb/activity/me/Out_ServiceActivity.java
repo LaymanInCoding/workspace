@@ -1,6 +1,6 @@
 package com.witmoon.xmb.activity.me;
 
-import android.app.Activity;
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -30,10 +30,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.OptionsPickerView;
 import com.duowan.mobile.netroid.Listener;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
-import com.witmoon.xmb.activity.common.AreaChooserActivity;
 import com.witmoon.xmb.activity.me.adapter.Out_imgAdapter;
 import com.witmoon.xmb.api.ApiHelper;
 import com.witmoon.xmb.api.Netroid;
@@ -41,6 +42,8 @@ import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.model.Out_;
+import com.witmoon.xmb.model.ProvinceBean;
+import com.witmoon.xmb.model.Region;
 import com.witmoon.xmb.model.SimpleBackPage;
 import com.witmoon.xmb.ui.popupwindow.Popup;
 import com.witmoon.xmb.ui.popupwindow.PopupDialog;
@@ -50,6 +53,8 @@ import com.witmoon.xmb.util.BitmapUtils;
 import com.witmoon.xmb.util.HttpUtility;
 import com.witmoon.xmb.util.UIHelper;
 import com.witmoon.xmb.util.WeakAsyncTask;
+import com.yxp.permission.util.lib.PermissionUtil;
+import com.yxp.permission.util.lib.callback.PermissionResultCallBack;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +74,8 @@ import java.util.Map;
 
 /**
  * Created by de on 2015/11/25
+ * <p>
+ * 申请退换货
  */
 public class Out_ServiceActivity extends BaseActivity implements View.OnClickListener {
     private GridView Image_view;//网格显示缩略图
@@ -86,7 +93,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
     private EditText region;
     private Out_ out;
     JSONObject ssm;
-    private boolean is_or = false;
+    private boolean is_goods_num = false;
     private IncreaseReduceTextView mIncreaseReduceTextView;
     private JSONArray mJSONArray;
     DecimalFormat mDecimalFormat = new DecimalFormat("##0.00");
@@ -100,11 +107,18 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
     private RadioButton trade, quit;
     private TextView title, serial_no, serial_count;
     int serial_counts = 0;
-    private String mProvinceId;
-    private String mCityId;
+
+    private String mProvinceId = "";
+    private String mCityId = "";
     AppContext applicationContext;
-    private String mDistrictId;
+    private String mDistrictId = "";
     private LinearLayout lin_is, lin_is_s;
+
+    private ArrayList<ProvinceBean> options1Items = new ArrayList<ProvinceBean>();
+    private ArrayList<ArrayList<ProvinceBean>> options2Items = new ArrayList<ArrayList<ProvinceBean>>();
+    private ArrayList<ArrayList<ArrayList<ProvinceBean>>> options3Items = new ArrayList<ArrayList<ArrayList<ProvinceBean>>>();
+    private OptionsPickerView pvOptions;
+
 
     @Override
     protected int getLayoutResourceId() {
@@ -133,7 +147,6 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
         serial_count = (TextView) findViewById(R.id.serial_count);
         serial_no = (TextView) findViewById(R.id.serial_no);
         edit_text = (EditText) findViewById(R.id.edit_text1);
-        Log.e("data",edit_text.getText().toString());
         lin_is = (LinearLayout) findViewById(R.id.lin_is);
         lin_is_s = (LinearLayout) findViewById(R.id.lin_is_s);
         findViewById(R.id.submit_button).setOnClickListener(this);
@@ -144,10 +157,94 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
         Image_view = (GridView) findViewById(R.id.gridView1);
         bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.mbq_post_add); //加号
         region = (EditText) findViewById(R.id.region);
+        pvOptions = new OptionsPickerView(this);
         imgAdapter = new Out_imgAdapter(Out_ServiceActivity.this);
         imgAdapter.addItemImage(bmp, "");
         Image_view.setAdapter(imgAdapter);
-        UserApi.out_addss(out.getOrder_id(), new Listener<JSONObject>() {
+        requetData();
+        registered_click();
+        initPickerView();
+    }
+
+    private void initPickerView() {
+        //选项选择器
+        List<Region> regionListTest = ((AppContext) getApplicationContext()).getXmbDB().loadRegions();
+        Map<String, List<Region>> map = new HashMap<>();
+        for (Region region : regionListTest) {
+            List<Region> regionTmp = new ArrayList<>();
+            if (!map.containsKey(region.getParentId())) {
+                regionTmp.add(region);
+            } else {
+                regionTmp = map.get(region.getParentId());
+                regionTmp.add(region);
+            }
+            map.put(region.getParentId(), regionTmp);
+        }
+
+        for (Region region : map.get("1")) {
+            options1Items.add(new ProvinceBean(region.getId(), region.getName()));
+        }
+
+        for (ProvinceBean province : options1Items) {
+            List<Region> regionListTmp = map.get(province.getId());
+            ArrayList<ProvinceBean> options2Items_tmp = new ArrayList<ProvinceBean>();
+            for (Region region : regionListTmp) {
+                options2Items_tmp.add(new ProvinceBean(region.getId(), region.getName()));
+            }
+            options2Items.add(options2Items_tmp);
+        }
+
+        for (int i = 0; i < options2Items.size(); i++) {
+            ArrayList<ArrayList<ProvinceBean>> options3Items_0 = new ArrayList<ArrayList<ProvinceBean>>();
+            ArrayList<ProvinceBean> tmp = options2Items.get(i);
+            for (ProvinceBean province : tmp) {
+                ArrayList<ProvinceBean> options3Items_0_1 = new ArrayList<ProvinceBean>();
+                List<Region> regionListTmp = map.get(province.getId());
+                if (regionListTmp != null) {
+                    for (Region region : regionListTmp) {
+                        options3Items_0_1.add(new ProvinceBean(region.getId(), region.getName()));
+                    }
+                }
+                options3Items_0.add(options3Items_0_1);
+            }
+            options3Items.add(options3Items_0);
+        }
+
+        pvOptions.setPicker(options1Items, options2Items, options3Items, true);
+        pvOptions.setTitle("选择配送区域");
+        pvOptions.setCyclic(false, false, false);
+        //设置默认选中的三级项目
+        //监听确定选择按钮
+        int pos1 = 0, pos2 = 0, pos3 = 0;
+        if (!mProvinceId.equals("")) {
+            pos1 = Integer.parseInt(mProvinceId);
+        }
+
+        if (!mCityId.equals("")) {
+            pos2 = Integer.parseInt(mCityId);
+        }
+
+        if (!mDistrictId.equals("")) {
+            pos3 = Integer.parseInt(mDistrictId);
+        }
+
+        pvOptions.setSelectOptions(pos1, pos2, pos3);
+        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3) {
+                region.setText(options1Items.get(options1).getPickerViewText()
+                        + options2Items.get(options1).get(options2).getPickerViewText()
+                        + options3Items.get(options1).get(options2).get(options3).getPickerViewText());
+                mProvinceId = options1Items.get(options1).getId();
+                mCityId = options2Items.get(options1).get(options2).getId();
+                mDistrictId = options3Items.get(options1).get(options2).get(options3).getId();
+            }
+        });
+    }
+
+    private void requetData() {
+        UserApi.get_refund_info(out.getOrder_id(), new Listener<JSONObject>() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
@@ -158,13 +255,12 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                         return;
                     }
                     ssm = response;
-                    parsJson(response);
+                    parsJson(response);  //解析服务端数据(用户自行加减退货商品数量)
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-        registered_click();
     }
 
     //注册点击事件
@@ -210,14 +306,6 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                 settingImg(u);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            }
-        } else if (requestCode == AREA_CHOOSER_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                region.setText(data.getStringExtra("address"));
-                String[] regionIdArray = data.getStringExtra("regionId").split(",");
-                mProvinceId = regionIdArray[0];
-                mCityId = regionIdArray[1];
-                mDistrictId = regionIdArray[2];
             }
         }
     }
@@ -273,7 +361,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
         View view = popupDialog.getContentView();
         //背景透明度设置
         view.findViewById(R.id.flMaskLayer).setAlpha(0.75f);
-        View.OnClickListener l =    new View.OnClickListener() {
+        View.OnClickListener l = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //取消按钮
@@ -304,20 +392,36 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                 }
                 //从相册
                 else if (v.getId() == R.id.tvHeaderFromSD) {
-                    PopupUtils.dismissPopupDialog();
-                    Intent intent = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, IMAGE_OPEN);
+                    PermissionUtil.getInstance().request(new String[]{Manifest.permission.CAMERA}, new PermissionResultCallBack() {
+                        @Override
+                        public void onPermissionGranted() {
+                            PopupUtils.dismissPopupDialog();
+                            Intent intent = new Intent(Intent.ACTION_PICK,
+                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, IMAGE_OPEN);
+                        }
+
+                        @Override
+                        public void onPermissionGranted(String... strings) {
+
+                        }
+
+                        @Override
+                        public void onPermissionDenied(String... strings) {
+
+                        }
+
+                        @Override
+                        public void onRationalShow(String... strings) {
+
+                        }
+                    });
                 }
             }
         };
         view.findViewById(R.id.tvCancel).setOnClickListener(l);
         view.findViewById(R.id.tvTakeHeader).setOnClickListener(l);
         view.findViewById(R.id.tvHeaderFromSD).setOnClickListener(l);
-    }
-
-    public PopupDialog getPopupDialog() {
-        return popupDialog;
     }
 
     //外部查询返回
@@ -332,7 +436,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
         cursor.moveToFirst();
         pathImage = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
         try {
-            mBitmap = BitmapUtils.getCompressedImage(pathImage,5);
+            mBitmap = BitmapUtils.getCompressedImage(pathImage, 5);
         } catch (NullPointerException e) {
             AppContext.showToast("当前相片不可用，重新选择或拍照！");
             return;
@@ -384,7 +488,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
             mIncreaseReduceTextView.setNumber(Integer.valueOf(jb.getString("goods_refund_number")));
             numlist.add(jb.getString("goods_max_refund_number"));
             ImageView imageView = (ImageView) goodsContainerView.findViewById(R.id.goods_image);
-            Netroid.displayBabyImage(jb.getString("goods_img"),imageView);
+            Netroid.displayBabyImage(jb.getString("goods_img"), imageView);
             TextView title = (TextView) goodsContainerView.findViewById(R.id.goods_title);
             title.setText(jb.getString("goods_name"));
             TextView price = (TextView) goodsContainerView.findViewById(R.id.goods_price);
@@ -453,7 +557,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
 
     private boolean Checkis_() {
         boolean is_ = false;
-        Log.e("data",edit_text.getText().toString());
+        Log.e("data", edit_text.getText().toString());
         if (edit_text.getText().toString().trim().equals("")) {
             AppContext.showToast("请输入问题描述！");
         } else if (name.getText().toString().trim().equals("")) {
@@ -466,7 +570,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
             AppContext.showToast("请输入详细地址！");
         } else if (imgAdapter.mList.size() <= 1) {
             AppContext.showToast("请上传图片！");
-        } else if (!is_or) {
+        } else if (!is_goods_num) {
             AppContext.showToast("请选择商品数量！");
         } else {
             is_ = true;
@@ -480,7 +584,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
             AppContext.showToast("请输入问题描述！");
         } else if (imgAdapter.mList.size() <= 1) {
             AppContext.showToast("请上传图片！");
-        } else if (!is_or) {
+        } else if (!is_goods_num) {
             AppContext.showToast("请选择商品数量！");
         } else {
             is_s = true;
@@ -488,9 +592,9 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
         return is_s;
     }
 
-    private class ModifyAsyncTask extends WeakAsyncTask<Void, Void, String, Out_ServiceActivity> {
+    private class ExchangeAsyncTask extends WeakAsyncTask<Void, Void, String, Out_ServiceActivity> {
 
-        public ModifyAsyncTask(Out_ServiceActivity mOut_ServiceActivity) {
+        public ExchangeAsyncTask(Out_ServiceActivity mOut_ServiceActivity) {
             super(mOut_ServiceActivity);
         }
 
@@ -513,7 +617,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                 } else {
                     pm.put("refund_type", "2");
                 }
-                pm.put("refund_way", "0");
+                pm.put("refund_way", "0");      //换货
                 pm.put("refund_reason", edit_text.getText().toString());
                 pm.put("consignee", name.getText().toString());
                 pm.put("mobile", phone.getText().toString());
@@ -521,10 +625,12 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                 pm.put("city", mCityId);
                 pm.put("district", mDistrictId);
                 pm.put("address", detailed_address.getText().toString());
-                String response = HttpUtility.post(ApiHelper.getAbsoluteApiUrl("/refund/apply"), null, pm, fm);
+                Log.e("PM", pm.toString());
+                Log.e("FM", fm.toString());
+                String response = HttpUtility.post(ApiHelper.BASE_URL + "refund/refund_apply", null, pm, fm);
                 JSONObject respObj = new JSONObject(response);
-                Log.e("response", response.toString());
-                Log.e("respObj", respObj.toString());
+                Logger.json(response);
+                Logger.t("换货server返回").json(respObj.toString());
                 if (respObj.getString("status").equals("0")) {
                     return respObj.getString("msg");
                 }
@@ -549,13 +655,14 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
             Bundle bundle = new Bundle();
             bundle.putSerializable("order", out);
             UIHelper.showSimpleBack(Out_ServiceActivity.this, SimpleBackPage.JINDU, bundle);
+            setResult(RESULT_OK);
             finish();
         }
     }
 
-    private class ModifyAsyncTask1 extends WeakAsyncTask<Void, Void, String, Out_ServiceActivity> {
+    private class ReturnAsyncTask extends WeakAsyncTask<Void, Void, String, Out_ServiceActivity> {
 
-        public ModifyAsyncTask1(Out_ServiceActivity mOut_ServiceActivity) {
+        public ReturnAsyncTask(Out_ServiceActivity mOut_ServiceActivity) {
             super(mOut_ServiceActivity);
         }
 
@@ -578,19 +685,13 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                 } else {
                     pm.put("refund_type", "2");
                 }
-                pm.put("refund_way", "1");
+                pm.put("refund_way", "1");  //退货  原支付方式返回
                 pm.put("refund_reason", edit_text.getText().toString());
-                pm.put("consignee", "");
-                pm.put("mobile", "");
-                pm.put("province", "");
-                pm.put("city", "");
-                pm.put("district", "");
-                pm.put("address", "");
                 Log.e("pm", pm.toString());
                 Log.e("mas", fm.toString());
-                String response = HttpUtility.post(ApiHelper.getAbsoluteApiUrl("/refund/apply"), null, pm, fm);
+                String response = HttpUtility.post(ApiHelper.BASE_URL + "refund/refund_apply", null, pm, fm);
                 JSONObject respObj = new JSONObject(response);
-                Log.e("respObj", respObj.toString());
+                Logger.t("退货server返回").json(respObj.toString());
                 if (respObj.getString("status").equals("0")) {
                     return respObj.getString("msg");
                 }
@@ -615,6 +716,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
             Bundle bundle = new Bundle();
             bundle.putSerializable("order", out);
             UIHelper.showSimpleBack(Out_ServiceActivity.this, SimpleBackPage.JINDU, bundle);
+            setResult(RESULT_OK);
             finish();
         }
     }
@@ -623,8 +725,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.region:
-                startActivityForResult(new Intent(Out_ServiceActivity.this, AreaChooserActivity.class),
-                        AREA_CHOOSER_CODE);
+                pvOptions.show();
                 break;
             case R.id.trade:
                 lin_is.setVisibility(View.GONE);
@@ -641,9 +742,8 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                 quit.setChecked(true);
                 break;
             case R.id.submit_button:
-                Log.e("out.getRefund_status()", out.getRefund_status());
                 try {
-                    parsJson1(ssm);
+                    parseToGoodsJson(ssm);     //完整信息提交
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -651,14 +751,14 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                 if (AppContext.isNetworkAvailable(Out_ServiceActivity.this)) {
                     if (quit.isChecked()) {
                         if (is_checks()) {
-                            ModifyAsyncTask1 asyncTask = new ModifyAsyncTask1(this);
+                            ReturnAsyncTask asyncTask = new ReturnAsyncTask(this);
                             asyncTask.execute();
                         }
                     }
 
                     if (trade.isChecked()) {
                         if (Checkis_()) {
-                            ModifyAsyncTask asyncTask = new ModifyAsyncTask(this);
+                            ExchangeAsyncTask asyncTask = new ExchangeAsyncTask(this);
                             asyncTask.execute();
                         }
                     }
@@ -671,18 +771,17 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void parsJson1(JSONObject object) throws JSONException {
+    private void parseToGoodsJson(JSONObject object) throws JSONException {
         JSONObject js = object.getJSONObject("data");
         JSONArray array = js.getJSONArray("refund_goods_detail");
-        Log.e("data",array.toString());
-        mJSONArray = null;
+        Log.e("data", array.toString());
         mJSONArray = new JSONArray();
         for (int i = 0; i < array.length(); i++) {
             JSONObject jb = array.getJSONObject(i);
             JSONObject up_js = new JSONObject();
             up_js.put(jb.getString("goods_id"), onlist.get(i).getNumber() + "");
             if (onlist.get(i).getNumber() >= 1) {
-                is_or = true;
+                is_goods_num = true;
             }
             mJSONArray.put(i, up_js);
         }

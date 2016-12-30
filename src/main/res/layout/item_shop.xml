@@ -1,77 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white">
-    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingTop="@dimen/space_16"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/space_8"
-        android:paddingRight="@dimen/space_8">
+        android:paddingRight="@dimen/space_8"
+        android:paddingTop="@dimen/space_16">
+
         <com.makeramen.roundedimageview.RoundedImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/shop_logo"
             android:layout_width="37dip"
             android:layout_height="37dip"
             android:layout_marginRight="@dimen/space_6"
+            android:scaleType="centerCrop"
             android:src="@null"
-            app:riv_corner_radius="4dip"
-            app:riv_border_width="0.5dip"
             app:riv_border_color="#efefef"
-            android:scaleType="centerCrop" />
+            app:riv_border_width="0.5dip"
+            app:riv_corner_radius="4dip"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/shop_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_15"
-                android:textColor="#606060"
-                android:text="@null"/>
+                android:text="@null"
+                android:textColor="@color/app_main_deep"
+                android:textSize="@dimen/text_size_15"/>
+
             <TextView
                 android:id="@+id/shop_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_14"
-                android:lineSpacingExtra="@dimen/dimen_6_dip"
                 android:layout_marginTop="@dimen/space_10"
-                android:textColor="#a9a9a9"
-                android:text="@null"/>
+                android:lineSpacingExtra="@dimen/dimen_6_dip"
+                android:text="@null"
+                android:textColor="@color/app_main_thin"
+                android:textSize="@dimen/text_size_14"/>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_9">
+
                 <TextView
                     android:id="@+id/shop_nearby_subway"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_13"
-                    android:drawableLeft="@mipmap/ditie"
                     android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/ditie"
                     android:drawablePadding="@dimen/space_4"
-                    android:textColor="#a9a9a9"
-                    android:text="@null"/>
+                    android:text="@null"
+                    android:textColor="@color/app_main_thin"
+                    android:textSize="@dimen/text_size_13"/>
 
                 <TextView
                     android:id="@+id/shop_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_13"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:drawableLeft="@mipmap/service_city_location"
                     android:drawablePadding="@dimen/space_4"
-                    android:textColor="#a9a9a9"
-                    android:text="@null"/>
+                    android:text="@null"
+                    android:textColor="@color/app_main_thin"
+                    android:textSize="@dimen/text_size_13"/>
             </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>
+
     <View
         style="@style/horizontal_divider"
-        android:layout_marginTop="@dimen/space_10"  />
+        android:layout_marginTop="@dimen/space_10"/>
 </LinearLayout>

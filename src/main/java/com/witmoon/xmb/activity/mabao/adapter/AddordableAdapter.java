@@ -3,6 +3,7 @@ package com.witmoon.xmb.activity.mabao.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import java.util.Map;
 /**
  * Created by de on 2016/3/17.
  */
-public class AddordableAdapter extends  RecyclerView.Adapter<AddordableAdapter.ViewHolder> {
+public class AddordableAdapter extends RecyclerView.Adapter<AddordableAdapter.ViewHolder> {
     private OnItemClickListener mOnItemButtonClickListener;
     private int width;
 
@@ -45,13 +46,13 @@ public class AddordableAdapter extends  RecyclerView.Adapter<AddordableAdapter.V
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Map<String, String> map = mDatas.get(position);
         int top = 5;
-        if (position % 2 == 0){
-            holder.view.setPadding(DensityUtils.dp2px(context,5),DensityUtils.dp2px(context,top),DensityUtils.dp2px(context,2.5f),0);
-        }else{
-            holder.view.setPadding(DensityUtils.dp2px(context,2.5f),DensityUtils.dp2px(context,top),DensityUtils.dp2px(context,5),0);
+        if (position % 2 == 0) {
+            holder.view.setPadding(DensityUtils.dp2px(context, 5), DensityUtils.dp2px(context, top), DensityUtils.dp2px(context, 2.5f), 0);
+        } else {
+            holder.view.setPadding(DensityUtils.dp2px(context, 2.5f), DensityUtils.dp2px(context, top), DensityUtils.dp2px(context, 5), 0);
         }
-        holder.goods_img.setLayoutParams(new LinearLayout.LayoutParams(width/2 - DensityUtils.dp2px(context,15),width/2 - DensityUtils.dp2px(context,15)));
-        holder.goods_price.setText("¥"+map.get("goods_price"));
+        holder.goods_img.setLayoutParams(new LinearLayout.LayoutParams(width / 2 - DensityUtils.dp2px(context, 8), width / 2 - DensityUtils.dp2px(context, 15)));
+        holder.goods_price.setText("¥" + map.get("goods_price"));
         holder.goods_img.setImageResource(R.mipmap.pic_goods_placeholder);
         Netroid.displayImage(map.get("goods_thumb"), holder.goods_img);
         holder.goods_name.setText(map.get("goods_name"));
@@ -61,8 +62,7 @@ public class AddordableAdapter extends  RecyclerView.Adapter<AddordableAdapter.V
                 CommodityDetailActivity.start(context, map.get("goods_id"));
             }
         });
-        if (red_nu.equals("1"))
-        {
+        if (red_nu.equals("1")) {
             holder.goods_price.setTextColor(Color.RED);
         }
     }
@@ -72,7 +72,7 @@ public class AddordableAdapter extends  RecyclerView.Adapter<AddordableAdapter.V
         return mDatas.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView goods_img;
         TextView goods_name;
         TextView goods_price;
@@ -87,7 +87,7 @@ public class AddordableAdapter extends  RecyclerView.Adapter<AddordableAdapter.V
         }
     }
 
-    public AddordableAdapter(ArrayList<Map<String, String>> mDatas, Context context,String red_nu) {
+    public AddordableAdapter(ArrayList<Map<String, String>> mDatas, Context context, String red_nu) {
         WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
         this.mDatas = mDatas;

@@ -10,5 +10,5 @@
         android:layout_gravity="center_vertical"
         android:textSize="@dimen/dimen_26_dip"
         android:paddingLeft="@dimen/dimen_15_dip"
-        android:textColor="@color/mbq_circle_category_name_normal" />
+        android:textColor="@color/app_main_deep" />
 </LinearLayout>

@@ -115,7 +115,6 @@ public class HotPostFragment extends BaseFragment {
                     stringAdapter.notifyDataSetChanged();
 
 
-                    stringAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);

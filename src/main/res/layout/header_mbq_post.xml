@@ -52,7 +52,7 @@
         android:layout_marginLeft="@dimen/dimen_8_dip"
         android:layout_marginRight="@dimen/dimen_8_dip"
         style="@style/mbq_horizontal_divider_full" />
-    <TextView
+    <org.sufficientlysecure.htmltextview.HtmlTextView
         android:id="@+id/post_content"
         android:textSize="@dimen/dimen_28_dip"
         android:layout_marginTop="@dimen/dimen_20_dip"
@@ -70,7 +70,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
     </LinearLayout>
     <RelativeLayout
         android:layout_marginLeft="@dimen/dimen_25_dip"

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_24_dip">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="@dimen/dimen_500_dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_30_dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_bean_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#555555"
+                android:textSize="@dimen/dimen_26_dip"
+                tools:text="每年自然增长"/>
+
+            <TextView
+                android:id="@+id/item_bean_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_14_dip"
+                android:textColor="#999999"
+                android:textSize="@dimen/dimen_24_dip"
+                tools:text="2016-12-20  19:25"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_40_dip"
+            tools:text="+007"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1_dip"
+        android:layout_marginLeft="@dimen/dimen_30_dip"
+        android:layout_marginRight="@dimen/dimen_30_dip"
+        android:layout_marginTop="@dimen/dimen_24_dip"
+        android:background="#dddddd"/>
+</LinearLayout>

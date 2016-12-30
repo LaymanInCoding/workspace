@@ -158,7 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_8"
-            android:background="@drawable/bg_rounded2_yellow"
+            android:background="@drawable/bg_rounded2_red"
             android:text="确认购买"
             android:textColor="@color/white"
             android:visibility="gone" />

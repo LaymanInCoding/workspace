@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/line_rootView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:orientation="vertical">
+
+    <include layout="@layout/toolbar_right_text"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/toolbar_height">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60_dip"
+                android:background="@null"
+                android:hint="@string/mbq_post_title_hint"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dimen_38_dip"
+                android:paddingRight="@dimen/dimen_38_dip"
+                android:textColor="@color/app_main_deep"
+                android:textSize="@dimen/dimen_28_dip"/>
+
+            <View
+                style="@style/mbq_horizontal_divider_full"
+                android:layout_below="@+id/et_name"/>
+
+            <EditText
+                android:id="@+id/richText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/post_title"
+                android:layout_marginBottom="@dimen/size_120"
+                android:layout_marginTop="@dimen/dimen_1_dip"
+                android:background="@null"
+                android:gravity="left|top"
+                android:hint="@string/mbq_post_content_hint"
+                android:paddingBottom="@dimen/dimen_20_dip"
+                android:paddingLeft="@dimen/dimen_38_dip"
+                android:paddingRight="@dimen/dimen_38_dip"
+                android:paddingTop="@dimen/dimen_20_dip"
+                android:textColor="@color/app_main_deep"
+                android:textSize="@dimen/dimen_26_dip"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/post_add_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dimen_20_dip"
+        android:layout_marginRight="@dimen/dimen_20_dip"
+        android:src="@mipmap/mbq_post_add"/>
+
+</RelativeLayout>

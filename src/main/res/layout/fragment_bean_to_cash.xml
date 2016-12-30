@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_tool_bar"/>
+
+    <include layout="@layout/header_my_bean"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30_dip"
+        android:layout_marginTop="@dimen/dimen_40_dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提现账户 :"
+            android:textColor="@color/app_main_deep"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_12_dip"
+            android:hint="@string/no_bind_card_msg"
+            android:paddingLeft="@dimen/dimen_20_dip"
+            android:textSize="@dimen/dimen_26_dip"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30_dip"
+        android:layout_marginTop="@dimen/dimen_60_dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/get_cash_tip"
+            android:textColor="@color/app_main_deep"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_12_dip"
+            android:background="@null"
+            android:hint="@string/bean_to_cash_hint"
+            android:paddingLeft="@dimen/dimen_20_dip"
+            android:textSize="@dimen/dimen_26_dip"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1_dip"
+        android:layout_marginLeft="@dimen/dimen_300_dip"
+        android:layout_marginRight="@dimen/dimen_150_dip"
+        android:layout_marginTop="@dimen/dimen_5_dip"
+        android:background="#aaaaaa"/>
+
+    <Button
+        android:id="@+id/submit_button"
+        style="@style/commonButton"
+        android:layout_height="@dimen/dimen_66_dip"
+        android:layout_marginLeft="@dimen/dimen_70_dip"
+        android:layout_marginRight="@dimen/dimen_70_dip"
+        android:layout_marginTop="@dimen/dimen_96_dip"
+        android:text="@string/confirm_cash"/>
+
+</LinearLayout>

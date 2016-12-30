@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/invoice_content_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_36_dip"
+                android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/invoice_content_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dimen_26_dip"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/content_unchecked"/>
+
+        <TextView
+            android:id="@+id/invoice_content_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/invoice_content_img"
+            android:text="@string/cosmetic_invoice"
+            android:textColor="#555555"
+            android:textSize="@dimen/dimen_26_dip"/>
+    </RelativeLayout>
+
+</RelativeLayout>

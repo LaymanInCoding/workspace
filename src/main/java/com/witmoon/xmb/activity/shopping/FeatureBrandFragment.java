@@ -24,6 +24,7 @@ import com.androidquery.util.AQUtility;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.activity.common.SearchActivity;
 import com.witmoon.xmb.activity.mabao.adapter.AddordableAdapter;
 import com.witmoon.xmb.activity.mabao.adapter.BrandGoodsAdapter;
 import com.witmoon.xmb.api.FriendshipApi;
@@ -64,21 +65,25 @@ public class FeatureBrandFragment extends BaseFragment {
     private Map<String, Object> map = new HashMap<>();
     private AQuery aQuery;
 
+    private ImageView backImg;
+    private ImageView searchImg;
+    private TextView titleText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         id = getArguments().getString("cat_id");
         type = getArguments().getString("cat_type");
         mDatas = new ArrayList<>();
-        super.onCreate(savedInstanceState);
+        ((BaseActivity) getActivity()).hideToolbar();
     }
 
-    private void configToolbar() {
-        Toolbar toolbar = ((BaseActivity) getActivity()).getToolBar();
-        toolbar.setBackgroundColor(getResources().getColor(R.color.main_kin));
-        aQuery = new AQuery(getActivity(), toolbar);
-        aQuery.id(R.id.toolbar_title_text).invisible();
-    }
+//    private void configToolbar() {
+//        Toolbar toolbar = ((BaseActivity) getActivity()).getToolBar();
+//        toolbar.setBackgroundColor(getResources().getColor(R.color.main_kin));
+//        aQuery = new AQuery(getActivity(), toolbar);
+//        aQuery.id(R.id.toolbar_title_text).invisible();
+//    }
 
     @Nullable
     @Override
@@ -94,6 +99,11 @@ public class FeatureBrandFragment extends BaseFragment {
                     setRecRequest(1);
                 }
             });
+            backImg = (ImageView) view.findViewById(R.id.toolbar_left_img);
+            backImg.setOnClickListener(v -> getActivity().onBackPressed());
+            searchImg = (ImageView) view.findViewById(R.id.toolbar_right_img);
+            searchImg.setOnClickListener(v -> startActivity(new Intent(getActivity(), SearchActivity.class)));
+            titleText = (TextView) view.findViewById(R.id.toolbar_title_text);
             adapter = new BrandGoodsAdapter(mDatas, this.getContext());
             layoutManager = new GridLayoutManager(this.getContext(), 2);
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -111,7 +121,7 @@ public class FeatureBrandFragment extends BaseFragment {
             mRootView.setAdapter(stringAdapter);
             IntentFilter refreshBrandGood = new IntentFilter(Const.INTENT_ACTION_REFRESH_FEATURE);
             this.getActivity().registerReceiver(refreh_brand_data, refreshBrandGood);
-            configToolbar();
+//            configToolbar();
             setRecRequest(1);
         }
         if (view.getParent() != null) {
@@ -172,7 +182,7 @@ public class FeatureBrandFragment extends BaseFragment {
             brand_name.setText((String) brand_info.get("brand_name"));
             brand_desc.setText((String) brand_info.get("brand_desc"));
             Netroid.displayAdImage(brand_info.get("brand_logo").toString(), brand_logo);
-            aQuery.id(R.id.toolbar_title_text).visible().text((CharSequence) brand_info.get(("brand_name")));
+            titleText.setText((CharSequence) brand_info.get(("brand_name")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -212,6 +222,7 @@ public class FeatureBrandFragment extends BaseFragment {
 
         }
     }
+
     private void resetData() {
         mDatas.clear();
     }

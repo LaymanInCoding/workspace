@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.widget.ScrollView;
 
 import com.witmoon.xmb.AppContext;
@@ -42,7 +43,7 @@ public class BitmapUtils {
         return BitmapFactory.decodeStream(isBm, null, null);
     }
 
-    public static Bitmap getCompressedImage(String srcPath,int max) {
+    public static Bitmap getCompressedImage(String srcPath, int max) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
@@ -63,14 +64,14 @@ public class BitmapUtils {
         }
         if (be <= 0)
             be = 1;
+        Log.e("SAMPLISIZE", be + "");
         newOpts.inSampleSize = be;//设置缩放比例
         //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
         return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
     }
 
-    public static Bitmap the_values_bitmap(String uil)
-    {
+    public static Bitmap the_values_bitmap(String uil) {
         Bitmap bmp = null;
         try {
             URL imgURL = new URL(uil);
@@ -81,7 +82,7 @@ public class BitmapUtils {
             BufferedInputStream bis = new BufferedInputStream(is);
 
             //下载之
-           bmp = BitmapFactory.decodeStream(bis);
+            bmp = BitmapFactory.decodeStream(bis);
 
             //关闭Stream
             bis.close();
@@ -94,12 +95,12 @@ public class BitmapUtils {
         }
         return bmp;
     }
+
     //把bitmap转化为图片并保存
-    public static String saveMyBitmap(Bitmap mBitmap, String bitName,Context context) throws IOException {
-        File f = new File(context.getExternalCacheDir()+bitName + ".jpg");
+    public static String saveMyBitmap(Bitmap mBitmap, String bitName, Context context) throws IOException {
+        File f = new File(context.getExternalCacheDir() + bitName + ".jpg");
         //判断当前文件是否存在-----
-        if (f.exists())
-        {
+        if (f.exists()) {
             f.delete();
         }
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f.getPath()));

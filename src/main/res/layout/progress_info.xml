@@ -1,50 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/no_process"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/dimen_10_dip"
+        android:text="暂无售后进度记录"
+        android:textColor="@color/app_main_deep"
+        android:visibility="gone"/>
+
     <LinearLayout
+        android:weightSum="9"
+        android:gravity="center_vertical"
         android:id="@+id/customer_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="10dp">
-
-        <LinearLayout
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="15dp">
-
-            <TextView
-                android:id="@+id/handle_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingLeft="5dp"
-                android:text="12:12:00" />
-
-        </LinearLayout>
-        <View
-            style="@style/vertical_divider"
-            android:background="@color/master_me" />
+        android:paddingBottom="@dimen/dimen_10_dip"
+        android:paddingTop="@dimen/dimen_10_dip">
 
         <TextView
+            android:layout_weight="4"
+            android:id="@+id/handle_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_5_dip"
+            android:textColor="@color/app_main_deep"
+            tools:text="12:12:00"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_toRightOf="@id/handle_time"
+            style="@style/vertical_divider"
+            android:background="@color/master_me"/>
+
+        <TextView
+            android:layout_weight="4"
+            android:layout_toRightOf="@id/divider"
             android:id="@+id/audit_type"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="您的订单已申请成功" />
+            android:textColor="@color/app_main_deep"
+            tools:text="您的订单已申请成功"/>
 
     </LinearLayout>
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:paddingTop="10dp" />
+        android:layout_below="@id/customer_progress"
+        android:background="@color/app_main_deep"
+        android:paddingTop="10dp"/>
 
-</LinearLayout>
+</RelativeLayout>

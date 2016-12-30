@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textSize="@dimen/dimen_30_dip"
-            android:textColor="#999999"
+            android:textColor="@color/app_main_deep"
             android:text="- 工具 -"/>
 
         <TextView
@@ -57,7 +57,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#a7a8a8"
+            android:textColor="@color/app_main_deep"
             android:layout_marginLeft="@dimen/dimen_20_dip"
             android:textSize="@dimen/dimen_28_dip"
             android:text="添加更多工具"/>

@@ -1,14 +1,17 @@
 package com.witmoon.xmb.activity.me.fragment;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.media.MediaBrowserServiceCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.activity.me.OrderType;
 import com.witmoon.xmb.activity.me.Out_ServiceActivity;
@@ -34,10 +37,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**退换货
+/**
+ * 退换货全部訂單
  * Created by de on 2015/11/24.
  */
-public class Out_PriceFragment extends BaseRecyclerViewFragmentV2{
+public class Out_PriceFragment extends BaseRecyclerViewFragmentV2 {
+    private static final int OUT_SERVICE_CODE = 0x110;
     Out_PriceAdapter mOut_PriceAdapter;
     private Out_ out;
     private Out_ mOut_;
@@ -45,8 +50,7 @@ public class Out_PriceFragment extends BaseRecyclerViewFragmentV2{
         @Override
         public void onReceive(Context context, Intent intent) {
             out = (Out_) intent.getSerializableExtra("order");
-            for (int i=0;i<mAdapter.getData().size();i++)
-            {
+            for (int i = 0; i < mAdapter.getData().size(); i++) {
                 mOut_ = (Out_) mAdapter.getData().get(i);
                 if (mOut_.getOrder_sn().equals(out.getOrder_sn())) {
                     mOut_PriceAdapter.getData().get(out.getPosion());
@@ -55,6 +59,7 @@ public class Out_PriceFragment extends BaseRecyclerViewFragmentV2{
             }
         }
     };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,22 +69,22 @@ public class Out_PriceFragment extends BaseRecyclerViewFragmentV2{
     @Override
     protected BaseRecyclerAdapter getListAdapter() {
         mOut_PriceAdapter = new Out_PriceAdapter(getActivity());
-            mOut_PriceAdapter.setOnItemButtonClickListener(new Out_PriceAdapter.OnItemButtonClickListener() {
-                @Override
-                public void onItemButtonClick(Out_ order, int position) {
-                    order.setPosion(position);
-                    order.setIs_(0);
-                    if (order.getRefund_status().equals("1")){
-                        Intent mIntent = new Intent(getActivity(), Out_ServiceActivity.class);
-                        mIntent.putExtra("order", order);
-                        startActivity(mIntent);
-                        return;
-                    }
-                    Bundle mb = new Bundle();
-                    mb.putSerializable("order", order);
-                    UIHelper.showSimpleBack(getActivity(), SimpleBackPage.JINDU, mb);
+        mOut_PriceAdapter.setOnItemButtonClickListener(new Out_PriceAdapter.OnItemButtonClickListener() {
+            @Override
+            public void onItemButtonClick(Out_ order, int position) {
+                order.setPosion(position);
+                order.setIs_(0);
+                if (order.getRefund_status().equals("1")) {
+                    Intent mIntent = new Intent(getActivity(), Out_ServiceActivity.class);
+                    mIntent.putExtra("order", order);
+                    startActivityForResult(mIntent, OUT_SERVICE_CODE);
+                    return;
                 }
-            });
+                Bundle mb = new Bundle();
+                mb.putSerializable("order", order);
+                UIHelper.showSimpleBack(getActivity(), SimpleBackPage.JINDU, mb);
+            }
+        });
         mOut_PriceAdapter.setOnItemTypeClickListener(new Out_PriceAdapter.OnItemTypeClickListener() {
             @Override
             public void OnItemTypeClick(Out_ order, int position) {
@@ -92,7 +97,7 @@ public class Out_PriceFragment extends BaseRecyclerViewFragmentV2{
                 } else if (order.getRefund_status().equals("3")) {
                     Intent mIntent = new Intent(getActivity(), Out_ServiceActivity.class);
                     mIntent.putExtra("order", order);
-                    startActivity(mIntent);
+                    startActivityForResult(mIntent, OUT_SERVICE_CODE);
                 } else if (order.getRefund_status().equals("5")) {
                     Intent mIntent = new Intent(getActivity(), Fill_info_Fragent.class);
                     mIntent.putExtra("order", order);
@@ -111,10 +116,12 @@ public class Out_PriceFragment extends BaseRecyclerViewFragmentV2{
         });
         return mOut_PriceAdapter;
     }
+
     @Override
     protected void requestData() {
         UserApi.all_orderList(mCurrentPage, getDefaultListener());
     }
+
     @Override
     protected ListEntity parseResponse(JSONObject json) throws Exception {
         JSONArray orderArray = json.getJSONArray("data");
@@ -128,12 +135,12 @@ public class Out_PriceFragment extends BaseRecyclerViewFragmentV2{
             public List<?> getList() {
                 return outs;
             }
+
             @Override
             public boolean hasMoreData() {
-                if(outs.size()==10)
-                {
+                if (outs.size() == 10) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
@@ -147,5 +154,15 @@ public class Out_PriceFragment extends BaseRecyclerViewFragmentV2{
 //        argument.putString(OrderDetailFragment.KEY_ORDER_TYPE, "");
 //        argument.putString(OrderDetailFragment.KEY_ORDER_ID, order.getOrder_id());
 //        UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ORDER_DETAIL, argument);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case OUT_SERVICE_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    refresh();
+                }
+        }
     }
 }

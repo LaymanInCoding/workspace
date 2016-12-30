@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.witmoon.xmb.ui.widget.EmptyLayout
+    android:id="@+id/empty_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    </com.witmoon.xmb.ui.widget.EmptyLayout>
+
+    <include layout="@layout/header_bean_use"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_40_dip">
+
+        <TextView
+            android:id="@+id/tip_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_40_dip"
+            android:text="@string/use_bean_tip"
+            android:textColor="@color/app_main_deep"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+
+        <EditText
+            android:layout_centerVertical="true"
+            android:id="@+id/use_bean_et"
+            android:layout_width="@dimen/dimen_150_dip"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tip_tv"
+            android:background="@null"
+            android:inputType="number"
+            android:paddingLeft="@dimen/dimen_20_dip"
+            android:paddingRight="@dimen/dimen_10_dip"
+            android:textColor="@color/app_main_deep"
+            android:textColorHint="#aaaaaa"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/convert_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/use_bean_et"
+            android:textColor="#ff7162"
+            tools:text="(可抵扣5.20)"/>
+
+        <View
+            android:layout_marginTop="@dimen/dimen_5_dip"
+            style="@style/horizontal_divider"
+            android:layout_alignLeft="@id/use_bean_et"
+            android:layout_below="@id/use_bean_et"
+            android:layout_marginRight="@dimen/dimen_40_dip"/>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/submit_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30_dip"
+        android:layout_marginRight="@dimen/dimen_30_dip"
+        android:layout_marginTop="@dimen/dimen_60_dip"
+        android:height="@dimen/dimen_66_dip"
+        android:background="@drawable/bg_button_radiu26"
+        android:gravity="center"
+        android:text="确认抵扣"
+        android:textColor="#f3f3f3"/>
+
+</LinearLayout>

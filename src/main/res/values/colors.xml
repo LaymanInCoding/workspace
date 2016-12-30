@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="app_main_deep">#575757</color><!--字体深色-->
+    <color name="app_main_thin">#8e8e8e</color><!--字体浅色-->
     <color name="white">#FFFFFF</color><!--烟白色 -->
     <color name="black">#000000</color><!--烟白色 -->
     <color name="grey">#adadad</color><!--淡灰色 -->
