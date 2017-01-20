@@ -10,10 +10,10 @@ android {
         applicationId "com.witmoon.xmb"
         minSdkVersion 16
         targetSdkVersion 24
-//        versionCode 42
-        versionCode 43
-//        versionName "4.64"
-        versionName "4.7"
+//        versionCode 45
+        versionCode 46
+//        versionName "4.81"
+        versionName "4.82"
         multiDexEnabled true
     }
     compileOptions {
@@ -49,21 +49,22 @@ android {
         安智市场 {}
         优亿市场 {}
         应用汇 {}
-        联想乐 {}
+//        联想乐 {}
         联想沃 {}
         魅族 {}
         木蚂蚁 {}
         搜狗手机助手 {}
-        应用酷 {}
-        历趣市场 {}
-        蘑菇市场 {}
+//        应用酷 {}
+//        历趣市场 {}
+//        蘑菇市场 {}
         冒泡网 {}
-        苏宁 {}
+//        苏宁 {}
         机锋 {}
-        搞趣网 {}
-        wifi万能钥匙 {}
-        泰康人寿 {}
-        地推0603 {}
+//        搞趣网 {}
+//        wifi万能钥匙 {}
+//        泰康人寿 {}
+//        地推0603 {}
+
     }
 
     productFlavors.all { flavor ->
@@ -103,6 +104,9 @@ dependencies {
     compile files('libsbammsdk.jar')
     compile files('libs/org.apache.http.legacy.jar')
     compile files('jpush-android-2.1.9.jar')
+
+    compile files('libs/tbs_sdk_thirdapp_v2.2.0.1096_36549_sharewithdownload_withoutGame_obfs_20160830_211645.jar')
+
     compile project(':pickerview')
     compile 'com.nineoldandroids:library:2.4.0'
     //
@@ -136,6 +140,7 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
 }
 
 bugly {
