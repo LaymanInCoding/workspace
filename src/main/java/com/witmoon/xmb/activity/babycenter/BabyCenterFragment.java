@@ -25,13 +25,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.babycenter.Adapter.DayNumberAdapter;
 import com.witmoon.xmb.activity.babycenter.Adapter.RecGoodsAdapter;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
@@ -256,6 +259,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
                         linearLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                UmengStatic.registStat(getActivity(),"Mengbao5");
+
                                 Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                                 try {
                                     intent.putExtra("url", jsonObject.getString("toolkit_url"));
@@ -357,7 +362,7 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
 
             @Override
             public void onSuccess(JSONObject response) {
-                Log.e("response", response.toString());
+                Logger.json(response.toString());
                 try {
                     btype = response.getString("type");
                 } catch (JSONException e) {
@@ -521,6 +526,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    UmengStatic.registStat(getActivity(),"Mengbao6");
+
                     Intent intent = new Intent(getActivity(), PostDetailActivity.class);
                     try {
                         intent.putExtra("post_id", Integer.parseInt(jsonObject.getString("post_id")));
@@ -570,6 +577,7 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        UmengStatic.registStat(getActivity(),"Mengbao4");
                         Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                         try {
                             intent.putExtra("url", jsonObject.getString("url"));
@@ -603,6 +611,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
 
         @Override
         public void onClick(View v) {
+            UmengStatic.registStat(getActivity(),"Mengbao7");
+
             try {
                 if (null != jsonObject.get("ad_type")) {
                     int type = Integer.parseInt(jsonObject.getString("ad_type"));
@@ -675,6 +685,7 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
         baby_born_status_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(getActivity(),"Mengbao1");
                 if (AppContext.instance().isLogin()) {
 //                    startActivity(new Intent(getActivity(),BabyGuideFragment.class));
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ChildStatus);
@@ -687,6 +698,7 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
         in_pregnant_status_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(getActivity(),"Mengbao0");
                 if (AppContext.instance().isLogin()) {
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.OverdueSetting);
                 } else {
@@ -868,6 +880,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
         baby_record_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(getActivity(),"Mengbao3");
+
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.BabyRecord);
             }
         });
@@ -875,6 +889,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
         knowledge_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(getActivity(),"Mengbao3");
+
                 Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                 intent.putExtra("url", ApiHelper.BASE_URL + "discovery/knowledge_index");
                 intent.putExtra("title", "知识库");
@@ -885,6 +901,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
         eatable_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(getActivity(),"Mengbao3");
+
                 Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                 intent.putExtra("url", ApiHelper.BASE_URL + "safefood/category");
                 intent.putExtra("title", "能不能吃");
@@ -895,6 +913,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
         treasure_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(getActivity(),"Mengbao3");
+
                 Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                 intent.putExtra("url", "http://www.xiaomabao.com/tools/jewel.html");
                 intent.putExtra("title", "百宝箱");
@@ -905,6 +925,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
         add_tools.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(getActivity(),"Mengbao5");
+
                 Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                 intent.putExtra("url", ApiHelper.BASE_URL + "mengbao/toolkit");
                 intent.putExtra("title", "添加工具到首页");
@@ -914,6 +936,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
         add_tools2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(getActivity(),"Mengbao5");
+
                 Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                 intent.putExtra("url", ApiHelper.BASE_URL + "mengbao/toolkit");
                 intent.putExtra("title", "添加工具到首页");

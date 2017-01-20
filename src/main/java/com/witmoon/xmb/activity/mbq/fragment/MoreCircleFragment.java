@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.mbq.activity.CircleActivity;
 import com.witmoon.xmb.activity.mbq.activity.SearchCircle;
 import com.witmoon.xmb.activity.mbq.adapter.CircleAdapter;
@@ -53,6 +54,8 @@ public class MoreCircleFragment extends BaseFragment implements  CircleCategoryA
             search_circleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    UmengStatic.registStat(getActivity(),"MoreCircle0");
+
                     startActivity(new Intent(getActivity(), SearchCircle.class));
                     getActivity().overridePendingTransition(R.anim.pop_right_in, R.anim.pop_right_out);
                 }
@@ -74,6 +77,8 @@ public class MoreCircleFragment extends BaseFragment implements  CircleCategoryA
             circleAdapter.setOnItemClickListener(new CircleAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(CircleCategory circleCategory) {
+                    UmengStatic.registStat(getActivity(),"MoreCircle2");
+
                     Intent intent = new Intent(getActivity(), CircleActivity.class);
                     intent.putExtra("circle_id", circleCategory.getCircle_id());
                     intent.putExtra("circle_logo",circleCategory.getCircle_logo());
@@ -85,6 +90,8 @@ public class MoreCircleFragment extends BaseFragment implements  CircleCategoryA
 
                 @Override
                 public void onItemButtonClick(int circle_id) {
+                    UmengStatic.registStat(getActivity(),"MoreCircle3");
+
                     XmbUtils.joinCircle(getActivity(), circle_id, new Listener<JSONObject>() {
                         @Override
                         public void onSuccess(JSONObject response) {
@@ -173,6 +180,8 @@ public class MoreCircleFragment extends BaseFragment implements  CircleCategoryA
 
     @Override
     public void onItemButtonClick(int position) {
+        UmengStatic.registStat(getActivity(),"MoreCircle1");
+
         circleCategoryAdapter.notifyDataSetChanged();
         circleCurrent.clear();
         circleCurrent.addAll(circleList.get(position));

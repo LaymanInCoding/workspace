@@ -23,6 +23,8 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.TbsListener;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.witmoon.xmb.api.ApiHelper;
@@ -99,6 +101,40 @@ public class AppContext extends BaseApplication {
         //Bugly会为您检测使用环境并自动完成配置
         CrashReport.initCrashReport(AppContext.this, "900007590", false);
         mDownloadPath = "/" + getString(R.string.app_name) + "/download";
+
+        //初始化tbs x5 webview
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                // TODO Auto-generated method stub
+                Log.e("app", " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+                // TODO Auto-generated method stub
+
+            }
+        };
+        QbSdk.setTbsListener(new TbsListener() {
+            @Override
+            public void onDownloadFinish(int i) {
+                Log.d("app","onDownloadFinish");
+            }
+
+            @Override
+            public void onInstallFinish(int i) {
+                Log.d("app","onInstallFinish");
+            }
+
+            @Override
+            public void onDownloadProgress(int i) {
+                Log.d("app","onDownloadProgress:"+i);
+            }
+        });
+
+        QbSdk.initX5Environment(getApplicationContext(),  cb);
     }
 
     public String getCachePath() {
@@ -121,6 +157,9 @@ public class AppContext extends BaseApplication {
         try {
             String dbPath = initDatabaseFromLocal();
             mXmbDB = XmbDB.getInstance(this, dbPath);
+            if (!mXmbDB.tabIsExist("search_ser")){
+                mXmbDB.addServiceTable();
+            }
             if (!mXmbDB.tabIsExist("search")) {
                 //可能升级数据库偏差   ----   所以换种思路
                 mXmbDB.addTable();

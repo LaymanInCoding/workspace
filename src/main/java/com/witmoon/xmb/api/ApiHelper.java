@@ -26,13 +26,13 @@ public class ApiHelper {
     public static final String BASE_URL = "https://api.xiaomabao.com/";
     public static final String GOODS_LINK_MODE = "https://www.xiaomabao.com/goods-%s.html";
     public static final String MARKET_LINK_MODE = "https://www.xiaomabao.com/topic.php?topic_id=%s";
-
-//    public static final String API_URL = "http://192.168.22.222/?url=%s";
-//    public static final String MBQZ_API_URL = "http://192.168.22.222/?url=%s";
-//    public static final String BASE_URL = "http://192.168.22.222/";
-//    public static final String GOODS_LINK_MODE = "http://192.168.22.222/goods-%s.html";
-//    public static final String MARKET_LINK_MODE = "http://192.168.22.222/topic.php?topic_id=%s";
 //
+//    public static final String API_URL = "http://192.168.10.202/?url=%s";
+//    public static final String MBQZ_API_URL = "http://192.168.10.202/?url=%s";
+//    public static final String BASE_URL = "http://192.168.10.202/";
+//    public static final String GOODS_LINK_MODE = "http://192.168.10.202/goods-%s.html";
+//    public static final String MARKET_LINK_MODE = "http://192.168.10.202/topic.php?topic_id=%s";
+
 //    public static final String API_URL = "http://192.168.11.36/mobile/?url=%s";
 //    public static final String MBQZ_API_URL = "http://192.168.11.36/mobile/?url=%s";
 //    public static final String BASE_URL = "http://192.168.11.36/";

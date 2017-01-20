@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.api.Netroid;
 
@@ -52,7 +53,9 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.ViewHold
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    CommodityDetailActivity.start(mContext, (String) map.get("goods_id"));
+                UmengStatic.registStat( mContext , "MaBaoFeatures1");
+
+                CommodityDetailActivity.start(mContext, (String) map.get("goods_id"));
             }
         });
     }

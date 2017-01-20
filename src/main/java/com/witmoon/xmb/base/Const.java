@@ -32,7 +32,7 @@ public class Const {
     public static final String INTENT_ACTION_LOGOUT = "com.witmoon.xmb.LOGOUT";
     public static final String INTENT_ACTION_LOGIN = "com.witmoon.xmb.LOGIN";
     public static final String INTENT_ACTION_REG_PUSH = "com.witmoon.xmb.REG_PUSH";
-    public static final String INTENT_ACTION_BABY= "com.witmoon.xmb.baby";
+    public static final String INTENT_ACTION_BABY = "com.witmoon.xmb.baby";
     public static final String INTENT_ACTION_EXIT_APP = "com.witmoon.xbm.EXIT_APP";
     public static final String INTENT_ACTION_UPDATA_CAR = "com.witmoon.xbm.updata.CAR";
     public static final String INTENT_ACTION_MAIN_TAB = "com.witmoon.xmb.TAB_CHANGE";
@@ -44,18 +44,20 @@ public class Const {
 
     public static final String INTENT_ACTION_REFRESH_BEAN = "send_bean_refresh";
 
+//    public static final String INTENT_ACTION_SERVICE_REFRESH = "service_refresh";
+
 
     public static final String BABY_SEX = "baby_sex";
 
 
-    public static String mood_desc_text[] = {"开心","窃喜","萌笑","害羞","困了","花痴","加油","委屈","伤心","棒棒"};
-    public static int mood_img[] = {R.mipmap.mood0,R.mipmap.mood1,R.mipmap.mood2,R.mipmap.mood3,R.mipmap.mood4,R.mipmap.mood5,R.mipmap.mood6,R.mipmap.mood7,R.mipmap.mood8,R.mipmap.mood9};
-    public static int mood_active_img[] = {R.mipmap.mood0_image,R.mipmap.mood1_image,R.mipmap.mood2_image,R.mipmap.mood3_image,R.mipmap.mood4_image,R.mipmap.mood5_image,R.mipmap.mood6_image,
-            R.mipmap.mood7_image,R.mipmap.mood8_image,R.mipmap.mood9_image};
-    public static String weather_desc_text[] = {"晴天","冰雹","多云","雨水","雷电","多云转晴","雾霾","下雪"};
-    public static int weather_img[] = {R.mipmap.mweather0,R.mipmap.mweather1,R.mipmap.mweather2,R.mipmap.mweather3,R.mipmap.mweather4,R.mipmap.mweather5,R.mipmap.mweather6,R.mipmap.mweather7};
-    public static int weather_active_img[] = {R.mipmap.mweather0_image,R.mipmap.mweather1_image,R.mipmap.mweather2_image,R.mipmap.mweather3_image,R.mipmap.mweather4_image,R.mipmap.mweather5_image
-            ,R.mipmap.mweather6_image, R.mipmap.mweather7_image};
-    public static int weather_icon_img[] = {R.mipmap.weather_icon1,R.mipmap.weather_icon2,R.mipmap.weather_icon3,R.mipmap.weather_icon4,R.mipmap.weather_icon5,R.mipmap.weather_icon6
-            ,R.mipmap.weather_icon7, R.mipmap.weather_icon8};
+    public static String mood_desc_text[] = {"开心", "窃喜", "萌笑", "害羞", "困了", "花痴", "加油", "委屈", "伤心", "棒棒"};
+    public static int mood_img[] = {R.mipmap.mood0, R.mipmap.mood1, R.mipmap.mood2, R.mipmap.mood3, R.mipmap.mood4, R.mipmap.mood5, R.mipmap.mood6, R.mipmap.mood7, R.mipmap.mood8, R.mipmap.mood9};
+    public static int mood_active_img[] = {R.mipmap.mood0_image, R.mipmap.mood1_image, R.mipmap.mood2_image, R.mipmap.mood3_image, R.mipmap.mood4_image, R.mipmap.mood5_image, R.mipmap.mood6_image,
+            R.mipmap.mood7_image, R.mipmap.mood8_image, R.mipmap.mood9_image};
+    public static String weather_desc_text[] = {"晴天", "冰雹", "多云", "雨水", "雷电", "多云转晴", "雾霾", "下雪"};
+    public static int weather_img[] = {R.mipmap.mweather0, R.mipmap.mweather1, R.mipmap.mweather2, R.mipmap.mweather3, R.mipmap.mweather4, R.mipmap.mweather5, R.mipmap.mweather6, R.mipmap.mweather7};
+    public static int weather_active_img[] = {R.mipmap.mweather0_image, R.mipmap.mweather1_image, R.mipmap.mweather2_image, R.mipmap.mweather3_image, R.mipmap.mweather4_image, R.mipmap.mweather5_image
+            , R.mipmap.mweather6_image, R.mipmap.mweather7_image};
+    public static int weather_icon_img[] = {R.mipmap.weather_icon1, R.mipmap.weather_icon2, R.mipmap.weather_icon3, R.mipmap.weather_icon4, R.mipmap.weather_icon5, R.mipmap.weather_icon6
+            , R.mipmap.weather_icon7, R.mipmap.weather_icon8};
 }

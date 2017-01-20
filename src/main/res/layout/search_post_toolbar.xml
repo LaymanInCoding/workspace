@@ -16,6 +16,18 @@
         android:background="@drawable/bg_nav"
         android:paddingRight="12dp">
 
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/toolbar_left_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/toolbar_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <EditText
             android:id="@+id/edit_text"
             android:layout_width="match_parent"

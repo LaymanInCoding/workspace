@@ -23,6 +23,7 @@ import com.duowan.mobile.netroid.NetroidError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.mabao.adapter.Duty_freeAdapter;
 import com.witmoon.xmb.activity.shopping.adapter.CatAdapter;
@@ -74,6 +75,8 @@ public class Duty_freeFragment extends BaseFragment {
             cat_adapter.setOnItemClickListener(new CatAdapter.OnItemClickListener() {
                 @Override
                 public void onItemnClick(Map<String, String> map) {
+                    UmengStatic.registStat(getActivity(),"FreeStore2");
+
                     Bundle bundle = new Bundle();
                     bundle.putString("cat_id",map.get("id"));
                     bundle.putString("is_type","1");
@@ -141,6 +144,8 @@ public class Duty_freeFragment extends BaseFragment {
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        UmengStatic.registStat(getActivity(),"FreeStore1");
+
                         try {
                             CommodityDetailActivity.start(getActivity(), goodsObject.getString("goods_id"));
                         } catch (JSONException e) {
@@ -270,6 +275,8 @@ public class Duty_freeFragment extends BaseFragment {
         mAutoScrollViewPager.setOnPageClickListener(new AutoScrollViewPager.OnPageClickListener() {
             @Override
             public void onPageClick(AutoScrollViewPager pager, int position) {
+                UmengStatic.registStat(getActivity(),"FreeStore0");
+
                 if (null != advertisements.get(position).get("ad_type")) {
                     int type = Integer.parseInt(advertisements.get(position).get("ad_type"));
                     //专题  2商品 3网页 4团购 5帖子

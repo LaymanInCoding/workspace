@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.me.OrderTab;
 import com.witmoon.xmb.activity.me.OrderType;
 import com.witmoon.xmb.base.BaseFragment;
@@ -55,18 +56,30 @@ public class MyOrderFragment extends BaseFragment {
     }
 
     private void handleInitPage() {
-        if (mInitType == null) return;
+        if (mInitType == null){
+            UmengStatic.registStat(getActivity(),"MyOrder0");
+
+            return;
+        }
         switch (mInitType) {
             case TYPE_WAITING_FOR_PAYMENT:
                 mViewPager.setCurrentItem(1);
+                UmengStatic.registStat(getActivity(),"MyOrder1");
+
                 break;
             case TYPE_WAITING_FOR_SENDING:
+                UmengStatic.registStat(getActivity(),"MyOrder2");
+
                 mViewPager.setCurrentItem(2);
                 break;
             case TYPE_WAITING_FOR_RECEIVING:
+                UmengStatic.registStat(getActivity(),"MyOrder3");
+
                 mViewPager.setCurrentItem(3);
                 break;
             case TYPE_FINISHED:
+                UmengStatic.registStat(getActivity(),"MyOrder4");
+
                 mViewPager.setCurrentItem(4);
                 break;
         }

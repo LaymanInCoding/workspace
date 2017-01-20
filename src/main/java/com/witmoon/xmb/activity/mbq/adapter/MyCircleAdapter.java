@@ -27,8 +27,7 @@ public class MyCircleAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
         void onItemMessageClick();
     }
 
-    public void setOnItemClickListener(
-            OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 

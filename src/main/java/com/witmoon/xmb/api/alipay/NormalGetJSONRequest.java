@@ -37,6 +37,10 @@ public class NormalGetJSONRequest extends Request<JSONObject> {
     public NormalGetJSONRequest(String url, Listener<JSONObject> listener) {
         super(Method.GET, url, listener);
         mParamMap = new HashMap<>();
+        if (BuildConfig.ENABLE_DEBUG) {
+            Log.e("url", url);
+            Log.e("map", mParamMap.toString());
+        }
     }
 
     /**

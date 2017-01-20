@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.utils.L;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.me.OrderType;
 import com.witmoon.xmb.activity.me.Out_ServiceActivity;
@@ -115,14 +116,20 @@ public class OrderAdapter extends BaseRecyclerAdapter {
                         orderContentNew.setmGoodsList(order.getGoodsList());
                         orderContentNew.setOrder_sn(order.getSerialNo());
                         if (order.getOrderRefundType().equals("3") || order.getOrderRefundType().equals("1")) {
+                            UmengStatic.registStat(mContext,"MyOrder8");
+
                             Intent mIntent = new Intent(mContext, Out_ServiceActivity.class);
                             mIntent.putExtra("order", orderContentNew);
                             mContext.startActivity(mIntent);
                         } else if (order.getOrderRefundType().equals("5")) {
+                            UmengStatic.registStat(mContext,"MyOrder10");
+
                             Intent mIntent = new Intent(mContext, Fill_info_Fragent.class);
                             mIntent.putExtra("order", orderContentNew);
                             mContext.startActivity(mIntent);
                         } else {
+                            UmengStatic.registStat(mContext,"MyOrder7");
+
                             Bundle mb = new Bundle();
                             mb.putSerializable("order", orderContentNew);
                             UIHelper.showSimpleBack(mContext, SimpleBackPage.JINDU, mb);
@@ -145,6 +152,8 @@ public class OrderAdapter extends BaseRecyclerAdapter {
             oHolder.detail_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    UmengStatic.registStat(mContext,"MyOrder6");
+
                     Bundle argument = new Bundle();
                     argument.putString(OrderDetailFragment.KEY_ORDER_TYPE, order.getOrderType());
                     argument.putString(OrderDetailFragment.KEY_ORDER_SN, order.getSerialNo());
@@ -161,7 +170,10 @@ public class OrderAdapter extends BaseRecyclerAdapter {
             List<Map<String, String>> goodsList = order.getGoodsList();
             for (Map<String, String> goodsMap : goodsList) {
                 View view = inflater.inflate(R.layout.item_order_goods, oHolder.container, false);
-                view.setOnClickListener(v -> CommodityDetailActivity.start(mContext, goodsMap.get("goods_id")));
+                view.setOnClickListener(v -> {
+                    UmengStatic.registStat(mContext,"MyOrder5");
+
+                    CommodityDetailActivity.start(mContext, goodsMap.get("goods_id"));});
                 ImageView imageView = (ImageView) view.findViewById(R.id.goods_image);
                 Netroid.displayBabyImage(goodsMap.get("goods_img"), imageView);
                 TextView title = (TextView) view.findViewById(R.id.goods_title);
@@ -221,6 +233,8 @@ public class OrderAdapter extends BaseRecyclerAdapter {
             oHolder.split_detail_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    UmengStatic.registStat(mContext,"MyOrder6");
+
                     Bundle argument = new Bundle();
                     argument.putString(OrderDetailFragment.KEY_ORDER_TYPE, order.getOrderType());
                     argument.putString(OrderDetailFragment.KEY_ORDER_SN, order.getSerialNo());
@@ -259,6 +273,8 @@ public class OrderAdapter extends BaseRecyclerAdapter {
                     refund_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            UmengStatic.registStat(mContext,"MyOrder8");
+
                             Intent mIntent = new Intent(mContext, Out_ServiceActivity.class);
                             mIntent.putExtra("order", orderContentNew1);
                             mContext.startActivity(mIntent);
@@ -267,6 +283,8 @@ public class OrderAdapter extends BaseRecyclerAdapter {
                     detail_text.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            UmengStatic.registStat(mContext,"MyOrder6");
+
                             Bundle argument = new Bundle();
                             try {
                                 argument.putString(OrderDetailFragment.KEY_ORDER_TYPE, order.getOrderType());
@@ -292,7 +310,7 @@ public class OrderAdapter extends BaseRecyclerAdapter {
                     }
                     ((TextView) view.findViewById(R.id.total_price)).setText(child_order.getString("total_fee"));
                     ((TextView) view.findViewById(R.id.child_serial_no)).setText("订单号：" + child_order.getString("order_sn"));
-                    ((TextView) view.findViewById(R.id.order_type)).setText(OrderType.getType(type).getTitle());
+                    ((TextView) view.findViewById(R.id.order_type)).setText(OrderType.getType(child_order.getString("order_status")).getTitle());
                     oHolder.splitContainer.addView(view);
                     LinearLayout childGoodsContainerView = (LinearLayout) view.findViewById(R.id.child_container);
                     JSONArray goodsList = child_order.getJSONArray("goods_list");

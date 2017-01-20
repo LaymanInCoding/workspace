@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_marginBottom="@dimen/dimen_16_dip"
-    android:layout_height="@dimen/dimen_370_dip">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_370_dip"
+                android:layout_marginBottom="@dimen/dimen_16_dip"
+                android:background="@color/white">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_210_dip"
         android:layout_marginBottom="@dimen/space_8"
         android:scaleType="centerCrop"
-        android:src="@mipmap/me_bg" />
+        android:src="@mipmap/me_bg"/>
 
-    <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/shop_logo"
         android:layout_width="@dimen/dimen_160_dip"
         android:layout_height="@dimen/dimen_160_dip"
@@ -22,7 +23,7 @@
         android:src="@mipmap/me_bg"
         app:riv_border_color="#efefef"
         app:riv_border_width="0.5dip"
-        app:riv_corner_radius="4dip" />
+        app:riv_corner_radius="4dip"/>
 
     <TextView
         android:id="@+id/shop_name"
@@ -32,13 +33,13 @@
         android:layout_marginRight="@dimen/dimen_33_dip"
         android:layout_marginTop="@dimen/dimen_70_dip"
         android:layout_toRightOf="@+id/shop_logo"
-        android:text="鸟语花香"
         android:shadowColor="#ff000000"
-        android:shadowRadius="1"
         android:shadowDx="2"
         android:shadowDy="2"
+        android:shadowRadius="1"
+        android:text="鸟语花香"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_16" />
+        android:textSize="@dimen/text_size_16"/>
 
 
     <TextView
@@ -49,13 +50,13 @@
         android:layout_marginLeft="@dimen/dimen_33_dip"
         android:layout_marginTop="@dimen/dimen_14_dip"
         android:layout_toRightOf="@+id/shop_logo"
-        android:text="地址："
         android:shadowColor="#ff000000"
-        android:shadowRadius="1"
         android:shadowDx="2"
         android:shadowDy="2"
+        android:shadowRadius="1"
+        android:text="地址："
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_16" />
+        android:textSize="@dimen/text_size_16"/>
 
     <TextView
         android:id="@+id/shop_nearby_subway"
@@ -67,11 +68,11 @@
         android:layout_toRightOf="@+id/shop_name_label"
         android:maxLines="2"
         android:shadowColor="#ff000000"
-        android:shadowRadius="1"
         android:shadowDx="2"
         android:shadowDy="2"
+        android:shadowRadius="1"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_12" />
+        android:textSize="@dimen/text_size_12"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,25 +85,27 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_79_dip"
             android:drawableLeft="@mipmap/dizhi"
-            android:paddingLeft="@dimen/dimen_16_dip"
-            android:paddingRight="@dimen/dimen_16_dip"
             android:drawablePadding="@dimen/dimen_34_dip"
             android:gravity="center_vertical"
-            android:text="" />
+            android:paddingLeft="@dimen/dimen_16_dip"
+            android:paddingRight="@dimen/dimen_16_dip"
+            android:text=""/>
 
         <View
-            style="@style/horizontal_divider" />
+            style="@style/horizontal_divider"/>
+
         <TextView
             android:id="@+id/shop_phone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_79_dip"
             android:drawableLeft="@mipmap/dianhua"
-            android:paddingLeft="@dimen/dimen_16_dip"
-            android:paddingRight="@dimen/dimen_16_dip"
             android:drawablePadding="@dimen/dimen_27_dip"
             android:gravity="center_vertical"
-            android:text="" />
+            android:paddingLeft="@dimen/dimen_16_dip"
+            android:paddingRight="@dimen/dimen_16_dip"
+            android:text=""/>
+
         <View
-            style="@style/horizontal_divider" />
+            style="@style/horizontal_divider"/>
     </LinearLayout>
 </RelativeLayout>

@@ -6,7 +6,9 @@ import android.view.View;
 
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.me.OrderType;
 import com.witmoon.xmb.activity.me.adapter.OrderAdapter;
 import com.witmoon.xmb.activity.shoppingcart.OrderSubmitSuccessActivity;
@@ -36,6 +38,7 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 {
     private String mOrderType;
 
     public static OrderFragment newInstance(String type) {
+
         OrderFragment orderFragment = new OrderFragment();
         Bundle bundle = new Bundle();
         bundle.putString(TYPE_KEY, type);
@@ -61,11 +64,15 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 {
             @Override
             public void onItemButtonClick(Order order) {
                 if (OrderType.getType(order.getOrderType()) == OrderType.TYPE_FINISHED) {
+                    UmengStatic.registStat(getActivity(),"9");
+
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("ORDER", order);
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.GOODS_EVALUATE, bundle);
                 } else if (OrderType.getType(order.getOrderType()) == OrderType
                         .TYPE_WAITING_FOR_PAYMENT) {
+                    UmengStatic.registStat(getActivity(),"MyOrder11");
+
                     JSONObject orderInfo = new JSONObject();
                     try {
                         orderInfo.put("order_sn", order.getSerialNo());
@@ -80,6 +87,8 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 {
                     }
                 } else if (OrderType.getType(order.getOrderType()) == OrderType
                         .TYPE_WAITING_FOR_RECEIVING) {
+                    UmengStatic.registStat(getActivity(),"MyOrder12");
+
                     UserApi.affirm_received(order.getId(), new Listener<JSONObject>() {
                         @Override
                         public void onPreExecute() {
@@ -131,7 +140,7 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 {
     @Override
     protected ListEntity parseResponse(final JSONObject json) {
         JSONArray orderArray = null;
-        Log.e("ORderArray", json.toString());
+        Logger.json(json.toString());
         try {
             orderArray = json.getJSONArray("data");
         } catch (JSONException e) {

@@ -12,9 +12,6 @@
         android:id="@+id/msg_null"
         android:textSize="14sp"
         android:textColor="#666666"
-        android:text="当前无未读消息，点击查看以前消息" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#F3F3F3"/>
+        android:text="已经全部加载完毕" />
+
 </LinearLayout>

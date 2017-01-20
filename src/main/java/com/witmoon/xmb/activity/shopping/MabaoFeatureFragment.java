@@ -25,6 +25,7 @@ import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.mbq.adapter.MyCircleAdapter;
 import com.witmoon.xmb.activity.shopping.adapter.CatAdapter;
@@ -72,6 +73,8 @@ public class MabaoFeatureFragment extends BaseFragment {
             cat_adapter.setOnItemClickListener(new CatAdapter.OnItemClickListener() {
                 @Override
                 public void onItemnClick(Map<String, String> map) {
+                    UmengStatic.registStat(getActivity(),"MaBaoFeatures0");
+
                     Bundle bundle = new Bundle();
                     bundle.putString("cat_id", map.get("id"));
                     bundle.putString("cat_type", map.get("type"));

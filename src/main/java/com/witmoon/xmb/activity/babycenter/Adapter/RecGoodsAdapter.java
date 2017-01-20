@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.api.Netroid;
 import org.json.JSONException;
@@ -41,6 +42,8 @@ public class RecGoodsAdapter extends RecyclerView.Adapter<RecGoodsAdapter.RGView
         try {
             holder.container.setOnClickListener(v -> {
                 try {
+                    UmengStatic.registStat(mContext,"Mengbao7");
+
                     CommodityDetailActivity.start(mContext, data.getString("goods_id"));
                 } catch (JSONException e) {
                     e.printStackTrace();

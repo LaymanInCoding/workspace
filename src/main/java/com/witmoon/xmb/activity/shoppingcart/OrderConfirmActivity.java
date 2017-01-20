@@ -372,7 +372,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 JSONObject jsonObject = response.getJSONObject("data").getJSONObject("order_info");
                 if (jsonObject.getDouble("order_amount") == 0.00) {
                     Intent intent = new Intent(OrderConfirmActivity.this, OrderPaySuccessActivity.class);
-                    intent.putExtra("ORDER_ID", jsonObject.getString("order_id"));
+                    intent.putExtra("ORDER_SN", jsonObject.getString("order_sn"));
                     startActivity(intent);
                 } else {
                     OrderSubmitSuccessActivity.startActivity(OrderConfirmActivity.this, jsonObject.toString());

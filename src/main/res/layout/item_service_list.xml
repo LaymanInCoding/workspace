@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_152_dip"
+        android:layout_marginLeft="@dimen/dimen_26_dip">
+
+        <TextView
+            android:layout_marginRight="@dimen/dimen_26_dip"
+            android:id="@+id/product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_26_dip"
+            android:text=""
+            android:textColor="#666666"/>
+
+        <com.witmoon.xmb.util.MoneyTextView
+            android:id="@+id/product_shop_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dimen_22_dip"
+            android:text=""
+            android:textColor="#e67474"
+            android:textSize="@dimen/dimen_30_dip"/>
+
+        <com.witmoon.xmb.util.MoneyTextView
+            android:layout_marginRight="@dimen/dimen_26_dip"
+            android:id="@+id/product_market_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/dimen_22_dip"
+            android:text=""
+            android:textColor="#a9a9a9"
+            android:textSize="@dimen/dimen_24_dip"/>
+
+        <View
+            android:id="@+id/split_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1_dip"
+            android:layout_alignParentBottom="true"
+            android:background="#dddddd"/>
+    </RelativeLayout>
+</LinearLayout>

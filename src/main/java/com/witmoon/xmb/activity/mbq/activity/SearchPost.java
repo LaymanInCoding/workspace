@@ -25,39 +25,30 @@ import android.widget.TextView;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.orhanobut.logger.Logger;
-import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
-import com.witmoon.xmb.activity.common.SearchActivity;
-import com.witmoon.xmb.activity.goods.SearchResultListActivity;
+
 import com.witmoon.xmb.activity.mbq.adapter.PostAdapter;
 import com.witmoon.xmb.api.CircleApi;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.Const;
-import com.witmoon.xmb.model.circle.CircleCategory;
 import com.witmoon.xmb.model.circle.CirclePost;
 import com.witmoon.xmb.ui.FlowTagLayout;
 import com.witmoon.xmb.ui.TagAdapter;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
 import com.witmoon.xmb.util.CommonUtil;
 import com.witmoon.xmb.util.SharedPreferencesUtil;
-import com.witmoon.xmb.util.SystemBarTintManager;
-import com.witmoon.xmb.util.XmbUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-import cn.easydone.swiperefreshendless.EndlessRecyclerOnScrollListener;
 import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 
 
-public class SearchPost extends AppCompatActivity {
-    private EndlessRecyclerOnScrollListener recyclerViewScrollListener;
-    private LinearLayoutManager layoutManager;
-    private HeaderViewRecyclerAdapter stringAdapter;
+public class SearchPost extends BaseActivity {
+
     private EmptyLayout mEmptyLayout;
     private PostAdapter adapter;
     private ArrayList<CirclePost> mDatas = new ArrayList<>();
@@ -67,64 +58,16 @@ public class SearchPost extends AppCompatActivity {
     private FlowTagLayout mBGAFlowLayout;
     private TagAdapter mAdapter;
     private View tagContainer;
-    private RecyclerView mRootView;
     private ArrayList<String> search_keywords = new ArrayList<>();
 
 
-    private void createLoadMoreView() {
-        removeFooterView();
-        View loadMoreView = LayoutInflater
-                .from(this)
-                .inflate(R.layout.view_load_more, mRootView, false);
-        stringAdapter.addFooterView(loadMoreView);
-    }
-
-    private void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
-
-    public void setTitleColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintDrawable(getResources().getDrawable(R.drawable.bg_status));
-        }
-    }
-
-    protected void removeFooterView() {
-        stringAdapter.removeFooterView();
-        mRootView.removeOnScrollListener(recyclerViewScrollListener);
-    }
-
-    protected void resetStatus() {
-        mRootView.removeOnScrollListener(recyclerViewScrollListener);
-        recyclerViewScrollListener = new EndlessRecyclerOnScrollListener(layoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                setRecRequest(currentPage);
-            }
-        };
-        mRootView.addOnScrollListener(recyclerViewScrollListener);
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_mbq_post_search;
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mbq_post_search);
-        initialize();
-        setTitleColor();
-    }
-
-    private void initialize() {
+    protected void initialize(Bundle savedInstanceState) {
         tagContainer = findViewById(R.id.container);
         View cancelView = findViewById(R.id.toolbar_right_text);
         cancelView.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +112,6 @@ public class SearchPost extends AppCompatActivity {
             }
         });
         mBGAFlowLayout = (FlowTagLayout) findViewById(R.id.tag_layout);
-        Logger.e(search_keywords.toString());
         mAdapter = new TagAdapter(this, search_keywords);
         mBGAFlowLayout.setAdapter(mAdapter);
         mBGAFlowLayout.setOnTagClickListener(((parent, view, position) -> {
@@ -218,7 +160,13 @@ public class SearchPost extends AppCompatActivity {
         }
     }
 
-    public void setRecRequest(int page0) {
+    @Override
+    protected void configActionBar(Toolbar toolbar) {
+        toolbar.findViewById(R.id.toolbar_title_text).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setRecRequest(int currentPage) {
         if (keyword.equals("")) {
             CommonUtil.show(this, "请输入关键字", 1000);
             return;
@@ -264,6 +212,4 @@ public class SearchPost extends AppCompatActivity {
             }
         });
     }
-
-
 }

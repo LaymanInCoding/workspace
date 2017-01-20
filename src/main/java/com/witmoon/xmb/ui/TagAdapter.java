@@ -28,17 +28,11 @@ public class TagAdapter extends BaseAdapter {
     public TagAdapter(Context context, ArrayList<String> data) {
         this.mContext = context;
         this.mDataList = data;
-        Logger.e(mDataList.toString());
-
     }
 
     @Override
     public int getCount() {
-        Logger.e(mDataList.toString());
-
-
         if (mDataList != null) {
-            Logger.e("" + mDataList.size());
             return mDataList.size();
         } else {
             return 0;
@@ -47,7 +41,6 @@ public class TagAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        Logger.e(mDataList.toString());
         return mDataList.get(position);
     }
 
@@ -58,12 +51,10 @@ public class TagAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Logger.e(mDataList.toString());
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_tag, null);
         TextView textView = (TextView) view.findViewById(R.id.tv_tag);
         textView.setBackgroundResource(mBackGround[position % 7]);
         String t = mDataList.get(position);
-        Logger.e(t);
         textView.setText(t);
         view.setTag(t);
         return view;

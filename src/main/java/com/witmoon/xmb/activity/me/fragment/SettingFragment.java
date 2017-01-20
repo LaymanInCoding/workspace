@@ -18,6 +18,7 @@ import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.UpdataService;
 import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseFragment;
@@ -93,18 +94,26 @@ public class SettingFragment extends BaseFragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.personal_info:
+                UmengStatic.registStat(getActivity(),"SetUp0");
+
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.PERSONAL_DATA);
                 break;
 //            case R.id.change_password:
 //                UIHelper.showSimpleBack(getActivity(), SimpleBackPage.CHANGE_PWD);
 //                break;
             case R.id.about:
+                UmengStatic.registStat(getActivity(),"SetUp2");
+
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ABOUT);
                 break;
             case R.id.service_provision:
+                UmengStatic.registStat(getActivity(),"SetUp1");
+
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.SERVICE_PROVISION);
                 break;
             case R.id.clear_cache:
+                UmengStatic.registStat(getActivity(),"SetUp3");
+
                 UIHelper.clearAppCache(getActivity());
                 mCacheSizeText.setText("0KB");
                 break;
@@ -143,6 +152,8 @@ public class SettingFragment extends BaseFragment {
                 });
                 break;
             case R.id.submit_button:
+                UmengStatic.registStat(getActivity(),"SetUp4");
+
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
                         .setMessage("确定要退出登录吗?")
                         .setCancelable(true)

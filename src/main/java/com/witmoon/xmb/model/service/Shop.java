@@ -1,15 +1,20 @@
 package com.witmoon.xmb.model.service;
 
 
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class Shop {
-    public int getShop_id() {
+    public String getShop_id() {
         return shop_id;
     }
 
-    public void setShop_id(int shop_id) {
+    public void setShop_id(String shop_id) {
         this.shop_id = shop_id;
     }
 
@@ -61,26 +66,26 @@ public class Shop {
         this.shop_nearby_subway = shop_nearby_subway;
     }
 
-    public int getShop_comment_cnt() {
+    public String getShop_comment_cnt() {
         return shop_comment_cnt;
     }
 
-    public void setShop_comment_cnt(int shop_comment_cnt) {
+    public void setShop_comment_cnt(String shop_comment_cnt) {
         this.shop_comment_cnt = shop_comment_cnt;
     }
 
-    public int getShop_products_num() {
+    public String getShop_products_num() {
         return shop_products_num;
     }
 
-    public void setShop_products_num(int shop_products_num) {
+    public void setShop_products_num(String shop_products_num) {
         this.shop_products_num = shop_products_num;
     }
 
-    public static Shop parse(JSONObject shopObject){
+    public static Shop parse(JSONObject shopObject) {
         Shop shop = new Shop();
         try {
-            shop.setShop_id(shopObject.getInt("shop_id"));
+            shop.setShop_id(shopObject.getString("shop_id"));
             shop.setShop_index(shopObject.getInt("index"));
             shop.setShop_name(shopObject.getString("shop_name"));
             shop.setShop_desc(shopObject.getString("shop_desc"));
@@ -88,8 +93,8 @@ public class Shop {
             shop.setShop_address(shopObject.getString("shop_address"));
             shop.setShop_phone(shopObject.getString("shop_phone"));
             shop.setShop_nearby_subway(shopObject.getString("shop_nearby_subway"));
-            shop.setShop_comment_cnt(shopObject.getInt("shop_comment_cnt"));
-            shop.setShop_products_num(shopObject.getInt("shop_products_num"));
+            shop.setShop_comment_cnt(shopObject.getString("shop_comment_cnt"));
+            shop.setShop_products_num(shopObject.getString("shop_products_num"));
             shop.setCity(shopObject.getString("shop_city"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -97,7 +102,7 @@ public class Shop {
         return shop;
     }
 
-    private int shop_id;
+    private String shop_id;
 
     public int getShop_index() {
         return shop_index;
@@ -114,8 +119,9 @@ public class Shop {
     private String shop_address;
     private String shop_phone;
     private String shop_nearby_subway;
-    private int shop_comment_cnt;
-    private int shop_products_num;
+    private String shop_comment_cnt;
+    private String shop_products_num;
+
 
     public String getCity() {
         return city;

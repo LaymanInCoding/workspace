@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
 import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
@@ -70,6 +71,8 @@ public class SelectedActivityAdapter extends  RecyclerView.Adapter<SelectedActiv
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        UmengStatic.registStat(context,"AffordablePlane6");
+
                         try {
                             CommodityDetailActivity.start(context, jsonObject.getString("goods_id"));
                         } catch (JSONException e) {
@@ -94,6 +97,8 @@ public class SelectedActivityAdapter extends  RecyclerView.Adapter<SelectedActiv
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(context,"AffordablePlane5");
+
                 clickListener(map);
             }
         });

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.service.adapter.ShopDetailAdapter;
 import com.witmoon.xmb.api.Netroid;
@@ -46,9 +47,9 @@ public class ServiceShopDetailActivity extends BaseActivity {
     public Shop shop_detail;
     private RelativeLayout headerView;
     private int shop_id;
-    private int comment_num;
+    private String shop_name;
     private LinearLayout productHeaderView;
-    private int product_num;
+    private boolean open;
 
     @Override
     protected int getLayoutResourceId() {
@@ -57,20 +58,18 @@ public class ServiceShopDetailActivity extends BaseActivity {
 
     @Override
     protected String getActionBarTitle() {
-        return "";
+        shop_name = getIntent().getStringExtra("shop_name");
+        return shop_name;
     }
 
     @Override
     protected void initialize(Bundle savedInstanceState) {
         setTitleColor_(R.color.main_kin);
         mRootView = (RecyclerView) findViewById(R.id.recycle_view);
-
         layoutManager = new LinearLayoutManager(this);
         mRootView.setHasFixedSize(true);
         mRootView.setLayoutManager(layoutManager);
-
-        shop_id = getIntent().getIntExtra("shop_id", 0);
-        product_num = getIntent().getIntExtra("product_num", 0);
+        shop_id = Integer.parseInt(getIntent().getStringExtra("shop_id"));
         headerView = (RelativeLayout) getLayoutInflater().inflate(R.layout.header_service_shop, mRootView, false);
         adapter = new ShopDetailAdapter(shopArrayList, this);
         final Activity activity = this;
@@ -106,67 +105,83 @@ public class ServiceShopDetailActivity extends BaseActivity {
         });
     }
 
-    private void setShopHeader(Shop shop){
+    private void setShopHeader(Shop shop) {
         RoundedImageView shop_logo = (RoundedImageView) headerView.findViewById(R.id.shop_logo);
         TextView shop_name = (TextView) headerView.findViewById(R.id.shop_name);
         TextView shop_nearby_subway = (TextView) headerView.findViewById(R.id.shop_nearby_subway);
         TextView shop_phone = (TextView) headerView.findViewById(R.id.shop_phone);
         TextView shop_address = (TextView) headerView.findViewById(R.id.shop_address);
-        Netroid.displayBabyImage(shop.getShop_logo(),shop_logo);
+        Netroid.displayBabyImage(shop.getShop_logo(), shop_logo);
         shop_name.setText(shop.getShop_name());
         shop_address.setText(shop.getShop_address());
         shop_nearby_subway.setText(shop.getShop_nearby_subway());
         shop_phone.setText(shop.getShop_phone());
     }
 
-    private void setServiceProductsHeader(ArrayList<Product> products){
-        productHeaderView = (LinearLayout)getLayoutInflater().inflate(R.layout.header_products, mRootView, false);
+    private void setServiceProductsHeader(ArrayList<Product> products) {
+        productHeaderView = (LinearLayout) getLayoutInflater().inflate(R.layout.header_products, mRootView, false);
         TextView product_num_view = (TextView) productHeaderView.findViewById(R.id.products_num);
         final LinearLayout product_container = (LinearLayout) productHeaderView.findViewById(R.id.product_container);
-        for(int i = 0; i < products.size(); i++){
+        for (int i = 0; i < products.size(); i++) {
             final Product product = products.get(i);
-            LinearLayout productLinearLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.item_product, mRootView, false);
-            if(i >= 2){
+            LinearLayout productLinearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.item_product, mRootView, false);
+            if (i >= 2) {
                 productLinearLayout.setVisibility(View.GONE);
             }
-            if(i == products.size() - 1){
-                productLinearLayout.findViewById(R.id.split_line).setVisibility(View.GONE);
-            }
+
             productLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(ServiceShopDetailActivity.this,ProductDetailActivity.class);
-                    intent.putExtra("product_id",product.getProduct_id());
+                    Intent intent = new Intent(ServiceShopDetailActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("product_id", product.getProduct_id());
                     startActivity(intent);
                 }
             });
-            ImageView product_img = (ImageView) productLinearLayout.findViewById(R.id.product_img);
-            TextView  product_name = (TextView) productLinearLayout.findViewById(R.id.product_name);
-            TextView  product_market_price = (TextView) productLinearLayout.findViewById(R.id.product_market_price);
-            TextView  product_shop_price = (TextView) productLinearLayout.findViewById(R.id.product_shop_price);
+            RoundedImageView product_img = (RoundedImageView) productLinearLayout.findViewById(R.id.product_img);
+            TextView product_name = (TextView) productLinearLayout.findViewById(R.id.product_name);
+            TextView product_market_price = (TextView) productLinearLayout.findViewById(R.id.product_market_price);
+            TextView product_shop_price = (TextView) productLinearLayout.findViewById(R.id.product_shop_price);
             Netroid.displayBabyImage(product.getProduct_img(), product_img);
             product_name.setText(product.getProduct_name());
-            product_shop_price.setText("¥"+product.getProduct_shop_price());
-            product_market_price.setText("市场价：¥" + product.getProduct_market_price());
+            product_shop_price.setText("¥" + product.getProduct_shop_price());
+            product_market_price.setText("门市价：¥" + product.getProduct_market_price());
             product_container.addView(productLinearLayout);
         }
         product_num_view.setText("服务" + shop_detail.getShop_products_num());
 
         final TextView product_num_all = (TextView) productHeaderView.findViewById(R.id.product_total_all);
-        product_num_all.setText("查看其他" + (shop_detail.getShop_products_num() - 2) + "个服务");
+        final TextView product_no_more = (TextView) productHeaderView.findViewById(R.id.product_no_more);
+        final View product_num_container = productHeaderView.findViewById(R.id.product_total_container);
+        ImageView imageView = (ImageView) productHeaderView.findViewById(R.id.num_img);
 
-        if(shop_detail.getShop_products_num() <= 2){
-            product_num_all.setVisibility(View.GONE);
+        product_num_all.setText("查看其他" + (Integer.parseInt(shop_detail.getShop_products_num()) - 2) + "个服务");
+
+        if (Integer.parseInt(shop_detail.getShop_products_num()) <= 2) {
+            product_num_container.setVisibility(View.GONE);
+            product_no_more.setVisibility(View.VISIBLE);
         }
 
-        product_num_all.setOnClickListener(new View.OnClickListener() {
+        product_num_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int cnt = product_container.getChildCount();
-                for (int i = 0; i < cnt; i++) {
-                    product_container.getChildAt(i).setVisibility(View.VISIBLE);
+                if (open == false) {
+                    int cnt = product_container.getChildCount();
+                    for (int i = 0; i < cnt; i++) {
+                        product_container.getChildAt(i).setVisibility(View.VISIBLE);
+                    }
+                    imageView.setImageResource(R.mipmap.up_img);
+                    product_num_all.setText("收起服务");
+                    open = true;
+                } else {
+                    mRootView.smoothScrollToPosition(0);
+                    int cnt = product_container.getChildCount();
+                    for (int i = 2; i < cnt; i++) {
+                        product_container.getChildAt(i).setVisibility(View.GONE);
+                    }
+                    product_num_all.setText("查看其他" + (Integer.parseInt(shop_detail.getShop_products_num()) - 2) + "个服务");
+                    imageView.setImageResource(R.mipmap.down_img);
+                    open = false;
                 }
-                product_num_all.setVisibility(View.GONE);
             }
         });
         stringAdapter.addHeaderView(productHeaderView);
@@ -182,42 +197,43 @@ public class ServiceShopDetailActivity extends BaseActivity {
 
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             //设置店铺头部信息
             try {
                 JSONObject shopinfoObject = response.getJSONObject("shop_info");
-                shopinfoObject.put("index",0);
+                shopinfoObject.put("index", 0);
                 shop_detail = Shop.parse(shopinfoObject);
                 setShopHeader(shop_detail);
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             try {
                 ArrayList<Product> products = new ArrayList<>();
                 JSONArray productsArray = response.getJSONArray("products");
-                for(int i = 0; i < productsArray.length(); i++){
+                for (int i = 0; i < productsArray.length(); i++) {
                     JSONObject jsonObject = productsArray.getJSONObject(i);
                     products.add(Product.parse(jsonObject));
                 }
                 setServiceProductsHeader(products);
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             try {
                 JSONObject commentObject = response.getJSONArray("comment").getJSONObject(0);
-                commentObject.put("comment_total",shop_detail.getShop_comment_cnt());
+                commentObject.put("comment_total", shop_detail.getShop_comment_cnt());
                 Comment comment = Comment.parse(commentObject);
                 shopArrayList.add(comment);
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             try {
                 JSONArray jsonArray = response.getJSONArray("other_shop");
-                for(int i = 0; i < jsonArray.length(); i++){
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    jsonObject.put("index",i);
+                    jsonObject.put("index", i);
                     shopArrayList.add(Shop.parse(jsonObject));
                 }
                 stringAdapter.notifyDataSetChanged();

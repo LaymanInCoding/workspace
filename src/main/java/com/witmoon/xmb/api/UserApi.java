@@ -149,10 +149,10 @@ public class UserApi {
     }
 
     //赠送麻包豆
-    public static void sendBean(String beanNum,String friend_account, Listener<JSONObject> listener) {
+    public static void sendBean(String beanNum, String friend_account, Listener<JSONObject> listener) {
         Map<String, String> pm = new HashMap<>();
-        pm.put("send_number",beanNum);
-        pm.put("friend_account",friend_account);
+        pm.put("send_number", beanNum);
+        pm.put("friend_account", friend_account);
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "bean/send", ApiHelper.getParamMap(pm), listener));
     }
 
@@ -305,16 +305,11 @@ public class UserApi {
     }
 
     // 订单详情
-    public static void orderDetail(String id, String sn, Listener<JSONObject> listener) {
+    public static void orderDetail(String sn, Listener<JSONObject> listener) {
         String api = "order/order_detail_new";
         //如果传了order_sn，走下面接口
         Map<String, String> paramMap = new HashMap<>();
-        if (id != null && !id.equals("")) {
-            api = "order/order_detail";
-            paramMap.put("order_id", id);
-        } else {
-            paramMap.put("order_sn", sn);
-        }
+        paramMap.put("order_sn", sn);
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + api,
                 paramMap, listener));
     }

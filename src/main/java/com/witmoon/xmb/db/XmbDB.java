@@ -250,27 +250,27 @@ public class XmbDB {
         }
     }
 
-    //插入帖子搜索
-    public void post_search_insert(String name) {
+    //插入服务搜索
+    public void service_search_insert(String name) {
         name = name.trim();
         if (null != name) {
             //保持唯一 0-0
-            Cursor cursor = db.rawQuery("select * from search where search_post = ?", new String[]{name});
+            Cursor cursor = db.rawQuery("select * from search_ser where search_service = ?", new String[]{name});
             if (cursor.getCount() <= 0) {
                 ContentValues values = new ContentValues();
-                values.put("search_post", name);
-                db.insert("search", null, values);
+                values.put("search_service", name);
+                db.insert("search_ser", null, values);
             }
         }
     }
-    
-    //查询所有帖子搜索记录
-    public List<String> search_post() {
+
+    //查询所有服务搜索记录
+    public List<String> search_service() {
         List<String> search = new ArrayList<String>();
-        Cursor cursor = db.query("search", null, null, null, null, null, null);
+        Cursor cursor = db.query("search_ser", null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                search.add(cursor.getString(cursor.getColumnIndex("search_post")));
+                search.add(cursor.getString(cursor.getColumnIndex("search_service")));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -278,23 +278,22 @@ public class XmbDB {
     }
 
     //删除某条帖子搜索记录
-    public void search_delete_onepost(String search_name) {
-        List<String> mList = search_name();
+    public void search_delete_oneservice(String search_name) {
+        List<String> mList = search_service();
         for (int i = 0; i < mList.size(); i++) {
             if (mList.get(i).toString().equals(search_name)) {
-                db.delete("search", "search_post = ?", new String[]{mList.get(i).toString()});
+                db.delete("search_ser", "search_service = ?", new String[]{mList.get(i).toString()});
             }
         }
     }
 
     //删除所有帖子搜索记录
-    public void search_delete_post() {
-        List<String> mList = search_name();
+    public void search_delete_service() {
+        List<String> mList = search_service();
         for (int i = 0; i < mList.size(); i++) {
-            db.delete("search", "search_post = ?", new String[]{mList.get(i).toString()});
+            db.delete("search_ser", "search_service = ?", new String[]{mList.get(i).toString()});
         }
     }
-
 
 
     //查询所有商品搜索记录
@@ -361,6 +360,14 @@ public class XmbDB {
         // search表建表语句
         String CREATE_SEARCH = "create table search (id text primary key, " +
                 "search_name text)";
+
         db.execSQL(CREATE_SEARCH);
+
+    }
+
+    public void addServiceTable() {
+        String CREATE_SEARCH_SERVICE = "create table search_ser (id text primary key, " +
+                "search_service text)";
+        db.execSQL(CREATE_SEARCH_SERVICE);
     }
 }

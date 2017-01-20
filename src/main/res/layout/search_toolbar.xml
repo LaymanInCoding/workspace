@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/top_toolbar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
-    android:fitsSystemWindows="true"
-    toolbar:contentInsetEnd="0dp"
-    toolbar:contentInsetStart="0dp">
+    android:background="@drawable/bg_nav"
+    app:contentInsetEnd="0dp"
+    app:contentInsetStart="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +16,6 @@
         android:paddingRight="12dp">
 
         <EditText
-            android:textCursorDrawable="@null"
             android:id="@+id/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,17 +31,18 @@
             android:padding="4dp"
             android:singleLine="true"
             android:textColorHint="@color/edit_text_hint"
+            android:textCursorDrawable="@null"
             android:textSize="@dimen/dimen_28_dip"
             android:visibility="visible"/>
 
 
         <TextView
-            android:layout_marginRight="@dimen/dimen_10_dip"
             android:id="@+id/toolbar_right_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_10_dip"
             android:text="取消"
             android:textColor="#ffffff"
             android:textSize="@dimen/dimen_32_dip"

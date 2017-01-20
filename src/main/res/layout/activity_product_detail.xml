@@ -41,14 +41,14 @@
                 android:textStyle="bold" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-    <WebView
+    <com.tencent.smtt.sdk.WebView
         android:visibility="gone"
         android:layout_marginTop="@dimen/toolbar_height"
         android:layout_marginBottom="45dip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/webview">
-    </WebView>
+    </com.tencent.smtt.sdk.WebView>
     <include
         android:layout_width="match_parent"
         android:layout_height="match_parent"

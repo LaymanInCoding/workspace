@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.duowan.mobile.netroid.Listener;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.service.adapter.CommentAdapter;
 import com.witmoon.xmb.api.ServiceApi;
@@ -77,7 +78,7 @@ public class ServiceCommentActivity extends BaseActivity {
 
         @Override
         public void onSuccess(JSONObject response) {
-
+            Logger.json(response.toString());
             try {
                 JSONArray jsonArray = response.getJSONArray("data");
                 for(int i = 0; i < jsonArray.length(); i++){

@@ -7,16 +7,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
-import android.webkit.CookieManager;
+
+import com.orhanobut.logger.Logger;
+import com.tencent.smtt.sdk.CookieManager;
+
 import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
+
 import android.widget.ImageView;
 
-import com.duowan.mobile.netroid.Listener;
-import com.duowan.mobile.netroid.NetroidError;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
@@ -24,13 +26,13 @@ import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
 import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
 import com.witmoon.xmb.activity.user.LoginActivity;
 import com.witmoon.xmb.api.ApiHelper;
-import com.witmoon.xmb.api.CircleApi;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.Const;
+import com.witmoon.xmb.model.SimpleBackPage;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
+import com.witmoon.xmb.util.UIHelper;
 import com.witmoon.xmb.util.XmbUtils;
 
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -80,8 +82,8 @@ public class InteractiveWebViewActivity extends BaseActivity {
     public void initWebView() {
         IntentFilter login = new IntentFilter(Const.INTENT_WEB_REFRESH);
         registerReceiver(loginReceiver, login);
-
         url = getIntent().getStringExtra("url");
+//        Logger.e(url);
         // 设置可以访问文件
         webView.getSettings().setAllowFileAccess(true);
         //如果访问的页面中有Javascript，则webview必须设置支持Javascript
@@ -148,14 +150,18 @@ public class InteractiveWebViewActivity extends BaseActivity {
             }
         }
 
+        @JavascriptInterface
+        public void jumpToCart() {
+            UIHelper.showSimpleBack(InteractiveWebViewActivity.this, SimpleBackPage.SHOPPING_CART);
+        }
 
         @JavascriptInterface
-        public void showShare(String logo,String title, String desc,String url) {
-            HashMap<String,String> share_info = new HashMap<>();
-            share_info.put("title",title);
-            share_info.put("desc",desc);
-            share_info.put("url",url);
-            XmbUtils.showMbqShare(InteractiveWebViewActivity.this,findViewById(R.id.mbq_story_container),share_info);
+        public void showShare(String logo, String title, String desc, String url) {
+            HashMap<String, String> share_info = new HashMap<>();
+            share_info.put("title", title);
+            share_info.put("desc", desc);
+            share_info.put("url", url);
+            XmbUtils.showMbqShare(InteractiveWebViewActivity.this, findViewById(R.id.mbq_story_container), share_info);
         }
 
 

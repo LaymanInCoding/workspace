@@ -22,10 +22,23 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.ViewHold
     private ArrayList<String> mList;
     private Context mContext;
     private OnItemDeleteListener mDeleteListener;
+    private boolean is_service;
+    private OnItemClickListener mClickListener;
+
 
     public Search_adapter(Context mContext, ArrayList<String> mList) {
         this.mList = mList;
         this.mContext = mContext;
+    }
+
+    public Search_adapter(Context mContext, ArrayList<String> mList, boolean is_service) {
+        this.mList = mList;
+        this.mContext = mContext;
+        this.is_service = is_service;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
     public interface OnItemDeleteListener {
@@ -36,6 +49,9 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.ViewHold
         this.mDeleteListener = listener;
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mClickListener = listener;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,7 +71,11 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.ViewHold
         holder.containerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchResultListActivity.start(mContext,mList.get(position));
+                if (is_service == true) {
+                    mClickListener.onItemClick(position);
+                } else {
+                    SearchResultListActivity.start(mContext, mList.get(position));
+                }
             }
         });
     }

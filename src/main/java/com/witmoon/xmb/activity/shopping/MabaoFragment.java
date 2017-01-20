@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 import com.androidquery.AQuery;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.common.SearchActivity;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.BaseFragment;
@@ -87,6 +88,7 @@ public class MabaoFragment extends BaseFragment implements RadioGroup.OnCheckedC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_imags:
+                UmengStatic.registStat(getActivity(),"Shopping0");
                 startActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
             default:
@@ -143,10 +145,13 @@ public class MabaoFragment extends BaseFragment implements RadioGroup.OnCheckedC
         public void onPageSelected(int position) {
             if(position == 0){
                 aff_btn.performClick();
+                UmengStatic.registStat(getActivity(),"Shopping1");
             }else if(position == 1){
                 cro_btn.performClick();
+                UmengStatic.registStat(getActivity(),"Shopping2");
             }else if(position ==2){
                 fea_btn.performClick();
+                UmengStatic.registStat(getActivity(),"Shopping3");
             }
         }
 

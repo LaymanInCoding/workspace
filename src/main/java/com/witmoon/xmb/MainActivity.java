@@ -168,7 +168,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                 .getSystemService(Context.WINDOW_SERVICE);
 
         MainActivity.screen_width = wm.getDefaultDisplay().getWidth();
-        //注册网络监听时间
+        //注册网络监听事件
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         myReceiver = new ConnectionChangeReceiver();
         this.registerReceiver(myReceiver, filter);

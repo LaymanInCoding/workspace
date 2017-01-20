@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -73,7 +74,7 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
     private JSONObject ntalkerparam = new JSONObject();
     private ImageView mToolbarShoppingCartImage;
     private BadgeView mCartCountBadgeView;
-    private TextView mCollectBtnText;
+    private ImageView mCollectImg;
     private ViewPager mPhotoViewPager;
     private ViewPager mInternalViewPager;
     private PagerSlidingTabStrip mPagerIndicator;
@@ -144,7 +145,7 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
         try {
             if (AppContext.instance().isLogin()) {
                 tmp.put("nickname", AppContext.getLoginInfo().getName());
-            }else{
+            } else {
                 tmp.put("nickname", "未登录用户");
             }
         } catch (Exception e) {
@@ -208,7 +209,7 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
         @Override
         public void onError(NetroidError error) {
             super.onError(error);
-            if (mGoods==null) {
+            if (mGoods == null) {
                 mEmptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
             } else {
                 mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
@@ -254,8 +255,7 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
         }
 
         if (goods.isCollected()) {
-            Drawable drawable = getResources().getDrawable(R.mipmap.icon_heart_red_empty_48x48);
-            mCollectBtnText.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+            mCollectImg.setImageResource(R.mipmap.icon_heart_red_64x64);
         }
 
         // 初始化顶部Tab页
@@ -288,9 +288,9 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
         mAQuery.id(R.id.toolbar_shopping_cart).clicked(this);
         mAQuery.id(R.id.buy_immediately_btn).clicked(this);
         mAQuery.id(R.id.add_to_cart_btn).clicked(this);
+        mAQuery.id(R.id.collect_button).clicked(this);
         mAQuery.id(R.id.specification_selection_text).clicked(this);
-        mCollectBtnText = mAQuery.id(R.id.collect_button).clicked(this).getTextView();
-
+        mCollectImg = mAQuery.id(R.id.collect_img).getImageView();
         // 初始化商品照片PagerView
         mPhotoViewPager = (ViewPager) mAQuery.id(R.id.view_pager).getView();
 
@@ -314,8 +314,7 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
                 AppContext.showToastShort(twoTuple.second);
                 return;
             }
-            Drawable drawable = getResources().getDrawable(R.mipmap.icon_heart_red_empty_48x48);
-            mCollectBtnText.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+            mCollectImg.setImageResource(R.mipmap.icon_heart_red_64x64);
             AppContext.showToastShort("收藏成功");
         }
     };
@@ -411,7 +410,7 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
         try {
             if (AppContext.instance().isLogin()) {
                 userInfo.put("nickname", AppContext.getLoginInfo().getName());
-            }else{
+            } else {
                 userInfo.put("nickname", "未登录用户");
             }
             unicall.UnicallUpdateUserInfo(userInfo);

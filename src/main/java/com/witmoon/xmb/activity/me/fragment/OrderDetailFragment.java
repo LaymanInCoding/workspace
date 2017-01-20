@@ -112,7 +112,7 @@ public class OrderDetailFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        UserApi.orderDetail(mOrderId,mOrderSn, new Listener<JSONObject>() {
+        UserApi.orderDetail(mOrderSn, new Listener<JSONObject>() {
             @Override
             public void onError(NetroidError error) {
                 emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);

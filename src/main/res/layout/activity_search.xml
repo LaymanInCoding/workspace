@@ -6,8 +6,7 @@
               android:background="@color/white"
               android:clipToPadding="true"
               android:fitsSystemWindows="true"
-              android:orientation="vertical"
-              app:fitsSystemWindows="true">
+              android:orientation="vertical">
 
     <include layout="@layout/search_toolbar"/>
 

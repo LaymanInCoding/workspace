@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.mbq.activity.PostDetailActivity;
 import com.witmoon.xmb.api.Netroid;
 import com.witmoon.xmb.model.circle.CirclePost;
@@ -61,6 +62,8 @@ public class HotPostAdapter extends  RecyclerView.Adapter<HotPostAdapter.ViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengStatic.registStat(context,"TopPost0");
+
                 Intent intent = new Intent(context, PostDetailActivity.class);
                 intent.putExtra("post_id",post.getPost_id());
                 context.startActivity(intent);

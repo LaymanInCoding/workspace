@@ -78,7 +78,6 @@ public class MyMabaoBeanFragment extends BaseFragment {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Logger.t("Refresh").e("refresh");
                 mEmptyLayout.setVisibility(View.VISIBLE);
                 page = 1;
                 mInfoList.clear();
@@ -92,7 +91,6 @@ public class MyMabaoBeanFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Logger.t("unregist").e("unregist");
         getActivity().unregisterReceiver(receiver);
     }
 
@@ -131,7 +129,6 @@ public class MyMabaoBeanFragment extends BaseFragment {
                         beanListener = new EndlessRecyclerOnScrollListener(layoutManager) {
                             @Override
                             public void onLoadMore(int currentPage) {
-                                Logger.t("PAGE").e(currentPage + "");
                                 page += 1;
                                 setRecRequest(page);
                             }

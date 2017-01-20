@@ -4,6 +4,7 @@ import com.duowan.mobile.netroid.Listener;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.api.alipay.NormalGetJSONRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,8 +19,38 @@ public class ServiceApi {
     public static String AFTER_SALES = "after_sales";
 
     //商铺列表
-    public static void shopList(int page, Listener<JSONObject> listener) {
+    public static void comment_shopList(int page, Listener<JSONObject> listener) {
         Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.BASE_URL + "service/shop_list/" + page, listener));
+    }
+
+    //商铺列表
+    public static void shopList(int page, Listener<JSONObject> listener) {
+        Netroid.addRequest(new NormalGetJSONRequest(ApiHelper.BASE_URL + "service/index/" + page, listener));
+    }
+
+    //一级目录
+    public static void subShopList(int page, String cat_id, Listener<JSONObject> listener) {
+        HashMap<String, String> pm = new HashMap<>();
+        pm.put("pid", cat_id);
+        pm.put("page", page + "");
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "/service/c_index", pm, listener));
+    }
+
+    //二级目录
+    public static void subSubShopList(int page, String cat_id, Listener<JSONObject> listener) {
+        HashMap<String, String> pm = new HashMap<>();
+        pm.put("pid", cat_id);
+        pm.put("page", page + "");
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "service/product_list", pm, listener));
+    }
+
+    //搜索服务
+    public static void searchService(int page, String search_key, String sort,Listener<JSONObject> listener) {
+        HashMap<String, String> pm = new HashMap<>();
+        pm.put("search_key", search_key);
+        pm.put("page", page + "");
+        pm.put("sort",sort);
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "service/search", pm, listener));
     }
 
     //商铺详情

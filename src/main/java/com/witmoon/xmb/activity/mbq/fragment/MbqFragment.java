@@ -13,15 +13,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
 import com.witmoon.xmb.AppContext;
@@ -33,10 +30,7 @@ import com.witmoon.xmb.api.CircleApi;
 import com.witmoon.xmb.base.BaseFragment;
 import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.ui.widget.BadgeView;
-import com.witmoon.xmb.ui.widget.PagerSlidingTabStrip;
 import com.witmoon.xmb.util.SharedPreferencesUtil;
-import com.witmoon.xmb.util.XmbUtils;
-import com.witmoon.xmblibrary.linearlistview.util.DensityUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;

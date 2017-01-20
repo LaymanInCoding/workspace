@@ -358,7 +358,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         View loadMoreView = LayoutInflater
                 .from(this)
                 .inflate(R.layout.view_no_message, mRootView, false);
-        stringAdapter.addHeaderView(loadMoreView);
+        stringAdapter.addFooterView(loadMoreView);
     }
 
     protected void createLoadMoreView() {

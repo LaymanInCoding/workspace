@@ -1,6 +1,7 @@
 package com.witmoon.xmb.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
+import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.ui.dialog.DialogControl;
@@ -36,6 +38,20 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     protected LinearLayoutManager layoutManager;
     protected HeaderViewRecyclerAdapter stringAdapter;
     public MainActivity mainActivity;
+    private Context mContext;
+
+    public Context getContext(){
+        if (mContext == null){
+            return AppContext.instance();
+        }
+        return mContext;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
     // 配置Toolbar
     public void hideToolBar() {
@@ -83,7 +99,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         View loadMoreView = LayoutInflater
                 .from(getActivity())
                 .inflate(R.layout.view_no_message, mRootView, false);
-        stringAdapter.addHeaderView(loadMoreView);
+        stringAdapter.addFooterView(loadMoreView);
     }
 
     protected void createLoadMoreView() {

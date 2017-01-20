@@ -28,11 +28,10 @@ import java.util.ArrayList;
 /**
  * Created by ZCM on 2016/1/25
  */
-public class ShopDetailAdapter extends  RecyclerView.Adapter<ViewHolder>{
+public class ShopDetailAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private ArrayList<Object> mList;
     private Context mContext;
-    private int comment_num;
     private int width;
 
     public ShopDetailAdapter(ArrayList<Object> mList, Context context) {
@@ -46,13 +45,13 @@ public class ShopDetailAdapter extends  RecyclerView.Adapter<ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
-        if (viewType == 0){
-            view = LayoutInflater.from(mContext).inflate(R.layout.item_shop, parent, false);
+        if (viewType == 0) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_sub_shop, parent, false);
             return new ViewHolderShop(view);
-        }else if (viewType == 1){
+        } else if (viewType == 1) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_shop_d, parent, false);
             return new ViewHolderShop(view);
-        }else if (viewType == 2){
+        } else if (viewType == 2) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_shop_comment_d, parent, false);
             return new ViewHolderComment(view);
         }
@@ -62,98 +61,99 @@ public class ShopDetailAdapter extends  RecyclerView.Adapter<ViewHolder>{
     @Override
     public int getItemViewType(int position) {
         Object object = mList.get(position);
-        if(object instanceof Shop){
-            if (((Shop) object).getShop_index() == 0){
+        if (object instanceof Shop) {
+            if (((Shop) object).getShop_index() == 0) {
                 return 1;
-            }else{
+            } else {
                 return 0;
             }
-        }else if(object instanceof Comment){
+        } else if (object instanceof Comment) {
             return 2;
         }
 
-        return  0;
+        return 0;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Object object = mList.get(position);
-        if(object instanceof  Shop){
-            ((ViewHolderShop)holder).shop_name.setText(((Shop)object).getShop_name());
-            ((ViewHolderShop)holder).shop_desc.setText(((Shop)object).getShop_desc());
-            ((ViewHolderShop)holder).shop_nearby_subway.setText(((Shop) object).getShop_nearby_subway());
-            ((ViewHolderShop)holder).shop_city.setText(((Shop) object).getCity());
+        if (object instanceof Shop) {
+            ((ViewHolderShop) holder).shop_name.setText(((Shop) object).getShop_name());
+            ((ViewHolderShop) holder).shop_desc.setText(((Shop) object).getShop_desc());
+            ((ViewHolderShop) holder).shop_nearby_subway.setText(((Shop) object).getShop_nearby_subway());
+            ((ViewHolderShop) holder).shop_city.setText(((Shop) object).getCity());
             Netroid.displayBabyImage(((Shop) object).getShop_logo(), ((ViewHolderShop) holder).shop_logo);
-            ((ViewHolderShop)holder).view.setOnClickListener(new View.OnClickListener() {
+            ((ViewHolderShop) holder).view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, ServiceShopDetailActivity.class);
-                    intent.putExtra("shop_id",((Shop) object).getShop_id());
+                    intent.putExtra("shop_id", ((Shop) object).getShop_id());
+                    intent.putExtra("shop_name",((Shop) object).getShop_name());
                     mContext.startActivity(intent);
                 }
             });
-        }else if(object instanceof  Comment){
+        } else if (object instanceof Comment) {
             Netroid.displayBabyImage(((Comment) object).getComment_header_img(), ((ViewHolderComment) holder).comment_header_img);
-            ((ViewHolderComment)holder).comment_username.setText(((Comment) object).getComment_username());
-            ((ViewHolderComment)holder).comment_date.setText(((Comment) object).getComment_date());
-            ((ViewHolderComment)holder).comment_content.setText(((Comment) object).getComment_content());
+            ((ViewHolderComment) holder).comment_username.setText(((Comment) object).getComment_username());
+            ((ViewHolderComment) holder).comment_date.setText(((Comment) object).getComment_date());
+            ((ViewHolderComment) holder).comment_content.setText(((Comment) object).getComment_content());
             ArrayList<String> comment_thumb_imgs = ((Comment) object).getComment_thumb_imgs();
             ArrayList<String> comment_imgs = ((Comment) object).getComment_imgs();
-            ((ViewHolderComment)holder).container1.removeAllViews();
-            ((ViewHolderComment)holder).container2.removeAllViews();
-            if(comment_thumb_imgs.size() > 3){
-                for(int i = 0;i < 3; i++){
+            ((ViewHolderComment) holder).container1.removeAllViews();
+            ((ViewHolderComment) holder).container2.removeAllViews();
+            if (comment_thumb_imgs.size() > 3) {
+                for (int i = 0; i < 3; i++) {
                     ImageView imageView = new ImageView(mContext);
-                    int w = (int)(mContext.getResources().getDimension(R.dimen.dimen_16_dip));
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams((this.width - w) / 3   , (this.width - w) / 3 - w));
-                    imageView.setPadding(w,0,0,0);
+                    int w = (int) (mContext.getResources().getDimension(R.dimen.dimen_16_dip));
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams((this.width - w) / 3, (this.width - w) / 3 - w));
+                    imageView.setPadding(w, 0, 0, 0);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     Netroid.displayBabyImage(comment_thumb_imgs.get(i), imageView);
-                    ((ViewHolderComment)holder).container1.addView(imageView);
+                    ((ViewHolderComment) holder).container1.addView(imageView);
                 }
-                for(int i = 3;i < comment_thumb_imgs.size(); i++){
+                for (int i = 3; i < comment_thumb_imgs.size(); i++) {
                     ImageView imageView = new ImageView(mContext);
-                    int w = (int)(mContext.getResources().getDimension(R.dimen.dimen_16_dip));
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams((this.width - w) / 3   , (this.width - w) / 3 - w));
-                    imageView.setPadding(w,0,0,0);
+                    int w = (int) (mContext.getResources().getDimension(R.dimen.dimen_16_dip));
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams((this.width - w) / 3, (this.width - w) / 3 - w));
+                    imageView.setPadding(w, 0, 0, 0);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     Netroid.displayBabyImage(comment_thumb_imgs.get(i), imageView);
-                    ((ViewHolderComment)holder).container2.addView(imageView);
+                    ((ViewHolderComment) holder).container2.addView(imageView);
                 }
-                ((ViewHolderComment)holder).container1.setVisibility(View.VISIBLE);
-                ((ViewHolderComment)holder).container2.setVisibility(View.VISIBLE);
-            }else if(comment_thumb_imgs.size() != 0){
-                for(int i = 0;i < comment_thumb_imgs.size(); i++){
+                ((ViewHolderComment) holder).container1.setVisibility(View.VISIBLE);
+                ((ViewHolderComment) holder).container2.setVisibility(View.VISIBLE);
+            } else if (comment_thumb_imgs.size() != 0) {
+                for (int i = 0; i < comment_thumb_imgs.size(); i++) {
                     ImageView imageView = new ImageView(mContext);
-                    int w = (int)(mContext.getResources().getDimension(R.dimen.dimen_16_dip));
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams((this.width - w) / 3   , (this.width - w) / 3 - w));
-                    imageView.setPadding(w,0,0,0);
+                    int w = (int) (mContext.getResources().getDimension(R.dimen.dimen_16_dip));
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams((this.width - w) / 3, (this.width - w) / 3 - w));
+                    imageView.setPadding(w, 0, 0, 0);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     Netroid.displayBabyImage(comment_thumb_imgs.get(i), imageView);
-                    ((ViewHolderComment)holder).container1.addView(imageView);
+                    ((ViewHolderComment) holder).container1.addView(imageView);
                 }
-                ((ViewHolderComment)holder).container1.setVisibility(View.VISIBLE);
-                ((ViewHolderComment)holder).container2.setVisibility(View.GONE);
-            }else{
-                ((ViewHolderComment)holder).container1.setVisibility(View.GONE);
-                ((ViewHolderComment)holder).container2.setVisibility(View.GONE);
+                ((ViewHolderComment) holder).container1.setVisibility(View.VISIBLE);
+                ((ViewHolderComment) holder).container2.setVisibility(View.GONE);
+            } else {
+                ((ViewHolderComment) holder).container1.setVisibility(View.GONE);
+                ((ViewHolderComment) holder).container2.setVisibility(View.GONE);
             }
             ((ViewHolderComment) holder).comment_header_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, UserInfoActivity.class);
-                    intent.putExtra("user_id",((Comment) object).getUser_id());
-                    intent.putExtra("user_name",((Comment) object).getComment_username());
-                    intent.putExtra("header_img",((Comment) object).getComment_header_img());
+                    intent.putExtra("user_id", ((Comment) object).getUser_id());
+                    intent.putExtra("user_name", ((Comment) object).getComment_username());
+                    intent.putExtra("header_img", ((Comment) object).getComment_header_img());
                     mContext.startActivity(intent);
                 }
             });
-            ((ViewHolderComment)holder).comment_total_all.setText("查看其它"+((Comment) object).getComment_cnt()+"个评价");
-            ((ViewHolderComment)holder).comment_total_all.setOnClickListener(new View.OnClickListener() {
+            ((ViewHolderComment) holder).comment_total_all.setText("查看其它" + ((Comment) object).getComment_cnt() + "个评价");
+            ((ViewHolderComment) holder).comment_total_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, ServiceCommentActivity.class);
-                    intent.putExtra("shop_id",((Comment) object).getShop_id());
+                    intent.putExtra("shop_id", ((Comment) object).getShop_id());
                     mContext.startActivity(intent);
                 }
             });
@@ -165,7 +165,7 @@ public class ShopDetailAdapter extends  RecyclerView.Adapter<ViewHolder>{
         return mList.size();
     }
 
-    public static class ViewHolderShop extends RecyclerView.ViewHolder{
+    public static class ViewHolderShop extends RecyclerView.ViewHolder {
         TextView shop_name;
         TextView shop_desc;
         ImageView shop_logo;
@@ -184,12 +184,12 @@ public class ShopDetailAdapter extends  RecyclerView.Adapter<ViewHolder>{
         }
     }
 
-    public static class ViewHolderComment extends RecyclerView.ViewHolder{
+    public static class ViewHolderComment extends RecyclerView.ViewHolder {
         TextView comment_date;
         TextView comment_username;
         ImageView comment_header_img;
         TextView comment_content;
-        LinearLayout container1,container2;
+        LinearLayout container1, container2;
         TextView comment_total_all;
         View view;
 

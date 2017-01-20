@@ -3,6 +3,7 @@ package com.witmoon.xmb.activity.mabao.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.api.Netroid;
@@ -81,6 +83,7 @@ public class SubClassAdapter extends BaseAdapter {
         });
         return convertView;
     }
+
 
     class ViewHoder {
         private ImageView subclass_img;

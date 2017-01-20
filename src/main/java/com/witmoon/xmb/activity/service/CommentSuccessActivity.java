@@ -9,11 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.duowan.mobile.netroid.Listener;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.service.adapter.ShopAdapter;
 import com.witmoon.xmb.activity.service.adapter.ShopDetailAdapter;
 import com.witmoon.xmb.api.ServiceApi;
 import com.witmoon.xmb.base.BaseActivity;
+import com.witmoon.xmb.model.service.Product;
 import com.witmoon.xmb.model.service.Shop;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
 
@@ -65,9 +67,9 @@ public class CommentSuccessActivity extends BaseActivity {
         });
     }
 
-    public void setRecRequest(int current_page){
+    public void setRecRequest(int current_page) {
         page = current_page;
-        ServiceApi.shopList(page, shop_list_listener);
+        ServiceApi.comment_shopList(page, shop_list_listener);
     }
 
     private Listener<JSONObject> shop_list_listener = new Listener<JSONObject>() {
@@ -79,16 +81,17 @@ public class CommentSuccessActivity extends BaseActivity {
 
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             try {
                 JSONArray jsonArray = response.getJSONArray("data");
-                for(int i = 0; i < jsonArray.length(); i++){
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    jsonObject.put("index",i + shopArrayList.size());
+                    jsonObject.put("index", i + shopArrayList.size());
                     shopArrayList.add(Shop.parse(jsonObject));
                 }
-                if(jsonArray.length() < 20){
+                if (jsonArray.length() < 20) {
                     removeFooterView();
-                }else{
+                } else {
                     createLoadMoreView();
                     resetStatus();
                 }

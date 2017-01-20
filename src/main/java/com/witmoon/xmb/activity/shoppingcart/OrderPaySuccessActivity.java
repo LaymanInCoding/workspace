@@ -37,16 +37,16 @@ public class OrderPaySuccessActivity extends BaseActivity {
             }
         });
 
-        findViewById(R.id.finish_done).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("ORDER_ID", getIntent().getStringExtra("ORDER_ID"));
-                bundle.putSerializable("ORDER_TYPE", "");
-                UIHelper.showSimpleBack(OrderPaySuccessActivity.this, SimpleBackPage.ORDER_DETAIL, bundle);
-                finish();
-            }
-        });
+//        findViewById(R.id.finish_done).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("ORDER_ID", getIntent().getStringExtra("ORDER_ID"));
+//                bundle.putSerializable("ORDER_TYPE", "");
+//                UIHelper.showSimpleBack(OrderPaySuccessActivity.this, SimpleBackPage.ORDER_DETAIL, bundle);
+//                finish();
+//            }
+//        });
     }
 
 

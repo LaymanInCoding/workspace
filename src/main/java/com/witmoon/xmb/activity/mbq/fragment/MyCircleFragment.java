@@ -23,6 +23,7 @@ import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.mbq.activity.CircleActivity;
 import com.witmoon.xmb.activity.mbq.activity.CollectActivity;
@@ -333,6 +334,8 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
         mAutoScrollViewPager.setOnPageClickListener(new AutoScrollViewPager.OnPageClickListener() {
             @Override
             public void onPageClick(AutoScrollViewPager pager, int position) {
+                UmengStatic.registStat(getActivity(),"MyCircle0");
+
                 if (null != advertisements.get(position).get("ad_type")) {
                     int type = Integer.parseInt(advertisements.get(position).get("ad_type"));
                     //专题  2商品 3网页 4团购 5帖子
@@ -357,6 +360,8 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
 
     @Override
     public void onItemClick(CircleCategory circleCategory) {
+        UmengStatic.registStat(getActivity(),"MyCircle5");
+
         Intent intent = new Intent(getActivity(), CircleActivity.class);
         intent.putExtra("circle_id", circleCategory.getCircle_id());
         intent.putExtra("circle_logo", circleCategory.getCircle_logo());
@@ -368,6 +373,8 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
 
     @Override
     public void onItemButtonClick(int circle_id) {
+        UmengStatic.registStat(getActivity(),"MyCircle7");
+
         if (!AppContext.instance().isLogin()) {
             startActivity(new Intent(getActivity(), LoginActivity.class));
         } else {
@@ -402,9 +409,13 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
                 startActivity(new Intent(getActivity(), MajorVoiceActivity.class));
                 break;
             case R.id.article_container:
+                UmengStatic.registStat(getActivity(),"MyCircle2");
+
                 startActivity(new Intent(getActivity(), MajorArticleActivity.class));
                 break;
             case R.id.story_container:
+                UmengStatic.registStat(getActivity(),"MyCircle1");
+
                 Intent intent = new Intent();
                 intent.putExtra("title", "睡前故事");
                 intent.putExtra("share_right", "1");
@@ -413,6 +424,8 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
                 startActivity(intent);
                 break;
             case R.id.article_collect_container:
+                UmengStatic.registStat(getActivity(),"MyCircle3");
+
                 if (AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), CollectArticleActivity.class));
                     break;
@@ -421,6 +434,8 @@ public class MyCircleFragment extends BaseFragment implements MyCircleAdapter.On
                     break;
                 }
             case R.id.collect_container:
+                UmengStatic.registStat(getActivity(),"MyCircle4");
+
                 if (AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), CollectActivity.class));
                     break;

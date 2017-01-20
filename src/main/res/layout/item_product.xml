@@ -3,7 +3,7 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/dimen_12_dip">
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:layout_width="@dimen/dimen_152_dip"
         android:layout_height="@dimen/dimen_152_dip"
         android:id="@+id/product_img"

@@ -40,6 +40,8 @@ import com.witmoon.xmb.activity.me.fragment.ServiceProvisionFragment;
 import com.witmoon.xmb.activity.me.fragment.SettingFragment;
 import com.witmoon.xmb.activity.me.fragment.WebUtilFragment;
 import com.witmoon.xmb.activity.me.fragment.WebUtilFragments;
+import com.witmoon.xmb.activity.service.SubServiceFragment;
+import com.witmoon.xmb.activity.service.Sub_SubServiceFragment;
 import com.witmoon.xmb.activity.shopping.FeatureBrandFragment;
 import com.witmoon.xmb.activity.shoppingcart.fragment.AddressSelectorFragment;
 import com.witmoon.xmb.activity.shoppingcart.fragment.MabaoCardFragment;
@@ -135,9 +137,12 @@ public enum SimpleBackPage {
     BindBankCard(55, R.string.bind_bank_card, R.color.master_me, BindBankCardFragment.class),
     MyMabaoBean(56, R.string.my_mabao_bean, R.color.master_me, MyMabaoBeanFragment.class),
     BeanHelp(57, R.string.madou_use_help, R.color.master_me, BeanHelpFragment.class),
-    BeanToCash(58,R.string.bean_to_cash,R.color.master_me,BeanToCashFragment.class),
-    BeanUse(59,R.string.madou_use,R.color.master_me,BeanUseFragment.class),
-    BeanSend(60,R.string.send_bean,R.color.master_me,BeanSendFragment.class);
+    BeanToCash(58, R.string.bean_to_cash, R.color.master_me, BeanToCashFragment.class),
+    BeanUse(59, R.string.madou_use, R.color.master_me, BeanUseFragment.class),
+    BeanSend(60, R.string.send_bean, R.color.master_me, BeanSendFragment.class),
+
+    SubService(61, R.string.send_bean, R.color.master_me, SubServiceFragment.class),
+    SubSubService(62, R.string.send_bean, R.color.master_me, Sub_SubServiceFragment.class);
 
 
     private int value;

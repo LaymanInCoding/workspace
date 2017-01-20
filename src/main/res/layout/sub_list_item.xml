@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/product_img"
+            android:layout_width="@dimen/dimen_136_dip"
+            android:layout_height="@dimen/dimen_136_dip"
+            android:layout_marginBottom="@dimen/dimen_20_dip"
+            android:layout_marginLeft="@dimen/dimen_26_dip"
+            android:layout_marginTop="@dimen/dimen_20_dip"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/pic_goods_placeholder"
+            app:riv_corner_radius="@dimen/dimen_8_dip"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_26_dip"
+            android:layout_marginRight="@dimen/dimen_30_dip"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/dimen_40_dip"
+                android:text=""
+                android:textColor="#666666"
+                android:textSize="@dimen/dimen_28_dip"/>
+
+            <com.witmoon.xmb.util.MoneyTextView
+                android:id="@+id/product_shop_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dimen_34_dip"
+                android:text=""
+                android:textColor="#e67474"
+                android:textSize="@dimen/dimen_30_dip"/>
+
+            <com.witmoon.xmb.util.MoneyTextView
+                android:id="@+id/product_market_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/dimen_34_dip"
+                android:text=""
+                android:textColor="#a9a9a9"
+                android:textSize="@dimen/dimen_24_dip"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1_dip"
+        android:layout_marginLeft="@dimen/dimen_26_dip"
+        android:background="#dddddd"/>
+</LinearLayout>

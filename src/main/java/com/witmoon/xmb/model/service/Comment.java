@@ -8,8 +8,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Comment {
-    private int comment_id;
-    private int user_id;
+    private String comment_id;
+    private String user_id;
     private String comment_content;
     private ArrayList<String> comment_imgs;
     private ArrayList<String> comment_thumb_imgs;
@@ -45,19 +45,19 @@ public class Comment {
 
     private String comment_header_img;
 
-    public int getComment_id() {
+    public String getComment_id() {
         return comment_id;
     }
 
-    public void setComment_id(int comment_id) {
+    public void setComment_id(String comment_id) {
         this.comment_id = comment_id;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
@@ -104,8 +104,8 @@ public class Comment {
     public static Comment parse(JSONObject commentObject){
         Comment comment = new Comment();
         try {
-            comment.setComment_id(commentObject.getInt("comment_id"));
-            comment.setUser_id(commentObject.getInt("user_id"));
+            comment.setComment_id(commentObject.getString("comment_id"));
+            comment.setUser_id(commentObject.getString("user_id"));
             comment.setComment_content(commentObject.getString("comment_content"));
             JSONArray comment_img_json_array = commentObject.getJSONArray("comment_imgs");
             JSONArray comment_imgthumb_json_array = commentObject.getJSONArray("comment_thumb_imgs");
