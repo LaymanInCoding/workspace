@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.umeng.analytics.MobclickAgent;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
@@ -36,6 +37,7 @@ public class SubClassAdapter extends BaseAdapter {
     private ArrayList<Map<String, String>> mDatas;
     private Context context;
     private String red_nu;
+
     @Override
     public int getCount() {
         return mDatas.size();
@@ -58,9 +60,9 @@ public class SubClassAdapter extends BaseAdapter {
             hoder = new ViewHoder();
             convertView = LayoutInflater.from(context).inflate(R.layout.subclass_h, parent, false);
             hoder.subclass_img = (ImageView) convertView.findViewById(R.id.subclass_img);
-            LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) hoder.subclass_img.getLayoutParams();
-            linearParams.width = (MainActivity.screen_width - DensityUtil.dip2px(context,75)) / 4;
-            linearParams.height = (MainActivity.screen_width - DensityUtil.dip2px(context,75))  * 213 / 167 / 4;
+            LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) hoder.subclass_img.getLayoutParams();
+            linearParams.width = (MainActivity.screen_width - DensityUtil.dip2px(context, 75)) / 4;
+            linearParams.height = (MainActivity.screen_width - DensityUtil.dip2px(context, 75)) * 213 / 167 / 4;
             hoder.subclass_img.setLayoutParams(linearParams);
             hoder.subclass_name = (TextView) convertView.findViewById(R.id.subclass_name);
             hoder.view = convertView;
@@ -75,10 +77,17 @@ public class SubClassAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("cat_id", map.get("cat_id"));
-                bundle.putString("is_type","0");
-                bundle.putString("cat_name",map.get("cat_name"));
-                UIHelper.showSimpleBack(context, SimpleBackPage.SUBCLASS_BOM, bundle);
+
+                if (map.get("is_long_show").equals("1")) {
+                    bundle.putString("cat_id", map.get("cat_id"));
+                    bundle.putString("cat_name", map.get("cat_name"));
+                    UIHelper.showSimpleBack(context, SimpleBackPage.SUBCLASS, bundle);
+                } else {
+                    bundle.putString("cat_id", map.get("cat_id"));
+                    bundle.putString("is_type", "0");
+                    bundle.putString("cat_name", map.get("cat_name"));
+                    UIHelper.showSimpleBack(context, SimpleBackPage.SUBCLASS_BOM, bundle);
+                }
             }
         });
         return convertView;

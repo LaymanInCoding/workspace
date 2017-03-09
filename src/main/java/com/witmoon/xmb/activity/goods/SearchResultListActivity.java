@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.goods.adapter.CommodityListAdapter;
@@ -157,7 +158,7 @@ public class SearchResultListActivity extends BaseActivity {
             mAdapter = new CommodityListAdapter(this);
             mRecyclerView.setAdapter(mAdapter);
             mErrorLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
-            refresh();
+//            refresh();
 
         }
         refresh();
@@ -191,6 +192,7 @@ public class SearchResultListActivity extends BaseActivity {
     Listener<JSONObject> mGoodsListCallback = new Listener<JSONObject>() {
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
             if (!twoTuple.first) {
                 AppContext.showToastShort(twoTuple.second);
@@ -200,6 +202,7 @@ public class SearchResultListActivity extends BaseActivity {
                 List<Goods> goodsList = parseResponse(response);
                 execOnLoadDataSuccess(goodsList);
                 execOnLoadDataFinish();
+                Log.d("mState", mState + "");
                 mAppContext.getXmbDB().search_insret(mKeywords);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -216,8 +219,11 @@ public class SearchResultListActivity extends BaseActivity {
 
     // 解析网络响应
     private List<Goods> parseResponse(JSONObject response) throws JSONException {
-        isMoreData = response.getJSONArray("data").length() != 0;
-
+        if (response.getJSONArray("data").length() < 20) {
+            isMoreData = false;
+        } else {
+            isMoreData = true;
+        }
         List<Goods> goodsList = new ArrayList<>();
         JSONArray goodsArray = response.getJSONArray("data");
         for (int i = 0; i < goodsArray.length(); i++) {

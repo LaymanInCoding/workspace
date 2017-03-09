@@ -92,6 +92,9 @@ public class XmbUtils {
             intent.putExtra("Key_Down_Url", download_url);
             activity.startService(intent);
         });
+        contentView.findViewById(R.id.refuse_update).setOnClickListener(v -> {
+            updateWindow.dismiss();
+        });
     }
 
     public static void showInvoiceInfo(Activity activity) {
@@ -533,4 +536,12 @@ public class XmbUtils {
         }
     }
 
+    public static void showSpecificationSelect(Context context) {
+        View contentView = LayoutInflater.from(context).inflate(R.layout.pop_invoice_info, null);
+        PopupWindow infoWindow = new PopupWindow(contentView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
+        infoWindow.setTouchable(true);
+        infoWindow.showAsDropDown(contentView);
+        Button button = (Button) contentView.findViewById(R.id.ok_btn);
+        button.setOnClickListener(v -> infoWindow.dismiss());
+    }
 }

@@ -187,6 +187,7 @@ public class NewAddressFragment extends BaseFragment {
                         mAddressEdit.setText(ad.getAddress());
                         mPhoneEdit.setText(ad.getTelephone());
                         mNameEdit.setText(ad.getName());
+                        mNameEdit.setSelection(ad.getName().length());
                         mRegionText.setText(ad.getProvinceName() + ad.getCityName() + ad
                                 .getDistrictName());
                         mProvinceId = ad.getProvinceId();

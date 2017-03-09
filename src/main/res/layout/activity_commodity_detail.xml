@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/commodity_detail_root"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white"
@@ -48,17 +49,17 @@
                 android:layout_height="@dimen/dimen_50_dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_share_white_2"/>
+                android:src="@mipmap/btn_card_details_share1"/>
 
             <ImageView
-                android:id="@+id/toolbar_shopping_cart"
+                android:id="@+id/collect_button"
                 android:layout_width="@dimen/dimen_50_dip"
                 android:layout_height="@dimen/dimen_50_dip"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_10_dip"
+                android:layout_marginRight="@dimen/dimen_20_dip"
                 android:layout_toLeftOf="@id/toolbar_share"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/icon_shopping_cart_white"/>
+                android:src="@mipmap/btn_like_unpress"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -123,91 +124,96 @@
                                 android:layout_weight="1"/>
 
                             <RelativeLayout
-                                android:id="@+id/price_layout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
-                                <com.witmoon.xmb.util.MoneyTextView
-                                    android:id="@+id/goods_price"
+                                <LinearLayout
+                                    android:id="@+id/price_layout"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_centerInParent="true"
-                                    android:layout_toLeftOf="@+id/market_price"
-                                    android:layout_toStartOf="@+id/market_price"
-                                    android:text="￥0"
-                                    android:textColor="@color/text_price"
-                                    android:textSize="20sp"/>
+                                    android:layout_centerVertical="true"
+                                    android:orientation="horizontal">
 
-                                <com.witmoon.xmb.util.MoneyTextView
-                                    android:id="@+id/market_price"
-                                    android:layout_width="wrap_content"
+                                    <com.witmoon.xmb.util.MoneyTextView
+                                        android:id="@+id/goods_price"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_centerInParent="true"
+                                        android:layout_toLeftOf="@+id/market_price"
+                                        android:layout_toStartOf="@+id/market_price"
+                                        android:text="￥0"
+                                        android:textColor="@color/text_price"
+                                        android:textSize="20sp"/>
+
+                                    <com.witmoon.xmb.util.MoneyTextView
+                                        android:id="@+id/market_price"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:layout_marginLeft="6dp"
+                                        android:text="￥0"
+                                        android:textColor="@color/text_view_hint"
+                                        android:textSize="12sp"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginLeft="6dp"
-                                    android:text="￥0"
-                                    android:textColor="@color/text_view_hint"
-                                    android:textSize="12sp"/>
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/dimen_30_dip"
+                                    android:gravity="right|center_vertical"
+                                    android:paddingRight="@dimen/goods_base_horizontal_padding">
+
+                                    <TextView
+                                        android:id="@+id/tag_discount"
+                                        style="@style/goodsTagTextView"
+                                        android:background="@drawable/bg_rounded2_yellow"
+                                        android:text="5.8折"/>
+
+                                    <TextView
+                                        android:id="@+id/tag_promote"
+                                        style="@style/goodsTagTextView"
+                                        android:layout_marginLeft="4dp"
+                                        android:background="@drawable/bg_rounded2_red"
+                                        android:text="限时特卖"/>
+
+                                    <TextView
+                                        android:id="@+id/tag_no_postage"
+                                        style="@style/goodsTagTextView"
+                                        android:layout_marginLeft="4dp"
+                                        android:background="@drawable/bg_rounded2_green"
+                                        android:text="包邮"/>
+                                </LinearLayout>
                             </RelativeLayout>
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="@dimen/goods_base_horizontal_padding"
-                            android:paddingRight="@dimen/goods_base_horizontal_padding">
-
-                            <com.witmoon.xmb.ui.widget.CountDownTextView2
-                                android:id="@+id/goods_remaining_time"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:drawableLeft="@mipmap/icon_clock_grey"
-                                android:drawablePadding="4dp"
-                                android:textColor="@color/text_view_hint"
-                                android:textSize="12sp"
-                                android:visibility="invisible"/>
-
-                            <TextView
-                                android:id="@+id/tag_discount"
-                                style="@style/goodsTagTextView"
-                                android:background="@drawable/bg_rounded2_yellow"
-                                android:text="5.8折"/>
-
-                            <TextView
-                                android:id="@+id/tag_promote"
-                                style="@style/goodsTagTextView"
-                                android:layout_marginLeft="4dp"
-                                android:background="@drawable/bg_rounded2_red"
-                                android:text="限时特卖"/>
-
-                            <TextView
-                                android:id="@+id/tag_no_postage"
-                                style="@style/goodsTagTextView"
-                                android:layout_marginLeft="4dp"
-                                android:background="@drawable/bg_rounded2_green"
-                                android:text="包邮"/>
-                        </LinearLayout>
-
                         <View
                             style="@style/horizontal_divider"
                             android:layout_marginBottom="12dp"
                             android:layout_marginTop="12dp"/>
 
-                        <TextView
-                            android:id="@+id/goods_brief"
+                        <LinearLayout
+                            android:id="@+id/brief_container"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingLeft="@dimen/goods_base_horizontal_padding"
-                            android:paddingRight="@dimen/goods_base_horizontal_padding"/>
+                            android:visibility="gone">
 
-                        <View
-                            style="@style/horizontal_divider"
-                            android:layout_marginBottom="12dp"
-                            android:layout_marginTop="12dp"/>
+                            <TextView
+                                android:id="@+id/goods_brief"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/goods_base_horizontal_padding"
+                                android:paddingRight="@dimen/goods_base_horizontal_padding"/>
+
+                            <View
+                                style="@style/horizontal_divider"
+                                android:layout_marginBottom="12dp"
+                                android:layout_marginTop="12dp"/>
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/goods_preferential"
@@ -216,12 +222,13 @@
                             android:paddingLeft="@dimen/goods_base_horizontal_padding"
                             android:paddingRight="@dimen/goods_base_horizontal_padding"
                             android:text="优惠信息：限时特卖、全场包邮"
-                            android:textColor="@color/red"/>
+                            android:textColor="@color/red"
+                            android:visibility="gone"/>
 
-                        <View
-                            style="@style/horizontal_divider"
-                            android:layout_marginBottom="12dp"
-                            android:layout_marginTop="12dp"/>
+                        <!--<View-->
+                        <!--style="@style/horizontal_divider"-->
+                        <!--android:layout_marginBottom="12dp"-->
+                        <!--android:layout_marginTop="12dp"/>-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -294,13 +301,114 @@
                             android:paddingRight="@dimen/goods_base_horizontal_padding"
                             android:text="选择：套餐分类、规格"/>
 
+
+                        <LinearLayout
+                            android:id="@+id/comments_container"
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <View
+                                style="@style/horizontal_divider_full"
+                                android:layout_height="6dp"
+                                android:layout_marginBottom="12dp"
+                                android:background="#f2f2f2"/>/>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="12dp"
+                                android:paddingLeft="@dimen/goods_base_horizontal_padding"
+                                android:paddingRight="@dimen/goods_base_horizontal_padding">
+
+                                <TextView
+                                    android:id="@+id/comments_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:paddingRight="@dimen/goods_base_horizontal_padding"
+                                    android:text="麻麻口碑"/>
+
+                                <TextView
+                                    android:id="@+id/comments_rate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:drawableRight="@mipmap/icon_arrow_right"
+                                    android:paddingRight="@dimen/goods_base_horizontal_padding"
+                                    android:textColor="@color/master_me"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toLeftOf="@id/comments_rate"
+                                    android:paddingLeft="@dimen/goods_base_horizontal_padding"
+                                    android:text="好评率"/>
+                            </RelativeLayout>
+
+                            <View
+                                style="@style/horizontal_divider"
+                                android:layout_marginBottom="12dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="12dp"
+                                android:background="@color/white"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/goods_base_horizontal_padding"
+                                android:paddingRight="@dimen/goods_base_horizontal_padding">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/name_e"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:text="宅妈妈"
+                                        android:textColor="@color/app_main_deep"
+                                        android:textStyle="bold"/>
+
+                                    <RatingBar
+                                        android:id="@+id/rating_e"
+                                        style="@android:style/Widget.Holo.Light.RatingBar.Small"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="12dp"
+                                        android:layout_toRightOf="@id/name_e"/>
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/content_e"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:text="Helo"
+                                    android:textColor="@color/app_main_deep"
+                                    android:textSize="12sp"/>
+
+                            </LinearLayout>
+
+                            <View
+                                style="@style/horizontal_divider_full"
+                                android:layout_height="6dp"
+                                android:background="#f2f2f2"/>
+                        </LinearLayout>
                     </com.witmoon.xmblibrary.stickynavlayout.MyLinearLayout>
 
                 </com.witmoon.xmblibrary.stickynavlayout.MyLinearLayout>
 
                 <View
-                    style="@style/horizontal_divider_full"
-                    android:layout_height="2dp"/>
+                    style="@style/horizontal_divider_full"/>
 
                 <com.witmoon.xmb.ui.widget.PagerSlidingTabStrip
                     android:id="@id/id_stickynavlayout_indicator"
@@ -320,31 +428,36 @@
                     android:layout_height="wrap_content"/>
             </com.witmoon.xmblibrary.stickynavlayout.StickyNavLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1_dip"
+                android:background="@color/divider"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_100_dip"
-                android:layout_alignParentBottom="true"
-                android:paddingLeft="8dp">
+                android:layout_alignParentBottom="true">
 
                 <LinearLayout
-                    android:layout_gravity="center_vertical"
                     android:id="@+id/xn_customer_service"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
+                        android:layout_width="@dimen/dimen_46_dip"
+                        android:layout_height="@dimen/dimen_46_dip"
                         android:layout_gravity="center_horizontal"
-                        android:layout_width="@dimen/dimen_35_dip"
-                        android:layout_height="@dimen/dimen_35_dip"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/icon_custom_service_avatar"/>
+                        android:src="@mipmap/product_detail_customer"/>
 
                     <TextView
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
                         android:text="客服"
                         android:textSize="@dimen/text_size_12"/>
                 </LinearLayout>
@@ -352,34 +465,36 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
                     android:layout_marginLeft="@dimen/dimen_12_dip"
                     android:layout_marginRight="@dimen/dimen_12_dip"
+                    android:layout_marginTop="6dp"
                     android:background="@color/divider"/>
 
                 <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/collect_button"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/collect_textview"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/toolbar_shopping_cart"
+                        android:layout_width="@dimen/dimen_46_dip"
+                        android:layout_height="@dimen/dimen_46_dip"
                         android:layout_gravity="center_horizontal"
-                        android:id="@+id/collect_img"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/icon_heart_grey_empty_48x48"
-                        android:layout_width="@dimen/dimen_35_dip"
-                        android:layout_height="@dimen/dimen_35_dip"/>
+                        android:src="@mipmap/collect_cart"
+                        />
 
                     <TextView
-                        android:gravity="center"
-                        android:layout_gravity="center_horizontal"
-                        android:id="@+id/collect_textview"
+                        android:id="@+id/collect"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="收藏"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="购物车"
                         android:textSize="@dimen/text_size_12"/>
                 </LinearLayout>
 
@@ -391,13 +506,14 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_rounded2_yellow"
                     android:text="立即购买"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/add_to_cart_btn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:background="@drawable/bg_rounded2_red"
                     android:text="@string/text_add_to_shopping_cart"
                     android:textColor="@color/white"/>

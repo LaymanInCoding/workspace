@@ -114,7 +114,7 @@ public class InnerScrollView extends ScrollView {
         return super.onTouchEvent(ev);
     }
 
-        private void setParentScrollAble(boolean flag) {
+    private void setParentScrollAble(boolean flag) {
 
         parentScrollView.requestDisallowInterceptTouchEvent(!flag);
     }

@@ -63,6 +63,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         if (view == null) {
+            Log.d("createView","true");
             view = inflater.inflate(R.layout.fragment_usercenter, container, false);
             AssetManager mgr = getActivity().getAssets();//得到AssetManager
             Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
@@ -80,7 +81,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onPreExecute() {
                 super.onPreExecute();
-                login_text_view.setText(AppContext.getLoginInfo().getName());
+//                login_text_view.setText(AppContext.getLoginInfo().getName());
                 if (!AppContext.getLoginInfo().getAvatar().equals("")) {
                     ImageLoader.getInstance().displayImage(AppContext.getLoginInfo().getAvatar(), me_avatar_img, AppContext.options_disk);
                 } else {

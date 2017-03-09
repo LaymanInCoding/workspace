@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
@@ -23,6 +24,8 @@ import com.witmoon.xmb.ui.dialog.WaitingDialog;
 
 import cn.easydone.swiperefreshendless.EndlessRecyclerOnScrollListener;
 import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * 项目Fragment基类
@@ -40,8 +43,30 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     public MainActivity mainActivity;
     private Context mContext;
 
-    public Context getContext(){
-        if (mContext == null){
+    protected CompositeSubscription mCompositeSubscription;
+
+    protected void unSubscribe() {
+        if (mCompositeSubscription != null) {
+            mCompositeSubscription.unsubscribe();
+            Logger.d("unsubscirbe");
+        }
+    }
+
+    protected void addSubscribe(Subscription subscription) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.add(subscription);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unSubscribe();
+    }
+
+    public Context getContext() {
+        if (mContext == null) {
             return AppContext.instance();
         }
         return mContext;
@@ -94,7 +119,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         mRootView.addOnScrollListener(recyclerViewScrollListener);
     }
 
-    protected void createMsgHeaderView() {
+    protected void createNoMoreView() {
         removeFooterView();
         View loadMoreView = LayoutInflater
                 .from(getActivity())

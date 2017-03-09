@@ -34,6 +34,7 @@ import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.InvoiceActivity;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.activity.me.AddressManageActivity;
 import com.witmoon.xmb.activity.shoppingcart.adapter.OrderConfirmAdapterV2;
 import com.witmoon.xmb.api.ApiHelper;
 import com.witmoon.xmb.api.GoodsApi;
@@ -400,9 +401,12 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.submit_button:
             case R.id.address_layout:
-                bundle.putString("selectedId", mReceiverAddressId);
-                UIHelper.showSimpleBackForResult(this, ADDRESS_CODE, SimpleBackPage
-                        .ADDRESS_SELECTOR, bundle);
+//                bundle.putString("selectedId", mReceiverAddressId);
+//                UIHelper.showSimpleBackForResult(this, ADDRESS_CODE, SimpleBackPage
+//                        .ADDRESS_SELECTOR, bundle);
+                Intent addressIntent = new Intent(this,AddressManageActivity.class);
+                addressIntent.putExtra("orderConfirm","1");
+                startActivityForResult(addressIntent,ADDRESS_CODE);
                 break;
             case R.id.mb_card:
                 startActivityForResult(new Intent(OrderConfirmActivity.this, MabaoCardActivity.class), MB_CARD_CODE);

@@ -137,7 +137,7 @@ public class Sub_SubServiceFragment extends BaseFragment {
                 }
 
                 if (jsonArray.length() < 20) {
-                    createMsgHeaderView();
+                    createNoMoreView();
                 } else {
                     createLoadMoreView();
                     resetStatus();

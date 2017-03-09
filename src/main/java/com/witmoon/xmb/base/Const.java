@@ -11,6 +11,7 @@ public class Const {
     public static final int HTTP_MEMORY_CACHE_SIZE = 100 * 1024 * 1024; // 100MB
     public static final int HTTP_DISK_CACHE_SIZE = 200 * 1024 * 1024; // 200MB
     public static final String HTTP_DISK_CACHE_DIR_NAME = "netroid";
+    public static final String HTTP_CACHE_DIR = "retrofit";
     public static final String USER_AGENT = "netroid.cn";
     public static final String MY_JOIN_CIRCLE_KEY = "my_join_circle_array";
     public static final String MBQ_SEARCH_HOT_KEYWORD = "mbq_search_hot_keywords";

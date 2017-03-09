@@ -91,8 +91,12 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder vh;
         if (viewType == TYPE_FOOTER) {
-            View v = getLayoutInflater(parent.getContext()).inflate(R.layout.list_cell_footer,
-                    null);
+//            View v = getLayoutInflater(parent.getContext()).inflate(R.layout.list_cell_footer,
+//                    null);
+            View v = LayoutInflater
+                    .from(parent.getContext())
+                    .inflate(R.layout.view_load_more, parent, false);
+//            stringAdapter.addFooterView(loadMoreView);
             vh = new FooterViewHolder(viewType, v);
         } else if (viewType == TYPE_HEADER) {
             if (mHeaderView == null) {
@@ -155,34 +159,34 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
             case STATE_LOAD_MORE:
                 vh.loadmore.setVisibility(View.VISIBLE);
                 vh.progress.setVisibility(View.VISIBLE);
-                vh.text.setVisibility(View.VISIBLE);
-                vh.text.setText(_loadMoreText);
+                vh.text.setVisibility(View.GONE);
+//                vh.text.setText(_loadMoreText);
                 break;
             case STATE_NO_MORE:
                 vh.loadmore.setVisibility(View.VISIBLE);
                 vh.progress.setVisibility(View.GONE);
                 vh.text.setVisibility(View.VISIBLE);
-                vh.text.setText(_loadFinishText);
+//                vh.text.setText(_loadFinishText);
                 break;
             case STATE_EMPTY_ITEM:
-                vh.progress.setVisibility(View.GONE);
+//                vh.progress.setVisibility(View.GONE);
                 vh.loadmore.setVisibility(View.GONE);
-                vh.text.setVisibility(View.GONE);
+//                vh.text.setVisibility(View.GONE);
                 break;
             case STATE_NETWORK_ERROR:
-                vh.loadmore.setVisibility(View.VISIBLE);
-                vh.progress.setVisibility(View.GONE);
-                vh.text.setVisibility(View.VISIBLE);
-                if (TDevice.hasInternet()) {
-                    vh.text.setText(AppContext.string(R.string.tip_load_data_error));
-                } else {
-                    vh.text.setText(AppContext.string(R.string.tip_network_error));
-                }
+//                vh.loadmore.setVisibility(View.GONE);
+////                vh.progress.setVisibility(View.GONE);
+//                vh.text.setVisibility(View.VISIBLE);
+//                if (TDevice.hasInternet()) {
+//                    vh.text.setText(AppContext.string(R.string.tip_load_data_error));
+//                } else {
+//                    vh.text.setText(AppContext.string(R.string.tip_network_error));
+//                }
                 break;
             default:
                 vh.loadmore.setVisibility(View.GONE);
-                vh.progress.setVisibility(View.GONE);
-                vh.text.setVisibility(View.GONE);
+//                vh.progress.setVisibility(View.GONE);
+//                vh.text.setVisibility(View.GONE);
                 break;
         }
     }
@@ -321,8 +325,8 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
         public FooterViewHolder(int viewType, View v) {
             super(viewType, v);
             loadmore = v;
-            progress = (ProgressBar) v.findViewById(R.id.progressbar);
-            text = (TextView) v.findViewById(R.id.text);
+            progress = (ProgressBar) v.findViewById(R.id.load_progress_bar);
+            text = (TextView) v.findViewById(R.id.msg_null);
         }
     }
 }

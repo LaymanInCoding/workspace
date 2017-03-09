@@ -4,76 +4,167 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.duowan.mobile.netroid.Listener;
 import com.orhanobut.logger.Logger;
+import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.friendship.fragment.CommentFragment;
 import com.witmoon.xmb.activity.me.Out_ServiceActivity;
 import com.witmoon.xmb.activity.me.adapter.OrderAdapter;
 import com.witmoon.xmb.activity.me.adapter.Out_PriceAdapter;
 import com.witmoon.xmb.api.UserApi;
+import com.witmoon.xmb.base.BaseFragment;
 import com.witmoon.xmb.base.BaseRecyclerAdapter;
 import com.witmoon.xmb.base.BaseRecyclerViewFragmentV2;
 import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.model.ListEntity;
 import com.witmoon.xmb.model.Order;
 import com.witmoon.xmb.model.Out_;
+import com.witmoon.xmb.model.RefreshEvent;
 import com.witmoon.xmb.model.SimpleBackPage;
+import com.witmoon.xmb.rx.RxBus;
+import com.witmoon.xmb.ui.widget.EmptyLayout;
 import com.witmoon.xmb.util.UIHelper;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by de on 2015/12/3.
  */
-public class AppliedFragment extends BaseRecyclerViewFragmentV2{
-    Out_PriceAdapter mOut_PriceAdapter;
-    private Out_ out;
-    private Out_ mOut_;
-    private boolean is_ = false;
-    private BroadcastReceiver mOut = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            out = (Out_) intent.getSerializableExtra("order");
-            for (int i=0;i<mAdapter.getData().size();i++)
-            {
-                mOut_ = (Out_) mAdapter.getData().get(i);
-                if (mOut_.getOrder_sn().equals(out.getOrder_sn()))
-                {
-                    ((Out_) mAdapter.getData().get(i)).setRefund_status(out.getRefund_status());
-                    mAdapter.notifyItemChanged(i);
-                    is_ = true;
-                }
-            }
-            if(is_)
-            {
-                mAdapter.getData().add(out);
-                mAdapter.notifyDataSetChanged();
-            }
-        }
-    };
+public class AppliedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+    private Out_PriceAdapter mOut_PriceAdapter;
+    private EmptyLayout mEmptyLayout;
+    private ArrayList<Out_> data = new ArrayList<>();
+    private int page = 1;
+    private boolean has_footer = false;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        is_dow = true;
-        getActivity().registerReceiver(mOut, new IntentFilter(Const.INTENT_ACTION_TUI));
+        initEvent();
+    }
+
+    private void initEvent() {
+        Subscription subscription = RxBus.getDefault().toObservable(RefreshEvent.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<RefreshEvent>() {
+                    @Override
+                    public void call(RefreshEvent event) {
+                        Logger.d(event.getIsRefresh());
+                        data.clear();
+                        setRecRequest(1);
+                    }
+                });
+        addSubscribe(subscription);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.applied_layout, container, false);
+        mRootView = (RecyclerView) view.findViewById(R.id.my_recycler);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
+        initAdapter();
+        stringAdapter = new HeaderViewRecyclerAdapter(mOut_PriceAdapter);
+        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRootView.setLayoutManager(layoutManager);
+        mRootView.setHasFixedSize(true);
+        mRootView.setAdapter(stringAdapter);
+        mEmptyLayout = (EmptyLayout) view.findViewById(R.id.empty_layout);
+        mEmptyLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRecRequest(1);
+            }
+        });
+        setRecRequest(1);
+        return view;
     }
 
     @Override
-    protected BaseRecyclerAdapter getListAdapter() {
-        mOut_PriceAdapter = new Out_PriceAdapter(getActivity());
+    public void setRecRequest(int currentPage) {
+        page = currentPage;
+        UserApi.applyList(page + "", mListener);
+
+    }
+
+    private Listener<JSONObject> mListener = new Listener<JSONObject>() {
+        @Override
+        public void onSuccess(JSONObject response) {
+            if (page == 1) {
+                data.clear();
+            }
+            Log.e("response", response.toString());
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+            JSONArray orderArray = null;
+            try {
+                orderArray = response.getJSONArray("data");
+                for (int i = 0; i < orderArray.length(); i++) {
+                    Out_ out = Out_.parse(orderArray.getJSONObject(i));
+                    data.add(out);
+                }
+                if (orderArray.length() < 20) {
+                    if (page != 1) {
+                        removeFooterView();
+                    }
+                    mRootView.scrollToPosition(0);
+                    has_footer = false;
+                } else {
+                    has_footer = true;
+                    createLoadMoreView();
+                    resetStatus();
+                    if (page == 1) {
+                        mRootView.scrollToPosition(0);
+                    }
+                }
+                mOut_PriceAdapter.notifyDataSetChanged();
+                mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+                page += 1;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private void initAdapter() {
+        mOut_PriceAdapter = new Out_PriceAdapter(getContext(), data);
         mOut_PriceAdapter.setOnItemButtonClickListener(new Out_PriceAdapter.OnItemButtonClickListener() {
             @Override
             public void onItemButtonClick(Out_ order, int position) {
                 order.setPosion(position);
                 order.setIs_(1);
-                if (order.getRefund_status().equals("1")){
+                if (order.getRefund_status().equals("1")) {
                     Intent mIntent = new Intent(getActivity(), Out_ServiceActivity.class);
                     mIntent.putExtra("order", order);
                     startActivity(mIntent);
@@ -81,7 +172,7 @@ public class AppliedFragment extends BaseRecyclerViewFragmentV2{
                 }
                 Bundle mb = new Bundle();
                 mb.putSerializable("order", order);
-                UIHelper.showSimpleBack(getActivity(),SimpleBackPage.JINDU,mb);
+                UIHelper.showSimpleBack(getActivity(), SimpleBackPage.JINDU, mb);
             }
         });
         mOut_PriceAdapter.setOnItemTypeClickListener(new Out_PriceAdapter.OnItemTypeClickListener() {
@@ -113,39 +204,12 @@ public class AppliedFragment extends BaseRecyclerViewFragmentV2{
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ORDER_DETAIL, argument);
             }
         });
-        return mOut_PriceAdapter;
     }
 
     @Override
-    protected void requestData() {
-        UserApi.applyList(mCurrentPage + "", getDefaultListener());
-    }
-
-    @Override
-    protected ListEntity parseResponse(JSONObject json) throws Exception {
-        JSONArray orderArray = json.getJSONArray("data");
-        final List<Out_> outs = new ArrayList<Out_>();
-        for (int i = 0; i < orderArray.length(); i++) {
-            outs.add(Out_.parse(orderArray.getJSONObject(i)));
-        }
-        return new ListEntity() {
-            @Override
-            public List<?> getList() {
-                return outs;
-            }
-            @Override
-            public boolean hasMoreData() {
-                    return true;
-            }
-        };
-    }
-
-    @Override
-    protected void onItemClick(View view, int position) {
-//        Out_ order = (Out_) mAdapter.getData().get(position);
-//        Bundle argument = new Bundle();
-//        argument.putString(OrderDetailFragment.KEY_ORDER_TYPE, "");
-//        argument.putString(OrderDetailFragment.KEY_ORDER_ID, order.getOrder_id());
-//        UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ORDER_DETAIL, argument);
+    public void onRefresh() {
+        mOut_PriceAdapter.notifyDataSetChanged();
+        page = 1;
+        setRecRequest(page);
     }
 }

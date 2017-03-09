@@ -1,8 +1,10 @@
 package com.witmoon.xmb.activity.goods.fragment;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.api.ApiHelper;
 import com.witmoon.xmb.api.GoodsApi;
@@ -28,6 +31,7 @@ import org.json.JSONObject;
 public class SpecificationFragment extends BaseFragment {
     private String mGoodsId;
     private GridLayout mGridLayout;
+
     public static SpecificationFragment newInstance(String goodsId) {
         SpecificationFragment fragment = new SpecificationFragment();
         Bundle bundle = new Bundle();
@@ -54,7 +58,7 @@ public class SpecificationFragment extends BaseFragment {
         scrollView.setPadding(12, 12, 12, 12);
 
         mGridLayout = new GridLayout(container.getContext());
-        mGridLayout.setColumnCount(2);
+        mGridLayout.setColumnCount(1);
         mGridLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams
                 .MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
@@ -69,15 +73,17 @@ public class SpecificationFragment extends BaseFragment {
     private Listener<JSONObject> mPropertiesCallback = new Listener<JSONObject>() {
         @Override
         public void onSuccess(JSONObject response) {
-            Log.e("response",response.toString());
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> tt = ApiHelper.parseResponseStatus(response);
             if (tt.first) {
                 try {
                     JSONArray propArray = response.getJSONArray("data");
                     for (int i = 0; i < propArray.length(); i++) {
                         JSONObject propAttr = propArray.getJSONObject(i);
-                        mGridLayout.addView(createLabel(propAttr.getString("name"), true));
-                        mGridLayout.addView(createLabel(propAttr.getString("value"), false));
+                        if (propAttr.getString("name") != null) {
+                            mGridLayout.addView(createLabel(propAttr.getString("name"),
+                                    propAttr.getString("value")));
+                        }
                     }
                 } catch (JSONException ignored) {
 
@@ -87,17 +93,13 @@ public class SpecificationFragment extends BaseFragment {
     };
 
     // 创建规格参数TextView
-    private TextView createLabel(String label, boolean isName) {
-        if (null == label) label = "";
-        TextView textView = new TextView(getContext());
-        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        textView.setPadding(4, 2, 4, 2);
-        if (isName) {
-            textView.getPaint().setFakeBoldText(true);
-            label += "：";
-        }
-        textView.setText(label);
-        return textView;
+    private View createLabel(String name, String detail) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.item_goods_spec, null);
+        TextView nameTv = (TextView) view.findViewById(R.id.name);
+        nameTv.setText(name + ":");
+        TextView detailTv = (TextView) view.findViewById(R.id.detail);
+        detailTv.setText(detail);
+
+        return view;
     }
 }

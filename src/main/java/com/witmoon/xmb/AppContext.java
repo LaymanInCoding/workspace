@@ -34,6 +34,7 @@ import com.witmoon.xmb.base.BaseApplication;
 import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.db.XmbDB;
 import com.witmoon.xmb.model.User;
+import com.witmoon.xmb.util.CommonUtil;
 import com.witmoon.xmb.util.LocalImageHelper;
 import com.witmoon.xmb.util.TwoTuple;
 import com.witmoon.xmb.util.TypefaceUtil;
@@ -120,21 +121,21 @@ public class AppContext extends BaseApplication {
         QbSdk.setTbsListener(new TbsListener() {
             @Override
             public void onDownloadFinish(int i) {
-                Log.d("app","onDownloadFinish");
+                Log.d("app", "onDownloadFinish");
             }
 
             @Override
             public void onInstallFinish(int i) {
-                Log.d("app","onInstallFinish");
+                Log.d("app", "onInstallFinish");
             }
 
             @Override
             public void onDownloadProgress(int i) {
-                Log.d("app","onDownloadProgress:"+i);
+                Log.d("app", "onDownloadProgress:" + i);
             }
         });
 
-        QbSdk.initX5Environment(getApplicationContext(),  cb);
+        QbSdk.initX5Environment(getApplicationContext(), cb);
     }
 
     public String getCachePath() {
@@ -157,7 +158,7 @@ public class AppContext extends BaseApplication {
         try {
             String dbPath = initDatabaseFromLocal();
             mXmbDB = XmbDB.getInstance(this, dbPath);
-            if (!mXmbDB.tabIsExist("search_ser")){
+            if (!mXmbDB.tabIsExist("search_ser")) {
                 mXmbDB.addServiceTable();
             }
             if (!mXmbDB.tabIsExist("search")) {
@@ -169,6 +170,14 @@ public class AppContext extends BaseApplication {
         } catch (IOException e) {
             Log.e("INIT_DB", e.getMessage());
         }
+    }
+
+    public static void showToast(String msg) {
+        CommonUtil.show(instance, msg, 1500);
+    }
+
+    public static void showToastShort(String msg) {
+        CommonUtil.show(instance, msg, 1000);
     }
 
     /**

@@ -18,6 +18,7 @@ import android.widget.ToggleButton;
 
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.user.LoginActivity;
@@ -153,7 +154,7 @@ public class WritePasswordFragment extends BaseFragment {
         @Override
         public void onSuccess(JSONObject response) {
             Context context = getActivity();
-            Log.e("login_response",response.toString());
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> result = ApiHelper.parseResponseStatus(response);
             if (result.first) {
                 Bundle bundle = new Bundle();

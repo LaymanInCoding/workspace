@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.goods.adapter.GoodsEvaluationAdapter;
@@ -46,12 +47,14 @@ public class EvaluateFragment extends BaseFragment {
     private String mGoodsId;
     private List<EvaluateBean> mDataList;
     public ListView mListView;
+    private boolean isLoad = false;
 
     public static EvaluateFragment newInstance(String id) {
         EvaluateFragment fragment = new EvaluateFragment();
         Bundle bundle = new Bundle();
         bundle.putString("GOODS_ID", id);
         fragment.setArguments(bundle);
+        Logger.e("eee");
         return fragment;
     }
 
@@ -66,8 +69,8 @@ public class EvaluateFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_goods_evaluate, container, false);
 
+        View view = inflater.inflate(R.layout.fragment_goods_evaluate, container, false);
         mCommentNumberText = (TextView) view.findViewById(R.id.comment_number);
         mGoodReputationRateText = (TextView) view.findViewById(R.id.good_reputation_rate);
         mSeeAllCommentsBtn = (TextView) view.findViewById(R.id.submit_button);
@@ -93,8 +96,11 @@ public class EvaluateFragment extends BaseFragment {
                         if (!hasMore) {
                             AppContext.showToastShort("没有更多评论");
                         } else {
-                            mPageNo++;
-                            GoodsApi.goodsComments(mGoodsId, mPageNo, mCommentCallback);
+                            if (!isLoad){
+                                isLoad = true;
+                                mPageNo++;
+                                GoodsApi.goodsComments(mGoodsId, mPageNo, mCommentCallback);
+                            }
                         }
                     }
                     break;
@@ -115,7 +121,7 @@ public class EvaluateFragment extends BaseFragment {
 
         @Override
         public void onSuccess(JSONObject response) {
-            Log.e("response", response.toString());
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> tt = ApiHelper.parseResponseStatus(response);
             if (tt.first) {
                 try {
@@ -129,6 +135,7 @@ public class EvaluateFragment extends BaseFragment {
                     e.printStackTrace();
                 }
             }
+            isLoad = false;
         }
     };
 
@@ -138,11 +145,14 @@ public class EvaluateFragment extends BaseFragment {
             mSeeAllCommentsBtn.setText("暂时还没有评价呦");
             return;
         }
-        mDataList = new ArrayList<>();
+
         String rate = dataObj.getString("good_comment_rate");
         mGoodReputationRateText.setText(rate);
-        mCommentNumberText.setText(mCommentNumberText.getText().toString().replace("0", number));
+        mCommentNumberText.setText("评价晒单（"+number+"人评论）");
         JSONArray commentArray = dataObj.getJSONArray("comments_list");
+        if (mPageNo == 1){
+            mDataList = new ArrayList<>();
+        }
         for (int i = 0; i < commentArray.length(); i++) {
             JSONObject commentObj = commentArray.getJSONObject(i);
             EvaluateBean mEvaluateBean = new EvaluateBean();
@@ -164,13 +174,14 @@ public class EvaluateFragment extends BaseFragment {
 //            }
             mDataList.add(mEvaluateBean);
         }
-        Log.e("mDataList", mDataList.toString());
-        if (mDataList.size() <= 3) {
+        if (mDataList.size() <= 3 && mPageNo == 1) {
             mSeeAllCommentsBtn.setVisibility(View.GONE);
         }
-
         adapter = new GoodsEvaluationAdapter(getActivity(), mDataList,this);
         mListView.setAdapter(adapter);
+        if (mPageNo > 1){
+            adapter.showAllComments();
+        }
         UIutil.setListViewHeightBasedOnChildren(mListView);
     }
 

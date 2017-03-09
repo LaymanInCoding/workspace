@@ -51,9 +51,9 @@ public class MabaoBeanAdapter extends RecyclerView.Adapter<MabaoBeanAdapter.Bean
             holder.mItemBeanTime.setTextColor(Color.parseColor("#999999"));
             holder.mItemBeanValue.setTextColor(Color.parseColor("#ff7162"));
             holder.mItemBeanValue.setText(beanObject.getString("record_val"));
-            if (beanObject.getString("record_type").equals("0") || beanObject.getString("record_type").equals("2")) {
+            if (beanObject.getString("record_val").contains("+")) {
                 holder.mItemBeanValue.setTextColor(Color.parseColor("#ff7162"));
-            } else if (beanObject.getString("record_type").equals("1")) {
+            } else {
                 holder.mItemBeanTitle.setTextColor(Color.parseColor("#bbbbbb"));
                 holder.mItemBeanValue.setTextColor(Color.parseColor("#bbbbbb"));
                 holder.mItemBeanTime.setTextColor(Color.parseColor("#bbbbbb"));

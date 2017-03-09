@@ -17,6 +17,8 @@ import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.model.Out_;
+import com.witmoon.xmb.model.RefreshEvent;
+import com.witmoon.xmb.rx.RxBus;
 import com.witmoon.xmb.util.TDevice;
 import com.witmoon.xmb.util.XmbUtils;
 
@@ -99,6 +101,7 @@ public class Fill_info_Fragent extends BaseActivity implements View.OnClickListe
                                     }
                                     AppContext.showToast(js.getString("error_desc"));
                                     Intent intent = new Intent(Const.INTENT_ACTION_TUI);
+                                    RxBus.getDefault().post(new RefreshEvent(true));
                                     out.setRefund_status("2");
                                     intent.putExtra("order", out);
                                     sendBroadcast(intent);

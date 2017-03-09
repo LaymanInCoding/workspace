@@ -64,9 +64,11 @@ public class GoodsApi {
     public static void goodsComments(String id, int p, Listener<JSONObject> listener) {
         Map<String, String> pm = new HashMap<>();
         pm.put("goods_id", id);
+        pm.put("page",p+"");
+        pm.put("count",20+"");
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL +
                 ("goods/comments"),
-                ApiHelper.getPaginationParamObj(p, pm), listener));
+                ApiHelper.getParamMap(pm), listener));
     }
 
     // 商品规格信息

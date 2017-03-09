@@ -1,16 +1,20 @@
 package com.witmoon.xmb.activity.webview;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.orhanobut.logger.Logger;
 import com.tencent.smtt.sdk.CookieManager;
 
+import android.view.View;
 import android.webkit.JavascriptInterface;
 
 import com.tencent.smtt.sdk.WebSettings;
@@ -22,6 +26,7 @@ import android.widget.ImageView;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
+import com.witmoon.xmb.activity.mbq.activity.PostDetailActivity;
 import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
 import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
 import com.witmoon.xmb.activity.user.LoginActivity;
@@ -42,6 +47,7 @@ public class InteractiveWebViewActivity extends BaseActivity {
     private WebView webView;
     private String url;
     private ImageView toolbar_right_image;
+    private HashMap<String, String> share_info = new HashMap<>();
 
     @Override
     protected int getLayoutResourceId() {
@@ -64,6 +70,7 @@ public class InteractiveWebViewActivity extends BaseActivity {
         setTitleColor_(R.color.main_kin);
         webView = (WebView) findViewById(R.id.webview);
         error_layout = (EmptyLayout) findViewById(R.id.error_layout);
+        toolbar_right_image = (ImageView) findViewById(R.id.toolbar_right_img);
         initWebView();
     }
 
@@ -78,11 +85,28 @@ public class InteractiveWebViewActivity extends BaseActivity {
         }
     };
 
+
     @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled"})
     public void initWebView() {
         IntentFilter login = new IntentFilter(Const.INTENT_WEB_REFRESH);
         registerReceiver(loginReceiver, login);
+        //        url = "https://chongzhike.com/XMBGQYr";
         url = getIntent().getStringExtra("url");
+        if (url.equals("http://www.xiaomabao.com/daily/prize") ||
+                url.equals(ApiHelper.BASE_URL + "discovery/knowledge_index") ||
+                url.startsWith(ApiHelper.HOME_URL + "activity")||
+                url.startsWith(ApiHelper.HOME_URL + "blood")) {
+            toolbar_right_image.setVisibility(View.VISIBLE);
+            share_info.put("title", getIntent().getStringExtra("title"));
+            share_info.put("desc", getIntent().getStringExtra("title"));
+            share_info.put("url", url);
+        }
+        toolbar_right_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XmbUtils.showMbqShare(InteractiveWebViewActivity.this, findViewById(R.id.mbq_story_container), share_info);
+            }
+        });
 //        Logger.e(url);
         // 设置可以访问文件
         webView.getSettings().setAllowFileAccess(true);
@@ -116,6 +140,30 @@ public class InteractiveWebViewActivity extends BaseActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Logger.e(url);
+                // 如下方案可在非微信内部WebView的H5页面中调出微信支付
+                if (url.startsWith("weixin://wap/pay?")) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
+
+                    return true;
+                } else if (parseScheme(url)) {
+                    try {
+                        Intent intent;
+                        intent = Intent.parseUri(url,
+                                Intent.URI_INTENT_SCHEME);
+                        intent.addCategory("android.intent.category.BROWSABLE");
+                        intent.setComponent(null);
+                        // intent.setSelector(null);
+                        startActivity(intent);
+//
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 return false;
             }
         });
@@ -123,6 +171,18 @@ public class InteractiveWebViewActivity extends BaseActivity {
         CookieManager.getInstance().setCookie("xiaomabao.com", "ECS_ID=" + ApiHelper.mSessionID + ";Domain=.xiaomabao.com");
         webView.addJavascriptInterface(new JavaScriptObject(InteractiveWebViewActivity.this), "xmbapp");
         webView.loadUrl(url);
+    }
+
+    public boolean parseScheme(String url) {
+
+        if (url.contains("platformapi/startapp")) {
+            return true;
+        } else if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
+                && (url.contains("platformapi") && url.contains("startapp"))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public class JavaScriptObject {

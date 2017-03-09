@@ -1,71 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f2f2f2"
+                android:orientation="vertical">
 
-    <com.witmoon.xmblibrary.recyclerview.SuperRecyclerView
-        android:id="@+id/recycler_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="40dip"
-        android:layout_weight="1"
-        app:layout_empty="@layout/layout_shopping_cart_empty"/>
+        android:layout_height="match_parent">
 
-    <RelativeLayout
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="40dip"
+            android:layout_weight="1"/>
+
+        <include
+            android:id="@+id/cart_empty"
+            layout="@layout/layout_shopping_cart_empty"/>
+    </FrameLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dip"
+        android:layout_height="@dimen/dimen_90_dip"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
             android:gravity="center_vertical">
 
             <CheckBox
                 android:id="@+id/checkall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
                 android:layout_marginRight="6dp"
                 android:button="@drawable/list_choice_indicator_single"
                 android:paddingLeft="4dp"
-                android:text="@string/text_check_all"/>
+                android:text="@string/text_check_all"
+                android:textColor="@color/app_main_deep"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="总计:"/>
 
-            <com.witmoon.xmb.util.MoneyTextView
-                android:id="@+id/account_sum"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:text="￥0"
-                android:textColor="@color/settle_account_btn_bg"/>
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/next_step_btn"
+                android:gravity="right"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="不含运费"
-                android:textSize="10sp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_8_dip"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="总计:"
+                        android:textColor="@color/app_main_deep"/>
+
+                    <com.witmoon.xmb.util.MoneyTextView
+                        android:id="@+id/account_sum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dimen_5_dip"
+                        android:layout_marginRight="8dp"
+                        android:text="￥0"
+                        android:textColor="@color/settle_account_btn_bg"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text"
+                    android:layout_marginBottom="@dimen/dimen_5_dip"
+                    android:layout_marginRight="@dimen/dimen_10_dip"
+                    android:layout_marginTop="@dimen/dimen_5_dip"
+                    android:text="不含运费和进口税"
+                    android:textColor="@color/app_main_thin"
+                    android:textSize="10sp"/>
+            </LinearLayout>
         </LinearLayout>
 
         <Button
             android:id="@+id/next_step_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@color/settle_account_btn_bg"
+            android:layout_weight="1"
+            android:background="@color/master_me"
             android:text="结算(0)"
             android:textColor="@android:color/white"/>
-    </RelativeLayout>
+
+    </LinearLayout>
 
 
-    <include layout="@layout/emptylayout_all" />
+    <include layout="@layout/emptylayout_all"/>
 </RelativeLayout>

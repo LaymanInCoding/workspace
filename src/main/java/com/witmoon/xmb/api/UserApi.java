@@ -29,7 +29,7 @@ public class UserApi {
     public static void verifyPhone(String phone, Listener<JSONObject> listener) {
         Map<String, String> paramMap = initParamMap();
         paramMap.put("name", phone);
-        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.getAbsoluteApiUrl("/user/valid"),
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "/users/checkuser",
                 paramMap, listener));
     }
 
@@ -41,15 +41,15 @@ public class UserApi {
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "users/phonecode", paramMap, listener));
     }
 
-    // 验证手机验证码短信
-    @Deprecated
-    public static void verifyPhoneCode(String phone, String code, Listener<JSONObject> listener) {
-        Map<String, String> paramMap = initParamMap();
-        paramMap.put("name", phone);
-        paramMap.put("phoneCode", code);
-        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.getAbsoluteApiUrl
-                ("/user/phoneCodeValid"), paramMap, listener));
-    }
+//    // 验证手机验证码短信
+//    @Deprecated
+//    public static void verifyPhoneCode(String phone, String code, Listener<JSONObject> listener) {
+//        Map<String, String> paramMap = initParamMap();
+//        paramMap.put("name", phone);
+//        paramMap.put("phoneCode", code);
+//        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.getAbsoluteApiUrl
+//                ("/user/phoneCodeValid"), paramMap, listener));
+//    }
 
     // 注册接口
     public static void signup(String code, String email, String phone, String pwd, Listener<JSONObject> listener) {
@@ -58,8 +58,8 @@ public class UserApi {
         paramMap.put("name", phone);
         paramMap.put("password", pwd);
         paramMap.put("email", email);
-        Log.e("signup_name", phone);
-        Log.e("singup_password", pwd);
+//        Log.e("signup_name", phone);
+//        Log.e("singup_password", pwd);
         Log.e("PARAM_MAP_SIGN", paramMap.toString());
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + ("/users/register"),
                 paramMap, listener));
@@ -347,6 +347,7 @@ public class UserApi {
     }
 
     // 用户反馈
+    //    unuse
     public static void evaluate(String evaluate, Listener<JSONObject> listener) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("msg_content", evaluate);
@@ -365,6 +366,7 @@ public class UserApi {
                 paramMap, listener));
     }
 
+    //unuse
     public static void CheckIdCard(String identity_card, String uid, String sid, String real_name, Listener<JSONObject> listener) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("session[uid]", uid);
@@ -375,15 +377,18 @@ public class UserApi {
                 ApiHelper.getParamObj(paramMap), listener));
     }
 
+    //unuse
     public static void is_Gnore(Listener<JSONObject> listener) {
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.getAbsoluteApiUrl("/common/ignore"), listener));
     }
 
+    //unuse
     public static void vaccine_record(Listener<JSONObject> listener) {
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.getAbsoluteApiUrl("/discovery/vaccine_record"),
                 ApiHelper.getParamObj(new HashMap<String, String>()), listener));
     }
 
+    //unuse
     public static void pregnancy_record(Listener<JSONObject> listener) {
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.getAbsoluteApiUrl("/discovery/pregnancy_record"),
                 ApiHelper.getParamObj(new HashMap<String, String>()), listener));

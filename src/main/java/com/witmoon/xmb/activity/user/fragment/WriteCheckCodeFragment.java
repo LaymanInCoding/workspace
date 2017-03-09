@@ -46,11 +46,11 @@ public class WriteCheckCodeFragment extends BaseFragment {
         Bundle args = getArguments();
         mPhoneNo = args.getString("telephone");
         type = args.getString("type");
-        mCheckCode = args.getString("checkCode");
+//        mCheckCode = args.getString("checkCode");
         mOperation = args.getInt("operation");
-        if (TextUtils.isEmpty(mCheckCode)) {
-            UserApi.phoneCode(mPhoneNo,type, phoneCodeCallback);
-        }
+//        if (TextUtils.isEmpty(mCheckCode)) {
+        UserApi.phoneCode(mPhoneNo, type, phoneCodeCallback);
+//        }
     }
 
     @Nullable
@@ -70,11 +70,10 @@ public class WriteCheckCodeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 createAndStartCountDownTimer();
-                if (type.equals("100"))
-                {
-                    UserApi.verifyPhone(mPhoneNo,phoneCodeCallback);
-                }else
-                UserApi.phoneCode(mPhoneNo, type ,phoneCodeCallback);
+//                if (type.equals("100")) {
+//                    UserApi.verifyPhone(mPhoneNo, phoneCodeCallback);
+//                } else
+                UserApi.phoneCode(mPhoneNo, type, phoneCodeCallback);
             }
         });
         createAndStartCountDownTimer();
@@ -97,7 +96,7 @@ public class WriteCheckCodeFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("telephone", mPhoneNo);
                 bundle.putInt("operation", mOperation);
-                bundle.putString("phoneCode",code);
+                bundle.putString("phoneCode", code);
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.WRITE_PASSWORD, bundle);
                 // 暂时去掉服务器端验证
 //                UserApi.verifyPhoneCode(mPhoneNo, code, verifyPhoneCodeCallback);
@@ -110,7 +109,7 @@ public class WriteCheckCodeFragment extends BaseFragment {
     private Listener<JSONObject> phoneCodeCallback = new Listener<JSONObject>() {
         @Override
         public void onSuccess(JSONObject response) {
-            TwoTuple<Boolean, String> result = ApiHelper.parseResponseStatus(response);
+            TwoTuple<Boolean, String> result = ApiHelper.parseRetrieveStatus(response);
             if (!result.first) {
                 AppContext.showToastShort(result.second);
                 return;
@@ -136,8 +135,8 @@ public class WriteCheckCodeFragment extends BaseFragment {
             }
             Bundle bundle = new Bundle();
             bundle.putString("telephone", mPhoneNo);
-            Log.e("phoneCode",mVCodeEditText.getText().toString().trim());
-            bundle.putString("phoneCode",mVCodeEditText.getText().toString().trim());
+            Log.e("phoneCode", mVCodeEditText.getText().toString().trim());
+            bundle.putString("phoneCode", mVCodeEditText.getText().toString().trim());
             UIHelper.showSimpleBack(getActivity(), SimpleBackPage.WRITE_PASSWORD, bundle);
         }
     };

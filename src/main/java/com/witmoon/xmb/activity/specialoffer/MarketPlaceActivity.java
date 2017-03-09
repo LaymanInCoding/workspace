@@ -302,12 +302,14 @@ public class MarketPlaceActivity extends BaseActivity implements AddordableAdapt
                 if (price_checked == 1) {
                     right_arrow.setImageResource(R.mipmap.price_check_twice);
                     price_checked = 2;
+                    emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
                     setRecRequestPrice(1, "desc");//降序
                     break;
                 }
                 if (price_checked == 2) {
                     right_arrow.setImageResource(R.mipmap.price_check_once);
                     price_checked = 1;
+                    emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
                     setRecRequestPrice(1, "asc");//升序
                     break;
                 }

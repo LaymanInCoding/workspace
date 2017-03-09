@@ -209,7 +209,7 @@ public class ServiceSearchActivity extends BaseActivity {
                         mArrayList.add(jsonObject);
                     }
                     if (jsonArray.length() < 20) {
-                        createMsgHeaderView();
+                        createNoMoreView();
                     } else {
                         createLoadMoreView();
                         resetStatus();

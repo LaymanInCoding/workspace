@@ -26,6 +26,7 @@ public class ReceiverAddressAdapter extends RecyclerView.Adapter<ReceiverAddress
     private OnSetDefaultClickListener mOnSetDefaultClickListener;
     private OnDeleteClickListener mOnDeleteClickListener;
     private OnEditClickListener mOnEditClickListener;
+    private OnConfirmClickListener mOnConfirmClickListener;
 
     public ReceiverAddressAdapter(Context context, List<ReceiverAddress> addressList) {
         mLayoutInflater = LayoutInflater.from(context);
@@ -45,8 +46,12 @@ public class ReceiverAddressAdapter extends RecyclerView.Adapter<ReceiverAddress
         holder.mTelephoneText.setText(address.getTelephone());
         holder.mAddressText.setText(address.getProvinceName() + address.getCityName() + address
                 .getDistrictName() + address.getAddress());
-
         holder.mSetDefaultText.setChecked(address.isDefault());
+        if (address.isDefault()){
+            holder.mSetDefaultText.setText("默认");
+        }else {
+            holder.mSetDefaultText.setText("设为默认");
+        }
         holder.mSetDefaultText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +73,14 @@ public class ReceiverAddressAdapter extends RecyclerView.Adapter<ReceiverAddress
             public void onClick(View v) {
                 if (mOnEditClickListener != null) {
                     mOnEditClickListener.onEditClick(address.getId());
+                }
+            }
+        });
+        holder.mAddressLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnConfirmClickListener != null){
+                    mOnConfirmClickListener.onConfirmClick(position);
                 }
             }
         });
@@ -103,6 +116,13 @@ public class ReceiverAddressAdapter extends RecyclerView.Adapter<ReceiverAddress
         mOnEditClickListener = onEditClickListener;
     }
 
+    public interface OnConfirmClickListener {
+        void onConfirmClick(int position);
+    }
+    public void setOnConfirmListener(OnConfirmClickListener onConfirmListener){
+        mOnConfirmClickListener = onConfirmListener;
+    }
+
     // ------------------------------- 接口定义 END ------------------------------
 
     // ViewHolder
@@ -115,6 +135,7 @@ public class ReceiverAddressAdapter extends RecyclerView.Adapter<ReceiverAddress
         CheckedTextView mSetDefaultText;
         TextView mDeleteText;
         TextView mEditText;
+        View mAddressLayout;
 
         public AddressHolder(View itemView) {
             super(itemView);
@@ -126,6 +147,7 @@ public class ReceiverAddressAdapter extends RecyclerView.Adapter<ReceiverAddress
             mSetDefaultText = (CheckedTextView) itemView.findViewById(R.id.set_default);
             mDeleteText = (TextView) itemView.findViewById(R.id.delete);
             mEditText = (TextView) itemView.findViewById(R.id.edit);
+            mAddressLayout = itemView.findViewById(R.id.address_parent);
         }
     }
 }

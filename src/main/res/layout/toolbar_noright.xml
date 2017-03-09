@@ -41,6 +41,18 @@
                 android:textSize="@dimen/toolbar_text_size"
                 android:textStyle="bold" />
 
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/toolbar_right_img"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                android:paddingRight="8dp"
+                android:src="@mipmap/mbq_share" />
+
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 </LinearLayout>

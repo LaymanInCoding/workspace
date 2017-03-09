@@ -5,27 +5,41 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.media.MediaBrowserServiceCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.duowan.mobile.netroid.Listener;
+import com.duowan.mobile.netroid.NetroidError;
 import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
+import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.me.OrderType;
 import com.witmoon.xmb.activity.me.Out_ServiceActivity;
 import com.witmoon.xmb.activity.me.adapter.OrderAdapter;
 import com.witmoon.xmb.activity.me.adapter.Out_PriceAdapter;
 import com.witmoon.xmb.activity.shoppingcart.OrderSubmitSuccessActivity;
 import com.witmoon.xmb.api.UserApi;
+import com.witmoon.xmb.base.BaseFragment;
 import com.witmoon.xmb.base.BaseRecyclerAdapter;
 import com.witmoon.xmb.base.BaseRecyclerViewFragmentV2;
 import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.model.ListEntity;
 import com.witmoon.xmb.model.Order;
 import com.witmoon.xmb.model.Out_;
+import com.witmoon.xmb.model.RefreshEvent;
 import com.witmoon.xmb.model.SimpleBackPage;
+import com.witmoon.xmb.rx.RxBus;
+import com.witmoon.xmb.ui.widget.EmptyLayout;
 import com.witmoon.xmb.util.UIHelper;
 
 import org.json.JSONArray;
@@ -37,38 +51,82 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
 /**
  * 退换货全部訂單
  * Created by de on 2015/11/24.
  */
-public class Out_PriceFragment extends BaseRecyclerViewFragmentV2 {
+public class Out_PriceFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final int OUT_SERVICE_CODE = 0x110;
-    Out_PriceAdapter mOut_PriceAdapter;
-    private Out_ out;
-    private Out_ mOut_;
-    private BroadcastReceiver mOut = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            out = (Out_) intent.getSerializableExtra("order");
-            for (int i = 0; i < mAdapter.getData().size(); i++) {
-                mOut_ = (Out_) mAdapter.getData().get(i);
-                if (mOut_.getOrder_sn().equals(out.getOrder_sn())) {
-                    mOut_PriceAdapter.getData().get(out.getPosion());
-                    mOut_PriceAdapter.notifyItemChanged(i);
-                }
+    private Out_PriceAdapter mOut_PriceAdapter;
+
+    private ArrayList<Out_> data = new ArrayList<>();
+    private int mCurrentPage = 1;
+    private EmptyLayout mEmptyLayout;
+    private boolean has_footer = false;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.out_price_layout, container, false);
+        mRootView = (RecyclerView) view.findViewById(R.id.my_recycler);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
+        initAdapter();
+        stringAdapter = new HeaderViewRecyclerAdapter(mOut_PriceAdapter);
+        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRootView.setLayoutManager(layoutManager);
+        mRootView.setHasFixedSize(true);
+        mRootView.setAdapter(stringAdapter);
+        mEmptyLayout = (EmptyLayout) view.findViewById(R.id.empty_layout);
+        mEmptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
+        mEmptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRecRequest(1);
             }
-        }
-    };
+        });
+        setRecRequest(1);
+        return view;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().registerReceiver(mOut, new IntentFilter(Const.INTENT_ACTION_TUI));
+        initEvent();
+    }
+
+    private void initEvent() {
+        Subscription subscription = RxBus.getDefault().toObservable(RefreshEvent.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<RefreshEvent>() {
+                    @Override
+                    public void call(RefreshEvent event) {
+                        Logger.d(event.getIsRefresh());
+                        data.clear();
+                        setRecRequest(1);
+                    }
+                });
+        addSubscribe(subscription);
     }
 
     @Override
-    protected BaseRecyclerAdapter getListAdapter() {
-        mOut_PriceAdapter = new Out_PriceAdapter(getActivity());
+    public void setRecRequest(int currentPage) {
+        mCurrentPage = currentPage;
+        UserApi.all_orderList(mCurrentPage, mListener);
+    }
+
+    private void initAdapter() {
+        mOut_PriceAdapter = new Out_PriceAdapter(getContext(), data);
         mOut_PriceAdapter.setOnItemButtonClickListener(new Out_PriceAdapter.OnItemButtonClickListener() {
             @Override
             public void onItemButtonClick(Out_ order, int position) {
@@ -114,55 +172,61 @@ public class Out_PriceFragment extends BaseRecyclerViewFragmentV2 {
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ORDER_DETAIL, argument);
             }
         });
-        return mOut_PriceAdapter;
     }
 
-    @Override
-    protected void requestData() {
-        UserApi.all_orderList(mCurrentPage, getDefaultListener());
-    }
-
-    @Override
-    protected ListEntity parseResponse(JSONObject json) throws Exception {
-        JSONArray orderArray = json.getJSONArray("data");
-        final List<Out_> outs = new ArrayList<Out_>(orderArray.length());
-        for (int i = 0; i < orderArray.length(); i++) {
-            Out_ out = Out_.parse(orderArray.getJSONObject(i));
-            outs.add(out);
-        }
-        return new ListEntity() {
-            @Override
-            public List<?> getList() {
-                return outs;
+    private Listener<JSONObject> mListener = new Listener<JSONObject>() {
+        @Override
+        public void onSuccess(JSONObject response) {
+            if (mCurrentPage == 1) {
+                data.clear();
             }
-
-            @Override
-            public boolean hasMoreData() {
-                if (outs.size() == 10) {
-                    return true;
+            Log.e("response", response.toString());
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+            JSONArray orderArray = null;
+            try {
+                orderArray = response.getJSONArray("data");
+                for (int i = 0; i < orderArray.length(); i++) {
+                    Out_ out = Out_.parse(orderArray.getJSONObject(i));
+                    data.add(out);
+                }
+                if (orderArray.length() < 20) {
+                    if (mCurrentPage != 1) {
+                        removeFooterView();
+                    }
+                    mRootView.scrollToPosition(0);
+                    has_footer = false;
                 } else {
-                    return false;
+                    has_footer = true;
+                    createLoadMoreView();
+                    resetStatus();
+                    if (mCurrentPage == 1) {
+                        mRootView.scrollToPosition(0);
+                    }
                 }
+                mOut_PriceAdapter.notifyDataSetChanged();
+                mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+                mCurrentPage += 1;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        };
-    }
-
-    @Override
-    protected void onItemClick(View view, int position) {
-//        Out_ order = (Out_) mAdapter.getData().get(position);
-//        Bundle argument = new Bundle();
-//        argument.putString(OrderDetailFragment.KEY_ORDER_TYPE, "");
-//        argument.putString(OrderDetailFragment.KEY_ORDER_ID, order.getOrder_id());
-//        UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ORDER_DETAIL, argument);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case OUT_SERVICE_CODE:
-                if (resultCode == Activity.RESULT_OK) {
-                    refresh();
-                }
         }
+
+        @Override
+        public void onError(NetroidError error) {
+            super.onError(error);
+            mEmptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+        }
+    };
+
+
+    @Override
+    public void onRefresh() {
+        mOut_PriceAdapter.notifyDataSetChanged();
+        mCurrentPage = 1;
+        setRecRequest(mCurrentPage);
     }
 }

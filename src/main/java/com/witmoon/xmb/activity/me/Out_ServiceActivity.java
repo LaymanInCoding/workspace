@@ -43,8 +43,10 @@ import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.model.Out_;
 import com.witmoon.xmb.model.ProvinceBean;
+import com.witmoon.xmb.model.RefreshEvent;
 import com.witmoon.xmb.model.Region;
 import com.witmoon.xmb.model.SimpleBackPage;
+import com.witmoon.xmb.rx.RxBus;
 import com.witmoon.xmb.ui.popupwindow.Popup;
 import com.witmoon.xmb.ui.popupwindow.PopupDialog;
 import com.witmoon.xmb.ui.popupwindow.PopupUtils;
@@ -647,6 +649,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                 AppContext.showToastShort(result);
                 return;
             }
+            RxBus.getDefault().post(new RefreshEvent(true));
             Intent intent = new Intent(Const.INTENT_ACTION_TUI);
             out.setRefund_status("2");
             intent.putExtra("order", out);
@@ -708,6 +711,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
                 AppContext.showToastShort(result);
                 return;
             }
+            RxBus.getDefault().post(new RefreshEvent(true));
             Intent intent = new Intent(Const.INTENT_ACTION_TUI);
             out.setRefund_status("2");
             intent.putExtra("order", out);

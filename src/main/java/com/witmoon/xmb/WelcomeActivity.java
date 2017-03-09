@@ -54,7 +54,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void run() {
                 runSwitchPage();
             }
-        }, 2500);
+        }, 1000);
     }
 
     // 根据是否为第一次启动应用, 跳转到引导页面或App主界面

@@ -125,9 +125,9 @@ public class SimpleBackActivity extends BaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(mFragment.get() instanceof ReturnofthegoodsFragment){
-           return ReturnofthegoodsFragment.onKeyDown(keyCode, event, SimpleBackActivity.this);
-        }
+//        if(mFragment.get() instanceof ReturnofthegoodsFragment){
+//           return ReturnofthegoodsFragment.onKeyDown(keyCode, event, SimpleBackActivity.this);
+//        }
         return super.onKeyDown(keyCode, event);
     }
 }

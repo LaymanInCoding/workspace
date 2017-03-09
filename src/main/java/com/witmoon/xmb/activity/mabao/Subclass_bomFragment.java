@@ -1,7 +1,9 @@
 package com.witmoon.xmb.activity.mabao;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -101,6 +103,7 @@ public class Subclass_bomFragment extends BaseFragment implements View.OnClickLi
         searchImg.setOnClickListener(v -> startActivity(new Intent(getActivity(), SearchActivity.class)));
         titleText = (TextView) view.findViewById(R.id.toolbar_title_text);
         titleText.setText(is_name);
+        setFont();
         view1 = view.findViewById(R.id.view1);
         view2 = view.findViewById(R.id.view2);
         view3 = view.findViewById(R.id.view3);
@@ -141,6 +144,11 @@ public class Subclass_bomFragment extends BaseFragment implements View.OnClickLi
         return view;
     }
 
+    private void setFont() {
+        AssetManager mgr = getActivity().getAssets();//得到AssetManager
+        Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
+        titleText.setTypeface(tf);
+    }
     public void setRecRequest(int page0) {
         FriendshipApi.child_category_index(cat_id, page + "", asc_or_desc, type, is_type, listener);
     }
@@ -161,6 +169,7 @@ public class Subclass_bomFragment extends BaseFragment implements View.OnClickLi
 
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             JSONArray goods_list = null;
             try {
                 goods_list = response.getJSONArray("goods_list");

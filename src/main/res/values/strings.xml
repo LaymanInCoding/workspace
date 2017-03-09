@@ -69,6 +69,7 @@
     <string name="text_vaccine_record">疫苗记录</string>
     <string name="text_bedtime_story">睡前故事</string>
     <string name="text_comment_">发评论</string>
+    <string name="text_mama_comment">麻麻评论</string>
     <string name="text_comments_">回复</string>
     <string name="text_message_">消息</string>
     <string name="text_big_aunt">大姨妈</string>
@@ -178,7 +179,7 @@
     <string name="btn_check">确&#160;&#160;定</string>
     <string name="info_title">发票须知</string>
     <string name="info_content_one">1.目前只支持纸质发票，暂不支持电子发票、增值税发票</string>
-    <string name="info_content_two">2.发票金额为订单实际支付金额，不含红包、优惠券抵扣金额</string>
+    <string name="info_content_two">2.发票金额为订单实际支付金额，不包含红包、优惠券抵扣金额、麻豆抵扣金额、麻包卡＆共享卡抵扣金额</string>
     <!-- Error View -->
     <string name="error_view_click_to_refresh">点击屏幕,重新加载</string>
     <string name="error_view_no_data">暂无内容</string>

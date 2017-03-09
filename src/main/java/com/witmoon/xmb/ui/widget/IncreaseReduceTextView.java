@@ -77,12 +77,12 @@ public class IncreaseReduceTextView extends ViewGroup implements View.OnClickLis
 
     // 初始化视图
     private void initializeView() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(DensityUtils.dp2px(getContext(), 20),
+                DensityUtils.dp2px(getContext(),20));
 
         mMinusImageButton = new ImageView(mContext);
         mMinusImageButton.setLayoutParams(params);
-        mMinusImageButton.setImageResource(R.mipmap.icon_minus_rounded_square);
+        mMinusImageButton.setImageResource(R.mipmap.icon_minus_enable);
         mMinusImageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +95,8 @@ public class IncreaseReduceTextView extends ViewGroup implements View.OnClickLis
         addView(mMinusImageButton);
 
         mNumberTextView = new TextView(mContext);
-        LayoutParams editLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams
-                .WRAP_CONTENT);
+        LayoutParams editLayoutParams = new LayoutParams(DensityUtils.dp2px(getContext(), 19),
+                DensityUtils.dp2px(getContext(), 19));
         mNumberTextView.setLayoutParams(editLayoutParams);
         mNumberTextView.setBackgroundResource(mBackground);
         mNumberTextView.setPadding(mHorizontalPadding, mVerticalPadding, mHorizontalPadding,
@@ -109,7 +109,7 @@ public class IncreaseReduceTextView extends ViewGroup implements View.OnClickLis
 
         mAddImageButton = new ImageView(mContext);
         mAddImageButton.setLayoutParams(params);
-        mAddImageButton.setImageResource(R.mipmap.icon_add_rounded_square);
+        mAddImageButton.setImageResource(R.mipmap.icon_add_enable);
         mAddImageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,9 +185,9 @@ public class IncreaseReduceTextView extends ViewGroup implements View.OnClickLis
             mOnNumberChangeListener.onNumberChange(number);
         }
         if (number <= max_) {
-            mMinusImageButton.setImageResource(R.mipmap.icon_minus_rounded_square_grey);
+            mMinusImageButton.setImageResource(R.mipmap.icon_minus_disable);
         } else {
-            mMinusImageButton.setImageResource(R.mipmap.icon_minus_rounded_square);
+            mMinusImageButton.setImageResource(R.mipmap.icon_minus_enable);
         }
     }
 
@@ -221,8 +221,8 @@ public class IncreaseReduceTextView extends ViewGroup implements View.OnClickLis
     public interface OnNumberChangeListener {
         void onNumberChange(int number);
     }
-    public void setting_num()
-    {
+
+    public void setting_num() {
         this.number = 0;
         this.max_ = 0;
     }

@@ -71,11 +71,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center"
-                app:horizontalPadding="8dp"
+                app:horizontalPadding="0dp"
                 app:textBackground="@drawable/bg_input_area"
-                app:verticalPadding="2dp"
-                app:viewSpace="4dp"
-                app:textSize="@dimen/dimen_20_dip"
+                app:textSize="14sp"
+                app:verticalPadding="0dp"
                 />
             </RelativeLayout>
         </LinearLayout>

@@ -8,6 +8,7 @@ import com.witmoon.xmb.activity.babycenter.ChildStatusFragment;
 import com.witmoon.xmb.activity.babycenter.MoreMessageFragment;
 import com.witmoon.xmb.activity.babycenter.OverdueSettingFragment;
 import com.witmoon.xmb.activity.friendship.fragment.CommentFragment;
+import com.witmoon.xmb.activity.goods.fragment.GoogsCommentFragment;
 import com.witmoon.xmb.activity.goods.fragment.Group_Buying_Fragment;
 import com.witmoon.xmb.activity.goods.fragment.PublishEvaluationFragment;
 import com.witmoon.xmb.activity.mabao.SubclassFragment;
@@ -142,7 +143,9 @@ public enum SimpleBackPage {
     BeanSend(60, R.string.send_bean, R.color.master_me, BeanSendFragment.class),
 
     SubService(61, R.string.send_bean, R.color.master_me, SubServiceFragment.class),
-    SubSubService(62, R.string.send_bean, R.color.master_me, Sub_SubServiceFragment.class);
+    SubSubService(62, R.string.send_bean, R.color.master_me, Sub_SubServiceFragment.class),
+
+    GoodsComment(63, R.string.text_mama_comment, R.color.master_me, GoogsCommentFragment.class);
 
 
     private int value;

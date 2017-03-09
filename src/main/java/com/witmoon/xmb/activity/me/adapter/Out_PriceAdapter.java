@@ -2,6 +2,7 @@ package com.witmoon.xmb.activity.me.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,17 +24,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * 订单适配器 ----   we
  */
-public class Out_PriceAdapter extends BaseRecyclerAdapter {
+public class Out_PriceAdapter extends RecyclerView.Adapter<Out_PriceAdapter.OrderViewHolder> {
     private Context mContext;
     private OnItemButtonClickListener mOnItemButtonClickListener;
     private OnItemTypeClickListener mOnItemTypeClickListener;
     private OnItemAllClickListener mOnItemAllClickListener;
+    private List<Out_> _data = new ArrayList<>();
+
     public void setOnItemButtonClickListener(
             OnItemButtonClickListener onItemButtonClickListener) {
         mOnItemButtonClickListener = onItemButtonClickListener;
@@ -48,51 +52,48 @@ public class Out_PriceAdapter extends BaseRecyclerAdapter {
             OnItemTypeClickListener onItemTypeClickListener) {
         mOnItemTypeClickListener = onItemTypeClickListener;
     }
-    public Out_PriceAdapter(Context context) {
+
+    public Out_PriceAdapter(Context context, List<Out_> _data) {
         this.mContext = context;
+        this._data = _data;
+    }
+
+
+    @Override
+    public OrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new OrderViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_out_price, parent, false));
     }
 
     @Override
-    protected View onCreateItemView(ViewGroup parent, int viewType) {
-        return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_out_price, parent, false);
-    }
-
-    @Override
-    protected ViewHolder onCreateItemViewHolder(View view, int viewType) {
-        return new OrderViewHolder(viewType, view);
-    }
-
-    @Override
-    protected void onBindItemViewHolder(ViewHolder holder, final int position) {
-        OrderViewHolder oHolder = (OrderViewHolder) holder;
-        final Out_ order = (Out_) _data.get(position);
-        switch (Integer.valueOf(order.getRefund_status()))
-        {
-            case 1 :
+    public void onBindViewHolder(OrderViewHolder holder, int position) {
+        OrderViewHolder oHolder = holder;
+        final Out_ order = _data.get(position);
+        switch (Integer.valueOf(order.getRefund_status())) {
+            case 1:
                 oHolder.goods_od.setVisibility(View.GONE);
                 oHolder.type1.setVisibility(View.GONE);
                 oHolder.type2.setVisibility(View.VISIBLE);
                 oHolder.type2.setText("申请售后");
                 break;
-            case 2 :
+            case 2:
                 oHolder.goods_od.setVisibility(View.GONE);
                 oHolder.type1.setVisibility(View.GONE);
                 oHolder.type2.setVisibility(View.VISIBLE);
                 oHolder.type2.setText("进度查询");
                 break;
-            case 3 :
+            case 3:
                 oHolder.goods_od.setVisibility(View.GONE);
                 oHolder.type1.setVisibility(View.VISIBLE);
                 oHolder.type2.setVisibility(View.GONE);
                 oHolder.type1.setText("重新申请");
                 break;
-            case 4 :
+            case 4:
                 oHolder.goods_od.setVisibility(View.VISIBLE);
                 oHolder.type1.setVisibility(View.GONE);
                 oHolder.type2.setVisibility(View.VISIBLE);
                 oHolder.type2.setText("已完成退换货");
                 break;
-            case 5 :
+            case 5:
                 oHolder.type1.setVisibility(View.VISIBLE);
                 oHolder.goods_od.setVisibility(View.GONE);
                 oHolder.type2.setVisibility(View.VISIBLE);
@@ -103,12 +104,12 @@ public class Out_PriceAdapter extends BaseRecyclerAdapter {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         oHolder.serialNoText.setText("订单号：" + order.getOrder_sn());
         oHolder.splitTime.setText(order.getAdd_time());
-        oHolder.total_price.setText("¥"+order.getOrder_total_money());
+        oHolder.total_price.setText("¥" + order.getOrder_total_money());
         oHolder.type2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mOnItemButtonClickListener != null)
-                    mOnItemButtonClickListener.onItemButtonClick(order,position);
+                    mOnItemButtonClickListener.onItemButtonClick(order, position);
             }
         });
 
@@ -116,7 +117,7 @@ public class Out_PriceAdapter extends BaseRecyclerAdapter {
             @Override
             public void onClick(View v) {
                 if (mOnItemTypeClickListener != null)
-                    mOnItemTypeClickListener.OnItemTypeClick(order,position);
+                    mOnItemTypeClickListener.OnItemTypeClick(order, position);
             }
         });
         oHolder.splitContainer.setOnClickListener(new View.OnClickListener() {
@@ -136,20 +137,27 @@ public class Out_PriceAdapter extends BaseRecyclerAdapter {
             TextView title = (TextView) goodsContainerView.findViewById(R.id.goods_title);
             title.setText(map.get("goods_name"));
             TextView price = (TextView) goodsContainerView.findViewById(R.id.goods_price);
-            price.setText("¥"+map.get("goods_price"));
+            price.setText("¥" + map.get("goods_price"));
             TextView count = (TextView) goodsContainerView.findViewById(R.id.goods_count);
-            count.setText("x"+map.get("goods_number"));
+            count.setText("x" + map.get("goods_number"));
             oHolder.splitContainer.addView(goodsContainerView);
         }
     }
 
+
+    @Override
+    public int getItemCount() {
+        return _data.size();
+    }
+
     // ViewHolder
-    public static class OrderViewHolder extends ViewHolder {
+    public class OrderViewHolder extends RecyclerView.ViewHolder {
         private TextView serialNoText;
         private LinearLayout container, splitContainer;
-        private TextView type1, splitTime, type2,goods_od,total_price;
-        public OrderViewHolder(int viewType, View v) {
-            super(viewType, v);
+        private TextView type1, splitTime, type2, goods_od, total_price;
+
+        public OrderViewHolder(View v) {
+            super(v);
             serialNoText = (TextView) v.findViewById(R.id.serial_no);
             splitContainer = (LinearLayout) v.findViewById(R.id.split_order_container);
             splitTime = (TextView) v.findViewById(R.id.split_time);
@@ -159,14 +167,17 @@ public class Out_PriceAdapter extends BaseRecyclerAdapter {
             goods_od = (TextView) v.findViewById(R.id.goods_od);
         }
     }
+
     //申请回调接口 --- 申请售后
     public interface OnItemButtonClickListener {
-        void onItemButtonClick(Out_ order,int position);
+        void onItemButtonClick(Out_ order, int position);
     }
+
     //申请回调接口 --- 重新申请售后
     public interface OnItemTypeClickListener {
-        void OnItemTypeClick(Out_ order,int position);
+        void OnItemTypeClick(Out_ order, int position);
     }
+
     public interface OnItemAllClickListener {
         void OnItemAllClickListener(Out_ order);
     }

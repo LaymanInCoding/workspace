@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.api.ApiHelper;
@@ -63,24 +64,36 @@ public class TelephoneRegisterFragment extends BaseFragment {
 
         @Override
         public void onSuccess(JSONObject response) {
-            TwoTuple<Boolean, String> status = ApiHelper.parseResponseStatus(response);
+            Logger.json(response.toString());
             hideWaitDialog();
-            if (!status.first) {
-                AppContext.showToastShort(status.second);
-                return;
-            }
-            // 启动手机校验码Activity
-            Bundle args = new Bundle();
-            args.putInt("operation", WritePasswordFragment.OPERATION_REGISTER);
-            args.putString("telephone", mPhoneEdit.getText().toString());
-            args.putString("type","100");
             try {
-                args.putString("checkCode", response.getJSONObject("data").getString("phoneCode"));
+                JSONObject object = response.getJSONObject("status");
+
+//                TwoTuple<Boolean, String> status = ApiHelper.parseResponseStatus(response);
+                if (object.getInt("succeed") == 1) {
+                    AppContext.showToastShort("手机号已注册");
+                    return;
+                }
+                String error_code = object.getString("error_code");
+                String error_desc = object.getString("error_desc");
+                if (error_code.equals("2006")) {
+                    AppContext.showToastShort(error_desc);
+                    return;
+                }
+                // 启动手机校验码Activity
+                Bundle args = new Bundle();
+                args.putInt("operation", WritePasswordFragment.OPERATION_REGISTER);
+                args.putString("telephone", mPhoneEdit.getText().toString());
+                args.putString("type", "100");
+                UIHelper.showSimpleBack(getActivity(), SimpleBackPage.WRITE_CHECK_CODE, args);
+//            try {
+//                args.putString("checkCode", response.getJSONObject("data").getString("phoneCode"));
             } catch (JSONException e) {
                 AppContext.showToastShort("发送短信校验码出错");
+                return;
             }
-            UIHelper.showSimpleBack(getActivity(), SimpleBackPage.WRITE_CHECK_CODE, args);
         }
+
         @Override
         public void onError(NetroidError error) {
             hideWaitDialog();

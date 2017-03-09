@@ -33,6 +33,8 @@ import com.witmoon.xmb.util.SystemBarTintManager;
 
 import cn.easydone.swiperefreshendless.EndlessRecyclerOnScrollListener;
 import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Activity基类
@@ -50,7 +52,21 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected RecyclerView mRootView;
     protected LinearLayoutManager layoutManager;
     protected HeaderViewRecyclerAdapter stringAdapter;
+    protected CompositeSubscription mCompositeSubscription;
 
+    protected void unSubscribe() {
+        if (mCompositeSubscription != null) {
+            mCompositeSubscription.unsubscribe();
+            Logger.d("unsubscirbe");
+        }
+    }
+
+    protected void addSubscribe(Subscription subscription) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.add(subscription);
+    }
     // 退出应用广播接收器
 
     private BroadcastReceiver mExistReceiver = new BroadcastReceiver() {
@@ -108,6 +124,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         unregisterReceiver(mExistReceiver);
 //        mExistReceiver = null;
         super.onDestroy();
+        unSubscribe();
     }
 
     protected void initialize(Bundle savedInstanceState) {
@@ -353,7 +370,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    protected void createMsgHeaderView() {
+    protected void createNoMoreView() {
         removeFooterView();
         View loadMoreView = LayoutInflater
                 .from(this)

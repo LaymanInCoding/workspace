@@ -2,16 +2,15 @@ package com.witmoon.xmb.activity.main.fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +18,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.common.SimpleBackActivity;
+import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.shoppingcart.OrderConfirmActivity;
 import com.witmoon.xmb.activity.shoppingcart.adapter.ShoppingCart;
 import com.witmoon.xmb.activity.user.LoginActivity;
@@ -36,12 +38,19 @@ import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.BaseFragment;
 import com.witmoon.xmb.base.Const;
+import com.witmoon.xmb.model.event.CartRefreshCd;
+import com.witmoon.xmb.rx.RxBus;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
 import com.witmoon.xmb.util.CommonUtil;
 import com.witmoon.xmb.util.TwoTuple;
 import com.witmoon.xmb.util.XmbUtils;
-import com.witmoon.xmblibrary.recyclerview.SuperRecyclerView;
 import com.witmoon.xmblibrary.recyclerview.itemdecoration.linear.DividerItemDecoration;
+import com.yanzhenjie.recyclerview.swipe.Closeable;
+import com.yanzhenjie.recyclerview.swipe.OnSwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,8 +72,8 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
 //    private JSONObject ntjson = new JSONObject();
 //    private JSONObject param1 = new JSONObject();
 //    private JSONArray ntalkerparam = new JSONArray();
-    private View mRootView;
-    private SuperRecyclerView mSuperRecyclerView;
+    private View rootView;
+    private SwipeMenuRecyclerView scrollRecycler;
     private ViewGroup mEmptyView;
     private TextView mActionTipText;    // 空布局提示
     private ImageView imageView;
@@ -114,15 +123,20 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).setTitleColor_(R.color.main_kin);
         }
-        if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
 
-            mSuperRecyclerView = (SuperRecyclerView) mRootView.findViewById(R.id.recycler_view);
-            mSuperRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            mSuperRecyclerView.addItemDecoration(new DividerItemDecoration(getResources()
+            scrollRecycler = (SwipeMenuRecyclerView) rootView.findViewById(R.id.recycler_view);
+            scrollRecycler.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
+            scrollRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+            scrollRecycler.addItemDecoration(new DividerItemDecoration(getResources()
                     .getDrawable(R.drawable.divider_x1)));
-
-            mEmptyView = (ViewGroup) mSuperRecyclerView.getEmptyView();
+            // 为SwipeRecyclerView的Item创建菜单就两句话，不错就是这么简单：
+            // 设置菜单创建器。
+            scrollRecycler.setSwipeMenuCreator(swipeMenuCreator);
+            // 设置菜单Item点击监听。
+            scrollRecycler.setSwipeMenuItemClickListener(menuItemClickListener);
+            mEmptyView = (ViewGroup) rootView.findViewById(R.id.cart_empty);
             mActionView = (TextView) mEmptyView.findViewById(R.id.tv_error_action);
             mActionTipText = (TextView) mEmptyView.findViewById(R.id.tv_error_tip);
             imageView = (ImageView) mEmptyView.findViewById(R.id.car_img);
@@ -132,16 +146,16 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
                     ((MainActivity) getActivity()).changeToTab(0);
                 }
             });
-            mAccountSumText = (TextView) mRootView.findViewById(R.id.account_sum);
-            mSettleAccountBtn = (Button) mRootView.findViewById(R.id.next_step_btn);
+            mAccountSumText = (TextView) rootView.findViewById(R.id.account_sum);
+            mSettleAccountBtn = (Button) rootView.findViewById(R.id.next_step_btn);
             mSettleAccountBtn.setOnClickListener(this);
-            mCheckAllCheckbox = (CheckBox) mRootView.findViewById(R.id.checkall);
+            mCheckAllCheckbox = (CheckBox) rootView.findViewById(R.id.checkall);
             mCheckAllCheckbox.setOnClickListener(this);
 
             mShoppingCartAdapter = new ShoppingCart(getContext(), mDataList);
             mShoppingCartAdapter.OnClickListener(this);
-            mSuperRecyclerView.setAdapter(mShoppingCartAdapter);
-            emptyLayout = (EmptyLayout) mRootView.findViewById(R.id.error_layout);
+            scrollRecycler.setAdapter(mShoppingCartAdapter);
+            emptyLayout = (EmptyLayout) rootView.findViewById(R.id.error_layout);
             emptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -150,18 +164,18 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
             });
         }
 
-        if (mRootView.getParent() != null) {
-            ((ViewGroup) mRootView.getParent()).removeView(mRootView);
+        if (rootView.getParent() != null) {
+            ((ViewGroup) rootView.getParent()).removeView(rootView);
         }
 
-        return mRootView;
+        return rootView;
     }
 
     // 刷新购物车
     public void refresh() {
-        if (null != mSuperRecyclerView) {
+        if (null != scrollRecycler) {
             if (!AppContext.instance().isLogin()) {
-                mSuperRecyclerView.hideRecycler();
+                scrollRecycler.setVisibility(View.GONE);
                 mEmptyView.setVisibility(View.VISIBLE);
                 mActionTipText.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
@@ -176,8 +190,9 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
                 });
                 mAccountSumText.setText("￥0");
                 mSettleAccountBtn.setText("结算(0)");
-            } else
+            } else {
                 GoodsApi.cartList(mCartCallback);
+            }
         }
     }
 
@@ -189,7 +204,7 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
         public void onPreExecute() {
             count = "0";
             totalPrice = "￥0";
-            emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
+//            emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
         }
 
         @Override
@@ -199,12 +214,14 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
                 //error_linked:防止在fragment attach 到Activity 前调用getResource();
                 // http://stackoverflow.com/questions/10919240/fragment-myfragment-not-attached-to-activity
                 if (isAdded()) {
+                    Logger.json(response.toString());
                     JSONObject dataObj = response.getJSONObject("data");
                     TwoTuple<Integer, List<Map<String, String>>> parseResult = parseGoodsList(dataObj
                             .getJSONArray("goods_list"));
                     if (parseResult.second.size() < 1) {
                         mEmptyView.setVisibility(View.VISIBLE);
-                        mSuperRecyclerView.hideRecycler();
+                        scrollRecycler.setVisibility(View.GONE);
+//                        mSuperRecyclerView.hideRecycler();
                         mCheckAllCheckbox.setEnabled(false);
                         mActionTipText.setVisibility(View.VISIBLE);
                         imageView.setVisibility(View.VISIBLE);
@@ -221,16 +238,18 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
                         emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
                         return;
                     }
-
+                    mEmptyView.setVisibility(View.GONE);
+                    scrollRecycler.setVisibility(View.VISIBLE);
                     mCheckAllCheckbox.setEnabled(true);
                     mCheckAllCheckbox.setChecked(parseResult.first == parseResult.second.size());
                     mSettleAccountBtn.setClickable(parseResult.first > 0);
-                    mSuperRecyclerView.showRecycler();
+//                    mSuperRecyclerView.showRecycler();
                     mDataList.addAll(parseResult.second);
                     totalPrice = dataObj.getJSONObject("total").getString("goods_price");
                     count = dataObj.getJSONObject("total").getString("real_goods_count");
                     mShoppingCartAdapter.notifyDataSetChanged();
                     emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+
                 }
             } catch (JSONException e) {
                 emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
@@ -271,6 +290,7 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
             dataMap.put("count", goods.getString("goods_number"));
             dataMap.put("is_third", goods.getString("is_third"));
             dataMap.put("is_group", goods.getString("is_group"));
+            dataMap.put("goods_attr",goods.getString("goods_attr"));
             dataMap.put("coupon_disable", goods.getString("coupon_disable"));
             dataMap.put("is_cross_border", goods.getString("is_cross_border"));
             goodsList.add(dataMap);
@@ -387,6 +407,7 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
             if (!tt.first) {
                 CommonUtil.show(getActivity(), tt.second, 1000);
             }
+//            RxBus.getDefault().post(new CartRefreshCd(true));
         }
 
         @Override
@@ -414,24 +435,23 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
     }
 
     @Override
-    public void OnRemoveButtonClickListener(final String recId) {
-        new AlertDialog.Builder(getActivity()).setMessage("确定将该商品从购物车删除吗?")
-                .setNegativeButton("取消", null).setCancelable(true)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        GoodsApi.removeFromCart(recId, mRemoveCallback);
-                    }
-                }).show();
+    public void onRemoveButtonClick(int position) {
+        Map<String, String> dataMap = mDataList.get(position);
+
+        GoodsApi.removeFromCart(dataMap.get("id"), mRemoveCallback);
+//                    }
+//                }).show();
     }
 
     @Override
-    public void OnAddFavoriteClickListener(String goodsId) {
-        UserApi.collectGoods(goodsId, mCollectCallback);
+    public void onAddFavoriteClick(int position) {
+        Map<String, String> dataMap = mDataList.get(position);
+
+        UserApi.collectGoods(dataMap.get("goods_id"), mCollectCallback);
     }
 
     @Override
-    public void OnShoppingCartChangeListener(int position, boolean is_checked, int number) {
+    public void onShoppingCartChange(int position, boolean is_checked, int number) {
         Map<String, String> dataMap = mDataList.get(position);
         GoodsApi.updateCart(dataMap.get("id"), is_checked, number, new Listener<JSONObject>() {
             @Override
@@ -448,4 +468,70 @@ public class ShoppingCartFragmentV2 extends BaseFragment implements ShoppingCart
             }
         });
     }
+
+    @Override
+    public void onItemClick(int position) {
+        Map<String, String> dataMap = mDataList.get(position);
+        CommodityDetailActivity.start(getActivity(), dataMap.get("goods_id"));
+    }
+
+    /**
+     * 菜单创建器。在Item要创建菜单的时候调用。
+     */
+    private SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
+        @Override
+        public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
+            int width = getResources().getDimensionPixelSize(R.dimen.dimen_100_dip);
+
+            // MATCH_PARENT 自适应高度，保持和内容一样高；也可以指定菜单具体高度，也可以用WRAP_CONTENT。
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+            // 添加右侧的，如果不添加，则右侧不会出现菜单。
+            {
+                SwipeMenuItem addItem = new SwipeMenuItem(getContext())
+                        .setText("收藏") // 文字，还可以设置文字颜色，大小等。。
+                        .setBackgroundDrawable(R.color.master_me)
+                        .setTextColor(Color.WHITE)
+                        .setWidth(width)
+                        .setHeight(height);
+                swipeRightMenu.addMenuItem(addItem);// 添加一个按钮到右侧侧菜单。
+
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getContext())
+                        .setText("删除")
+                        .setBackgroundDrawable(R.color.grey)
+                        .setTextColor(Color.WHITE)
+                        .setWidth(width)
+                        .setHeight(height);
+                swipeRightMenu.addMenuItem(deleteItem); // 添加一个按钮到右侧菜单。
+            }
+        }
+    };
+    /**
+     * 菜单点击监听。
+     */
+    private OnSwipeMenuItemClickListener menuItemClickListener = new OnSwipeMenuItemClickListener() {
+        /**
+         * Item的菜单被点击的时候调用。
+         * @param closeable       closeable. 用来关闭菜单。
+         * @param adapterPosition adapterPosition. 这个菜单所在的item在Adapter中position。
+         * @param menuPosition    menuPosition. 这个菜单的position。比如你为某个Item创建了2个MenuItem，那么这个position可能是是 0、1，
+         * @param direction       如果是左侧菜单，值是：SwipeMenuRecyclerView#LEFT_DIRECTION，如果是右侧菜单，值是：SwipeMenuRecyclerView#RIGHT_DIRECTION.
+         */
+        @Override
+        public void onItemClick(Closeable closeable, int adapterPosition, int menuPosition, int direction) {
+            closeable.smoothCloseMenu();// 关闭被点击的菜单。
+
+            // TODO 如果是删除：推荐调用Adapter.notifyItemRemoved(position)，不推荐Adapter.notifyDataSetChanged();
+            if (menuPosition == 1) {// 删除按钮被点击。
+                Map<String, String> dataMap = mDataList.get(adapterPosition);
+                GoodsApi.removeFromCart(dataMap.get("id"), mRemoveCallback);
+                mDataList.remove(adapterPosition);
+                mShoppingCartAdapter.notifyItemRemoved(adapterPosition);
+            }
+            if (menuPosition == 0) { //收藏被点击
+                Map<String, String> dataMap = mDataList.get(adapterPosition);
+                UserApi.collectGoods(dataMap.get("goods_id"), mCollectCallback);
+            }
+        }
+    };
 }

@@ -26,6 +26,7 @@ import android.widget.ToggleButton;
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
@@ -202,6 +203,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
             if (twoTuple.first) {
                 try {

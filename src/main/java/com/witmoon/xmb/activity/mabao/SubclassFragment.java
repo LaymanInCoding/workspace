@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.common.SearchActivity;
@@ -134,6 +135,7 @@ public class SubclassFragment extends BaseFragment implements View.OnClickListen
         AssetManager mgr = getActivity().getAssets();//得到AssetManager
         Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
         TextView mbjx = (TextView) headerView.findViewById(R.id.mbjx);
+        titleText.setTypeface(tf);
         mbjx.setTypeface(tf);
     }
 
@@ -155,6 +157,7 @@ public class SubclassFragment extends BaseFragment implements View.OnClickListen
 
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             try {
                 if (response.has("category")) {
                     list = new ArrayList<>();
@@ -165,6 +168,7 @@ public class SubclassFragment extends BaseFragment implements View.OnClickListen
                         map.put("cat_id", categoryJson.getString("cat_id"));
                         map.put("icon", categoryJson.getString("icon"));
                         map.put("cat_name", categoryJson.getString("cat_name"));
+                        map.put("is_long_show", categoryJson.getString("is_long_show"));
                         if (!StringUtils.isEmpty(map.get("cat_id")))
                             list.add(map);
                     }

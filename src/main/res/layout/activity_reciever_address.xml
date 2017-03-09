@@ -22,7 +22,7 @@
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F23030"
+        android:background="@color/master_me"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"

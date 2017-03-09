@@ -91,8 +91,6 @@ public class GoodsEvaluationAdapter extends LinearBaseAdapter {
             evaluationHolder = (EvaluationHolder) view.getTag();
         }
         EvaluateBean mEvaluateBean = mDataList.get(position);
-        Log.e("position:", position + "");
-        Log.e("mEvaluateBean", mEvaluateBean.toString());
         evaluationHolder.nameText.setText(mEvaluateBean.getAuthor());
         evaluationHolder.content.setText(mEvaluateBean.getContent());
         evaluationHolder.rating.setRating(Float.valueOf(mEvaluateBean.getmRating() + ""));

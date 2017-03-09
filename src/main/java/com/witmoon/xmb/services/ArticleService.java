@@ -1,33 +1,29 @@
 package com.witmoon.xmb.services;
 
 import com.witmoon.xmb.AppContext;
+import com.witmoon.xmb.BuildConfig;
+import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.model.MajorArticle;
 import com.witmoon.xmb.model.mbq.MbqArticleCollectResponse;
+import com.witmoon.xmb.rx.RetrofitHelper;
+import com.witmoon.xmb.util.SystemUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.http.FieldMap;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.POST;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 import rx.Observable;
 
 public class ArticleService {
     private static final String USER_SERVER_URL = "https://api.xiaomabao.com";
     private Api api;
-
     public ArticleService() {
-        RequestInterceptor requestInterceptor = (RequestInterceptor.RequestFacade request) -> request.addHeader("Accept", "application/json");
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(USER_SERVER_URL)
-                .setRequestInterceptor(requestInterceptor)
-                .build();
-
-        api = restAdapter.create(Api.class);
+        RetrofitHelper helper = new RetrofitHelper();
+        api = helper.getApiService(USER_SERVER_URL,Api.class);
     }
 
     public Api getApi() {

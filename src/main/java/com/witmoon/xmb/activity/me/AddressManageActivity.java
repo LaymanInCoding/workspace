@@ -1,5 +1,6 @@
 package com.witmoon.xmb.activity.me;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.me.adapter.ReceiverAddressAdapter;
@@ -101,6 +103,20 @@ public class AddressManageActivity extends BaseActivity {
                         SimpleBackPage.NEW_ADDRESS, bundle);
             }
         });
+        //若该activity是由确认订单页面启动  则添加此监听
+        if (null != getIntent().getStringExtra("orderConfirm")) {
+            mAddressAdapter.setOnConfirmListener(new ReceiverAddressAdapter.OnConfirmClickListener() {
+                @Override
+                public void onConfirmClick(int position) {
+                    Intent intent = new Intent();
+                    intent.putExtra("address", mAddressList.get(position));
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
+            });
+        } else {
+            mAddressAdapter.setOnConfirmListener(null);
+        }
 
         mSuperRecyclerView.setAdapter(mAddressAdapter);
 
@@ -128,6 +144,7 @@ public class AddressManageActivity extends BaseActivity {
 
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
             if (!twoTuple.first) {
                 AppContext.showToastShort(twoTuple.second);
@@ -143,13 +160,13 @@ public class AddressManageActivity extends BaseActivity {
                     }
                     mAddressList.add(address);
                 }
-                if(mAddressList.size() == 0){
+                if (mAddressList.size() == 0) {
                     TextView emptyText = (TextView) mSuperRecyclerView.getEmptyView();
                     emptyText.setText("您还没有收货地址, 快来添加一个吧!");
                 }
                 mAddressAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
-                Log.e("data",e.getMessage());
+                Log.e("data", e.getMessage());
                 AppContext.showToastShort("服务器出现异常");
             }
         }
@@ -170,11 +187,11 @@ public class AddressManageActivity extends BaseActivity {
                     AppContext.showToastShort(twoTuple.second);
                     return;
                 }
-                for (ReceiverAddress address : mAddressList){
-                    if(address.isDefault()){
+                for (ReceiverAddress address : mAddressList) {
+                    if (address.isDefault()) {
                         address.setIsDefault(false);
                     }
-                    if(address.getId().equals(id)){
+                    if (address.getId().equals(id)) {
                         address.setIsDefault(true);
                     }
                 }
@@ -210,7 +227,7 @@ public class AddressManageActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("data",requestCode+"----"+resultCode);
+        Log.e("data", requestCode + "----" + resultCode);
         switch (requestCode) {
             case NEW_ADDRESS:
                 if (resultCode == RESULT_OK) {

@@ -301,4 +301,9 @@
     <style name="invoice_radiobtn_two">
         <item name="android:button">@drawable/bg_invoice_text</item>
     </style>
+
+    <style name="PopAnimation">
+        <item name="android:windowEnterAnimation">@anim/cart_pop_in</item>
+        <item name="android:windowExitAnimation">@anim/cart_pop_out</item>
+    </style>
 </resources>
