@@ -473,7 +473,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
 
     private void parsJson(JSONObject object) throws JSONException {
         JSONObject js = object.getJSONObject("data");
-        order_id = js.getString("order_id");
+        order_id = js.getInt("order_id") + "";
         title.setText(js.getString("order_sn"));
         serial_no.setText("¥" + js.getString("refund_total_money"));
         serial_count.setText("数量" + js.getString("refund_total_goods_num"));

@@ -115,7 +115,7 @@ public class Out_ extends BaseBean {
             JSONObject goodsObj = childOrders.getJSONObject(i);
             Map<String, String> tmap = new HashMap<>();
             tmap.put("order_id", goodsObj.getInt("order_id")+"");
-            tmap.put("goods_id", goodsObj.getInt("goods_id")+"");
+            tmap.put("goods_id", goodsObj.getString("goods_id"));
             tmap.put("goods_name", goodsObj.getString("goods_name"));
             tmap.put("goods_price", goodsObj.getString("goods_price"));
             tmap.put("goods_number", goodsObj.getInt("goods_number")+"");

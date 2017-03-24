@@ -16,7 +16,6 @@ import android.widget.CheckedTextView;
 
 import com.alipay.sdk.app.PayTask;
 import com.androidquery.AQuery;
-import com.duowan.mobile.netroid.Listener;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -26,14 +25,12 @@ import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.me.OrderType;
 import com.witmoon.xmb.activity.me.fragment.OrderDetailFragment;
 import com.witmoon.xmb.api.ApiHelper;
-import com.witmoon.xmb.api.GoodsApi;
 import com.witmoon.xmb.api.alipay.AlipayResult;
 import com.witmoon.xmb.api.alipay.SignUtils;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.model.SimpleBackPage;
 import com.witmoon.xmb.util.CommonUtil;
-import com.witmoon.xmb.util.TwoTuple;
 import com.witmoon.xmb.util.UIHelper;
 import com.witmoon.xmb.wxapi.simcpux.Constants;
 import com.witmoon.xmb.wxapi.simcpux.MD5;
@@ -107,6 +104,7 @@ public class OrderSubmitSuccessActivity extends BaseActivity {
                 CommonUtil.show(OrderSubmitSuccessActivity.this, "支付成功", 1000);
                 Intent intent1 = new Intent(OrderSubmitSuccessActivity.this, OrderPaySuccessActivity.class);
                 intent1.putExtra("ORDER_SN", mOrderSerialNo);
+                intent1.putExtra("TYPE","goods");
                 startActivity(intent1);
                 finish();
             }
@@ -393,6 +391,7 @@ public class OrderSubmitSuccessActivity extends BaseActivity {
                 CommonUtil.show(OrderSubmitSuccessActivity.this, "支付成功", 1000);
                 Intent intent1 = new Intent(OrderSubmitSuccessActivity.this, OrderPaySuccessActivity.class);
                 intent1.putExtra("ORDER_SN", mOrderSerialNo);
+                intent1.putExtra("TYPE","goods");
                 startActivity(intent1);
                 finish();
             } else {    // 判断resultStatus 为非“9000”则代表可能支付失败

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_marginBottom="@dimen/space_8">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dimen_20_dip"
+        android:paddingLeft="@dimen/dimen_36_dip"
+        android:paddingTop="@dimen/dimen_20_dip"
+        android:text="购物清单"
+        android:textColor="#555555"/>
+
+    <View style="@style/horizontal_divider_full"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/g_container">
+    </LinearLayout>
+
+
+</LinearLayout>

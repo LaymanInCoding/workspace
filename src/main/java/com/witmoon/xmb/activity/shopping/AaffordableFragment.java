@@ -24,13 +24,12 @@ import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.UmengStatic;
+import com.witmoon.xmb.activity.card.CardActivity;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.main.ShakeActivity;
 import com.witmoon.xmb.activity.main.SignInActivity;
-import com.witmoon.xmb.activity.mbq.activity.CollectActivity;
 import com.witmoon.xmb.activity.shopping.adapter.CatAdapter;
 import com.witmoon.xmb.activity.shopping.adapter.SelectedActivityAdapter;
-import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
 import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
 import com.witmoon.xmb.activity.user.LoginActivity;
 import com.witmoon.xmb.activity.webview.InteractiveWebViewActivity;
@@ -76,7 +75,7 @@ public class AaffordableFragment extends BaseFragment {
             cat_adapter.setOnItemClickListener(new CatAdapter.OnItemClickListener() {
                 @Override
                 public void onItemnClick(Map<String, String> map) {
-                    UmengStatic.registStat(getActivity(),"AffordablePlane4");
+                    UmengStatic.registStat(getActivity(), "AffordablePlane4");
 
                     Bundle bundle = new Bundle();
                     bundle.putString("cat_id", map.get("id"));
@@ -130,7 +129,7 @@ public class AaffordableFragment extends BaseFragment {
         headerView.findViewById(R.id.sign_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"AffordablePlane1");
+                UmengStatic.registStat(getActivity(), "AffordablePlane1");
 
                 if (AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), SignInActivity.class));
@@ -142,7 +141,7 @@ public class AaffordableFragment extends BaseFragment {
         headerView.findViewById(R.id.shake_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"AffordablePlane2");
+                UmengStatic.registStat(getActivity(), "AffordablePlane2");
 
                 if (AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), ShakeActivity.class));
@@ -154,12 +153,23 @@ public class AaffordableFragment extends BaseFragment {
         headerView.findViewById(R.id.raffle_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"AffordablePlane3");
+                UmengStatic.registStat(getActivity(), "AffordablePlane3");
 
                 if (AppContext.instance().isLogin()) {
                     Intent intent = new Intent(getActivity(), InteractiveWebViewActivity.class);
                     intent.putExtra("title", "幸运大转盘");
                     intent.putExtra("url", "http://www.xiaomabao.com/daily/prize");
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+            }
+        });
+        headerView.findViewById(R.id.giftcard_container).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AppContext.instance().isLogin()) {
+                    Intent intent = new Intent(getActivity(), CardActivity.class);
                     startActivity(intent);
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -285,7 +295,7 @@ public class AaffordableFragment extends BaseFragment {
             @Override
             public void onPageClick(AutoScrollViewPager pager, int position) {
                 if (null != advertisements.get(position).get("ad_type")) {
-                    UmengStatic.registStat(getActivity(),"AffordablePlane0");
+                    UmengStatic.registStat(getActivity(), "AffordablePlane0");
                     int type = Integer.parseInt(advertisements.get(position).get("ad_type"));
                     //专题  2商品 3网页 4团购 5帖子
                     String id = advertisements.get(position).get("act_id");

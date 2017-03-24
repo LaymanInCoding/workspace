@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/white"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dimen_10_dip"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_8_dip">
+
+        <TextView
+            android:textSize="@dimen/dimen_26_dip"
+            android:id="@+id/add_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_8_dip"
+            android:textColor="#555555"
+            tools:text="2017-03-16 12:34:50"/>
+
+        <TextView
+            android:textSize="@dimen/dimen_26_dip"
+            android:id="@+id/order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_4_dip"
+            android:padding="@dimen/dimen_8_dip"
+            android:textColor="#e8465e"
+            tools:text="待付款"/>
+
+    </RelativeLayout>
+
+    <View style="@style/horizontal_divider_full"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/card_order_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_8_dip">
+
+        <TextView
+            android:id="@+id/text"
+            android:textSize="@dimen/dimen_26_dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_8_dip"
+            android:text="总计："
+            android:textColor="#555555"/>
+
+        <TextView
+            android:textSize="@dimen/dimen_26_dip"
+            android:id="@+id/order_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/text"
+            android:textColor="#e8465e"
+            tools:text="500.00"/>
+        <LinearLayout
+            android:padding="@dimen/dimen_5_dip"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/detail_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_6_dip"
+            android:background="@drawable/bg_card_order_text"
+            android:paddingTop="@dimen/dimen_6_dip"
+            android:paddingBottom="@dimen/dimen_6_dip"
+            android:paddingLeft="@dimen/dimen_8_dip"
+            android:paddingRight="@dimen/dimen_8_dip"
+            android:textSize="@dimen/dimen_24_dip"
+            android:textColor="#555555"
+            android:text="详情"/>
+
+        <TextView
+            android:id="@+id/pay_button"
+            android:textSize="@dimen/dimen_24_dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_12_dip"
+            android:layout_marginRight="@dimen/dimen_12_dip"
+            android:background="@drawable/bg_card_order_text"
+            android:paddingTop="@dimen/dimen_6_dip"
+            android:paddingBottom="@dimen/dimen_6_dip"
+            android:paddingLeft="@dimen/dimen_8_dip"
+            android:paddingRight="@dimen/dimen_8_dip"
+            android:textColor="#555555"
+            android:text="去付款"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

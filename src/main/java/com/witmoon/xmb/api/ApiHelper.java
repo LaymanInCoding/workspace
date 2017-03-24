@@ -2,9 +2,7 @@ package com.witmoon.xmb.api;
 
 import android.util.Log;
 
-import com.duowan.mobile.netroid.Listener;
 import com.witmoon.xmb.AppContext;
-import com.witmoon.xmb.model.User;
 import com.witmoon.xmb.util.TDevice;
 import com.witmoon.xmb.util.TwoTuple;
 
@@ -23,8 +21,8 @@ public class ApiHelper {
 //
     public static final String API_URL = "https://api.xiaomabao.com/mobile/?url=%s";
     public static final String MBQZ_API_URL = "https://api.xiaomabao.com/mobile/?url=%s";
-    public static final String BASE_URL = "https://api.xiaomabao.com/";
-//    public static final String BASE_URL = "http://192.168.10.230/";
+//    public static final String BASE_URL = "https://api.xiaomabao.com/";
+    public static final String BASE_URL = "http://192.168.11.153:82/";
     public static final String HOME_URL = "http://www.xiaomabao.com/";
     public static final String GOODS_LINK_MODE = "https://www.xiaomabao.com/goods-%s.html";
     public static final String MARKET_LINK_MODE = "https://www.xiaomabao.com/topic.php?topic_id=%s";

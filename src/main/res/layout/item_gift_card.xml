@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_490_dip">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/card_pic"
+            android:layout_width="@dimen/dimen_366_dip"
+            android:layout_height="@dimen/dimen_366_dip"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/pic_goods_placeholder"/>
+
+        <TextView
+            android:paddingLeft="@dimen/dimen_12_dip"
+            android:paddingRight="@dimen/dimen_12_dip"
+            tools:text="as65das56d"
+            android:id="@+id/card_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_pic"
+            android:paddingBottom="@dimen/dimen_20_dip"
+            android:textColor="#555555"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <TextView
+            android:paddingLeft="@dimen/dimen_12_dip"
+            android:id="@+id/card_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="@dimen/dimen_8_dip"
+            android:textColor="#e8465e"
+            android:textSize="@dimen/dimen_28_dip"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

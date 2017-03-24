@@ -29,11 +29,11 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 /**
  * Created by de on 2016/3/16
  */
-public class MabaoFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener,View.OnClickListener{
+public class MabaoFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
     private View view;
-    private RadioButton aff_btn,cro_btn,fea_btn;
+    private RadioButton aff_btn, cro_btn, fea_btn;
     private ViewPager mViewPage;
-    private Fragment[] fragments = {new AaffordableFragment(),new Duty_freeFragment(),new MabaoFeatureFragment()};
+    private Fragment[] fragments = {new AaffordableFragment(), new Duty_freeFragment(), new MabaoFeatureFragment()};
     private SegmentedGroup segmented;
 
     @Nullable
@@ -49,7 +49,7 @@ public class MabaoFragment extends BaseFragment implements RadioGroup.OnCheckedC
             aff_btn.performClick();
 
             AssetManager mgr = getActivity().getAssets();//得到AssetManager
-            Typeface tf=Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
+            Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
             aff_btn.setTypeface(tf);
             cro_btn.setTypeface(tf);
             fea_btn.setTypeface(tf);
@@ -76,7 +76,7 @@ public class MabaoFragment extends BaseFragment implements RadioGroup.OnCheckedC
         MainActivity.current_tab_index = 2;
     }
 
-    public void init(){
+    public void init() {
         mViewPage.setOnPageChangeListener(new mOnPageChangeListener());
         segmented.setOnCheckedChangeListener(this);
         view.findViewById(R.id.search_imags).setOnClickListener(this);
@@ -88,7 +88,7 @@ public class MabaoFragment extends BaseFragment implements RadioGroup.OnCheckedC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_imags:
-                UmengStatic.registStat(getActivity(),"Shopping0");
+                UmengStatic.registStat(getActivity(), "Shopping0");
                 startActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
             default:
@@ -143,15 +143,15 @@ public class MabaoFragment extends BaseFragment implements RadioGroup.OnCheckedC
 
         @Override
         public void onPageSelected(int position) {
-            if(position == 0){
+            if (position == 0) {
                 aff_btn.performClick();
-                UmengStatic.registStat(getActivity(),"Shopping1");
-            }else if(position == 1){
+                UmengStatic.registStat(getActivity(), "Shopping1");
+            } else if (position == 1) {
                 cro_btn.performClick();
-                UmengStatic.registStat(getActivity(),"Shopping2");
-            }else if(position ==2){
+                UmengStatic.registStat(getActivity(), "Shopping2");
+            } else if (position == 2) {
                 fea_btn.performClick();
-                UmengStatic.registStat(getActivity(),"Shopping3");
+                UmengStatic.registStat(getActivity(), "Shopping3");
             }
         }
 

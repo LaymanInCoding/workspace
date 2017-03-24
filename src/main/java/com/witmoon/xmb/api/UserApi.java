@@ -3,7 +3,6 @@ package com.witmoon.xmb.api;
 import android.util.Log;
 
 import com.duowan.mobile.netroid.Listener;
-import com.nostra13.universalimageloader.utils.L;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.model.ReceiverAddress;
 
@@ -312,6 +311,16 @@ public class UserApi {
         paramMap.put("order_sn", sn);
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + api,
                 paramMap, listener));
+    }
+
+    // 订单详情
+    public static void cardOrderList(String order_status, int page, Listener<JSONObject> listener) {
+        //如果传了order_sn，走下面接口
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("order_status", order_status);
+        paramMap.put("page", page + "");
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "order/gift_order_list",
+                ApiHelper.getParamMap(paramMap), listener));
     }
 
     // -----------------------------------------------------------------------------------

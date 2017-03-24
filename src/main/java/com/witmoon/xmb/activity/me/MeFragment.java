@@ -14,13 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
@@ -36,7 +34,6 @@ import com.witmoon.xmb.util.UIHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -281,6 +278,18 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.OUT_PRICE);
+                }
+            }
+        });
+
+        View my_elec_order_view = view.findViewById(R.id.my_elec_order);
+        my_elec_order_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!AppContext.instance().isLogin()) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ElecOrder);
                 }
             }
         });

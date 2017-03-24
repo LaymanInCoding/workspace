@@ -64,6 +64,7 @@
     <string name="text_add_baby">添加宝宝</string>
     <string name="text_edit_baby">修改宝宝信息</string>
     <string name="text_my_favorite">我的收藏</string>
+    <string name="text_my_elec_order">电子卡订单</string>
     <string name="text_cash_coupon">代金券</string>
     <string name="text_browsing_history">浏览记录</string>
     <string name="text_vaccine_record">疫苗记录</string>
@@ -162,6 +163,23 @@
     <string name="loading">加载中…</string>
     <string name="loading_no_more">没有更多.</string>
 
+    <string name="mabao_gongxiang_card">麻包卡&#038;共享卡</string>
+    <string name="welfare_card">福利卡</string>
+    <string name="card_use_help">帮助中心</string>
+    <string name="entity_card">实体卡</string>
+    <string name="electronic_card">电子卡</string>
+    <string name="add_card">添加</string>
+    <string name="custom_hint">请输入自定义面额(1-5000整数)</string>
+    <string name="card_pay_area">电子卡结算区</string>
+    <string name="go_pay">去结算</string>
+    <string name="pay_amount">应付总额：</string>
+    <string name="tip_content">尊敬的用户，你正在购买电子卡，付款后请在\&#034;订单详情页\&#034;查看卡号和密码进行使用，电子卡购买后不退不换</string>
+    <string name="card_num_passw">卡号&#038;卡密</string>
+    <string name="card_order_detail">订单详情</string>
+    <string name="elec_order">电子卡订单</string>
+    <string name="copy_account_pss">复制信息</string>
+
+
     <string name="text_message_shouldknonw">须知</string>
     <string name="type_of_invoice">发票类型 :</string>
     <string name="paper_invoice">纸质发票</string>
@@ -180,6 +198,7 @@
     <string name="info_title">发票须知</string>
     <string name="info_content_one">1.目前只支持纸质发票，暂不支持电子发票、增值税发票</string>
     <string name="info_content_two">2.发票金额为订单实际支付金额，不包含红包、优惠券抵扣金额、麻豆抵扣金额、麻包卡＆共享卡抵扣金额</string>
+    <string name="info_content_three">3.跨境购商品暂不支持开具发票</string>
     <!-- Error View -->
     <string name="error_view_click_to_refresh">点击屏幕,重新加载</string>
     <string name="error_view_no_data">暂无内容</string>
@@ -319,6 +338,7 @@
 
     <!-- 麻包豆 -->
     <string name="my_mabao_bean">我的麻豆</string>
+    <string name="my_collects">我的收藏</string>
     <string name="bind_bank_card">绑定银行卡</string>
     <string name="bean_to_cash">兑换现金</string>
     <string name="send_bean">赠送麻豆</string>

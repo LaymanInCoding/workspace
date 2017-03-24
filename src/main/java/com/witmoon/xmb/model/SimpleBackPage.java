@@ -7,6 +7,7 @@ import com.witmoon.xmb.activity.babycenter.CalOverdueFragment;
 import com.witmoon.xmb.activity.babycenter.ChildStatusFragment;
 import com.witmoon.xmb.activity.babycenter.MoreMessageFragment;
 import com.witmoon.xmb.activity.babycenter.OverdueSettingFragment;
+import com.witmoon.xmb.activity.card.CardOrderDetailFragment;
 import com.witmoon.xmb.activity.friendship.fragment.CommentFragment;
 import com.witmoon.xmb.activity.goods.fragment.GoogsCommentFragment;
 import com.witmoon.xmb.activity.goods.fragment.Group_Buying_Fragment;
@@ -26,6 +27,7 @@ import com.witmoon.xmb.activity.me.fragment.CashCouponFragment;
 import com.witmoon.xmb.activity.me.fragment.CertificationFragment;
 import com.witmoon.xmb.activity.me.fragment.ChangePasswordFragment;
 import com.witmoon.xmb.activity.me.fragment.CheckProgressFragment;
+import com.witmoon.xmb.activity.me.fragment.ElectroincOrderFragment;
 import com.witmoon.xmb.activity.me.fragment.EvaluateFragment;
 import com.witmoon.xmb.activity.me.fragment.HelpFragment;
 import com.witmoon.xmb.activity.me.fragment.LogisticsFragment;
@@ -145,7 +147,9 @@ public enum SimpleBackPage {
     SubService(61, R.string.send_bean, R.color.master_me, SubServiceFragment.class),
     SubSubService(62, R.string.send_bean, R.color.master_me, Sub_SubServiceFragment.class),
 
-    GoodsComment(63, R.string.text_mama_comment, R.color.master_me, GoogsCommentFragment.class);
+    GoodsComment(63, R.string.text_mama_comment, R.color.master_me, GoogsCommentFragment.class),
+    CardOrderDetail(64, R.string.card_order_detail, R.color.master_me, CardOrderDetailFragment.class),
+    ElecOrder(65, R.string.elec_order, R.color.master_me, ElectroincOrderFragment.class);
 
 
     private int value;

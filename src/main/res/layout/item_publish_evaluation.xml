@@ -82,6 +82,7 @@
         android:paddingLeft="@dimen/dimen_60_dip"
         android:paddingRight="@dimen/dimen_60_dip"
         android:paddingTop="@dimen/dimen_12_dip"
+        android:layout_marginTop="@dimen/dimen_15_dip"
         android:text="提交评价"
         android:textColor="#ff48beab"/>
 </LinearLayout>

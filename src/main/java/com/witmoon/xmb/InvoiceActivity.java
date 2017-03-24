@@ -1,32 +1,22 @@
 package com.witmoon.xmb;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaExtractor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.witmoon.xmb.base.BaseActivity;
-import com.witmoon.xmb.base.BaseFragment;
 import com.witmoon.xmb.util.XmbUtils;
 
-import org.apache.cordova.LOG;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by de on 2016/11/22.
@@ -169,7 +159,7 @@ public class InvoiceActivity extends BaseActivity {
                         XmbUtils.showMessage(this, "单位公司名称不能为空");
                     } else {
                         resultIntent.removeExtra("inv_payee");
-                        resultIntent.putExtra("inv_payee", companyInfoEt.getText().toString());
+                        resultIntent.putExtra("inv_payee", companyInfoEt.getText().toString().trim());
                         setResult(RESULT_OK, resultIntent);
                         finish();
                         break;

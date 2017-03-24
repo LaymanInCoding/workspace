@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_marginBottom="@dimen/space_8">
+
+    <View style="@style/horizontal_divider_full" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dip"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/space_3"
+        android:paddingBottom="@dimen/space_3"
+        android:paddingLeft="@dimen/space_10"
+        android:paddingRight="@dimen/space_10">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="小麻包自营"
+            android:textColor="#555555"
+            android:textSize="@dimen/text_size_12"
+            android:id="@+id/supplier_name"/>
+    </LinearLayout>
+
+
+    <View style="@style/horizontal_divider_full" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/g_container">
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dip"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/dimen_20_dip"
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/card_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#999999"
+                android:gravity="center_vertical"
+                tools:text="共2件商品"
+                android:textSize="@dimen/text_size_12" />
+            <com.witmoon.xmb.util.MoneyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@null"
+                android:textColor="@color/text_price"
+                android:textSize="@dimen/text_size_12"
+                android:id="@+id/supplier_shipping"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/supplier_s_con"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center|right">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|right"
+                android:textSize="12sp"
+                android:text="小计："/>
+            <com.witmoon.xmb.util.MoneyTextView
+                android:id="@+id/supplier_s_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="128"
+                android:textColor="#e8465e"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <View style="@style/horizontal_divider_full" />
+
+</LinearLayout>

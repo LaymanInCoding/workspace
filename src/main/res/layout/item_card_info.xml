@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:paddingLeft="@dimen/dimen_36_dip"
+        android:paddingRight="@dimen/dimen_12_dip"
+        android:paddingTop="@dimen/dimen_18_dip"
+        android:paddingBottom="@dimen/dimen_18_dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            tools:text="麻包卡500元面值"
+            android:id="@+id/card_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#555555"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="@dimen/dimen_36_dip"
+        android:paddingRight="@dimen/dimen_12_dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="卡号："
+            android:textColor="#999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            tools:text="ASDADGGGASRWRQRQWAS"
+            android:id="@+id/card_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#999999"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="@dimen/dimen_36_dip"
+        android:paddingRight="@dimen/dimen_12_dip"
+        android:layout_marginTop="@dimen/dimen_10_dip"
+        android:paddingBottom="@dimen/dimen_20_dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="卡密："
+            android:textColor="#999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            tools:text="ASDADGGGASRWRQRQWAS"
+            android:id="@+id/card_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#999999"/>
+    </LinearLayout>
+    <View style="@style/horizontal_divider_full"/>
+</LinearLayout>

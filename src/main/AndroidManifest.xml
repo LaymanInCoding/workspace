@@ -104,6 +104,10 @@
         <activity android:name=".activity.goods.SpecificationSelectionActivity"/>
         <activity android:name=".activity.shoppingcart.OrderConfirmActivity"/>
         <activity android:name=".activity.shoppingcart.OrderSubmitSuccessActivity"/>
+        <activity android:name=".activity.card.CardActivity"/>
+        <activity android:name=".activity.card.CardOrderConfirmActivity"/>
+        <activity android:name=".activity.card.ElecCardHelpActivity"/>
+        <activity android:name=".activity.card.CardOrderSubmitSuccessActivity"/>
         <activity
             android:name=".activity.shoppingcart.MabaoCardAddActivity"
             android:windowSoftInputMode="adjustResize"/>

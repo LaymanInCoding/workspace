@@ -51,6 +51,18 @@
                 android:text="@string/info_content_two"
                 android:textColor="#666666"
                 android:textSize="@dimen/dimen_26_dip"/>
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text2"
+                android:layout_marginLeft="@dimen/dimen_20_dip"
+                android:layout_marginTop="@dimen/dimen_5_dip"
+                android:padding="@dimen/dimen_5_dip"
+                android:text="@string/info_content_three"
+                android:textColor="#666666"
+                android:textSize="@dimen/dimen_26_dip"/>
         </RelativeLayout>
 
         <Button

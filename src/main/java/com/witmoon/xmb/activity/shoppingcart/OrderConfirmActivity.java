@@ -17,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -71,6 +70,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 确认订单界面Activity
@@ -105,15 +106,15 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
     private String str_name, str_id;
     private String mOrderMoney; //商品总额
     private Button mButton;
-    private String mReceiverAddressId ;  // 送货地址ID
+    private String mReceiverAddressId;  // 送货地址ID
     private String mCashCouponId = "";       // 客户选择代金券ID
     private ArrayList<String> mSelectedCard = new ArrayList<>();
     private String mBonusId = "";       // 客户选择红包或兑换ID
     private String mBeanId = ""; //麻豆金额
     private String inv_type = "";  //发票类型
     private String inv_payee = ""; //发票抬头
-    private String inv_content; //发票内容
-    private LinearLayout k_lin;
+    private String inv_content = ""; //发票内容
+    private LinearLayout k_lin;//跨境购
     private EmptyLayout emptyLayout;
     private ImageView frontImageView, backendImageView;
     String name;
@@ -367,6 +368,18 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
             TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
             if (!twoTuple.first) {
                 XmbUtils.showMessage(OrderConfirmActivity.this, twoTuple.second);
+                if (response.has("cart_goods_number")) {
+                    Intent intent = new Intent(Const.INTENT_ACTION_UPDATA_CAR);
+                    sendBroadcast(intent);
+                    // 倒计时, 结束后跳转购物车
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 1500);
+                }
                 return;
             }
             try {
@@ -374,6 +387,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 if (jsonObject.getDouble("order_amount") == 0.00) {
                     Intent intent = new Intent(OrderConfirmActivity.this, OrderPaySuccessActivity.class);
                     intent.putExtra("ORDER_SN", jsonObject.getString("order_sn"));
+                    intent.putExtra("TYPE", "goods");
                     startActivity(intent);
                 } else {
                     OrderSubmitSuccessActivity.startActivity(OrderConfirmActivity.this, jsonObject.toString());
@@ -404,9 +418,9 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
 //                bundle.putString("selectedId", mReceiverAddressId);
 //                UIHelper.showSimpleBackForResult(this, ADDRESS_CODE, SimpleBackPage
 //                        .ADDRESS_SELECTOR, bundle);
-                Intent addressIntent = new Intent(this,AddressManageActivity.class);
-                addressIntent.putExtra("orderConfirm","1");
-                startActivityForResult(addressIntent,ADDRESS_CODE);
+                Intent addressIntent = new Intent(this, AddressManageActivity.class);
+                addressIntent.putExtra("orderConfirm", "1");
+                startActivityForResult(addressIntent, ADDRESS_CODE);
                 break;
             case R.id.mb_card:
                 startActivityForResult(new Intent(OrderConfirmActivity.this, MabaoCardActivity.class), MB_CARD_CODE);
@@ -435,7 +449,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.use_mabao_bean:
                 bundle.putString("mabaobean_number", mBeanId);
-                UIHelper.showSimpleBackForResult(this, MABAO_BEAN_CODE, SimpleBackPage.BeanUse,bundle);
+                UIHelper.showSimpleBackForResult(this, MABAO_BEAN_CODE, SimpleBackPage.BeanUse, bundle);
                 break;
             case R.id.submit_name_id:
                 if (isCheck()) {

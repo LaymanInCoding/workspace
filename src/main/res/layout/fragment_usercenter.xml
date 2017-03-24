@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="#ffffff"
-    android:orientation="vertical">
+                xmlns:fresco="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/top_toolbar"
         android:layout_width="match_parent"
@@ -14,495 +15,599 @@
         android:gravity="top"
         fresco:contentInsetEnd="0dp"
         fresco:contentInsetStart="0dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height">
+
             <TextView
                 android:id="@+id/toolbar_title_text"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
-                android:gravity="center"
                 android:layout_centerInParent="true"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:maxLength="20"
-                android:singleLine="true"
                 android:paddingRight="20dip"
+                android:singleLine="true"
                 android:text="@string/text_me"
                 android:textColor="@color/white"
                 android:textSize="@dimen/toolbar_text_size"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
+
             <ImageView
                 android:id="@+id/me_setting"
                 android:layout_width="@dimen/dimen_50_dip"
                 android:layout_height="@dimen/dimen_50_dip"
-                android:scaleType="centerInside"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="@dimen/dimen_14_dip"
                 android:layout_marginRight="8dp"
-                android:src="@mipmap/icon_gear" />
+                android:layout_marginTop="@dimen/dimen_14_dip"
+                android:scaleType="centerInside"
+                android:src="@mipmap/icon_gear"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:overScrollMode="never"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dimen_95_dip"
-        android:layout_height="match_parent">
+        android:overScrollMode="never">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/userinfo_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/userinfo_container"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <com.makeramen.roundedimageview.RoundedImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/me_avatar_img"
                     android:layout_width="@dimen/dimen_185_dip"
                     android:layout_height="@dimen/dimen_185_dip"
+                    android:scaleType="centerCrop"
                     android:src="@mipmap/touxiang"
-                    app:riv_corner_radius="@dimen/dimen_10_dip"
-                    app:riv_border_width="@dimen/dimen_5_dip"
                     app:riv_border_color="#3f000000"
-                    android:scaleType="centerCrop" />
+                    app:riv_border_width="@dimen/dimen_5_dip"
+                    app:riv_corner_radius="@dimen/dimen_10_dip"/>
+
                 <TextView
-                    android:layout_width="match_parent"
-                    android:background="@color/white"
-                    android:textSize="@dimen/dimen_30_dip"
-                    android:textColor="@color/app_main_deep"
                     android:id="@+id/login_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:gravity="center"
-                    android:paddingTop="@dimen/dimen_20_dip"
                     android:paddingBottom="@dimen/dimen_20_dip"
+                    android:paddingTop="@dimen/dimen_20_dip"
                     android:text="登录 / 注册"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/app_main_deep"
+                    android:textSize="@dimen/dimen_30_dip"/>
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/top_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/top_container"
                 android:background="#F4F4F4"
-                android:paddingTop="@dimen/dimen_20_dip"
+                android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen_20_dip"
-                android:orientation="horizontal">
+                android:paddingTop="@dimen/dimen_20_dip">
+
                 <LinearLayout
+                    android:id="@+id/my_order"
                     android:layout_width="0dip"
-                    android:paddingTop="@dimen/dimen_10_dip"
-                    android:paddingBottom="@dimen/dimen_10_dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:id="@+id/my_order"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dimen_10_dip"
+                    android:paddingTop="@dimen/dimen_10_dip">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/reminders"/>
+
                     <TextView
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/dimen_30_dip"
-                        android:textColor="@color/app_main_deep"
-                        android:layout_marginTop="@dimen/dimen_20_dip"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_my_order"/>
+                        android:layout_marginTop="@dimen/dimen_20_dip"
+                        android:text="@string/text_my_order"
+                        android:textColor="@color/app_main_deep"
+                        android:textSize="@dimen/dimen_30_dip"/>
                 </LinearLayout>
+
                 <ImageView
                     android:layout_width="@dimen/dimen_1_dip"
                     android:layout_height="match_parent"
                     android:background="#B2B2B2"/>
+
                 <LinearLayout
+                    android:id="@+id/my_service"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:id="@+id/my_service"
-                    android:paddingTop="@dimen/dimen_10_dip"
+                    android:orientation="vertical"
                     android:paddingBottom="@dimen/dimen_10_dip"
-                    android:orientation="vertical">
+                    android:paddingTop="@dimen/dimen_10_dip">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/servers"/>
+
                     <TextView
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/dimen_30_dip"
-                        android:textColor="@color/app_main_deep"
-                        android:layout_marginTop="@dimen/dimen_20_dip"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_product_order"/>
+                        android:layout_marginTop="@dimen/dimen_20_dip"
+                        android:text="@string/text_product_order"
+                        android:textColor="@color/app_main_deep"
+                        android:textSize="@dimen/dimen_30_dip"/>
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="@dimen/dimen_1_dip"
                     android:layout_height="match_parent"
                     android:background="#B2B2B2"/>
+
                 <LinearLayout
+                    android:id="@+id/my_shopping_cart"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:id="@+id/my_shopping_cart"
-                    android:paddingTop="@dimen/dimen_10_dip"
+                    android:orientation="vertical"
                     android:paddingBottom="@dimen/dimen_10_dip"
-                    android:orientation="vertical">
+                    android:paddingTop="@dimen/dimen_10_dip">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/carrybag"/>
+
                     <TextView
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/dimen_30_dip"
-                        android:textColor="@color/app_main_deep"
-                        android:layout_marginTop="@dimen/dimen_20_dip"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_shopcart"/>
+                        android:layout_marginTop="@dimen/dimen_20_dip"
+                        android:text="@string/text_shopcart"
+                        android:textColor="@color/app_main_deep"
+                        android:textSize="@dimen/dimen_30_dip"/>
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="@dimen/dimen_1_dip"
                     android:layout_height="match_parent"
                     android:background="#B2B2B2"/>
+
                 <LinearLayout
+                    android:id="@+id/my_elec_order"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:id="@+id/my_collect"
                     android:gravity="center"
-                    android:paddingTop="@dimen/dimen_10_dip"
+                    android:orientation="vertical"
                     android:paddingBottom="@dimen/dimen_10_dip"
-                    android:orientation="vertical">
+                    android:paddingTop="@dimen/dimen_10_dip">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/star2"/>
+                        android:src="@mipmap/my_elec_order_img"/>
+
                     <TextView
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/dimen_30_dip"
-                        android:textColor="@color/app_main_deep"
-                        android:layout_marginTop="@dimen/dimen_20_dip"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_my_favorite"/>
+                        android:layout_marginTop="@dimen/dimen_20_dip"
+                        android:text="@string/text_my_elec_order"
+                        android:textColor="@color/app_main_deep"
+                        android:textSize="@dimen/dimen_30_dip"/>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
-                android:background="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#FFFFFF"
                 android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/my_collect"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100_dip">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_56_dip"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dimen_30_dip"
+                        android:src="@mipmap/my_collect_img"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dimen_105_dip"
+                        android:text="@string/my_collects"
+                        android:textColor="@color/app_main_deep"
+                        android:textSize="@dimen/dimen_30_dip"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_30_dip"
+                        android:src="@mipmap/jiantou"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_1_dip"
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
+                </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/me_mabao_bean"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_100_dip">
+
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_56_dip"
                         android:layout_centerVertical="true"
                         android:paddingLeft="@dimen/dimen_30_dip"
-                        android:layout_height="@dimen/dimen_56_dip"
                         android:src="@mipmap/mabaobean"/>
+
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:text="@string/my_mabao_bean"
                         android:textColor="@color/app_main_deep"
-                        android:layout_marginLeft="@dimen/dimen_105_dip"
-                        android:layout_centerVertical="true"
-                        android:textSize="@dimen/dimen_30_dip"
-                        android:layout_height="wrap_content" />
+                        android:textSize="@dimen/dimen_30_dip"/>
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jiantou"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_30_dip"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@mipmap/jiantou"/>
+
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_height="@dimen/dimen_1_dip"
-                        android:background="#ececec" />
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/me_history"
-                    android:layout_height="@dimen/dimen_100_dip">
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100_dip"
+                    android:visibility="gone">
+
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_56_dip"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_30_dip"
-                        android:layout_height="@dimen/dimen_56_dip"
                         android:src="@mipmap/icon1"/>
+
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:text="@string/text_browsing_history"
                         android:textColor="@color/app_main_deep"
-                        android:layout_marginLeft="@dimen/dimen_105_dip"
-                        android:layout_centerVertical="true"
-                        android:textSize="@dimen/dimen_30_dip"
-                        android:layout_height="wrap_content" />
+                        android:textSize="@dimen/dimen_30_dip"/>
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jiantou"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_30_dip"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@mipmap/jiantou"/>
+
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_height="@dimen/dimen_1_dip"
-                        android:background="#ececec" />
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/hot_line"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_100_dip">
+
                     <ImageView
-                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:layout_width="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_height="@dimen/dimen_56_dip"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:src="@mipmap/icon2"/>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/text_hot_line"
                             android:textColor="@color/app_main_deep"
-                            android:textSize="@dimen/dimen_30_dip"
-                            android:layout_height="wrap_content" />
+                            android:textSize="@dimen/dimen_30_dip"/>
+
                         <TextView
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_20_dip"
                             android:text="@string/text_tel_service"
                             android:textColor="@color/app_main_thin"
-                            android:layout_marginLeft="@dimen/dimen_20_dip"
-                            android:textSize="@dimen/dimen_30_dip"
-                            android:layout_height="wrap_content" />
+                            android:textSize="@dimen/dimen_30_dip"/>
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jiantou"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_30_dip"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@mipmap/jiantou"/>
+
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_height="@dimen/dimen_1_dip"
-                        android:background="#ececec" />
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/me_address"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_100_dip">
+
                     <ImageView
-                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:layout_width="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_height="@dimen/dimen_56_dip"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:src="@mipmap/icon3"/>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/text_receiver_address"
                             android:textColor="@color/app_main_deep"
-                            android:textSize="@dimen/dimen_30_dip"
-                            android:layout_height="wrap_content" />
+                            android:textSize="@dimen/dimen_30_dip"/>
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jiantou"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_30_dip"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@mipmap/jiantou"/>
+
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_height="@dimen/dimen_1_dip"
-                        android:background="#ececec" />
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/after_sales"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_100_dip">
+
                     <ImageView
-                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:layout_width="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_height="@dimen/dimen_56_dip"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:src="@mipmap/icon4"/>
+
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:text="@string/text_receiver_out_service"
                         android:textColor="@color/app_main_deep"
-                        android:layout_marginLeft="@dimen/dimen_105_dip"
-                        android:layout_centerVertical="true"
-                        android:textSize="@dimen/dimen_30_dip"
-                        android:layout_height="wrap_content" />
+                        android:textSize="@dimen/dimen_30_dip"/>
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jiantou"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_30_dip"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@mipmap/jiantou"/>
+
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_height="@dimen/dimen_1_dip"
-                        android:background="#ececec" />
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/contact_us"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_100_dip">
+
                     <ImageView
-                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:layout_width="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_height="@dimen/dimen_56_dip"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:src="@mipmap/icon5"/>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/text_online_service"
                             android:textColor="@color/app_main_deep"
-                            android:textSize="@dimen/dimen_30_dip"
-                            android:layout_height="wrap_content" />
+                            android:textSize="@dimen/dimen_30_dip"/>
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jiantou"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_30_dip"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@mipmap/jiantou"/>
+
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_height="@dimen/dimen_1_dip"
-                        android:background="#ececec" />
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/me_mb_help"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_100_dip">
+
                     <ImageView
-                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:layout_width="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_height="@dimen/dimen_56_dip"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:src="@mipmap/icon6"/>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/text_mb_help"
                             android:textColor="@color/app_main_deep"
-                            android:textSize="@dimen/dimen_30_dip"
-                            android:layout_height="wrap_content" />
+                            android:textSize="@dimen/dimen_30_dip"/>
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jiantou"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_30_dip"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@mipmap/jiantou"/>
+
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_height="@dimen/dimen_1_dip"
-                        android:background="#ececec" />
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/order_sel_after"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_100_dip">
+
                     <ImageView
-                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:layout_width="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_height="@dimen/dimen_56_dip"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dimen_30_dip"
                         android:src="@mipmap/icon7"/>
+
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:text="@string/text_wait_for_out_price"
                         android:textColor="@color/app_main_deep"
-                        android:layout_marginLeft="@dimen/dimen_105_dip"
-                        android:layout_centerVertical="true"
-                        android:textSize="@dimen/dimen_30_dip"
-                        android:layout_height="wrap_content" />
+                        android:textSize="@dimen/dimen_30_dip"/>
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jiantou"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_30_dip"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@mipmap/jiantou"/>
+
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_height="@dimen/dimen_1_dip"
-                        android:background="#ececec" />
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/me_item_cash_coupon"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_100_dip">
+
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_56_dip"
                         android:layout_centerVertical="true"
                         android:paddingLeft="@dimen/dimen_30_dip"
-                        android:layout_height="@dimen/dimen_56_dip"
                         android:src="@mipmap/icon8"/>
+
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dimen_105_dip"
                         android:text="@string/text_cash_coupon"
                         android:textColor="@color/app_main_deep"
-                        android:layout_marginLeft="@dimen/dimen_105_dip"
-                        android:layout_centerVertical="true"
-                        android:textSize="@dimen/dimen_30_dip"
-                        android:layout_height="wrap_content" />
+                        android:textSize="@dimen/dimen_30_dip"/>
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jiantou"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_30_dip"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@mipmap/jiantou"/>
+
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_height="@dimen/dimen_1_dip"
-                        android:background="#ececec" />
+                        android:layout_alignParentBottom="true"
+                        android:background="#ececec"/>
                 </RelativeLayout>
 
             </LinearLayout>

@@ -1,17 +1,14 @@
 package com.witmoon.xmb;
 
-import android.*;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,7 +24,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.duowan.mobile.netroid.Listener;
 import com.tencent.map.geolocation.TencentLocation;
@@ -38,24 +34,20 @@ import com.umeng.analytics.MobclickAgent;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
 import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
-import com.witmoon.xmb.activity.user.LoginActivity;
 import com.witmoon.xmb.activity.webview.InteractiveWebViewActivity;
 import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.Const;
-import com.witmoon.xmb.model.SimpleBackPage;
 import com.witmoon.xmb.receiver.ConnectionChangeReceiver;
 import com.witmoon.xmb.util.CommonUtil;
 import com.witmoon.xmb.util.FileUtils;
 import com.witmoon.xmb.util.LocalImageHelper;
-import com.witmoon.xmb.util.UIHelper;
 import com.witmoon.xmb.util.XmbUtils;
-import com.witmoon.xmblibrary.linearlistview.util.DensityUtil;
-import com.xiaoneng.menu.Ntalker;
 
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -79,6 +71,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     public String size;
     public float latest_version;
     public static int current_tab_index = 2;
+    public static ArrayList<Integer> selec_index = new ArrayList<>();//电子卡选中index;
     public String app_name;
     private int mPreparedTabIndex = -1;
     private Intent intent;

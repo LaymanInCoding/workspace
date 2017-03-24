@@ -57,7 +57,7 @@
     <color name="province_line_border">#C7C7C7</color>
 
     <!-- 文字常用颜色 -->
-    <color name="text_price">#FF0000</color>
+    <color name="text_price">#e8465e</color>
     <color name="text_view_hint">#CCCCCC</color>
     <color name="edit_text_hint">#CCCCCC</color>
     <color name="text_disabled">#CCCCCC</color>

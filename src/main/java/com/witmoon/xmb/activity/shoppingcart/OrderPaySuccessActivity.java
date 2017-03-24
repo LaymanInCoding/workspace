@@ -30,9 +30,14 @@ public class OrderPaySuccessActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("ORDER_SN", getIntent().getStringExtra("ORDER_SN"));
                 bundle.putSerializable("ORDER_TYPE", "");
-                UIHelper.showSimpleBack(OrderPaySuccessActivity.this, SimpleBackPage.ORDER_DETAIL, bundle);
+                if (getIntent().getStringExtra("TYPE").equals("card")) {
+                    bundle.putSerializable("order_sn", getIntent().getStringExtra("ORDER_SN"));
+                    UIHelper.showSimpleBack(OrderPaySuccessActivity.this, SimpleBackPage.CardOrderDetail, bundle);
+                } else {
+                    bundle.putSerializable("ORDER_SN", getIntent().getStringExtra("ORDER_SN"));
+                    UIHelper.showSimpleBack(OrderPaySuccessActivity.this, SimpleBackPage.ORDER_DETAIL, bundle);
+                }
                 finish();
             }
         });

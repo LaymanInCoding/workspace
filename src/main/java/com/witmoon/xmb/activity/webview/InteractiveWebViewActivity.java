@@ -1,7 +1,6 @@
 package com.witmoon.xmb.activity.webview;
 
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,23 +9,18 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.widget.ImageView;
 
 import com.orhanobut.logger.Logger;
 import com.tencent.smtt.sdk.CookieManager;
-
-import android.view.View;
-import android.webkit.JavascriptInterface;
-
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
-
-import android.widget.ImageView;
-
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
-import com.witmoon.xmb.activity.mbq.activity.PostDetailActivity;
 import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
 import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
 import com.witmoon.xmb.activity.user.LoginActivity;
@@ -37,7 +31,6 @@ import com.witmoon.xmb.model.SimpleBackPage;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
 import com.witmoon.xmb.util.UIHelper;
 import com.witmoon.xmb.util.XmbUtils;
-
 
 import java.util.HashMap;
 
@@ -94,7 +87,8 @@ public class InteractiveWebViewActivity extends BaseActivity {
         url = getIntent().getStringExtra("url");
         if (url.equals("http://www.xiaomabao.com/daily/prize") ||
                 url.equals(ApiHelper.BASE_URL + "discovery/knowledge_index") ||
-                url.startsWith(ApiHelper.HOME_URL + "activity")||
+                url.equals(ApiHelper.BASE_URL + "discovery/story") ||
+                url.startsWith(ApiHelper.HOME_URL + "activity") ||
                 url.startsWith(ApiHelper.HOME_URL + "blood")) {
             toolbar_right_image.setVisibility(View.VISIBLE);
             share_info.put("title", getIntent().getStringExtra("title"));
