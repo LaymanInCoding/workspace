@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dimen_118_dip"
+              android:orientation="horizontal">
+
+    <com.witmoon.xmb.ui.widget.CircleImageView
+        android:layout_centerVertical="true"
+        android:id="@+id/header_img"
+        android:layout_width="@dimen/dimen_88_dip"
+        android:layout_height="@dimen/dimen_88_dip"
+        android:layout_marginLeft="@dimen/dimen_36_dip"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:layout_toRightOf="@id/header_img"
+        android:layout_centerVertical="true"
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_24_dip"
+        android:textColor="#555555"
+        android:textSize="@dimen/dimen_26_dip"
+        tools:text="18062597980"/>
+    <TextView
+        android:layout_marginRight="@dimen/dimen_30_dip"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/dimen_24_dip"
+        android:textColor="#555555"
+        android:layout_centerVertical="true"
+        android:id="@+id/coupon_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="未入账"/>
+    <TextView
+        android:textSize="@dimen/dimen_24_dip"
+        android:textColor="#f1566d"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen_30_dip"
+        android:layout_toLeftOf="@id/coupon_status"
+        android:id="@+id/coupon_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="5元优惠券"/>
+    <View
+        android:layout_alignParentBottom="true"
+        android:background="#e6e6e6"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1_dip"/>
+</RelativeLayout>
