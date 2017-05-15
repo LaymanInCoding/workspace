@@ -1,21 +1,13 @@
 package com.witmoon.xmb.activity.mbq.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -25,8 +17,9 @@ import android.widget.TextView;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.orhanobut.logger.Logger;
+import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
-
+import com.witmoon.xmb.activity.mbq.MbqSearchAdapter;
 import com.witmoon.xmb.activity.mbq.adapter.PostAdapter;
 import com.witmoon.xmb.api.CircleApi;
 import com.witmoon.xmb.base.BaseActivity;
@@ -47,7 +40,7 @@ import java.util.ArrayList;
 import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 
 
-public class SearchPost extends BaseActivity {
+public class SearchPost extends BaseActivity implements MbqSearchAdapter.OnItemClickListener {
 
     private EmptyLayout mEmptyLayout;
     private PostAdapter adapter;
@@ -60,6 +53,13 @@ public class SearchPost extends BaseActivity {
     private View tagContainer;
     private ArrayList<String> search_keywords = new ArrayList<>();
 
+    private ArrayList<String> mList = new ArrayList<>();
+    private MbqSearchAdapter searchAdapter;
+    private TextView mSearch_no;
+    private RecyclerView mSearchRV;
+    private LinearLayout mLinearLayout;
+    private HeaderViewRecyclerAdapter searchAdapterWrapper;
+    private View footerView;
 
     @Override
     protected int getLayoutResourceId() {
@@ -76,7 +76,10 @@ public class SearchPost extends BaseActivity {
                 finish();
             }
         });
+        mLinearLayout = (LinearLayout) findViewById(R.id.search_boom);
+        mSearch_no = (TextView) findViewById(R.id.search_no);
         mEmptyLayout = (EmptyLayout) findViewById(R.id.empty_layout);
+        mSearchRV = (RecyclerView) findViewById(R.id.search_listView);
         mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
         mRootView = (RecyclerView) findViewById(R.id.recycle_view);
         searchText = (EditText) findViewById(R.id.edit_text);
@@ -136,6 +139,8 @@ public class SearchPost extends BaseActivity {
             public void onItemClick(int position) {
                 Intent intent = new Intent(SearchPost.this, PostDetailActivity.class);
                 intent.putExtra("post_id", mDatas.get(position).getPost_id());
+                intent.putExtra("post_content", mDatas.get(position).getPost_content());
+                intent.putExtra("post_title", mDatas.get(position).getPost_title());
                 startActivity(intent);
             }
         });
@@ -143,6 +148,7 @@ public class SearchPost extends BaseActivity {
         mRootView.setAdapter(stringAdapter);
         mRootView.setVisibility(View.GONE);
         getKeyWord();
+        initData();
     }
 
     private void getKeyWord() {
@@ -158,6 +164,44 @@ public class SearchPost extends BaseActivity {
 
             }
         }
+    }
+
+    public void initData() {
+        mList = (ArrayList<String>) AppContext.instance().getXmbDB().mbq_service();
+        if (mList.size() > 0) {
+            searchAdapter = new MbqSearchAdapter(this, mList);
+            searchAdapter.setOnItemDeleteListener(new MbqSearchAdapter.OnItemDeleteListener() {
+                @Override
+                public void onItemDelete(int position) {
+                    AppContext.instance().getXmbDB().search_delete_onembq(mList.get(position));
+                    mList.remove(position);
+                    searchAdapter.notifyDataSetChanged();
+                    if (mList.size() == 0) {
+                        mSearch_no.setVisibility(View.VISIBLE);
+                        mLinearLayout.setVisibility(View.GONE);
+                    }
+                }
+            });
+            searchAdapter.setOnItemClickListener(this);
+            LinearLayoutManager manager = new LinearLayoutManager(this);
+            manager.setOrientation(LinearLayoutManager.VERTICAL);
+            mSearchRV.setLayoutManager(manager);
+            searchAdapterWrapper = new HeaderViewRecyclerAdapter(searchAdapter);
+            mSearchRV.setAdapter(searchAdapterWrapper);
+            footerView = LayoutInflater.from(this).inflate(R.layout.search_footer_layout, mSearchRV, false);
+            footerView.setOnClickListener(v -> {
+                AppContext.instance().getXmbDB().search_delete_allmbq();
+                AppContext.showToast("清除成功！");
+                initData();
+            });
+            searchAdapterWrapper.addFooterView(footerView);
+            mSearch_no.setVisibility(View.GONE);
+            mLinearLayout.setVisibility(View.VISIBLE);
+        } else {
+            mSearch_no.setVisibility(View.VISIBLE);
+            mLinearLayout.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -182,6 +226,8 @@ public class SearchPost extends BaseActivity {
             @Override
             public void onSuccess(JSONObject response) {
                 tagContainer.setVisibility(View.GONE);
+                mLinearLayout.setVisibility(View.GONE);
+                mSearch_no.setVisibility(View.GONE);
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -201,6 +247,7 @@ public class SearchPost extends BaseActivity {
                     } else {
                         mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
                     }
+                    AppContext.instance().getXmbDB().mbq_search_insert(keyword);
                 } catch (JSONException e) {
                     mEmptyLayout.setErrorType(EmptyLayout.NODATA);
                 }
@@ -212,4 +259,12 @@ public class SearchPost extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void onItemClick(int position) {
+        keyword = mList.get(position);
+        page = 1;
+        setRecRequest(page);
+    }
+
 }

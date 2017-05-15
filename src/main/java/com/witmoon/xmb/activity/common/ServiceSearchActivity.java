@@ -1,34 +1,28 @@
 package com.witmoon.xmb.activity.common;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
 import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
-import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.common.adapter.Search_adapter;
-import com.witmoon.xmb.activity.goods.SearchResultListActivity;
-import com.witmoon.xmb.activity.service.ServiceSearchResultActivity;
 import com.witmoon.xmb.activity.service.adapter.SubAdapter;
 import com.witmoon.xmb.api.CommonApi;
 import com.witmoon.xmb.api.ServiceApi;
 import com.witmoon.xmb.base.BaseActivity;
-import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.ui.FlowTagLayout;
 import com.witmoon.xmb.ui.TagAdapter;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
@@ -70,6 +64,9 @@ public class ServiceSearchActivity extends BaseActivity {
     private TextView more_service_tv;
 
 
+    private HeaderViewRecyclerAdapter adapterWrapper;
+    private View footerView;
+
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_service_search;
@@ -105,7 +102,6 @@ public class ServiceSearchActivity extends BaseActivity {
         mBGAFlowLayout.setAdapter(mAdapter);
         mLinearLayout = (LinearLayout) findViewById(R.id.search_boom);
         mSearch_no = (TextView) findViewById(R.id.search_no);
-        findViewById(R.id.delete_search).setOnClickListener(this);
         findViewById(R.id.toolbar_right_text).setOnClickListener(this);
         mLinearListView = (RecyclerView) findViewById(R.id.search_listView);
         mSearchEdit = (EditText) findViewById(R.id.edit_text);
@@ -171,7 +167,15 @@ public class ServiceSearchActivity extends BaseActivity {
             LinearLayoutManager manager = new LinearLayoutManager(mContext);
             manager.setOrientation(LinearLayoutManager.VERTICAL);
             mLinearListView.setLayoutManager(manager);
-            mLinearListView.setAdapter(adapter);
+            adapterWrapper = new HeaderViewRecyclerAdapter(adapter);
+            footerView = LayoutInflater.from(this).inflate(R.layout.search_footer_layout, mLinearListView, false);
+            footerView.setOnClickListener(v -> {
+                AppContext.instance().getXmbDB().search_delete_service();
+                AppContext.showToast("清除成功！");
+                initData();
+            });
+            adapterWrapper.addFooterView(footerView);
+            mLinearListView.setAdapter(adapterWrapper);
             mSearch_no.setVisibility(View.GONE);
             mLinearLayout.setVisibility(View.VISIBLE);
         } else {
@@ -252,11 +256,6 @@ public class ServiceSearchActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.delete_search:
-                mAppContext.getXmbDB().search_delete_service();
-                AppContext.showToast("清除成功！");
-                initData();
-                break;
             case R.id.toolbar_right_text:
                 finish();
                 break;

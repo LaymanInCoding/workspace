@@ -33,6 +33,10 @@
         <item name="android:textColor">@color/mcv_text_date</item>
     </style>
 
+    <style name="CustomTextSize">
+        <item name="android:textSize">@dimen/dimen_22_dip</item>
+    </style>
+
     <style name="CustomWeekDayTextAppearance" parent="TextAppearance.MaterialCalendarWidget.WeekDay">
         <item name="android:textColor">@android:color/white</item>
     </style>
@@ -285,6 +289,10 @@
     <style name="anim_pop_bottom">
         <item name="android:windowEnterAnimation">@anim/pop_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/pop_bottom_out</item>
+    </style>
+
+    <style name="anim_pop_show">
+        <item name="android:windowExitAnimation">@anim/pop_dismiss</item>
     </style>
 
     <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">

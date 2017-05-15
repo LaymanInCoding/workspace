@@ -1,53 +1,41 @@
 package com.witmoon.xmb.activity.common;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
-import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.common.adapter.Search_adapter;
 import com.witmoon.xmb.activity.goods.SearchResultListActivity;
 import com.witmoon.xmb.api.CommonApi;
-import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.ui.FlowTagLayout;
-import com.witmoon.xmb.ui.SearChMyView.BGAFlowLayout;
 import com.witmoon.xmb.ui.TagAdapter;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
 import com.witmoon.xmb.util.SystemBarTintManager;
 import com.witmoon.xmb.util.XmbUtils;
-import com.witmoon.xmblibrary.linearlistview.LinearListView;
-import com.witmoon.xmblibrary.linearlistview.listener.OnItemClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 
 /**
  * 搜索界面
@@ -68,6 +56,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private TagAdapter mAdapter;
     private Search_adapter adapter;
     private EmptyLayout mEmptyLayout;
+
+    private HeaderViewRecyclerAdapter adapterWrapper;
+    private View footerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,7 +118,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         });
         mLinearLayout = (LinearLayout) findViewById(R.id.search_boom);
         mSearch_no = (TextView) findViewById(R.id.search_no);
-        findViewById(R.id.delete_search).setOnClickListener(this);
         findViewById(R.id.toolbar_right_text).setOnClickListener(this);
         mLinearListView = (RecyclerView) findViewById(R.id.search_listView);
         initData();
@@ -153,7 +143,15 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             LinearLayoutManager manager = new LinearLayoutManager(mContext);
             manager.setOrientation(LinearLayoutManager.VERTICAL);
             mLinearListView.setLayoutManager(manager);
-            mLinearListView.setAdapter(adapter);
+            adapterWrapper = new HeaderViewRecyclerAdapter(adapter);
+            footerView = LayoutInflater.from(this).inflate(R.layout.search_footer_layout, mLinearListView, false);
+            footerView.setOnClickListener(v -> {
+                AppContext.instance().getXmbDB().search_delete();
+                AppContext.showToast("清除成功！");
+                initData();
+            });
+            adapterWrapper.addFooterView(footerView);
+            mLinearListView.setAdapter(adapterWrapper);
             mSearch_no.setVisibility(View.GONE);
             mLinearLayout.setVisibility(View.VISIBLE);
         } else {
@@ -175,11 +173,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.delete_search:
-                mAppContext.getXmbDB().search_delete();
-                AppContext.showToast("清除成功！");
-                initData();
-                break;
             case R.id.toolbar_right_text:
                 finish();
                 break;

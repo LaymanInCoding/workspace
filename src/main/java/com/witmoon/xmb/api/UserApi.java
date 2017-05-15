@@ -104,15 +104,20 @@ public class UserApi {
                 paramMap, listener));
     }
 
-    // 登录
-    public static void login(String account, String pwd, String type, Listener<JSONObject> listener) {
-        Map<String, String> paramMap = initParamMap();
-        paramMap.put("sign_type", type);
-        paramMap.put("name", account);
-        paramMap.put("password", pwd);
-        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "users/register",
-                paramMap, listener));
+    public static void refresh_token(Listener<JSONObject> listener) {
+        Map<String, String> paramMap = new HashMap<>();
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "users/refresh_token",
+                ApiHelper.getParamMap(paramMap), listener));
     }
+    // 登录
+//    public static void login(String account, String pwd, String type, Listener<JSONObject> listener) {
+//        Map<String, String> paramMap = initParamMap();
+//        paramMap.put("sign_type", type);
+//        paramMap.put("name", account);
+//        paramMap.put("password", pwd);
+//        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "users/register",
+//                paramMap, listener));
+//    }
 
     // --------------------------- 用户设置 ---------------------------
 
@@ -219,20 +224,21 @@ public class UserApi {
     public static void collectGoods(String id, Listener<JSONObject> listener) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("goods_id", id);
-        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "collect/collect_goods", ApiHelper.getParamObj(paramMap), listener));
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "collect/collect_goods", ApiHelper.getParamMap(paramMap), listener));
     }
 
     // 取消收藏商品
     public static void cancelCollect(String id, Listener<JSONObject> listener) {
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("rec_id", id);
-        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "collect/del_goods", ApiHelper.getParamObj(paramMap), listener));
+        paramMap.put("goods_id", id);
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "collect/del_goods", ApiHelper.getParamMap(paramMap), listener));
     }
 
     // 商品收藏列表
     public static void collectionList(int page, Listener<JSONObject> listener) {
-        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "collect/goods_list", ApiHelper.getPaginationParamObj(page, ApiHelper
-                .getParamObj(null)), listener));
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("page", page + "");
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "collect/goods_list", ApiHelper.getParamMap(paramMap), listener));
     }
 
 
@@ -342,6 +348,16 @@ public class UserApi {
                 .getParamObj(paramMap)), listener));
     }
 
+    // 我的优惠券(可用优惠券)
+    public static void get_invite_coupon(int page, Listener<JSONObject> listener) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("page", page + "");
+//        paramMap.put("version",AppContext.geVerSion());
+//        paramMap.put("channel",AppContext.getChannels());
+//        paramMap.put("device",AppContext.getDevice());
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "invite/coupon", ApiHelper.getParamMap(paramMap), listener));
+    }
+
     // 用户浏览记录
     public static void browseHistory(int page, Listener<JSONObject> listener) {
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL +
@@ -373,6 +389,18 @@ public class UserApi {
         paramMap.put("device", device);
         Netroid.addRequest(new NormalPostJSONRequest("https://api.xiaomabao.com/common/update",
                 paramMap, listener));
+    }
+
+
+    //获取体检报告地址
+    public static void getPdfUrl(String idcard, String name, Listener<JSONObject> listener) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("idcard", idcard);
+        paramMap.put("name", name);
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "/health/check_tj_status",
+                ApiHelper.getParamMap(paramMap), listener));
+//        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "health/check_tj_status",
+//                paramMap, listener));
     }
 
     //unuse

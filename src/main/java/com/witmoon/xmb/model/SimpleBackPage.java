@@ -30,7 +30,10 @@ import com.witmoon.xmb.activity.me.fragment.CheckProgressFragment;
 import com.witmoon.xmb.activity.me.fragment.ElectroincOrderFragment;
 import com.witmoon.xmb.activity.me.fragment.EvaluateFragment;
 import com.witmoon.xmb.activity.me.fragment.HelpFragment;
+import com.witmoon.xmb.activity.me.fragment.InviteFriendsFragment;
+import com.witmoon.xmb.activity.me.fragment.InvitiRuleFragment;
 import com.witmoon.xmb.activity.me.fragment.LogisticsFragment;
+import com.witmoon.xmb.activity.me.fragment.MedicalReportFragment;
 import com.witmoon.xmb.activity.me.fragment.MyFavoriteGoodsFragment;
 import com.witmoon.xmb.activity.me.fragment.MyMabaoBeanFragment;
 import com.witmoon.xmb.activity.me.fragment.MyOrderFragment;
@@ -149,7 +152,10 @@ public enum SimpleBackPage {
 
     GoodsComment(63, R.string.text_mama_comment, R.color.master_me, GoogsCommentFragment.class),
     CardOrderDetail(64, R.string.card_order_detail, R.color.master_me, CardOrderDetailFragment.class),
-    ElecOrder(65, R.string.elec_order, R.color.master_me, ElectroincOrderFragment.class);
+    ElecOrder(65, R.string.elec_order, R.color.master_me, ElectroincOrderFragment.class),
+    InviteFriend(66, R.string.invite_friend, R.color.master_me, InviteFriendsFragment.class),
+    InviteRule(67, R.string.invite_rule, R.color.master_me, InvitiRuleFragment.class),
+    MedicalReport(68, R.string.my_medical_report, R.color.master_me, MedicalReportFragment.class);
 
 
     private int value;

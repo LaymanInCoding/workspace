@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
-import com.witmoon.xmb.WelcomeActivity;
 
 
 /**
@@ -81,9 +80,14 @@ public class BabyGuideActivity extends Activity {
             }
         });
         guidePager.setAdapter(new BabyGuideAdapter());
-
+        setOnClick();
     }
 
+    private void setOnClick() {
+        mGuideImageViews[0].setOnClickListener(v -> guidePager.setCurrentItem(1, true));
+        mGuideImageViews[1].setOnClickListener(v -> guidePager.setCurrentItem(2, true));
+        mGuideImageViews[2].setOnClickListener(v -> guidePager.setCurrentItem(3, true));
+    }
 
     class BabyGuideAdapter extends PagerAdapter {
 

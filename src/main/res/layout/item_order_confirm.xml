@@ -1,98 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/space_8"
               android:background="@color/white"
               android:gravity="center_vertical"
-              android:orientation="vertical"
-              android:layout_marginBottom="@dimen/space_8">
+              android:orientation="vertical">
 
-    <View style="@style/horizontal_divider_full" />
+    <View style="@style/horizontal_divider_full"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dip"
         android:gravity="center_vertical"
-        android:paddingTop="@dimen/space_3"
         android:paddingBottom="@dimen/space_3"
         android:paddingLeft="@dimen/space_10"
-        android:paddingRight="@dimen/space_10">
+        android:paddingRight="@dimen/space_10"
+        android:paddingTop="@dimen/space_3">
+
         <TextView
+            android:id="@+id/supplier_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="小麻包自营"
             android:textSize="@dimen/text_size_12"
-            android:id="@+id/supplier_name"/>
+            tools:text="小麻包自营"/>
     </LinearLayout>
 
-
-    <View style="@style/horizontal_divider_full" />
+    <View style="@style/horizontal_divider_full"/>
 
     <LinearLayout
+        android:id="@+id/discount_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/g_container">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/space_3"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10"
+            android:paddingTop="@dimen/space_3">
+
+            <TextView
+                android:id="@+id/discount_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_price"
+                android:textSize="@dimen/text_size_12"
+                tools:text="小麻包自营"/>
+
+        </LinearLayout>
+
+        <View style="@style/horizontal_divider_full"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/g_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dip"
-        android:visibility="gone"
         android:gravity="center_vertical"
-        android:paddingTop="@dimen/space_3"
         android:paddingBottom="@dimen/space_3"
         android:paddingLeft="@dimen/space_10"
-        android:paddingRight="@dimen/space_10">
+        android:paddingRight="@dimen/space_10"
+        android:paddingTop="@dimen/space_3"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="商品税费："
-                android:textSize="@dimen/text_size_12" />
+                android:textSize="@dimen/text_size_12"/>
+
             <com.witmoon.xmb.util.MoneyTextView
+                android:id="@+id/supplier_tax"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="@null"
                 android:textColor="@color/text_price"
-                android:textSize="@dimen/text_size_12"
-                android:id="@+id/supplier_tax"/>
+                android:textSize="@dimen/text_size_12"/>
         </LinearLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="40dip"
         android:layout_alignParentRight="true"
         android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center|left"
-            android:paddingLeft="@dimen/dimen_20_dip"
             android:layout_alignParentLeft="true"
-            android:orientation="horizontal">
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_20_dip">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="商品运费："
-                android:textSize="@dimen/text_size_12" />
+                android:textSize="@dimen/text_size_12"/>
+
             <com.witmoon.xmb.util.MoneyTextView
+                android:id="@+id/supplier_shipping"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="@null"
                 android:textColor="@color/text_price"
-                android:textSize="@dimen/text_size_12"
-                android:id="@+id/supplier_shipping"/>
+                android:textSize="@dimen/text_size_12"/>
         </LinearLayout>
 
         <LinearLayout
@@ -101,12 +138,14 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="center|right">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center|right"
-                android:textSize="12sp"
-                android:text="小计："/>
+                android:text="小计："
+                android:textSize="12sp"/>
+
             <com.witmoon.xmb.util.MoneyTextView
                 android:id="@+id/supplier_s_total"
                 android:layout_width="wrap_content"
@@ -118,16 +157,16 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/supplier_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_toLeftOf="@+id/supplier_s_con"
-            android:text=""
-            android:id="@+id/supplier_count"
+            android:gravity="center"
             android:paddingLeft="10dip"
-            android:textSize="@dimen/text_size_12" />
+            android:text=""
+            android:textSize="@dimen/text_size_12"/>
     </RelativeLayout>
 
-    <View style="@style/horizontal_divider_full" />
+    <View style="@style/horizontal_divider_full"/>
 
 </LinearLayout>

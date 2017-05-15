@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class MabaoCardAdapter extends  RecyclerView.Adapter<MabaoCardAdapter.ViewHolder> {
 
     private OnItemClickListener mOnClickListener;
+    private Boolean hideCheck = false;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -29,6 +30,12 @@ public class MabaoCardAdapter extends  RecyclerView.Adapter<MabaoCardAdapter.Vie
     public MabaoCardAdapter(ArrayList<MabaoCard> mDatas, Context context) {
         this.mDatas = mDatas;
         this.context = context;
+    }
+
+    public MabaoCardAdapter(ArrayList<MabaoCard> mDatas, Context context,Boolean hideCheck) {
+        this.mDatas = mDatas;
+        this.context = context;
+        this.hideCheck = hideCheck;
     }
 
     private ArrayList<MabaoCard> mDatas;
@@ -51,6 +58,9 @@ public class MabaoCardAdapter extends  RecyclerView.Adapter<MabaoCardAdapter.Vie
             holder.mb_card_checked.setImageResource(R.mipmap.mb_card_selected);
         }else{
             holder.mb_card_checked.setImageResource(R.mipmap.mb_card_default);
+        }
+        if (this.hideCheck){
+            holder.mb_card_checked.setVisibility(View.GONE);
         }
         if (mabaoCard.getOver_date()){
             holder.mb_over_date.setVisibility(View.VISIBLE);

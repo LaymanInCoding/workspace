@@ -24,6 +24,7 @@ import com.witmoon.xmb.model.ReceiverAddress;
 import com.witmoon.xmb.model.SimpleBackPage;
 import com.witmoon.xmb.util.TwoTuple;
 import com.witmoon.xmb.util.UIHelper;
+import com.witmoon.xmb.util.XmbUtils;
 import com.witmoon.xmblibrary.recyclerview.SuperRecyclerView;
 
 import org.json.JSONArray;
@@ -90,7 +91,11 @@ public class AddressManageActivity extends BaseActivity {
                 .OnDeleteClickListener() {
             @Override
             public void onDeleteClick(String id, int position) {
-                deleteAddress(id, position);
+                if (null != getIntent().getStringExtra("orderConfirm")) {
+                    XmbUtils.showMessage(AddressManageActivity.this, "当前页不可进行删除操作");
+                } else {
+                    deleteAddress(id, position);
+                }
             }
         });
         // 编辑地址
@@ -212,6 +217,10 @@ public class AddressManageActivity extends BaseActivity {
                             @Override
                             public void onSuccess(JSONObject response) {
                                 mAddressList.remove(position);
+                                if (mAddressList.size() == 0) {
+                                    TextView emptyText = (TextView) mSuperRecyclerView.getEmptyView();
+                                    emptyText.setText("您还没有收货地址, 快来添加一个吧!");
+                                }
                                 mAddressAdapter.notifyDataSetChanged();
                             }
                         });

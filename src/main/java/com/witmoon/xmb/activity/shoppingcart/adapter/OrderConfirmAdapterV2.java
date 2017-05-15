@@ -1,7 +1,6 @@
 package com.witmoon.xmb.activity.shoppingcart.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmblibrary.linearlistview.adapter.LinearBaseAdapter;
@@ -60,27 +60,36 @@ public class OrderConfirmAdapterV2 extends LinearBaseAdapter {
         if (convertView == null) {
             convertView = mLayoutInflater.inflate(R.layout.item_order_confirm, parent, false);
             holder = new ItemHolder();
-            holder.supplierText = (TextView)convertView.findViewById(R.id.supplier_name);
-            holder.g_container = (LinearLayout)convertView.findViewById(R.id.g_container);
-            holder.supplierTax = (TextView)convertView.findViewById(R.id.supplier_tax);
-            holder.supplierShipping = (TextView)convertView.findViewById(R.id.supplier_shipping);
-            holder.supplierCount = (TextView)convertView.findViewById(R.id.supplier_count);
+            holder.supplierText = (TextView) convertView.findViewById(R.id.supplier_name);
+            holder.g_container = (LinearLayout) convertView.findViewById(R.id.g_container);
+            holder.supplierTax = (TextView) convertView.findViewById(R.id.supplier_tax);
+            holder.supplierShipping = (TextView) convertView.findViewById(R.id.supplier_shipping);
+            holder.supplierCount = (TextView) convertView.findViewById(R.id.supplier_count);
             holder.supplier_s_total = (TextView) convertView.findViewById(R.id.supplier_s_total);
+            holder.discount_container = (LinearLayout) convertView.findViewById(R.id.discount_container);
+            holder.discount_name = (TextView) convertView.findViewById(R.id.discount_name);
             convertView.setTag(holder);
         } else {
             holder = (ItemHolder) convertView.getTag();
         }
 
         Map<String, Object> dataMap = mDataList.get(position);
+        Logger.d(dataMap);
+        if (!dataMap.get("discount_name").toString().equals("")) {
+            holder.discount_container.setVisibility(View.VISIBLE);
+            holder.discount_name.setText(dataMap.get("discount_name").toString());
+        } else {
+            holder.discount_container.setVisibility(View.GONE);
+        }
         holder.supplierText.setText(dataMap.get("supplier_name").toString());
         holder.supplierTax.setText(dataMap.get("cross_border_money").toString());
-        holder.supplierShipping.setText( dataMap.get("shipping_fee").toString());
-        holder.supplierCount.setText("共"+dataMap.get("number").toString()+"件商品，");
+        holder.supplierShipping.setText(dataMap.get("shipping_fee").toString());
+        holder.supplierCount.setText("共" + dataMap.get("number").toString() + "件商品，");
         holder.supplier_s_total.setText(dataMap.get("total_money").toString());
         holder.g_container.removeAllViews();
-        List<Map<String,String>> goodsList = ( List<Map<String,String>>)dataMap.get("goods_list");
-        for(int i = 0; i < goodsList.size(); i++){
-            LinearLayout containerView = (LinearLayout)mLayoutInflater.inflate(R.layout.item_order_confirm_goods, parent, false);
+        List<Map<String, String>> goodsList = (List<Map<String, String>>) dataMap.get("goods_list");
+        for (int i = 0; i < goodsList.size(); i++) {
+            LinearLayout containerView = (LinearLayout) mLayoutInflater.inflate(R.layout.item_order_confirm_goods, parent, false);
             ImageLoader.getInstance().displayImage(goodsList.get(i).get("url"), ((SimpleDraweeView) containerView.findViewById(R.id.goods_image)), AppContext.options_memory);
             ((TextView) containerView.findViewById(R.id.goods_title)).setText(goodsList.get(i).get("title"));
             ((TextView) containerView.findViewById(R.id.goods_price)).setText(goodsList.get(i).get("price_formatted"));
@@ -102,12 +111,14 @@ public class OrderConfirmAdapterV2 extends LinearBaseAdapter {
         return mDataList.size();
     }
 
-    class ItemHolder{
+    class ItemHolder {
         TextView supplierText;
         LinearLayout g_container;
         TextView supplierShipping;
         TextView supplierTax;
         TextView supplierCount;
         TextView supplier_s_total;
+        LinearLayout discount_container;
+        TextView discount_name;
     }
 }

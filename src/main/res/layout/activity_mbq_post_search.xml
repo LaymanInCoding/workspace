@@ -18,17 +18,17 @@
     </com.witmoon.xmb.ui.widget.EmptyLayout>
 
     <LinearLayout
-        android:background="#ffffff"
-        android:orientation="vertical"
         android:id="@+id/container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="vertical">
 
         <TextView
-            android:background="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10_dip"
+            android:background="#ffffff"
             android:paddingLeft="@dimen/dimen_35_dip"
             android:text="@string/mbq_circle_search_other"
             android:textColor="@color/mbq_search_text"
@@ -36,12 +36,61 @@
 
 
         <com.witmoon.xmb.ui.FlowTagLayout
-            android:background="#ffffff"
             android:id="@+id/tag_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_30_dip">
+            android:layout_marginLeft="@dimen/dimen_30_dip"
+            android:background="#ffffff">
         </com.witmoon.xmb.ui.FlowTagLayout>
+
+
+        <LinearLayout
+            android:id="@+id/search_boom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_5"
+                android:background="#ffffff">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_30_dip"
+                    android:layout_marginTop="@dimen/dimen_64_dip"
+                    android:background="#ffffff"
+                    android:text="搜索历史"
+                    android:textColor="#777777"
+                    android:textSize="@dimen/dimen_28_dip"/>
+
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/search_listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/search_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_60_dip"
+            android:background="#ffffff"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10"
+            android:text="暂无搜索记录"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/dimen_26_dip"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

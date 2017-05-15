@@ -118,6 +118,20 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1_dip"
             android:background="@color/mengbao_index_split_line_color"/>
+
+        <TextView
+            android:text="@string/mb_card_add_hint3"
+            android:textSize="@dimen/dimen_20_dip"
+            android:layout_marginLeft="@dimen/dimen_20_dip"
+            android:layout_marginTop="@dimen/dimen_10_dip"
+            android:layout_marginBottom="@dimen/dimen_10_dip"
+            android:textColor="#b1b1b1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1_dip"
+            android:background="@color/mengbao_index_split_line_color"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="@dimen/dimen_10_dip"

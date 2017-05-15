@@ -18,6 +18,10 @@ public class ElecCard extends BaseBean {
         this.card_num = number;
     }
 
+    public void addCard_num() {
+        this.card_num += 1;
+    }
+
     public int getCard_num() {
         return card_num;
     }

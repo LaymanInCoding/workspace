@@ -66,6 +66,8 @@ public class HotPostAdapter extends  RecyclerView.Adapter<HotPostAdapter.ViewHol
 
                 Intent intent = new Intent(context, PostDetailActivity.class);
                 intent.putExtra("post_id",post.getPost_id());
+                intent.putExtra("post_content",post.getPost_content());
+                intent.putExtra("post_title",post.getPost_title());
                 context.startActivity(intent);
             }
         });

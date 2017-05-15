@@ -79,15 +79,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/delete_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dimen_64_dip"
-                android:text="清空搜索历史"
-                android:textColor="#555555"
-                android:textSize="@dimen/dimen_26_dip"/>
         </LinearLayout>
 
         <TextView

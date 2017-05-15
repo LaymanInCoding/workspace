@@ -168,12 +168,8 @@ public class AaffordableFragment extends BaseFragment {
         headerView.findViewById(R.id.giftcard_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppContext.instance().isLogin()) {
-                    Intent intent = new Intent(getActivity(), CardActivity.class);
-                    startActivity(intent);
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
+                Intent intent = new Intent(getActivity(), CardActivity.class);
+                startActivity(intent);
             }
         });
         qbfl.setTypeface(tf);

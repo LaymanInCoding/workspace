@@ -9,7 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/webview"
+            android:layout_marginBottom="@dimen/dimen_80_dip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </WebView>
         <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
             android:id="@+id/recycle_view"
             android:scrollbars="vertical"
             android:layout_marginBottom="@dimen/dimen_80_dip"
@@ -127,7 +134,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
 
         <include layout="@layout/emptylayout_all" />
     </RelativeLayout>

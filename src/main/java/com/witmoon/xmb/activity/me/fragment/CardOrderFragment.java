@@ -1,5 +1,9 @@
 package com.witmoon.xmb.activity.me.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.MySwipeRefreshLayout;
@@ -17,6 +21,7 @@ import com.witmoon.xmb.activity.me.adapter.CardOrderAdapter;
 import com.witmoon.xmb.api.ApiHelper;
 import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseFragment;
+import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.model.ElecCardBean;
 import com.witmoon.xmb.model.SimpleBackPage;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
@@ -43,6 +48,12 @@ public class CardOrderFragment extends BaseFragment implements MySwipeRefreshLay
     private EmptyLayout mEmptyLayout;
     private MySwipeRefreshLayout mSwipeRefreshLayout;
     private CardOrderAdapter mAdapter;
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onRefresh();
+        }
+    };
 
     @Nullable
     @Override
@@ -71,6 +82,7 @@ public class CardOrderFragment extends BaseFragment implements MySwipeRefreshLay
                 }
             });
             setRecRequest(1);
+            getContext().registerReceiver(mReceiver, new IntentFilter(Const.INTENT_REFRESH_CARD_ORDER));
         }
         return view;
     }
@@ -110,6 +122,10 @@ public class CardOrderFragment extends BaseFragment implements MySwipeRefreshLay
             JSONArray orderArray = null;
             try {
                 orderArray = response.getJSONArray("data");
+                if (mCurrentPage == 1 && orderArray.length() == 0) {
+                    mEmptyLayout.setErrorType(EmptyLayout.NODATA);
+                    return;
+                }
                 for (int i = 0; i < orderArray.length(); i++) {
                     ElecCardBean bean = ElecCardBean.parse(orderArray.getJSONObject(i));
                     data.add(bean);
@@ -149,10 +165,11 @@ public class CardOrderFragment extends BaseFragment implements MySwipeRefreshLay
         ElecCardBean bean = data.get(position);
         JSONObject orderInfo = new JSONObject();
         try {
+            String[] strings = bean.getOrder_amount().split("¥");
             orderInfo.put("order_sn", bean.getOrder_sn());
-            orderInfo.put("order_amount", bean.getOrder_amount());
-            orderInfo.put("desc","小麻包商城");
-            orderInfo.put("subject","小麻包商城");
+            orderInfo.put("order_amount", strings[1]);
+            orderInfo.put("desc", "小麻包商城");
+            orderInfo.put("subject", "小麻包商城");
             CardOrderSubmitSuccessActivity.startActivity(getActivity(), orderInfo
                     .toString());
         } catch (JSONException e) {
@@ -166,5 +183,12 @@ public class CardOrderFragment extends BaseFragment implements MySwipeRefreshLay
         Bundle bundle = new Bundle();
         bundle.putString("order_sn", order_sn);
         UIHelper.showSimpleBack(getContext(), SimpleBackPage.CardOrderDetail, bundle);
+    }
+
+    @Override
+    public void onDestroy() {
+        Logger.d("unregister");
+        super.onDestroy();
+        getContext().unregisterReceiver(mReceiver);
     }
 }

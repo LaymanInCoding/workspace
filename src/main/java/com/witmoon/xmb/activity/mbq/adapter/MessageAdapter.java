@@ -10,11 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.witmoon.xmb.R;
-import com.witmoon.xmb.activity.mbq.activity.PostActivity;
 import com.witmoon.xmb.activity.mbq.activity.PostDetailActivity;
 import com.witmoon.xmb.api.Netroid;
-import com.witmoon.xmb.model.circle.CircleCategory;
-import com.witmoon.xmb.util.XmbUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,8 +40,9 @@ public class MessageAdapter extends  RecyclerView.Adapter<MessageAdapter.ViewHol
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PostDetailActivity.class);
                     try {
-                        intent.putExtra("post_id",jsonObject.getInt("notify_post_id"));
-                        intent.putExtra("comment_id",jsonObject.getInt("notify_comment_id"));
+                        intent.putExtra("post_id",Integer.parseInt(jsonObject.getString("notify_post_id")));
+                        intent.putExtra("post_title",jsonObject.getString("notify_base_content"));
+                        intent.putExtra("post_content",jsonObject.getString("notify_content"));
                         context.startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();

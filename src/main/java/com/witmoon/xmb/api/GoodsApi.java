@@ -1,10 +1,6 @@
 package com.witmoon.xmb.api;
 
-import android.util.Log;
-
 import com.duowan.mobile.netroid.Listener;
-import com.orhanobut.logger.Logger;
-import com.witmoon.xmb.AppContext;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,8 +60,8 @@ public class GoodsApi {
     public static void goodsComments(String id, int p, Listener<JSONObject> listener) {
         Map<String, String> pm = new HashMap<>();
         pm.put("goods_id", id);
-        pm.put("page",p+"");
-        pm.put("count",20+"");
+        pm.put("page", p + "");
+        pm.put("count", 20 + "");
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL +
                 ("goods/comments"),
                 ApiHelper.getParamMap(pm), listener));
@@ -176,7 +172,7 @@ public class GoodsApi {
     }
 
     // 提交订单
-    public static void submitOrder(String addrId, String couponId, String bonusId,String beanNum,
+    public static void submitOrder(String addrId, String couponId, String bonusId, String beanNum,
                                    String real_name, String identity_card, String postscript,
                                    ArrayList<String> mabaoCardArray, String invType,
                                    String invPayee, String invContent, Listener<JSONObject> listener) {
@@ -230,7 +226,21 @@ public class GoodsApi {
     public static void sign(String orderId, Listener<JSONObject> listener) {
         Map<String, String> pm = new HashMap<>();
         pm.put("order_id", orderId);
-        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.getAbsoluteApiUrl
-                ("/payment/alipay/request"), ApiHelper.getParamObj(pm), listener));
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL +
+                ("/pay/test"), ApiHelper.getParamMap(pm), listener));
+    }
+
+    //获取商品支付宝签名
+    public static void getSign(String orderId, Listener<JSONObject> listener) {
+        Map<String, String> pm = new HashMap<>();
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL +
+                ("/pay/goods/" + orderId), ApiHelper.getParamMap(pm), listener));
+    }
+
+    //获取商品微信支付签名
+    public static void getWXSign(String orderId, Listener<JSONObject> listener) {
+        Map<String, String> pm = new HashMap<>();
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL +
+                ("/pay/wx_goods/" + orderId), ApiHelper.getParamMap(pm), listener));
     }
 }

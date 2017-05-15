@@ -9,11 +9,11 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.lzy.okgo.OkGo;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -24,6 +24,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.TbsDownloader;
 import com.tencent.smtt.sdk.TbsListener;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
@@ -35,7 +36,6 @@ import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.db.XmbDB;
 import com.witmoon.xmb.model.User;
 import com.witmoon.xmb.util.CommonUtil;
-import com.witmoon.xmb.util.LocalImageHelper;
 import com.witmoon.xmb.util.TwoTuple;
 import com.witmoon.xmb.util.TypefaceUtil;
 import com.xiaoneng.menu.Ntalker;
@@ -64,6 +64,7 @@ public class AppContext extends BaseApplication {
     private static AppContext instance;
     public static boolean IS_ADDBABY = true;
     public static DisplayImageOptions options_disk, options_memory;
+    private int status = 1;
 
     @Override
     public void onCreate() {
@@ -80,7 +81,7 @@ public class AppContext extends BaseApplication {
                 .bitmapConfig(Bitmap.Config.ARGB_8888) // default
                 .displayer(new SimpleBitmapDisplayer()) // default
                 .build();
-
+        OkGo.init(this);
         options_memory = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(false) // default
                 .cacheInMemory(true) // default
@@ -136,6 +137,7 @@ public class AppContext extends BaseApplication {
         });
 
         QbSdk.initX5Environment(getApplicationContext(), cb);
+        TbsDownloader.needDownload(getApplicationContext(), false);
     }
 
     public String getCachePath() {
@@ -164,6 +166,10 @@ public class AppContext extends BaseApplication {
             if (!mXmbDB.tabIsExist("search")) {
                 //可能升级数据库偏差   ----   所以换种思路
                 mXmbDB.addTable();
+            }
+            if (!mXmbDB.tabIsExist("search_mbq")) {
+                //可能升级数据库偏差   ----   所以换种思路
+                mXmbDB.addMbqSearchTable();
             } else {
                 Log.e("search", "数据库已存在！");
             }
@@ -240,14 +246,40 @@ public class AppContext extends BaseApplication {
         sendBroadcast(intent3);
     }
 
+    public int refreshToken() {
+        if (AppContext.instance().isLogin()) {
+            UserApi.refresh_token(new Listener<JSONObject>() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    Logger.json(response.toString());
+                    if (response.has("info")) {
+                        status = 0;
+                    } else {
+                        status = 1;
+                    }
+                }
+
+                @Override
+                public void onError(NetroidError error) {
+                    logout();
+                }
+            });
+            return status;
+        } else
+            return -1;
+    }
+
     // 初始化用户登录信息
     public void initLoginInfo() {
+
         final User user = getLoginInfo();
         if (user == null || user.getUid() == 0) {
+            Logger.d("user");
             logout();
             return;
         }
         //取得登陆类型作比对，用作自动登录。
+        //本地登录
         if (user.getIs_Or().equals("ZH")) {
             UserApi.login1(user.getType(), user.getSin_name(), new Listener<JSONObject>() {
                 @Override
@@ -284,7 +316,6 @@ public class AppContext extends BaseApplication {
 
                 @Override
                 public void onError(NetroidError error) {
-
                 }
             });
         } else {

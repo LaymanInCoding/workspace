@@ -19,11 +19,13 @@ import android.widget.TextView;
 import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.UmengStatic;
 import com.witmoon.xmb.activity.service.ServiceOrderActivity;
+import com.witmoon.xmb.activity.shoppingcart.MabaoCardActivity;
 import com.witmoon.xmb.activity.user.LoginActivity;
 import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseActivity;
@@ -60,7 +62,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         if (view == null) {
-            Log.d("createView","true");
+            Log.d("createView", "true");
             view = inflater.inflate(R.layout.fragment_usercenter, container, false);
             AssetManager mgr = getActivity().getAssets();//得到AssetManager
             Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");//根据路径得到Typeface
@@ -74,6 +76,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void requestData() {
+        login_text_view.setText(AppContext.getLoginInfo().getName());
         UserApi.userInfo(new Listener<JSONObject>() {
             @Override
             public void onPreExecute() {
@@ -88,11 +91,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
             @Override
             public void onSuccess(JSONObject response) {
+                Logger.json(response.toString());
                 try {
                     JSONObject data = response.getJSONObject("data");
                     Log.e("Data", data.toString());
-                    login_text_view.setText(data.getString("nick_name"));
-                    AppContext.getLoginInfo().setName(data.getString("nick_name"));
                     if (!data.getString("header_img").equals("")) {
                         ImageLoader.getInstance().displayImage(data.getString("header_img"), me_avatar_img, AppContext.options_disk);
                     } else {
@@ -108,6 +110,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private void bindEvent() {
 
         login_text_view = (TextView) view.findViewById(R.id.login_text_view);
+        login_text_view.setText(AppContext.getLoginInfo().getName());
+
         me_avatar_img = (ImageView) view.findViewById(R.id.me_avatar_img);
 
         login_text_view.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +127,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         me_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter0");
+                UmengStatic.registStat(getActivity(), "PersonalCenter0");
 
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -133,11 +137,25 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             }
         });
 
+        View my_medical_report = view.findViewById(R.id.my_medical_report);
+        my_medical_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!AppContext.instance().isLogin()) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    UIHelper.showSimpleBack(getActivity(), SimpleBackPage.MedicalReport);
+                }
+
+            }
+        });
+
         View my_order_view = view.findViewById(R.id.my_order);
         my_order_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter1");
+                UmengStatic.registStat(getActivity(), "PersonalCenter1");
 
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -153,7 +171,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         my_service_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter2");
+                UmengStatic.registStat(getActivity(), "PersonalCenter2");
 
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -168,7 +186,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         my_shopping_cart_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter3");
+                UmengStatic.registStat(getActivity(), "PersonalCenter3");
 
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -178,11 +196,25 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             }
         });
 
+        View my_mbcard_view = view.findViewById(R.id.my_mbcard);
+        my_mbcard_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!AppContext.instance().isLogin()) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    Intent intent = new Intent(getActivity(), MabaoCardActivity.class);
+                    intent.putExtra("from","userCenter");
+                    startActivity(intent);
+                }
+            }
+        });
+
         View my_collect_view = view.findViewById(R.id.my_collect);
         my_collect_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter4");
+                UmengStatic.registStat(getActivity(), "PersonalCenter4");
 
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -196,7 +228,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         me_history_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter10");
+                UmengStatic.registStat(getActivity(), "PersonalCenter10");
 
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -210,7 +242,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         hot_line_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter8");
+                UmengStatic.registStat(getActivity(), "PersonalCenter8");
 
                 new AlertDialog.Builder(getActivity()).setMessage("确定要拨打热线电话吗?")
                         .setNegativeButton("取消", null)
@@ -228,7 +260,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         me_address_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter9");
+                UmengStatic.registStat(getActivity(), "PersonalCenter9");
 
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -237,12 +269,24 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 }
             }
         });
+        View my_invite_view = view.findViewById(R.id.me_invite);
+        my_invite_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!AppContext.instance().isLogin()) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    UIHelper.showSimpleBack(getActivity(), SimpleBackPage.InviteFriend);
+                }
+            }
+        });
+
 
         View after_sale_view = view.findViewById(R.id.after_sales);
         after_sale_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter12");
+                UmengStatic.registStat(getActivity(), "PersonalCenter12");
 
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.AFTER_SALE_SERVICE);
             }
@@ -252,7 +296,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         contact_us_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter11");
+                UmengStatic.registStat(getActivity(), "PersonalCenter11");
 
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ONLINE_SERVICE);
             }
@@ -262,7 +306,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         me_mb_help_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter13");
+                UmengStatic.registStat(getActivity(), "PersonalCenter13");
 
                 UIHelper.showSimpleBack(getActivity(), SimpleBackPage.HELP);
             }
@@ -272,7 +316,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         order_sel_after_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter5");
+                UmengStatic.registStat(getActivity(), "PersonalCenter5");
 
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -298,7 +342,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         me_item_cash_coupon_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UmengStatic.registStat(getActivity(),"PersonalCenter6");
+                UmengStatic.registStat(getActivity(), "PersonalCenter6");
 
                 if (!AppContext.instance().isLogin()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -337,7 +381,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @OnClick(R.id.me_mabao_bean)
     public void onClick() {
-        UmengStatic.registStat(getActivity(),"PersonalCenter7");
+        UmengStatic.registStat(getActivity(), "PersonalCenter7");
 
         if (!AppContext.instance().isLogin()) {
             startActivity(new Intent(getActivity(), LoginActivity.class));

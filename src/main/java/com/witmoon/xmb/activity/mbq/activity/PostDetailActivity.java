@@ -4,49 +4,38 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
-import com.duowan.mobile.netroid.NetroidError;
+import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
-import com.witmoon.xmb.activity.mbq.adapter.CommentAdapter;
 import com.witmoon.xmb.activity.user.LoginActivity;
+import com.witmoon.xmb.api.ApiHelper;
 import com.witmoon.xmb.api.CircleApi;
-import com.witmoon.xmb.api.Netroid;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.base.Const;
-import com.witmoon.xmb.util.HtmlHttpImageGetter;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
-import com.witmoon.xmb.util.URLImageGetter;
 import com.witmoon.xmb.util.XmbUtils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.sufficientlysecure.htmltextview.HtmlTextView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
-import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 
 public class PostDetailActivity extends BaseActivity {
 
     private ImageView toolbar_right_img;
-    private int page = 1;
     private int post_id;
-    private ArrayList<JSONObject> mDatas = new ArrayList<>();
-    private CommentAdapter adapter;
     private LinearLayout headerView;
     private EmptyLayout emptyLayout;
     private TextView toolbar_title_text;
@@ -57,23 +46,54 @@ public class PostDetailActivity extends BaseActivity {
     private View post_collect, post_comment;
     private int current_choose = 1;
     private int type = 1;
-    private int user_id = 0;
     private int is_collect = 0;
     private ImageView collect_img;
-    private int comment_id = 0;
     private HashMap<String, String> share_info = new HashMap<>();
+    private WebView webView;
+    private String isImage = "1";
+    private String poster = "1";
+    private String desc = "";
+    private String title = "";
+    private int page = 1;
+    private int user_id = 0;
+    private int comment_id = 0;
+    private String url;
+
+//    @Override
+//    public void setRecRequest(int page0) {
+//        CircleApi.circle_detail(post_id, page, type, user_id, comment_id, new Listener<JSONObject>() {
+//            @Override
+//            public void onError(NetroidError error) {
+//                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+//            }
+//
+//            @Override
+//            public void onSuccess(JSONObject response) {
+//                Logger.json(response.toString());
+//                if (response.has("post_detail")) {
+////                    try {
+//////                        getShareInfo(response.getJSONObject("post_detail"));
+////                    } catch (JSONException e) {
+////                        e.printStackTrace();
+////                    }
+//                }
+//                emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+//            }
+//        });
+//    }
+
+    private void setShare_info(){
+        share_info.put("title", title);
+        share_info.put("desc", desc);
+        share_info.put("url", ApiHelper.BASE_URL + "circle/mpost/" + post_id + "/1/1");
+    }
 
     private BroadcastReceiver refreshCurrentActivity = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (mDatas.size() < 20) {
-                mDatas.clear();
-                page = 1;
-                setRecRequest(page);
-            } else {
-                TextView post_comment_total = (TextView) headerView.findViewById(R.id.post_comment_total);
-                post_comment_total.setText(post_comment_total.getText().toString() + 1);
-            }
+            isImage = "1";
+            url = ApiHelper.BASE_URL + "circle/mpost/" + post_id + "/" + isImage + "/" + poster;
+            webView.loadUrl(url);
         }
     };
 
@@ -102,6 +122,14 @@ public class PostDetailActivity extends BaseActivity {
     }
 
     private void initView() {
+        post_id = getIntent().getIntExtra("post_id", 0);
+        desc = getIntent().getStringExtra("post_content");
+        title = getIntent().getStringExtra("post_title");
+        Logger.d(post_id);
+        Logger.d(desc);
+        Logger.d(title);
+        setShare_info();
+        url = ApiHelper.BASE_URL + "circle/mpost/" + post_id + "/" + isImage + "/" + poster;
         headerView = (LinearLayout) getLayoutInflater().inflate(R.layout.header_mbq_post, null, false);
         toolbar_right_img = (ImageView) findViewById(R.id.toolbar_right_img);
         toolbar_right_img.setImageResource(R.mipmap.mbq_share);
@@ -113,16 +141,6 @@ public class PostDetailActivity extends BaseActivity {
         toolbar_title_text.setCompoundDrawables(null, null, drawable2, null);
         toolbar_title_text.setCompoundDrawablePadding(20);
         emptyLayout = (EmptyLayout) findViewById(R.id.error_layout);
-        mRootView = (RecyclerView) findViewById(R.id.recycle_view);
-        layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRootView.setHasFixedSize(true);
-        mRootView.setLayoutManager(layoutManager);
-        adapter = new CommentAdapter(mDatas, this);
-        stringAdapter = new HeaderViewRecyclerAdapter(adapter);
-        stringAdapter.addHeaderView(headerView);
-        mRootView.setAdapter(stringAdapter);
-        post_id = getIntent().getIntExtra("post_id", 0);
         choose_area = findViewById(R.id.choose_area);
         post_pic_layout = findViewById(R.id.post_pic_layout);
         post_up_layout = findViewById(R.id.post_up_layout);
@@ -132,7 +150,6 @@ public class PostDetailActivity extends BaseActivity {
         post_pic = (ImageView) findViewById(R.id.post_pic);
         post_collect = findViewById(R.id.post_collect);
         collect_img = (ImageView) findViewById(R.id.collect_img);
-        comment_id = getIntent().getIntExtra("comment_id", 0);
         post_comment = findViewById(R.id.post_comment);
         post_comment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +204,14 @@ public class PostDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 current_choose = 1;
+                if (type == current_choose) {
+                    return;
+                }
                 setImage();
+                isImage = "1";
+                url = ApiHelper.BASE_URL + "circle/mpost/" + post_id + "/" + isImage + "/" + poster;
+                Logger.d(url);
+                webView.loadUrl(url);
             }
         });
 
@@ -195,6 +219,7 @@ public class PostDetailActivity extends BaseActivity {
         toolbar_right_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Logger.d(share_info.toString());
                 XmbUtils.showMbqShare(PostDetailActivity.this, findViewById(R.id.mbq_share_container), share_info);
             }
         });
@@ -203,7 +228,14 @@ public class PostDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 current_choose = 2;
+                if (type == current_choose) {
+                    return;
+                }
                 setImage();
+                isImage = "2";
+                url = ApiHelper.BASE_URL + "circle/mpost/" + post_id + "/" + isImage + "/" + poster;
+                Logger.d(url);
+                webView.loadUrl(url);
             }
         });
 
@@ -211,12 +243,17 @@ public class PostDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 current_choose = 3;
+                if (type == current_choose) {
+                    return;
+                }
                 setImage();
+                isImage = "3";
+                url = ApiHelper.BASE_URL + "circle/mpost/" + post_id + "/" + isImage + "/" + poster;
+                Logger.d(url);
+                webView.loadUrl(url);
             }
         });
-
-        setRecRequest(page);
-
+//        setRecRequest(1);
         toolbar_title_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,6 +264,29 @@ public class PostDetailActivity extends BaseActivity {
                 }
             }
         });
+        webView = (WebView) findViewById(R.id.webview);
+
+        //如果访问的页面中有Javascript，则webview必须设置支持Javascript
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+            }
+        });
+        webView.loadUrl(url);
+        webView.addJavascriptInterface(new JavaInterfaceObject(PostDetailActivity.this), "xmbapp");
     }
 
     private void setImage() {
@@ -246,12 +306,8 @@ public class PostDetailActivity extends BaseActivity {
             post_pic.setImageResource(R.mipmap.mbq_post_pic_white);
             type = 3;
         }
-        page = 1;
-        mDatas.clear();
-        comment_id = 0;
         emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
         showArea(2);
-        setRecRequest(page);
     }
 
     @Override
@@ -286,87 +342,26 @@ public class PostDetailActivity extends BaseActivity {
         }
     }
 
-    private void setHeadView(JSONObject jsonObject) throws JSONException {
-        ImageView post_userhead = (ImageView) headerView.findViewById(R.id.post_userhead);
-        Netroid.displayBabyImage(jsonObject.getString("author_userhead"), post_userhead);
-        TextView post_username = (TextView) headerView.findViewById(R.id.post_username);
-        post_username.setText(jsonObject.getString("author_name"));
-        TextView post_floor = (TextView) headerView.findViewById(R.id.post_floor);
-        post_floor.setText("楼主");
-        user_id = jsonObject.getInt("author_id");
-        TextView post_title = (TextView) headerView.findViewById(R.id.post_title);
-        post_title.setText(jsonObject.getString("post_title"));
-        HtmlTextView post_content = (HtmlTextView) headerView.findViewById(R.id.post_content);
-//        post_content.setHtml(jsonObject.getString("post_content"), new HtmlHttpImageGetter(post_content,null,true));
-        post_content.setHtml(jsonObject.getString("post_content"), new URLImageGetter(post_content));
-        share_info.put("title", jsonObject.getString("post_title"));
-        share_info.put("desc", jsonObject.getString("post_content"));
-        share_info.put("url", "http://api.xiaomabao.com/circle/post/" + post_id);
-        LinearLayout post_imgs_container = (LinearLayout) headerView.findViewById(R.id.post_imgs_container);
-        post_imgs_container.removeAllViews();
-//        JSONArray imgsJsonArray = jsonObject.getJSONArray("post_imgs");
-//        if (imgsJsonArray.length() == 0) {
-//            post_imgs_container.setVisibility(View.GONE);
-//        } else {
-//            post_imgs_container.setVisibility(View.VISIBLE);
-//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//            for (int i = 0; i < imgsJsonArray.length(); i++) {
-//                ImageView riv = new ImageView(this);
-//                layoutParams.width = MainActivity.screen_width - 50;
-//                layoutParams.setMargins(0, 0, 0, 20);
-//                riv.setMaxHeight(MainActivity.screen_width * 5);
-//                riv.setScaleType(ImageView.ScaleType.FIT_XY);
-//                riv.setAdjustViewBounds(true);
-//                riv.setLayoutParams(layoutParams);
-//                Netroid.displayImage(imgsJsonArray.getString(i), riv);
-//                post_imgs_container.addView(riv);
-//            }
-//        }
+    public class JavaInterfaceObject {
+        private Context mContext;
 
-        TextView circle_name = (TextView) headerView.findViewById(R.id.circle_name);
-        circle_name.setText(jsonObject.getString("circle_name"));
+        public JavaInterfaceObject(Context context) {
+            this.mContext = context;
+        }
 
-        TextView post_comment_total = (TextView) headerView.findViewById(R.id.post_comment_total);
-        post_comment_total.setText(jsonObject.getString("reply_cnt"));
-    }
-
-    @Override
-    public void setRecRequest(int page0) {
-        CircleApi.circle_detail(post_id, page, type, user_id, comment_id, new Listener<JSONObject>() {
-            @Override
-            public void onError(NetroidError error) {
-                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+        @JavascriptInterface
+        public void postComment(String post_id, String comment_id, String user_name) {
+            Logger.t("post_id").d(post_id);
+            Logger.t("comment_id").d(comment_id);
+            Logger.t("user_name").d(user_name);
+            if (!AppContext.instance().isLogin()) {
+                mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                return;
             }
-
-            @Override
-            public void onSuccess(JSONObject response) {
-                Log.e("Response", response.toString());
-                if (response.has("post_detail")) {
-                    try {
-                        setHeadView(response.getJSONObject("post_detail"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    JSONArray jsonArray = response.getJSONArray("comments");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        mDatas.add(jsonArray.getJSONObject(i));
-                    }
-                    if (jsonArray.length() < 20) {
-                        removeFooterView();
-                    } else {
-                        createLoadMoreView();
-                        resetStatus();
-                    }
-                    page += 1;
-                    stringAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
-            }
-        });
+            Intent intent = new Intent(mContext, PostCommentActivity.class);
+            intent.putExtra("post_id", post_id + "");
+            intent.putExtra("comment_reply_id", comment_id);
+            mContext.startActivity(intent);
+        }
     }
-
 }

@@ -52,11 +52,16 @@
             app:tabTextColor="@color/main_black">
         </android.support.design.widget.TabLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1_dip"
+            android:background="#cccccc"/>
+
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dimen_16_dip"/>
+            android:layout_marginTop="@dimen/dimen_5_dip"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

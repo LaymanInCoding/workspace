@@ -1,19 +1,13 @@
 package com.witmoon.xmb.activity.me.fragment;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,20 +15,11 @@ import android.view.ViewGroup;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.orhanobut.logger.Logger;
-import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
-import com.witmoon.xmb.activity.me.OrderType;
 import com.witmoon.xmb.activity.me.Out_ServiceActivity;
-import com.witmoon.xmb.activity.me.adapter.OrderAdapter;
 import com.witmoon.xmb.activity.me.adapter.Out_PriceAdapter;
-import com.witmoon.xmb.activity.shoppingcart.OrderSubmitSuccessActivity;
 import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseFragment;
-import com.witmoon.xmb.base.BaseRecyclerAdapter;
-import com.witmoon.xmb.base.BaseRecyclerViewFragmentV2;
-import com.witmoon.xmb.base.Const;
-import com.witmoon.xmb.model.ListEntity;
-import com.witmoon.xmb.model.Order;
 import com.witmoon.xmb.model.Out_;
 import com.witmoon.xmb.model.RefreshEvent;
 import com.witmoon.xmb.model.SimpleBackPage;
@@ -47,9 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 import rx.Subscription;
@@ -187,27 +169,31 @@ public class Out_PriceFragment extends BaseFragment implements SwipeRefreshLayou
             JSONArray orderArray = null;
             try {
                 orderArray = response.getJSONArray("data");
-                for (int i = 0; i < orderArray.length(); i++) {
-                    Out_ out = Out_.parse(orderArray.getJSONObject(i));
-                    data.add(out);
-                }
-                if (orderArray.length() < 20) {
-                    if (mCurrentPage != 1) {
-                        removeFooterView();
-                    }
-                    mRootView.scrollToPosition(0);
-                    has_footer = false;
+                if (orderArray.length() == 0 && mCurrentPage == 1) {
+                    mEmptyLayout.setErrorType(EmptyLayout.NODATA);
                 } else {
-                    has_footer = true;
-                    createLoadMoreView();
-                    resetStatus();
-                    if (mCurrentPage == 1) {
-                        mRootView.scrollToPosition(0);
+                    for (int i = 0; i < orderArray.length(); i++) {
+                        Out_ out = Out_.parse(orderArray.getJSONObject(i));
+                        data.add(out);
                     }
+                    if (orderArray.length() < 20) {
+                        if (mCurrentPage != 1) {
+                            removeFooterView();
+                        }
+                        mRootView.scrollToPosition(0);
+                        has_footer = false;
+                    } else {
+                        has_footer = true;
+                        createLoadMoreView();
+                        resetStatus();
+                        if (mCurrentPage == 1) {
+                            mRootView.scrollToPosition(0);
+                        }
+                    }
+                    mOut_PriceAdapter.notifyDataSetChanged();
+                    mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+                    mCurrentPage += 1;
                 }
-                mOut_PriceAdapter.notifyDataSetChanged();
-                mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
-                mCurrentPage += 1;
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (Exception e) {

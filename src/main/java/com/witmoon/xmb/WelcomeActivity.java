@@ -1,22 +1,11 @@
 package com.witmoon.xmb;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.facebook.drawee.drawable.ScalingUtils;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
-import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
-import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
-import com.witmoon.xmb.activity.webview.InteractiveWebViewActivity;
 import com.xiaoneng.menu.Ntalker;
 
 import java.util.Timer;

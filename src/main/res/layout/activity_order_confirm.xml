@@ -34,17 +34,18 @@
                 android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/submit_button"
+                    android:id="@+id/no_address_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:drawableLeft="@mipmap/icon_64x64_plus"
+                    android:drawableRight="@mipmap/icon_arrow_right"
                     android:drawablePadding="@dimen/space_10"
                     android:gravity="center_vertical"
                     android:text="请先添加收货地址"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/address_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -139,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:text="身&#032;份&#032;证&#032;号&#032;:"/>
+                        android:text="身份证号码:"/>
 
                     <EditText
                         android:id="@+id/id_no"
@@ -202,12 +203,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp">
 
                     <TextView
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/line"
+                        android:paddingTop="@dimen/dimen_16_dip"
+                        android:paddingBottom="@dimen/dimen_16_dip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -223,6 +226,7 @@
 
                 <LinearLayout
                     android:id="@+id/over_sea_container"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"

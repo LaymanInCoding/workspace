@@ -92,10 +92,10 @@ public class CardOrderConfirmActivity extends BaseActivity implements View.OnCli
         emptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MabaoCardApi.checkOrder(inv_payee, inv_type, inv_content,remarks, mSelectedCard, mCardList, mCheckCallback);
+                MabaoCardApi.checkOrder(inv_payee, inv_type, inv_content, remarks, mSelectedCard, mCardList, mCheckCallback);
             }
         });
-        MabaoCardApi.checkOrder(inv_payee, inv_type, inv_content,remarks, mSelectedCard, mCardList, mCheckCallback);
+        MabaoCardApi.checkOrder(inv_payee, inv_type, inv_content, remarks, mSelectedCard, mCardList, mCheckCallback);
     }
 
     // 确认订单回调
@@ -123,6 +123,8 @@ public class CardOrderConfirmActivity extends BaseActivity implements View.OnCli
                 total_paymentText.setText(mOrderMoney);
                 if (response.getJSONObject("total").has("mabao_card_amount")) {
                     mMbCardText.setText(response.getJSONObject("total").getString("mabao_card_amount"));
+                } else {
+                    mMbCardText.setText("");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -176,12 +178,12 @@ public class CardOrderConfirmActivity extends BaseActivity implements View.OnCli
             }
             try {
                 JSONObject jsonObject = response.getJSONObject("data");
-                jsonObject.put("desc","小麻包商城");
-                jsonObject.put("subject","小麻包商城");
+                jsonObject.put("desc", "小麻包商城");
+                jsonObject.put("subject", "小麻包商城");
                 if (jsonObject.getDouble("order_amount") == 0.00) {
                     Intent intent = new Intent(CardOrderConfirmActivity.this, OrderPaySuccessActivity.class);
                     intent.putExtra("ORDER_SN", jsonObject.getString("order_sn"));
-                    intent.putExtra("TYPE","card");
+                    intent.putExtra("TYPE", "card");
                     startActivity(intent);
                     finish();
                 } else {
@@ -218,7 +220,7 @@ public class CardOrderConfirmActivity extends BaseActivity implements View.OnCli
                 startActivityForResult(intent, INVOICE_CODE);
                 break;
             case R.id.next_step_btn:
-                MabaoCardApi.submitOrder(inv_payee, inv_type, inv_content,remarks, mSelectedCard, mCardList, submitCallback);
+                MabaoCardApi.submitOrder(inv_payee, inv_type, inv_content, remarks, mSelectedCard, mCardList, submitCallback);
                 break;
         }
 
@@ -231,7 +233,7 @@ public class CardOrderConfirmActivity extends BaseActivity implements View.OnCli
             case MB_CARD_CODE:
                 if (resultCode == RESULT_OK) {
                     mSelectedCard = data.getStringArrayListExtra("data");
-                    MabaoCardApi.checkOrder(inv_payee, inv_type, inv_content,remarks, mSelectedCard, mCardList, mCheckCallback);
+                    MabaoCardApi.checkOrder(inv_payee, inv_type, inv_content, remarks, mSelectedCard, mCardList, mCheckCallback);
                 }
                 break;
             case INVOICE_CODE:

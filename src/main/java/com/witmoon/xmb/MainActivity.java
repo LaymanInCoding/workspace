@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
+import com.orhanobut.logger.Logger;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -34,6 +35,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
 import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
 import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
+import com.witmoon.xmb.activity.user.LoginActivity;
 import com.witmoon.xmb.activity.webview.InteractiveWebViewActivity;
 import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseActivity;
@@ -74,6 +76,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     public static ArrayList<Integer> selec_index = new ArrayList<>();//电子卡选中index;
     public String app_name;
     private int mPreparedTabIndex = -1;
+    private static int refreshTime = 0;
     private Intent intent;
     private TencentLocationManager mLocationManager;
     // 切换Tab页广播接收器
@@ -114,8 +117,33 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
             MainActivity activity = mActivity.get();
             if (activity != null && msg.what == 1) {
                 if (AppContext.isNetworkAvailable(activity)) {
-                    AppContext.instance().initLoginInfo();
+                    int status = AppContext.instance().refreshToken();
+//                    Logger.d(status);
+                    if (status == 0) {
+                        XmbUtils.showMessage(activity, "登录过期，请重新登录");
+                        sendEmptyMessageDelayed(2, 1500);
+                    }
                 }
+            }
+            if (activity != null && msg.what == 2 && AppContext.instance().getLoginUid() != 0) {
+//                Logger.d("jumpToLogin");
+                AppContext.instance().logout();
+                Intent intent = new Intent(activity, LoginActivity.class);
+                activity.startActivity(intent);
+            }
+            msg.recycle();
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            if (myReceiver == null) {
+                myReceiver = new ConnectionChangeReceiver();
+                Logger.d("windowfocus");
+                IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+                this.registerReceiver(myReceiver, filter);
             }
         }
     }
@@ -128,8 +156,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         public void run() {
             while (true) {
                 try {
-                    Thread.sleep(1000 * 60 * 10);
-                    Message msg = new Message();
+                    Thread.sleep(1000 * 60 * 30);
+//                    Thread.sleep(1000 * 20);
+                    Message msg = Message.obtain();
                     msg.what = 1;
                     mHandlerLogin.sendMessage(msg);
                 } catch (Exception e) {
@@ -144,7 +173,6 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     @Override
     public void onStatusUpdate(String name, int status, String desc) {
         // do your work
-
     }
 
     @Override
@@ -162,10 +190,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 
         MainActivity.screen_width = wm.getDefaultDisplay().getWidth();
         //注册网络监听事件
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        myReceiver = new ConnectionChangeReceiver();
-        this.registerReceiver(myReceiver, filter);
-
+//        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+//        myReceiver = new ConnectionChangeReceiver();
+//        this.registerReceiver(myReceiver, filter);
         new Thread(new ThreadShow()).start();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
@@ -368,6 +395,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         }
         unregisterReceiver(mChangTabReceiver);
         unregisterReceiver(mLoginReceiver);
+        unregisterReceiver(myReceiver);
         System.exit(0);
     }
 

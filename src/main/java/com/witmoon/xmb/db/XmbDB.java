@@ -264,6 +264,53 @@ public class XmbDB {
         }
     }
 
+//    ----------------------------------------------------------------------
+
+    //插入麻包圈搜索
+    public void mbq_search_insert(String name) {
+        name = name.trim();
+        if (null != name) {
+            //保持唯一 0-0
+            Cursor cursor = db.rawQuery("select * from search_mbq where search_key = ?", new String[]{name});
+            if (cursor.getCount() <= 0) {
+                ContentValues values = new ContentValues();
+                values.put("search_key", name);
+                db.insert("search_mbq", null, values);
+            }
+        }
+    }
+
+    //查询所有麻包圈搜索记录
+    public List<String> mbq_service() {
+        List<String> search = new ArrayList<String>();
+        Cursor cursor = db.query("search_mbq", null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                search.add(cursor.getString(cursor.getColumnIndex("search_key")));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return search;
+    }
+
+    //删除某条麻包圈搜索记录
+    public void search_delete_onembq(String search_name) {
+        List<String> mList = mbq_service();
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i).toString().equals(search_name)) {
+                db.delete("search_mbq", "search_key = ?", new String[]{mList.get(i).toString()});
+            }
+        }
+    }
+
+    //删除所有麻包圈搜索记录
+    public void search_delete_allmbq() {
+        List<String> mList = mbq_service();
+        for (int i = 0; i < mList.size(); i++) {
+            db.delete("search_mbq", "search_key = ?", new String[]{mList.get(i).toString()});
+        }
+    }
+//    ----------------------------------------------------------------------
     //查询所有服务搜索记录
     public List<String> search_service() {
         List<String> search = new ArrayList<String>();
@@ -287,7 +334,7 @@ public class XmbDB {
         }
     }
 
-    //删除所有帖子搜索记录
+    //删除所有服务搜索记录
     public void search_delete_service() {
         List<String> mList = search_service();
         for (int i = 0; i < mList.size(); i++) {
@@ -369,5 +416,11 @@ public class XmbDB {
         String CREATE_SEARCH_SERVICE = "create table search_ser (id text primary key, " +
                 "search_service text)";
         db.execSQL(CREATE_SEARCH_SERVICE);
+    }
+
+    public void addMbqSearchTable() {
+        String CREATE_SEARCH_MBQ = "create table search_mbq (id text primary key, " +
+                "search_key text)";
+        db.execSQL(CREATE_SEARCH_MBQ);
     }
 }

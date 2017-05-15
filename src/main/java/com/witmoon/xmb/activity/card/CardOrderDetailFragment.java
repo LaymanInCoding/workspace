@@ -58,6 +58,12 @@ public class CardOrderDetailFragment extends BaseFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.activity_card_detail, container, false);
             mEmptyLayout = (EmptyLayout) view.findViewById(R.id.empty_layout);
+            mEmptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setRecRequest(1);
+                }
+            });
             mGoodsListView = (LinearListView) view.findViewById(R.id.goods_list);
             mCardInfoListView = (LinearListView) view.findViewById(R.id.card_info_list);
             mOrderSnText = (TextView) view.findViewById(R.id.order_id);

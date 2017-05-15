@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.xmb.viewpagerindicator.LinePageIndicator;
 
@@ -19,7 +18,7 @@ import com.xmb.viewpagerindicator.LinePageIndicator;
  */
 public class GuideActivity extends AppCompatActivity{
 
-    private int[] mPagers = new int[]{R.mipmap.page_guide_01, R.mipmap.page_guide_02, R.mipmap
+    private int[] mPagers = new int[]{R.mipmap.page_guide_01, R.mipmap.page_guide_02_new, R.mipmap
             .page_guide_03, R.mipmap.page_guide_04};
     private View[] mGuideImageViews = new View[mPagers.length];
 

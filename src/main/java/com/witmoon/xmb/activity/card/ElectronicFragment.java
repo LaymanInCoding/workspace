@@ -1,5 +1,6 @@
 package com.witmoon.xmb.activity.card;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,8 +17,10 @@ import android.widget.TextView;
 
 import com.duowan.mobile.netroid.Listener;
 import com.orhanobut.logger.Logger;
+import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
+import com.witmoon.xmb.activity.user.LoginActivity;
 import com.witmoon.xmb.api.MabaoCardApi;
 import com.witmoon.xmb.base.BaseFragment;
 import com.witmoon.xmb.model.ElecCard;
@@ -83,6 +87,10 @@ public class ElectronicFragment extends BaseFragment implements CardAdapter.OnIt
         }
     };
 
+    private void hideSoft() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(custom_edittext.getWindowToken(), 0);
+    }
 
     @Nullable
     @Override
@@ -93,21 +101,25 @@ public class ElectronicFragment extends BaseFragment implements CardAdapter.OnIt
             commitBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mCardList.size() == 0) {
-                        XmbUtils.showMessage(getContext(), "请先选择电子卡");
-                        return;
+                    if (AppContext.instance().isLogin()) {
+                        if (mCardList.size() == 0) {
+                            XmbUtils.showMessage(getContext(), "请先选择电子卡");
+                            return;
+                        }
+                        ArrayList<String> list = new ArrayList<>();
+                        for (int i = 0; i < mCardList.size(); i++) {
+                            ElecCard card = mCardList.get(i);
+                            //拼接成  12|500|1  格式
+                            String tmp = card.getCard_id() + "|" + card.getCard_money() + "|" + card.getCard_num();
+                            list.add(tmp);
+                        }
+                        Logger.d(list);
+                        Intent intent = new Intent(getContext(), CardOrderConfirmActivity.class);
+                        intent.putStringArrayListExtra("list", list);
+                        startActivity(intent);
+                    }else{
+                        startActivity(new Intent(getContext(), LoginActivity.class));
                     }
-                    ArrayList<String> list = new ArrayList<>();
-                    for (int i = 0; i < mCardList.size(); i++) {
-                        ElecCard card = mCardList.get(i);
-                        //拼接成  12|500|1  格式
-                        String tmp = card.getCard_id() + "|" + card.getCard_money() + "|" + card.getCard_num();
-                        list.add(tmp);
-                    }
-                    Logger.d(list);
-                    Intent intent = new Intent(getContext(), CardOrderConfirmActivity.class);
-                    intent.putStringArrayListExtra("list", list);
-                    startActivity(intent);
                 }
             });
             mFlowTagLayout = (FlowTagLayout) view.findViewById(R.id.flow_layout);
@@ -147,6 +159,17 @@ public class ElectronicFragment extends BaseFragment implements CardAdapter.OnIt
                         if (Integer.valueOf(custom_money) <= Double.valueOf(max_custom_money) &&
                                 !custom_money.equals("0")) {
                             noCardContainer.setVisibility(View.GONE);
+                            for (int i = 0; i < mCardList.size(); i++) {
+                                if (custom_edittext.getText().toString().trim().equals(mCardList.get(i).getCard_money())
+                                        && mCardList.get(i).getCard_id() == custom_cardId) {
+                                    mCardList.get(i).addCard_num();
+                                    mCardAdapter.notifyDataSetChanged();
+                                    custom_edittext.setText("");
+                                    calculate();
+                                    hideSoft();
+                                    return;
+                                }
+                            }
                             ElecCard card = new ElecCard();
                             card.setCard_money(custom_edittext.getText().toString().trim());
                             card.setCard_id(custom_cardId);
@@ -155,6 +178,7 @@ public class ElectronicFragment extends BaseFragment implements CardAdapter.OnIt
                             mCardAdapter.notifyDataSetChanged();
                             calculate();
                             custom_edittext.setText("");
+                            hideSoft();
                         } else {
                             XmbUtils.showMessage(getContext(), "请输入(1-" + Double.valueOf
                                     (max_custom_money) + ")面额");
@@ -182,11 +206,17 @@ public class ElectronicFragment extends BaseFragment implements CardAdapter.OnIt
     @Override
     public void onItemDelete(int position) {
         int index = mCardList.get(position).getDelete_index();
+        int id = mCardList.get(position).getCard_id();
         if (index != -1) {
             mDataList.get(index).setDelete_index(-1);
             mAdapter.notifyDataSetChanged();
         }
-        MainActivity.selec_index.remove(position);
+        if (id != custom_cardId) {
+            for (int i = 0; i < MainActivity.selec_index.size(); i++)
+                if (MainActivity.selec_index.get(i) == index) {
+                    MainActivity.selec_index.remove(i);
+                }
+        }
         mCardList.get(position).setCard_num(1);
         mCardList.remove(position);
         if (mCardList.size() == 0) {

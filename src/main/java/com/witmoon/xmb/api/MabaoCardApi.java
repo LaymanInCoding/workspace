@@ -49,13 +49,13 @@ public class MabaoCardApi {
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "giftcard/welfare_card/", ApiHelper.getParamMap(map), listener));
     }
 
-    public static void checkOrder(String inv_type, String inv_payee, String inv_content,String remarks,
+    public static void checkOrder(String inv_type, String inv_payee, String inv_content, String remarks,
                                   ArrayList<String> mabaoCardArray, ArrayList<String> cardList, Listener<JSONObject> listener) {
         Map<String, String> pm = new HashMap<>();
         pm.put("inv_type", inv_type);
         pm.put("inv_payee", inv_payee);
         pm.put("inv_content", inv_content);
-        pm.put("remarks",remarks);
+        pm.put("remarks", remarks);
         for (int i = 0; i < cardList.size(); i++) {
             pm.put("card[" + i + "]", cardList.get(i));
         }
@@ -72,13 +72,13 @@ public class MabaoCardApi {
     }
 
     //提交订单
-    public static void submitOrder(String inv_type, String inv_payee, String inv_content,String remarks,
+    public static void submitOrder(String inv_type, String inv_payee, String inv_content, String remarks,
                                    ArrayList<String> mabaoCardArray, ArrayList<String> cardList, Listener<JSONObject> listener) {
         Map<String, String> pm = new HashMap<>();
         pm.put("inv_type", inv_type);
         pm.put("inv_payee", inv_payee);
         pm.put("inv_content", inv_content);
-        pm.put("remarks",remarks);
+        pm.put("remarks", remarks);
         for (int i = 0; i < cardList.size(); i++) {
             pm.put("card[" + i + "]", cardList.get(i));
         }
@@ -99,5 +99,18 @@ public class MabaoCardApi {
         Map<String, String> pm = new HashMap<>();
         pm.put("order_sn", order_sn);
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "order/gift_order_detail", ApiHelper.getParamMap(pm), listener));
+    }
+
+    //获取电子卡支付宝签名信息
+    public static void getSign(String order_id, Listener<JSONObject> listener) {
+        HashMap<String, String> pm = new HashMap<>();
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "pay/giftcard/" + order_id, ApiHelper.getParamMap(pm), listener));
+    }
+
+    //获取电子卡微信支付签名
+    public static void getWXSign(String orderId, Listener<JSONObject> listener) {
+        Map<String, String> pm = new HashMap<>();
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL +
+                ("/pay/wx_giftcard/" + orderId), ApiHelper.getParamMap(pm), listener));
     }
 }

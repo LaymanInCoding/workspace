@@ -11,6 +11,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -127,6 +130,10 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
     private String pathImage2 = "backend_pic";
     private int current_img = 1;
 
+    private Handler mHandler;
+    private HandlerThread mHandlerThread;
+
+
     public static void startActivity(Context context, boolean is_code) {
         Intent intent = new Intent(context, OrderConfirmActivity.class);
         intent.putExtra("is_code", is_code);
@@ -153,6 +160,19 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initialize(Bundle savedInstanceState) {
+        mHandlerThread = new HandlerThread("oc_thread");
+        mHandlerThread.start();
+        mHandler = new Handler(mHandlerThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == 1) {
+                    Intent addIntent = new Intent(OrderConfirmActivity.this, AddressManageActivity.class);
+                    addIntent.putExtra("orderConfirm", "1");
+                    startActivityForResult(addIntent, ADDRESS_CODE);
+                }
+            }
+        };
         getIntent().getBooleanExtra("is_code", false);
         mWaitingDialog = new WaitingDialog(this);
         name_text = (TextView) findViewById(R.id.receiver_name_text);
@@ -163,7 +183,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
         mId = (EditText) findViewById(R.id.id_no);
         mReceiverLayout = findViewById(R.id.address_layout);
         mReceiverLayout.setOnClickListener(this);
-        mNoReceiverTipView = findViewById(R.id.submit_button);
+        mNoReceiverTipView = findViewById(R.id.no_address_text);
         id_card = (TextView) findViewById(R.id.id_card);
         goods_envelope = (TextView) findViewById(R.id.goods_envelope);
         goods_dvolume = (TextView) findViewById(R.id.goods_dvolume);
@@ -221,9 +241,12 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
 
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> tt = ApiHelper.parseResponseStatus(response);
             if (!tt.first) {
-                XmbUtils.showMessage(OrderConfirmActivity.this, tt.second);
+                if (OrderConfirmActivity.this != null) {
+                    XmbUtils.showMessage(OrderConfirmActivity.this, tt.second);
+                }
                 emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
                 return;
             }
@@ -247,16 +270,21 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
 
                 if (dataObj.has("surplus")) {
                     mMbCardText.setText(dataObj.getString("surplus"));
+                } else {
+                    mMbCardText.setText("");
                 }
                 emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
                 JSONObject receiverObj = dataObj.getJSONObject("consignee");
                 if (receiverObj == null || !receiverObj.has("id")) {
+                    Logger.d("no_consige");
                     is_over_sea = true;
                     mNoReceiverTipView.setVisibility(View.VISIBLE);
                     mReceiverLayout.setVisibility(View.GONE);
                     emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
                     return;
                 }
+                mNoReceiverTipView.setVisibility(View.GONE);
+                mReceiverLayout.setVisibility(View.VISIBLE);
                 mReceiverAddressId = receiverObj.getString("id");
                 mReceiverText.setText(receiverObj.getString("consignee") + "（" + receiverObj
                         .getString("mobile") + "）");
@@ -347,6 +375,7 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
                 tmpDataList.add(dataMap);
             }
             tmpDataMap.put("goods_list", tmpDataList);
+            tmpDataMap.put("discount_name", value.getString("discount_name"));
             tmpDataMap.put("number", value.getString("number"));
             tmpDataMap.put("total_money", value.getString("total_money"));
             tmpDataMap.put("cross_border_money", value.getString("cross_border_money"));
@@ -413,7 +442,11 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
-            case R.id.submit_button:
+            case R.id.no_address_text:
+                Intent addIntent = new Intent(this, AddressManageActivity.class);
+                addIntent.putExtra("orderConfirm", "1");
+                startActivityForResult(addIntent, ADDRESS_CODE);
+                break;
             case R.id.address_layout:
 //                bundle.putString("selectedId", mReceiverAddressId);
 //                UIHelper.showSimpleBackForResult(this, ADDRESS_CODE, SimpleBackPage
@@ -517,12 +550,13 @@ public class OrderConfirmActivity extends BaseActivity implements View.OnClickLi
             case R.id.next_step_btn:
                 if (mReceiverAddressId == null) {
                     XmbUtils.showMessage(this, "请选择收货地址");
+                    mHandler.sendEmptyMessageDelayed(1, 1000);
                     return;
                 }
-                if (!is_over_sea) {
-                    XmbUtils.showMessage(this, "海外直邮必须上传身份证照片");
-                    return;
-                }
+//                if (!is_over_sea) {
+//                    XmbUtils.showMessage(this, "海外直邮必须上传身份证照片");
+//                    return;
+//                }
                 if (!mName.getText().toString().equals("")) {
                     name = mName.getText().toString();
                 } else {

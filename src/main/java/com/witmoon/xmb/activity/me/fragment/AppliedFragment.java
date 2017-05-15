@@ -1,9 +1,6 @@
 package com.witmoon.xmb.activity.me.fragment;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,17 +15,10 @@ import android.view.ViewGroup;
 import com.duowan.mobile.netroid.Listener;
 import com.orhanobut.logger.Logger;
 import com.witmoon.xmb.R;
-import com.witmoon.xmb.activity.friendship.fragment.CommentFragment;
 import com.witmoon.xmb.activity.me.Out_ServiceActivity;
-import com.witmoon.xmb.activity.me.adapter.OrderAdapter;
 import com.witmoon.xmb.activity.me.adapter.Out_PriceAdapter;
 import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseFragment;
-import com.witmoon.xmb.base.BaseRecyclerAdapter;
-import com.witmoon.xmb.base.BaseRecyclerViewFragmentV2;
-import com.witmoon.xmb.base.Const;
-import com.witmoon.xmb.model.ListEntity;
-import com.witmoon.xmb.model.Order;
 import com.witmoon.xmb.model.Out_;
 import com.witmoon.xmb.model.RefreshEvent;
 import com.witmoon.xmb.model.SimpleBackPage;
@@ -40,9 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.easydone.swiperefreshendless.HeaderViewRecyclerAdapter;
 import rx.Subscription;
@@ -128,27 +116,31 @@ public class AppliedFragment extends BaseFragment implements SwipeRefreshLayout.
             JSONArray orderArray = null;
             try {
                 orderArray = response.getJSONArray("data");
-                for (int i = 0; i < orderArray.length(); i++) {
-                    Out_ out = Out_.parse(orderArray.getJSONObject(i));
-                    data.add(out);
-                }
-                if (orderArray.length() < 20) {
-                    if (page != 1) {
-                        removeFooterView();
-                    }
-                    mRootView.scrollToPosition(0);
-                    has_footer = false;
+                if (page == 1 && orderArray.length() == 0) {
+                    mEmptyLayout.setErrorType(EmptyLayout.NODATA);
                 } else {
-                    has_footer = true;
-                    createLoadMoreView();
-                    resetStatus();
-                    if (page == 1) {
-                        mRootView.scrollToPosition(0);
+                    for (int i = 0; i < orderArray.length(); i++) {
+                        Out_ out = Out_.parse(orderArray.getJSONObject(i));
+                        data.add(out);
                     }
+                    if (orderArray.length() < 20) {
+                        if (page != 1) {
+                            removeFooterView();
+                        }
+                        mRootView.scrollToPosition(0);
+                        has_footer = false;
+                    } else {
+                        has_footer = true;
+                        createLoadMoreView();
+                        resetStatus();
+                        if (page == 1) {
+                            mRootView.scrollToPosition(0);
+                        }
+                    }
+                    mOut_PriceAdapter.notifyDataSetChanged();
+                    mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+                    page += 1;
                 }
-                mOut_PriceAdapter.notifyDataSetChanged();
-                mEmptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
-                page += 1;
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (Exception e) {

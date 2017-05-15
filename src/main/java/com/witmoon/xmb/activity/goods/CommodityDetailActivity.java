@@ -1,21 +1,16 @@
 package com.witmoon.xmb.activity.goods;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -33,7 +28,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
-import com.androidquery.util.Constants;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.orhanobut.logger.Logger;
@@ -41,7 +35,6 @@ import com.unicall.androidsdk.UnicallController;
 import com.unicall.androidsdk.UnicallDelegate;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
-import com.witmoon.xmb.activity.goods.fragment.EvaluateFragment;
 import com.witmoon.xmb.activity.goods.fragment.IntroduceFragment;
 import com.witmoon.xmb.activity.goods.fragment.SpecificationFragment;
 import com.witmoon.xmb.activity.user.LoginActivity;
@@ -52,11 +45,7 @@ import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.model.Goods;
 import com.witmoon.xmb.model.SimpleBackPage;
-import com.witmoon.xmb.model.event.CartRefreshCd;
-import com.witmoon.xmb.rx.RxBus;
-import com.witmoon.xmb.rx.RxUtil;
 import com.witmoon.xmb.ui.widget.BadgeView;
-import com.witmoon.xmb.ui.widget.CountDownTextView2;
 import com.witmoon.xmb.ui.widget.EmptyLayout;
 import com.witmoon.xmb.ui.widget.IncreaseReduceTextView;
 import com.witmoon.xmb.ui.widget.LineFeedHorizontalLayout;
@@ -79,11 +68,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
-import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  * 商品详情界面
@@ -129,6 +113,7 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
     private View popView;
     private int width;
     private int height;
+    private boolean is_collect = false;
 
     public static void start(Context context, String id) {
         start(context, id, "");
@@ -427,6 +412,7 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
         mAQuery.id(R.id.sale_count).text(String.format("%s件", goods.getSalesSum()));
 
         if (goods.isCollected()) {
+            is_collect = true;
             mCollectImg.setImageResource(R.mipmap.btn_like_press);
         }
 
@@ -483,6 +469,7 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
     private Listener<JSONObject> mCollectCallback = new Listener<JSONObject>() {
         @Override
         public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
             TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
             if (!twoTuple.first) {
                 AppContext.showToastShort(twoTuple.second);
@@ -490,6 +477,28 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
             }
             mCollectImg.setImageResource(R.mipmap.btn_like_press);
             AppContext.showToastShort("收藏成功");
+        }
+    };
+    // 收藏商品响应接口
+    private Listener<JSONObject> mCancelCollectCallback = new Listener<JSONObject>() {
+
+        @Override
+        public void onError(NetroidError error) {
+            Logger.d("error");
+            error.printStackTrace();
+            super.onError(error);
+        }
+
+        @Override
+        public void onSuccess(JSONObject response) {
+            Logger.json(response.toString());
+            TwoTuple<Boolean, String> twoTuple = ApiHelper.parseResponseStatus(response);
+            if (!twoTuple.first) {
+                AppContext.showToastShort(twoTuple.second);
+                return;
+            }
+            mCollectImg.setImageResource(R.mipmap.btn_like_unpress);
+            AppContext.showToastShort("取消收藏");
         }
     };
 
@@ -516,7 +525,15 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
                     startActivity(new Intent(this, LoginActivity.class));
                     return;
                 }
-                UserApi.collectGoods(mGoodsId, mCollectCallback);
+                if (is_collect) {
+                    Logger.d("cancel");
+                    UserApi.cancelCollect(mGoodsId, mCancelCollectCallback);
+                    is_collect = false;
+                } else {
+                    Logger.d("collect");
+                    UserApi.collectGoods(mGoodsId, mCollectCallback);
+                    is_collect = true;
+                }
                 break;
             case R.id.toolbar_share:
                 showShare();
@@ -714,7 +731,8 @@ public class CommodityDetailActivity extends BaseActivity implements View.OnClic
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
                         mGoodsPriceText.setText(jsonObject.getString("result"));
-                        mAQuery.id(R.id.inventory).text(String.format("库存量%s件", Integer.parseInt(jsonObject.getString("num"))));
+                        ((TextView) popView.findViewById(R.id.inventory)).setText(String.
+                                format("库存量%s件", Integer.parseInt(jsonObject.getString("num"))));
                         mIncreaseReduceTextView.setNumber(Integer.parseInt(jsonObject.getString("qty")));
                     } catch (JSONException e) {
                         e.printStackTrace();

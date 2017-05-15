@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_10_dip"
+        android:layout_marginLeft="@dimen/dimen_14_dip"
         android:layout_marginTop="10dp"
         android:text="请退货给商家"
         android:textColor="@color/app_main_deep"
@@ -32,17 +32,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10_dip"
-                android:padding="4dp"
-                android:text="退货地址:"
-                android:textColor="@color/app_main_deep"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:paddingLeft="4dp"
-                android:text="北京通州区六环内(马驹桥镇)团瓢庄西仓库开兴仓储物流有限公司9排9-12门"
+                android:paddingLeft="@dimen/dimen_14_dip"
+                android:text="@string/refund_info"
                 android:textColor="@color/app_main_deep"/>
 
         </LinearLayout>
@@ -55,8 +46,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:padding="4dp"
+                android:layout_marginLeft="@dimen/dimen_10_dip"
+                android:padding="@dimen/dimen_4_dip"
                 android:text="姓        名:"
                 android:textColor="@color/app_main_deep"/>
 
@@ -80,8 +71,8 @@
                 android:textColor="@color/app_main_deep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:padding="4dp"
+                android:layout_marginLeft="@dimen/dimen_10_dip"
+                android:padding="@dimen/dimen_4_dip"
                 android:text="电        话:"/>
 
             <TextView
@@ -104,7 +95,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_10_dip"
+        android:layout_marginLeft="@dimen/dimen_14_dip"
         android:layout_marginTop="10dp"
         android:text="请填写发货信息"
         android:textColor="@color/app_main_deep"
@@ -127,13 +118,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
-                android:padding="4dp"
+                android:layout_marginLeft="@dimen/dimen_14_dip"
                 android:text="快递单号:"
                 android:textColor="@color/app_main_deep"/>
 
             <EditText
                 android:id="@+id/express_no"
+                android:paddingTop="@dimen/dimen_2_dip"
+                android:paddingBottom="@dimen/dimen_2_dip"
+                android:paddingLeft="@dimen/dimen_2_dip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
@@ -170,6 +163,7 @@
         <!--</LinearLayout>-->
 
         <LinearLayout
+            android:visibility="gone"
             android:baselineAligned="true"
             android:id="@+id/fuc_Sa"
             android:layout_width="match_parent"
@@ -196,13 +190,6 @@
                 android:textColor="@color/app_main_deep"/>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="温馨提示：如您寄回的商品的退货原因经小麻包判断为与真实情况不符，将无法为您报销运费，感谢您的理解和支持"
-            android:textColor="@color/app_main_thin"
-            android:textSize="10dp"/>
     </LinearLayout>
 
 

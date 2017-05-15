@@ -7,13 +7,13 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +30,6 @@ import com.duowan.mobile.netroid.Listener;
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.UpdataService;
-import com.witmoon.xmb.activity.mbq.activity.PostDetailActivity;
 import com.witmoon.xmb.activity.user.LoginActivity;
 import com.witmoon.xmb.api.CircleApi;
 import com.witmoon.xmb.base.Const;
@@ -41,9 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Set;
 
-import cn.jpush.android.api.TagAliasCallback;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
@@ -543,5 +540,28 @@ public class XmbUtils {
         infoWindow.showAsDropDown(contentView);
         Button button = (Button) contentView.findViewById(R.id.ok_btn);
         button.setOnClickListener(v -> infoWindow.dismiss());
+    }
+
+    //弹出mbq提示文字
+    public static void showWarning(Context context, String message) {
+        AssetManager mgr = context.getAssets();
+        Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");
+        View contentView = LayoutInflater.from(context).inflate(
+                R.layout.invite_cancel_window, null);
+        TextView messageTextView = (TextView) contentView.findViewById(R.id.top_text);
+        messageTextView.setText(message);
+        XmbUtils.popupWindow = new PopupWindow(contentView,
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
+        XmbUtils.popupWindow.setTouchable(true);
+        XmbUtils.popupWindow.showAsDropDown(contentView);
+        TextView cancelView = (TextView) contentView.findViewById(R.id.bottom_text);
+        messageTextView.setTypeface(tf);
+        cancelView.setTypeface(tf);
+        cancelView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XmbUtils.popupWindow.dismiss();
+            }
+        });
     }
 }

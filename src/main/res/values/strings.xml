@@ -118,6 +118,10 @@
     <string name="tip_certification">1、由于免税店、直邮商品需要办理入境申报，请配合进行实名认证\n2
         、小订包承诺所传身份证明只用于直邮商品的清关手续，不作其他用途使用，其他任何人均无法查看</string>
     <string name="tip_real_name">请输入真实姓名</string>
+    <string name="name">姓名&#160;:</string>
+    <string name="identity_number">身份证号&#160;:</string>
+    <string name="name_hint">请输入您的姓名</string>
+    <string name="identity_number_hint">请输入您的身份证号</string>
     <string name="tip_mail_register">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;您已通过邮箱注册，还差一步完成注册，完成手机注册，让您购物更安全</string>
     <string name="tip_certification_card">请输入身份证号码</string>
     <string name="text_empty">清空</string>
@@ -138,6 +142,8 @@
     <string name="text_fans">粉丝</string>
     <string name="text_check_all">全选</string>
     <string name="text_receiver_address">收货地址</string>
+    <string name="text_invite_friend">邀请好友</string>
+    <string name="text_invite_friend_grey">立赚5元</string>
     <string name="text_jing_group">今日团购</string>
     <string name="text_receiver_out_service">售后服务</string>
     <string name="text_new_baby">知识库</string>
@@ -145,6 +151,7 @@
     <string name="text_new_receiver_address">新增收货地址</string>
     <string name="text_cancel">取消</string>
     <string name="text_confirm">确定</string>
+    <string name="cancel_share_text">您取消了分享！</string>
     <string name="text_total">总计：</string>
     <string name="text_canceled">已取消</string>
     <string name="text_special_offer">特卖</string>
@@ -178,7 +185,8 @@
     <string name="card_order_detail">订单详情</string>
     <string name="elec_order">电子卡订单</string>
     <string name="copy_account_pss">复制信息</string>
-
+    <string name="invite_friend">邀请好友</string>
+    <string name="invite_rule">邀请好友规则</string>
 
     <string name="text_message_shouldknonw">须知</string>
     <string name="type_of_invoice">发票类型 :</string>
@@ -199,6 +207,8 @@
     <string name="info_content_one">1.目前只支持纸质发票，暂不支持电子发票、增值税发票</string>
     <string name="info_content_two">2.发票金额为订单实际支付金额，不包含红包、优惠券抵扣金额、麻豆抵扣金额、麻包卡＆共享卡抵扣金额</string>
     <string name="info_content_three">3.跨境购商品暂不支持开具发票</string>
+    <string name="refund_info">请在7天内将商品寄回，逾期未退货申请将自动关闭。\n退货地址：请联系客服进行
+        确认\n联系人：小麻包商城，电话：010-85170751\n建议使用圆通，中通，申通，韵达，不接受顺丰EMS和任何到付件</string>
     <!-- Error View -->
     <string name="error_view_click_to_refresh">点击屏幕,重新加载</string>
     <string name="error_view_no_data">暂无内容</string>
@@ -335,9 +345,13 @@
     <string name="mb_card_add">绑 定 并 使 用</string>
     <string name="mb_card_add_hint1">请输入麻包卡密码：</string>
     <string name="mb_card_add_hint2">密码包含数字0&#8211;9,大写字母A&#8211;Z</string>
+    <string name="mb_card_add_hint3">每个输入框填写4位数，不要有空格</string>
 
     <!-- 麻包豆 -->
     <string name="my_mabao_bean">我的麻豆</string>
+    <string name="my_mabao_card">我的麻包卡</string>
+    <string name="my_medical_report">体检报告查询</string>
+    <string name="query_text">查询</string>
     <string name="my_collects">我的收藏</string>
     <string name="bind_bank_card">绑定银行卡</string>
     <string name="bean_to_cash">兑换现金</string>

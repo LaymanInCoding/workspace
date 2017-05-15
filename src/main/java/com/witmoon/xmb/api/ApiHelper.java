@@ -3,6 +3,8 @@ package com.witmoon.xmb.api;
 import android.util.Log;
 
 import com.witmoon.xmb.AppContext;
+import com.witmoon.xmb.base.Const;
+import com.witmoon.xmb.util.SharedPreferencesUtil;
 import com.witmoon.xmb.util.TDevice;
 import com.witmoon.xmb.util.TwoTuple;
 
@@ -18,15 +20,16 @@ import java.util.Map;
  */
 public class ApiHelper {
     public static final int PAGE_SIZE = TDevice.getPageSize();
-//
+
     public static final String API_URL = "https://api.xiaomabao.com/mobile/?url=%s";
     public static final String MBQZ_API_URL = "https://api.xiaomabao.com/mobile/?url=%s";
-//    public static final String BASE_URL = "https://api.xiaomabao.com/";
-    public static final String BASE_URL = "http://192.168.11.153:82/";
+    public static final String BASE_URL = "https://api.xiaomabao.com/";
+    //    public static final String BASE_URL = "http://192.168.10.230/";
+//    public static final String BASE_URL = "http://192.168.11.136:82/";
     public static final String HOME_URL = "http://www.xiaomabao.com/";
     public static final String GOODS_LINK_MODE = "https://www.xiaomabao.com/goods-%s.html";
-    public static final String MARKET_LINK_MODE = "https://www.xiaomabao.com/topic.php?topic_id=%s";
-//
+    public static final String MARKET_LINK_MODE = "https://www.xiaomabao.com/topic/%s";
+
 //    public static final String API_URL = "http://192.168.10.202/?url=%s";
 //    public static final String MBQZ_API_URL = "http://192.168.10.202/?url=%s";
 //    public static final String BASE_URL = "http://192.168.10.202/";
@@ -42,7 +45,7 @@ public class ApiHelper {
     //    public static final String API_URL = "http://172.16.1.122/mobile/?url=%s";
 //    public static final String MBQZ_API_URL = "http://172.16.1.122/mobile?url=%s";
 //    public static final String BASE_URL = "http://172.16.1.122/";
-    public static String mSessionID;
+    public static String mSessionID = "";
 
     public static void setSessionID(String sessionID) {
         mSessionID = sessionID;
@@ -92,8 +95,10 @@ public class ApiHelper {
     public static Map<String, String> getParamMap(Map<String, String> pm) {
 //
         Map<String, String> paramObj = pm == null ? new HashMap<>() : pm;
-        paramObj.put("session[uid]", AppContext.getLoginUid() + "");
-        paramObj.put("session[sid]", AppContext.getLoginInfo().getSid());
+        String sid = SharedPreferencesUtil.get(AppContext.instance(), Const.LOGIN_SESSION_ID, "").toString();
+        String uid = SharedPreferencesUtil.get(AppContext.instance(), Const.LOGIN_U_ID, "").toString();
+        paramObj.put("session[uid]", uid);
+        paramObj.put("session[sid]", sid);
         paramObj.put("version", AppContext.geVerSion());
         paramObj.put("channel", AppContext.getChannels());
         paramObj.put("device", "android");

@@ -10,7 +10,6 @@ import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.activity.mbq.adapter.CollectPostAdapter;
-import com.witmoon.xmb.activity.mbq.adapter.PostAdapter;
 import com.witmoon.xmb.api.CircleApi;
 import com.witmoon.xmb.base.BaseActivity;
 import com.witmoon.xmb.model.circle.CirclePost;
@@ -62,6 +61,8 @@ public class CollectActivity extends BaseActivity {
             public void onItemClick(int position) {
                 Intent intent = new Intent(CollectActivity.this, PostDetailActivity.class);
                 intent.putExtra("post_id", mDatas.get(position).getPost_id());
+                intent.putExtra("post_content",mDatas.get(position).getPost_content());
+                intent.putExtra("post_title",mDatas.get(position).getPost_title());
                 startActivity(intent);
             }
         });

@@ -28,16 +28,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         void onItemDelete(int position);
     }
 
-    private String num;
-
-    public void setNum(String number) {
-        this.num = number;
-    }
-
-    public String getNum() {
-        return num;
-    }
-
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
@@ -64,9 +54,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 }
             }
         });
-        if (mDataList.get(position).getCard_num() == 1) {
-            holder.irText.setNumber(1);
-        }
+        holder.irText.setNumber(mDataList.get(position).getCard_num());
         holder.irText.setOnNumberChangeListener(new IncreaseReduceTextView.OnNumberChangeListener() {
             @Override
             public void onNumberChange(int number) {

@@ -11,11 +11,11 @@
     <!-- 访问网络状态权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -75,7 +75,9 @@
         <activity android:name=".activity.specialoffer.GroupBuyActivity"/>
         <activity android:name=".GuideActivity"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".activity.common.SimpleBackActivity"/>
+        <activity
+            android:name=".activity.common.SimpleBackActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.me.fragment.New_BabyWebActivity"/>
         <activity android:name=".activity.user.LoginActivity"/>
         <activity android:name=".activity.me.AddressManageActivity"/>
@@ -102,10 +104,14 @@
         <activity android:name=".activity.goods.SearchResultListActivity"/>
         <activity android:name=".activity.goods.CommodityDetailActivity"/>
         <activity android:name=".activity.goods.SpecificationSelectionActivity"/>
-        <activity android:name=".activity.shoppingcart.OrderConfirmActivity"/>
+        <activity
+            android:name=".activity.shoppingcart.OrderConfirmActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".activity.shoppingcart.OrderSubmitSuccessActivity"/>
         <activity android:name=".activity.card.CardActivity"/>
-        <activity android:name=".activity.card.CardOrderConfirmActivity"/>
+        <activity
+            android:name=".activity.card.CardOrderConfirmActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".activity.card.ElecCardHelpActivity"/>
         <activity android:name=".activity.card.CardOrderSubmitSuccessActivity"/>
         <activity
@@ -154,8 +160,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <data android:scheme="tencent100371282"/>
-
+                <data android:scheme="tencent1104820224"/>
                 <action android:name="android.intent.action.VIEW"/>
 
                 <category android:name="android.intent.category.BROWSABLE"/>
@@ -353,7 +358,8 @@
         <activity
             android:name=".activity.service.ServiceCart"
             android:label="@string/title_activity_service_cart"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activity.service.ServiceOrderActivity"
             android:label="@string/title_activity_service_order"

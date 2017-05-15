@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/query_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_26_dip"
+            android:layout_marginRight="@dimen/dimen_26_dip"
+            android:layout_marginTop="@dimen/dimen_100_dip"
+            android:background="@drawable/bg_linearlayout"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_26_dip"
+                android:layout_marginLeft="@dimen/dimen_30_dip"
+                android:layout_marginRight="@dimen/dimen_26_dip"
+                android:layout_marginTop="@dimen/dimen_26_dip"
+                android:text="@string/name"
+                android:textColor="#555555"
+                android:textSize="@dimen/dimen_26_dip"/>
+
+            <EditText
+                android:id="@+id/name_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/name_hint"
+                android:paddingBottom="@dimen/dimen_10_dip"
+                android:paddingRight="@dimen/dimen_100_dip"
+                android:paddingTop="@dimen/dimen_10_dip"
+                android:textColor="#555555"
+                android:textColorHint="#aaaaaa"
+                android:textSize="@dimen/dimen_26_dip"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_26_dip"
+            android:layout_marginRight="@dimen/dimen_26_dip"
+            android:layout_marginTop="@dimen/dimen_40_dip"
+            android:background="@drawable/bg_linearlayout"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_26_dip"
+                android:layout_marginLeft="@dimen/dimen_30_dip"
+                android:layout_marginRight="@dimen/dimen_26_dip"
+                android:layout_marginTop="@dimen/dimen_26_dip"
+                android:text="@string/identity_number"
+                android:textColor="#555555"
+                android:textSize="@dimen/dimen_26_dip"/>
+
+            <EditText
+                android:id="@+id/identity_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/identity_number_hint"
+                android:paddingBottom="@dimen/dimen_10_dip"
+                android:paddingRight="@dimen/dimen_100_dip"
+                android:paddingTop="@dimen/dimen_10_dip"
+                android:textColor="#555555"
+                android:textColorHint="#aaaaaa"
+                android:textSize="@dimen/dimen_26_dip"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/query_button"
+            android:layout_width="@dimen/dimen_350_dip"
+            android:layout_height="@dimen/dimen_76_dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_90_dip"
+            android:background="@drawable/bg_button_radiu36"
+            android:text="@string/query_text"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/dimen_26_dip"/>
+    </LinearLayout>
+
+    <com.witmoon.xmb.ui.widget.EmptyLayout
+        android:id="@+id/empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+    </com.witmoon.xmb.ui.widget.EmptyLayout>
+
+    <com.witmoon.xmb.ui.NumberProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingLeft="@dimen/dimen_30_dip"
+        android:paddingRight="@dimen/dimen_30_dip"
+        android:visibility="gone"
+        app:progress_reached_bar_height="@dimen/dimen_50_dip"
+        app:progress_reached_color="#3498DB"
+        app:progress_text_color="#3498DB"
+        app:progress_text_size="@dimen/dimen_36_dip"
+        app:progress_unreached_bar_height="@dimen/dimen_45_dip"
+        app:progress_unreached_color="#CCCCCC"/>
+
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"></com.github.barteksc.pdfviewer.PDFView>
+
+    <ImageView
+        android:id="@+id/no_record_img"
+        android:layout_width="@dimen/dimen_380_dip"
+        android:layout_height="@dimen/dimen_450_dip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_120_dip"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/no_report_img"
+        android:visibility="gone"/>
+
+</RelativeLayout>

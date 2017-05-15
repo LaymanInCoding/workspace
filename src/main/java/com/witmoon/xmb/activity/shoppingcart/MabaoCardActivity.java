@@ -43,6 +43,7 @@ public class MabaoCardActivity extends BaseActivity implements View.OnClickListe
     private ArrayList<String> selectedCardList = new ArrayList<>();
     private int current_page = 1;
     private View next_container;
+    private String from;
 
     private BroadcastReceiver bind_card_success_receiver = new BroadcastReceiver() {
         @Override
@@ -55,9 +56,13 @@ public class MabaoCardActivity extends BaseActivity implements View.OnClickListe
                 stringAdapter.notifyDataSetChanged();
                 mRootView.setVisibility(View.VISIBLE);
                 no_mb_card_view.setVisibility(View.GONE);
-                next_container.setVisibility(View.VISIBLE);
+                if (from != null && from.equals("userCenter")) {
+                    next_container.setVisibility(View.GONE);
+                } else {
+                    next_container.setVisibility(View.VISIBLE);
+                }
                 selectedCardList.add(mabaoCard.getCard_no());
-                XmbUtils.showMessage(MabaoCardActivity.this,jsonObject.getString("info"));
+                XmbUtils.showMessage(MabaoCardActivity.this, jsonObject.getString("info"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -72,6 +77,7 @@ public class MabaoCardActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void initialize(Bundle savedInstanceState) {
+        from = getIntent().getStringExtra("from");
         setTitleColor_(R.color.master_shopping_cart);
         emptyLayout = (EmptyLayout) findViewById(R.id.error_layout);
         emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
@@ -87,29 +93,33 @@ public class MabaoCardActivity extends BaseActivity implements View.OnClickListe
         setReceiver();
     }
 
-    private void setReceiver(){
+    private void setReceiver() {
         IntentFilter loginFilter = new IntentFilter(Const.BIND_MABAO_CARD_SUCCESS);
         registerReceiver(bind_card_success_receiver, loginFilter);
     }
 
-    private void unsetReceiver(){
+    private void unsetReceiver() {
         unregisterReceiver(bind_card_success_receiver);
     }
 
-    private void initRecycleView(){
+    private void initRecycleView() {
         mRootView = (RecyclerView) findViewById(R.id.recycle_view);
         layoutManager = new LinearLayoutManager(this);
         mRootView.setHasFixedSize(true);
         mRootView.setLayoutManager(layoutManager);
-        adapter = new MabaoCardAdapter(arrayList,this);
+        if (null != from && from.equals("userCenter")) {
+            adapter = new MabaoCardAdapter(arrayList, this, true);
+        } else {
+            adapter = new MabaoCardAdapter(arrayList, this, false);
+        }
         adapter.setOnItemClickListener(new MabaoCardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 MabaoCard mabaoCard = arrayList.get(position);
-                if (mabaoCard.getIs_checked() == 1){
+                if (mabaoCard.getIs_checked() == 1) {
                     selectedCardList.remove(mabaoCard.getCard_no());
                     mabaoCard.setIs_checked(0);
-                }else{
+                } else {
                     selectedCardList.add(mabaoCard.getCard_no());
                     mabaoCard.setIs_checked(1);
                 }
@@ -123,18 +133,18 @@ public class MabaoCardActivity extends BaseActivity implements View.OnClickListe
         setRecRequest(current_page);
     }
 
-    private Boolean check_is_show(MabaoCard mabaoCard){
-        for (int i = 0,len = arrayList.size();i < len; i++){
-            if (mabaoCard.getCard_no().equals(arrayList.get(i).getCard_no())){
+    private Boolean check_is_show(MabaoCard mabaoCard) {
+        for (int i = 0, len = arrayList.size(); i < len; i++) {
+            if (mabaoCard.getCard_no().equals(arrayList.get(i).getCard_no())) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
         return false;
     }
 
-    public void setRecRequest(int currentPage){
+    public void setRecRequest(int currentPage) {
         MabaoCardApi.get_card_list(current_page, new Listener<JSONObject>() {
             @Override
             public void onError(NetroidError error) {
@@ -158,13 +168,17 @@ public class MabaoCardActivity extends BaseActivity implements View.OnClickListe
                         createLoadMoreView();
                         resetStatus();
                     }
-                    if (arrayList.size() == 0){
+                    if (arrayList.size() == 0) {
                         no_mb_card_view.setVisibility(View.VISIBLE);
                         next_container.setVisibility(View.GONE);
                         mRootView.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         mRootView.setVisibility(View.VISIBLE);
-                        next_container.setVisibility(View.VISIBLE);
+                        if (from != null && from.equals("userCenter")) {
+                            next_container.setVisibility(View.GONE);
+                        } else {
+                            next_container.setVisibility(View.VISIBLE);
+                        }
                     }
                     current_page += 1;
                     stringAdapter.notifyDataSetChanged();
@@ -176,16 +190,16 @@ public class MabaoCardActivity extends BaseActivity implements View.OnClickListe
         });
     }
 
-    private void setFont(){
+    private void setFont() {
         AssetManager mgr = this.getAssets();
-        Typeface tf=Typeface.createFromAsset(mgr, "fonts/font.otf");
-        TextView toolbar_title_text = (TextView)findViewById(R.id.toolbar_title_text);
-        TextView toolbar_right_text = (TextView)findViewById(R.id.toolbar_right_text);
+        Typeface tf = Typeface.createFromAsset(mgr, "fonts/font.otf");
+        TextView toolbar_title_text = (TextView) findViewById(R.id.toolbar_title_text);
+        TextView toolbar_right_text = (TextView) findViewById(R.id.toolbar_right_text);
         next_container = findViewById(R.id.next_container);
         no_mb_card_view = findViewById(R.id.no_mb_card_view);
-        TextView mb_card_sorry_title = (TextView)findViewById(R.id.mb_card_sorry_title);
-        TextView mb_card_sorry_desc = (TextView)findViewById(R.id.mb_card_sorry_desc);
-        Button mb_card_use = (Button)findViewById(R.id.mb_card_use);
+        TextView mb_card_sorry_title = (TextView) findViewById(R.id.mb_card_sorry_title);
+        TextView mb_card_sorry_desc = (TextView) findViewById(R.id.mb_card_sorry_desc);
+        Button mb_card_use = (Button) findViewById(R.id.mb_card_use);
         if (mb_card_use != null) {
             mb_card_use.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -197,21 +211,26 @@ public class MabaoCardActivity extends BaseActivity implements View.OnClickListe
                 }
             });
         }
-        if(mb_card_sorry_title != null) {
+        if (mb_card_sorry_title != null) {
             mb_card_sorry_title.setTypeface(tf);
         }
-        if(mb_card_sorry_desc != null) {
+        if (mb_card_sorry_desc != null) {
             mb_card_sorry_desc.setTypeface(tf);
         }
-        if(toolbar_title_text != null) {
-            toolbar_title_text.setText("选择麻包卡");
+        if (toolbar_title_text != null) {
+            if (from != null && from.equals("userCenter")) {
+                toolbar_title_text.setText("我的麻包卡");
+                next_container.setVisibility(View.GONE);
+            } else {
+                toolbar_title_text.setText("选择麻包卡");
+            }
         }
-        if(toolbar_right_text != null){
+        if (toolbar_right_text != null) {
             toolbar_right_text.setText("绑定新卡");
             toolbar_right_text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(MabaoCardActivity.this,MabaoCardAddActivity.class));
+                    startActivity(new Intent(MabaoCardActivity.this, MabaoCardAddActivity.class));
                 }
             });
         }

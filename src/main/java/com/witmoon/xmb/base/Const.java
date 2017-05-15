@@ -29,6 +29,10 @@ public class Const {
     public static final String INTENT_ACTION_REFRESH_CIRCLE = "com.witmoon.xmb.REFRESH_MY_CIRCLE";
     public static final String INTENT_ACTION_REFRESH_POST = "com.witmoon.xmb.REFRESH_MY_POST";
     public static final String INTENT_ACTION_REFRESH_MY_MBQ_SEARCH = "com.witmoon.xmb.REFRESH_MY__SEARCH";
+    public static final String INTENT_REFRESH_CARD_ORDER = "com.witmoon.xmb.REFRESH_CARD_ORDER";
+    public static final String INTENT_REFRESH_GOODS_ORDER = "com.witmoon.xmb.REFRESH_GOODS_ORDER";
+
+
     public static final String INTENT_ACTION_TUI = "com.witmoon.xmb.YUI";
     public static final String INTENT_ACTION_LOGOUT = "com.witmoon.xmb.LOGOUT";
     public static final String INTENT_ACTION_LOGIN = "com.witmoon.xmb.LOGIN";
@@ -44,6 +48,10 @@ public class Const {
     public static final String BIND_MABAO_CARD_SUCCESS = "com.witmoon.xmb.BIND_MABAO_CARD_SUCCESS";
 
     public static final String INTENT_ACTION_REFRESH_BEAN = "send_bean_refresh";
+
+    public static final String LOGIN_SESSION_ID = "login_sid";
+    public static final String LOGIN_U_ID = "login_uid";
+
 
 //    public static final String INTENT_ACTION_SERVICE_REFRESH = "service_refresh";
 

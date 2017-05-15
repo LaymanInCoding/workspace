@@ -1,8 +1,10 @@
 package com.witmoon.xmb.activity.me.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
@@ -16,6 +18,7 @@ import com.witmoon.xmb.api.ApiHelper;
 import com.witmoon.xmb.api.UserApi;
 import com.witmoon.xmb.base.BaseRecyclerAdapter;
 import com.witmoon.xmb.base.BaseRecyclerViewFragmentV2;
+import com.witmoon.xmb.base.Const;
 import com.witmoon.xmb.model.ListEntity;
 import com.witmoon.xmb.model.Order;
 import com.witmoon.xmb.model.SimpleBackPage;
@@ -36,6 +39,12 @@ import java.util.List;
 public class OrderFragment extends BaseRecyclerViewFragmentV2 {
     public static final String TYPE_KEY = "all";
     private String mOrderType;
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refresh();
+        }
+    };
 
     public static OrderFragment newInstance(String type) {
 
@@ -50,6 +59,13 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mOrderType = getArguments().getString(TYPE_KEY);
+        getContext().registerReceiver(mReceiver, new IntentFilter(Const.INTENT_REFRESH_GOODS_ORDER));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getContext().unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -64,14 +80,14 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 {
             @Override
             public void onItemButtonClick(Order order) {
                 if (OrderType.getType(order.getOrderType()) == OrderType.TYPE_FINISHED) {
-                    UmengStatic.registStat(getActivity(),"9");
+                    UmengStatic.registStat(getActivity(), "9");
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("ORDER", order);
                     UIHelper.showSimpleBack(getActivity(), SimpleBackPage.GOODS_EVALUATE, bundle);
                 } else if (OrderType.getType(order.getOrderType()) == OrderType
                         .TYPE_WAITING_FOR_PAYMENT) {
-                    UmengStatic.registStat(getActivity(),"MyOrder11");
+                    UmengStatic.registStat(getActivity(), "MyOrder11");
 
                     JSONObject orderInfo = new JSONObject();
                     try {
@@ -87,7 +103,7 @@ public class OrderFragment extends BaseRecyclerViewFragmentV2 {
                     }
                 } else if (OrderType.getType(order.getOrderType()) == OrderType
                         .TYPE_WAITING_FOR_RECEIVING) {
-                    UmengStatic.registStat(getActivity(),"MyOrder12");
+                    UmengStatic.registStat(getActivity(), "MyOrder12");
 
                     UserApi.affirm_received(order.getId(), new Listener<JSONObject>() {
                         @Override

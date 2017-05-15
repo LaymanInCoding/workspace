@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
 import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.WelcomeActivity;
 import com.witmoon.xmb.activity.goods.CommodityDetailActivity;
@@ -13,7 +11,6 @@ import com.witmoon.xmb.activity.specialoffer.GroupBuyActivity;
 import com.witmoon.xmb.activity.specialoffer.MarketPlaceActivity;
 import com.witmoon.xmb.activity.webview.InteractiveWebViewActivity;
 import com.witmoon.xmb.base.Const;
-import com.witmoon.xmb.util.CommonUtil;
 import com.witmoon.xmb.util.SharedPreferencesUtil;
 import com.witmoon.xmb.util.SystemUtils;
 

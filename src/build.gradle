@@ -10,10 +10,10 @@ android {
         applicationId "com.witmoon.xmb"
         minSdkVersion 16
         targetSdkVersion 24
-//        versionCode 49
-        versionCode 50
-//        versionName "4.85"
-        versionName "4.86"
+//        versionCode 53
+        versionCode 54
+//        versionName "4.89"  moidifyday 17.5.5
+        versionName "4.9"
         multiDexEnabled true
     }
     compileOptions {
@@ -104,8 +104,8 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.6.1.jar')
     compile files('libs/TencentLocationSDK_v4.1.1_r175129.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.6.1.jar')
-    compile files('libs/alipaySDK-20150724.jar')
-    compile files('libsbammsdk.jar')
+    compile files('libs/alipaySDK-20170309.jar')
+//    compile files('libsbammsdk.jar')
     compile files('libs/org.apache.http.legacy.jar')
     compile files('jpush-android-2.1.9.jar')
 
@@ -138,6 +138,8 @@ dependencies {
     compile 'cn.bingoogolapple:bga-adapter:1.0.5@aar'
     compile 'info.hoang8f:android-segmented:1.0.6'
 
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.1.6'
+
     //retrofit
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
@@ -151,6 +153,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
 
     compile 'com.yanzhenjie:recyclerview-swipe:1.0.2'
+    compile 'com.lzy.net:okgo:2.1.4'
+    compile 'com.github.barteksc:android-pdf-viewer:2.5.1'
 
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.orhanobut:logger:1.15'

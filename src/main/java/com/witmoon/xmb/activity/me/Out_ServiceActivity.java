@@ -570,9 +570,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
             AppContext.showToast("请选择收货地址！");
         } else if (detailed_address.getText().toString().trim().equals("")) {
             AppContext.showToast("请输入详细地址！");
-        } else if (imgAdapter.mList.size() <= 1) {
-            AppContext.showToast("请上传图片！");
-        } else if (!is_goods_num) {
+        }else if (!is_goods_num) {
             AppContext.showToast("请选择商品数量！");
         } else {
             is_ = true;
@@ -584,9 +582,7 @@ public class Out_ServiceActivity extends BaseActivity implements View.OnClickLis
         boolean is_s = false;
         if (edit_text.getText().toString().trim().equals("")) {
             AppContext.showToast("请输入问题描述！");
-        } else if (imgAdapter.mList.size() <= 1) {
-            AppContext.showToast("请上传图片！");
-        } else if (!is_goods_num) {
+        }else if (!is_goods_num) {
             AppContext.showToast("请选择商品数量！");
         } else {
             is_s = true;

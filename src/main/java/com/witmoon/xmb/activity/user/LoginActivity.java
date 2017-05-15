@@ -3,7 +3,6 @@ package com.witmoon.xmb.activity.user;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -27,9 +26,8 @@ import com.androidquery.AQuery;
 import com.duowan.mobile.netroid.Listener;
 import com.duowan.mobile.netroid.NetroidError;
 import com.orhanobut.logger.Logger;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.witmoon.xmb.AppContext;
-import com.witmoon.xmb.MainActivity;
 import com.witmoon.xmb.R;
 import com.witmoon.xmb.api.ApiHelper;
 import com.witmoon.xmb.api.Netroid;
@@ -43,6 +41,7 @@ import com.witmoon.xmb.ui.popupwindow.PopupDialog;
 import com.witmoon.xmb.ui.popupwindow.PopupUtils;
 import com.witmoon.xmb.util.CommonUtil;
 import com.witmoon.xmb.util.MD5Utils;
+import com.witmoon.xmb.util.SharedPreferencesUtil;
 import com.witmoon.xmb.util.StringUtils;
 import com.witmoon.xmb.util.TDevice;
 import com.witmoon.xmb.util.TwoTuple;
@@ -210,7 +209,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     User user;
                     JSONObject respData = response.getJSONObject("data");
                     String sessionID = respData.getJSONObject("session").getString("sid");
+                    String uid = respData.getJSONObject("session").getString("uid");
                     ApiHelper.setSessionID(sessionID);
+                    SharedPreferencesUtil.put(AppContext.instance(), Const.LOGIN_SESSION_ID, sessionID);
+                    SharedPreferencesUtil.put(AppContext.instance(), Const.LOGIN_U_ID, uid);
+                    Logger.d(SharedPreferencesUtil.get(AppContext.instance(), Const.LOGIN_SESSION_ID, "0"));
+                    Logger.d(SharedPreferencesUtil.get(AppContext.instance(), Const.LOGIN_U_ID, "0"));
                     if (is_in) {
                         //第三方
                         user = User.parse(respData.getJSONObject("user"), type, sin_name, "");
@@ -239,7 +243,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     if (!AppContext.is_login_or()) {
                         if (response.getJSONObject("status").getString("error_code").equals("2008")) {
                             showDownUpPopupDialog();
-                        }else{
+                        } else {
                             AppContext.clearLoginInfo();     // 登录失败, 清除登录信息
                             CommonUtil.show(LoginActivity.this, twoTuple.second, 1000);
                         }

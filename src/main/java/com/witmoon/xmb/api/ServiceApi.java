@@ -1,15 +1,13 @@
 package com.witmoon.xmb.api;
 
 import com.duowan.mobile.netroid.Listener;
-import com.witmoon.xmb.AppContext;
 import com.witmoon.xmb.api.alipay.NormalGetJSONRequest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ServiceApi {
 
@@ -45,11 +43,11 @@ public class ServiceApi {
     }
 
     //搜索服务
-    public static void searchService(int page, String search_key, String sort,Listener<JSONObject> listener) {
+    public static void searchService(int page, String search_key, String sort, Listener<JSONObject> listener) {
         HashMap<String, String> pm = new HashMap<>();
         pm.put("search_key", search_key);
         pm.put("page", page + "");
-        pm.put("sort",sort);
+        pm.put("sort", sort);
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "service/search", pm, listener));
     }
 
@@ -122,5 +120,18 @@ public class ServiceApi {
         HashMap<String, String> pm = new HashMap<>();
         pm.put("order_id", order_id + "");
         Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "/service/return_order_info", pm, listener));
+    }
+
+    //获取服务支付宝签名
+    public static void getSign(String order_id, Listener<JSONObject> listener) {
+        HashMap<String, String> pm = new HashMap<>();
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL + "pay/service/" + order_id, ApiHelper.getParamMap(pm), listener));
+    }
+
+    //获取服务微信支付签名
+    public static void getWXSign(String orderId, Listener<JSONObject> listener) {
+        Map<String, String> pm = new HashMap<>();
+        Netroid.addRequest(new NormalPostJSONRequest(ApiHelper.BASE_URL +
+                ("/pay/wx_service/" + orderId), ApiHelper.getParamMap(pm), listener));
     }
 }

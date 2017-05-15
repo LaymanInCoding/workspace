@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -531,6 +530,8 @@ public class BabyCenterFragment extends BaseFragment implements DialogInterface.
                     Intent intent = new Intent(getActivity(), PostDetailActivity.class);
                     try {
                         intent.putExtra("post_id", Integer.parseInt(jsonObject.getString("post_id")));
+                        intent.putExtra("post_content",jsonObject.getString("post_content"));
+                        intent.putExtra("post_title",jsonObject.getString("post_title"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
